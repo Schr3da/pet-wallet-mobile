@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {styles} from './index.styles';
 import {StatusBar} from 'expo-status-bar';
 import {Text, View} from 'react-native';
+
+import {styles} from './index.style';
 
 export const App = (): JSX.Element =>  {
   return (
