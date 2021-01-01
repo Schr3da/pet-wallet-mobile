@@ -5,7 +5,7 @@ import {Text, View} from 'react-native';
 
 import {styles} from './index.style';
 
-export const App = (): JSX.Element =>  {
+export const Component = (): JSX.Element =>  {
   return (
     <View style={styles.container}>
       <Text>My Quick Test</Text>
@@ -13,4 +13,4 @@ export const App = (): JSX.Element =>  {
       <Text>My Quick Test</Text>
     </View>
   );
-}
+};

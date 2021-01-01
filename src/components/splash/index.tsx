@@ -1,48 +1,54 @@
+
 import * as React from "react";
 
+import {Image, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import {Text, View} from "react-native";
 
-import {
-  onSplashAnimationStart,
-  onSplashAnimationComplete
-} from "store/actions/splash";
+import type {ICombinedReducerState} from "../../store/reducers";
 
-import type {ICombinedReducerState} from "store/reducers";
+import {Splash} from "../../store/actions";
+import {createStyle, ThemeTypes} from "../../theme";
 
-import {styles} from './index.style';
+import {applyStyles} from "./index.style";
 
-const toProps = (
+interface IProps {
+  isAnimating: boolean;
+  theme: ThemeTypes;
+}
+  
+const stateToProps = (
   state: ICombinedReducerState
-) => state.splash;
+): IProps => ({
+  isAnimating: state.splash.isAnimating,
+  theme: state.theme.current,
+});
 
-const startAnimation = (dispatch: any) =>
-  dispatch(onSplashAnimationStart());
+const startAnimation = (dispatch: any) => {
+  dispatch(Splash.onSplashAnimationStart());
+  setTimeout(() => completeAnimation(dispatch), 4500);
+}
 
-const completeAnimation = (
-  dispatch: any, 
-  duration: number
-) => setTimeout(() => { 
-  dispatch(onSplashAnimationComplete())
-}, duration);
+const completeAnimation = (dispatch: any) =>
+  dispatch(Splash.onSplashAnimationComplete());
+
+const didMount = (dispatch: any) =>
+  startAnimation(dispatch);
 
 export const Component = (): JSX.Element =>  {
   const dispatch = useDispatch()
   
-  const {isAnimating, duration} = useSelector(toProps); 
+  const {theme}= useSelector(stateToProps); 
   
-  React.useEffect(
-    () => {
-      isAnimating === true ? 
-        completeAnimation(dispatch, duration) : 
-        startAnimation(dispatch);
-    },
-    [isAnimating]
-  );
+  React.useEffect(() => didMount(dispatch), []);
 
+  const styles = createStyle(theme, applyStyles); 
+  
   return (
-    <View style={styles.container}>
-      <Text>{"value is: " + isAnimating}</Text>
+    <View style={styles.container as any}>
+      <Image 
+        source={require("../../../assets/png/app-icon.png")}
+        style={styles.appIcon}  
+      />
     </View>
   );
-}
+};
