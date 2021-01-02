@@ -1,4 +1,3 @@
-
 import * as React from "react";
 
 import {Image, View} from "react-native";
@@ -25,7 +24,7 @@ const stateToProps = (
 
 const startAnimation = (dispatch: any) => {
   dispatch(Splash.onSplashAnimationStart());
-  setTimeout(() => completeAnimation(dispatch), 4500);
+  setTimeout(() => completeAnimation(dispatch), 2000);
 }
 
 const completeAnimation = (dispatch: any) =>

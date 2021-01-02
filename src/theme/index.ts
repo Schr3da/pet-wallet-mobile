@@ -6,6 +6,7 @@ export interface ITheme {
   color3: string;
   color4: string;
   color5: string;
+  color6: string;
 };
 
 const LightTheme: ITheme = {
@@ -14,6 +15,7 @@ const LightTheme: ITheme = {
   color3: "#5BA4FF",
   color4: "#FF4340",
   color5: "#FDCB02",
+  color6: "#D9EFFF",
 };
 
 const DarkTheme: ITheme = {
@@ -22,12 +24,18 @@ const DarkTheme: ITheme = {
   color3: "#5BA4FF",
   color4: "#FF4340",
   color5: "#FDCB02",
+  color6: "#D9EFFF",
 }
 
 export enum ThemeTypes {
   Dark,
   Light
 }
+
+export const getColors = (
+  theme: ThemeTypes
+): ITheme => 
+  ThemeTypes.Dark === theme ? DarkTheme : LightTheme;
 
 type useThemeCallback<
   T extends StyleSheet.NamedStyles<T> |
@@ -38,7 +46,10 @@ export const createStyle = <T>(
   theme: ThemeTypes,
   cb: useThemeCallback<T>
 ) => {
-  let colors = ThemeTypes.Dark === theme ? DarkTheme : LightTheme;
+  let colors = getColors(theme);
   let styles = cb(colors);
   return StyleSheet.create(styles);
 }
+
+export const createStyleWithoutTheme =
+  (styles: any) => StyleSheet.create(styles);

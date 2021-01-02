@@ -1,10 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {ITheme} from "theme";
 
-export const styles = StyleSheet.create({
+export const applyStyles = (theme: ITheme) => ({ 
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: theme.color1,
+    alignItems: "center",
   },
 });

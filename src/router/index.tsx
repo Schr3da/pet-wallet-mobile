@@ -17,7 +17,7 @@ const stateToProps = (
   currentViewComponent: state.general.currentViewComponent,
 });
 
-export const Component = (): JSX.Element =>  {
+export const Route = (): JSX.Element =>  {
   const {currentViewComponent} = useSelector(stateToProps);
 
   switch (currentViewComponent) {
