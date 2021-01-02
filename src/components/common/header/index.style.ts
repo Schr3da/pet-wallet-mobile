@@ -15,13 +15,13 @@ export const applyStyles = (theme: ITheme) => ({
   title: {
     marginBottom: "5%", 
     fontWeight: "bold",
-    fontSize: 36,
+    fontSize: 32,
   },
   text: {
-    marginLeft: "10%",
-    marginRight: "10%",
+    marginLeft: "12%",
+    marginRight: "12%",
     marginBottom: "10%",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
   }
 });

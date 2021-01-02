@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Text, TouchableHighlight, View} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 
 import {createStyleWithoutTheme} from "theme";
 
@@ -23,7 +23,7 @@ export const StyledButton = (
   
   return (
     <View style={styles.container as any}>
-      <TouchableHighlight onPress={onPress}>
+      <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
         <View style={style}>
           {title ? 
             <Text style={styles.text as any}>
@@ -31,7 +31,7 @@ export const StyledButton = (
             </Text> : (children || [])
           } 
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 }

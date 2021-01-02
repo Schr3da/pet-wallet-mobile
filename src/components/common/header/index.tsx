@@ -24,7 +24,7 @@ export const Header = (
     <View style={styles.container as any}>
       <Image style={styles.image} source={source} />
       <Text style={styles.title as any}>{title}</Text>
-      <Text style={styles.text}>{text || ""}</Text>
+      <Text style={styles.text as any}>{text || ""}</Text>
     </View>
   );
 }
