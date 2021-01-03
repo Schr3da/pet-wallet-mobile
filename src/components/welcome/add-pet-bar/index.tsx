@@ -14,18 +14,17 @@ interface IProps {
   theme: ThemeTypes
 }
 
-const addNewPet = (dispatch: Dispatch<any>) => 
+const addNewPet = (dispatch: Dispatch<any>) => { 
   dispatch(onChangeViewComponent(ViewComponents.newPet));
+}
 
-export const BottomBar = (props: IProps): JSX.Element =>  {
+export const AddPetBar = (props: IProps): JSX.Element =>  {
   const {theme} = props; 
 
   const dispatch = useDispatch();
 
   const styles = createStyle(theme, applyStyles); 
   const colors = getColors(theme);
-
-   
 
   return (
     <View style={styles.container as any}>
@@ -39,7 +38,6 @@ export const BottomBar = (props: IProps): JSX.Element =>  {
         title="Hinzufügen"
         onPress={() => addNewPet(dispatch)}
       />
-    
   </View>
   );
 };

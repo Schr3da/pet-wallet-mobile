@@ -1,4 +1,4 @@
-import {ITheme} from "theme";
+import {ITheme} from "../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
   container: {

@@ -10,13 +10,13 @@ export interface IProps {
   title: string;
   theme: ThemeTypes;
   source: ImageSourcePropType;
-  text?: string;
+  description?: string;
 }
 
 export const Header = (
   props: IProps
 ) => {
-  const {source, title, text, theme} = props;
+  const {description, source, title, theme} = props;
   
   const styles = createStyle(theme, applyStyles);
   
@@ -24,7 +24,7 @@ export const Header = (
     <View style={styles.container as any}>
       <Image style={styles.image} source={source} />
       <Text style={styles.title as any}>{title}</Text>
-      <Text style={styles.text as any}>{text || ""}</Text>
+      <Text style={styles.text as any}>{description || ""}</Text>
     </View>
   );
 }
