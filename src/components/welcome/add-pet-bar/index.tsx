@@ -1,3 +1,4 @@
+import {ILayoutChildProps} from "components/common/layout";
 import React, {Dispatch} from "react";
 
 import {Text, View} from "react-native";
@@ -5,21 +6,17 @@ import {Text, View} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {onChangeViewComponent, ViewComponents} from "../../../store/actions/general";
-import {createStyle, getColors, ThemeTypes} from "../../../theme";
+import {createStyle, getColors} from "../../../theme";
 import {StyledButton} from "../../common";
 
 import {applyStyles} from './index.style';
-
-interface IProps {
-  theme: ThemeTypes
-}
 
 const addNewPet = (dispatch: Dispatch<any>) => { 
   dispatch(onChangeViewComponent(ViewComponents.newPet));
 }
 
-export const AddPetBar = (props: IProps): JSX.Element =>  {
-  const {theme} = props; 
+export const AddPetBar = (props: ILayoutChildProps): JSX.Element =>  {
+  const {theme, language} = props; 
 
   const dispatch = useDispatch();
 
@@ -29,13 +26,12 @@ export const AddPetBar = (props: IProps): JSX.Element =>  {
   return (
     <View style={styles.container as any}>
       <Text style={styles.text}>
-        Füge ein Haustier zu deiner 
-        persönlichen Pet Wallet hinzu.
+        {language.welcome.addPetBar.description}
       </Text>
       <StyledButton
         color={colors.color3}
         style={styles.button}
-        title="Hinzufügen"
+        title={language.welcome.addPetBar.button}
         onPress={() => addNewPet(dispatch)}
       />
   </View>

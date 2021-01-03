@@ -11,7 +11,7 @@ import {AddPetBar} from "../add-pet-bar";
 import {applyStyles} from './index.style';
 
 export const Box = (props: {} & ILayoutChildProps): JSX.Element =>  {
-  const {theme} = props;
+  const {language, theme} = props;
   const styles = createStyle(theme, applyStyles); 
 
   return (
@@ -20,7 +20,10 @@ export const Box = (props: {} & ILayoutChildProps): JSX.Element =>  {
         style={styles.image}
         source={require("../../../../assets/png/animals-illustration.png")}
       />
-      <AddPetBar theme={theme}/>        
+      <AddPetBar 
+        theme={theme}
+        language={language}
+      />        
     </View>
   );
 };

@@ -19,7 +19,7 @@ export const HelpBar = (
 ): JSX.Element =>  { 
   const dispatch = useDispatch();
 
-  const {theme} = props;
+  const {language, theme} = props;
   const colors = getColors(theme);
   const styles = createStyle(theme, applyStyles); 
 
@@ -31,7 +31,7 @@ export const HelpBar = (
         onPress={() => handleHelp(dispatch)}
       >
         <Text style={styles.buttonText}>
-          Brauchst du Hilfe?
+          {language.welcome.help.button}
         </Text> 
       </StyledButton>
     </View>
