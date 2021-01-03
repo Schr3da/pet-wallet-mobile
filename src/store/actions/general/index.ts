@@ -1,4 +1,5 @@
-import {LanguageTypes} from "language";
+import {LanguageTypes} from "../../../language";
+import {ThemeTypes} from "../../../theme";
 
 export enum ViewComponents {
   splash = "splash",
@@ -6,6 +7,19 @@ export enum ViewComponents {
   newPet = "new-pet",
   help = "help",
 };
+
+export const ON_CHANGE_CURRENT_THEME = "ON_CHANGE_CURRENT_THEME";
+interface IOnChangeCurrentTheme{
+  type: typeof ON_CHANGE_CURRENT_THEME;
+  next: ThemeTypes;
+}
+
+export const onChangeCurrentTheme = (
+  next: ThemeTypes
+): IOnChangeCurrentTheme => ({
+  type: ON_CHANGE_CURRENT_THEME,
+  next, 
+});
 
 export const ON_CHANGE_LANGUAGE = "ON_CHANGE_LANGUAGE";
 interface IOnChangeLanguage{
@@ -27,6 +41,7 @@ export const onChangeViewComponent = (
 });
 
 export type Actions = 
-  | IOnChangeViewComponent 
+  | IOnChangeCurrentTheme
   | IOnChangeLanguage
+  | IOnChangeViewComponent 
 ;

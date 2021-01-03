@@ -24,11 +24,19 @@ export interface IWelcome {
   }
 }
 
-export interface ILanguage {
-  welcome: IWelcome;
+export interface INewPet  {
+  petSelection: {
+    title: string;
+    description: string;
+  }
 }
 
-export const getLanguageProperties = (
+export interface ILanguage {
+  welcome: IWelcome;
+  newPet: INewPet;
+}
+
+export const getTranslation = (
   language: LanguageTypes,
 ): ILanguage => {
   switch (language) {

@@ -1,11 +1,13 @@
 import * as React from "react";
 
 import {Image, View} from "react-native";
+
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ICombinedReducerState} from "../../store/reducers";
 
 import {Splash} from "../../store/actions";
+
 import {createStyle, ThemeTypes} from "../../theme";
 
 import {applyStyles} from "./index.style";
@@ -19,7 +21,7 @@ const stateToProps = (
   state: ICombinedReducerState
 ): IProps => ({
   isAnimating: state.splash.isAnimating,
-  theme: state.theme.current,
+  theme: state.general.currentTheme,
 });
 
 const startAnimation = (dispatch: any) => {

@@ -1,4 +1,4 @@
-import type {IWelcome} from "../index";
+import type {INewPet, IWelcome} from "../index";
 
 const welcome: IWelcome = {
   noPets: {
@@ -18,6 +18,14 @@ const welcome: IWelcome = {
   }
 }
 
+const newPet: INewPet = {
+  petSelection: {
+    title: "New Pet",
+    description: "Choose your pet and continue with next",
+  }
+}
+
 export const EN = {
   welcome,
+  newPet,
 }

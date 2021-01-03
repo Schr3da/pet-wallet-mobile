@@ -11,13 +11,10 @@ import {applyStyles} from "./index.style";
 export const Component = () => {
   return (
     <Layout
-      title="Hilfestellung"
-      description="Hier kannst du nützliche Informationen über die Verwendung der App finden."
       imageSource={require("../../../assets/png/help-icon.png")}
       render={(props) => {
         const {theme} = props;
         const styles = createStyle(theme, applyStyles); 
-
         return (
           <React.Fragment>
             <View style={styles.container as any}>

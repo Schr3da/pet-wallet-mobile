@@ -1,4 +1,5 @@
 import {ILayoutChildProps} from "components/common/layout";
+
 import React, {Dispatch} from "react";
 
 import {Text, View} from "react-native";
@@ -6,7 +7,9 @@ import {Text, View} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {onChangeViewComponent, ViewComponents} from "../../../store/actions/general";
+
 import {createStyle, getColors} from "../../../theme";
+
 import {StyledButton} from "../../common";
 
 import {applyStyles} from './index.style';

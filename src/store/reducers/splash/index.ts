@@ -10,14 +10,14 @@ const initialState = (): ISplashState => ({
 
 type Actions = Splash.Actions;
 
-const handleAnimationStart = (
+const animationStart = (
   state: ISplashState, 
 ): ISplashState => ({
   ...state,
   isAnimating: true,
 });
 
-const handleAnimationComplete = (
+const animationComplete = (
   state: ISplashState, 
 ): ISplashState => ({
   ...state,
@@ -27,9 +27,9 @@ const handleAnimationComplete = (
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
     case Splash.ON_SPLASH_ANIMATION_START:
-      return handleAnimationStart(state);
+      return animationStart(state);
     case Splash.ON_SPLASH_ANIMATION_COMPLETE:
-      return handleAnimationComplete(state);
+      return animationComplete(state);
     default:
       return state;
   }
