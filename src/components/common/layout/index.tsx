@@ -22,8 +22,8 @@ const stateToProps = (
 ): IStateProps => ({
   title: state.general.title,
   description: state.general.description,
-  theme: state.general.currentTheme,  
-  language: state.general.currentLanguage,
+  theme: state.general.theme,  
+  language: state.general.language,
 });
 
 export interface ILayoutChildProps {

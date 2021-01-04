@@ -1,51 +1,57 @@
 import {ThemeTypes} from "../../../theme";
+
 import {getTranslation, LanguageTypes} from "../../../language";
+
 import {General, Splash} from "../../actions";
-import {ViewComponents} from "store/actions/general";
+import {SubViewComponents} from "store/actions/general";
 
 export interface IGeneralState {
   title: string;
   description: string;
-  currentLanguage: LanguageTypes,
-  currentTheme: ThemeTypes,
-  currentViewComponent: General.ViewComponents;
+  language: LanguageTypes,
+  theme: ThemeTypes,
+  mainViewComponent: General.ViewComponents;
+  subViewComponent: General.SubViewComponents;
 }
 
 const initialState = (): IGeneralState => ({
   title: "",
   description: "",
-  currentLanguage: LanguageTypes.en,
-  currentTheme: ThemeTypes.Light,
-  currentViewComponent: General.ViewComponents.splash,
+  language: LanguageTypes.de,
+  theme: ThemeTypes.Light,
+  mainViewComponent: General.ViewComponents.splash,
+  subViewComponent: General.SubViewComponents.none, 
 });
 
 const changeViewComponent = (
   state: IGeneralState,
-  next: General.ViewComponents,
+  nextMainViewComponent: General.ViewComponents,
+  nextSubViewComponent?: General.SubViewComponents,
 ) => {
   const nextState = {...state};
-  nextState.currentViewComponent = next;
+  nextState.mainViewComponent = nextMainViewComponent;
+  nextState.subViewComponent = nextSubViewComponent || SubViewComponents.none;
   return changeTitleAndDescription(nextState);
 }
 
 const changeTitleAndDescription = (
   state: IGeneralState
 ): IGeneralState => {
-  const {currentLanguage, currentViewComponent} = state; 
+  const {language: currentLanguage, mainViewComponent} = state; 
   const translation = getTranslation(currentLanguage);
 
   let title = "";
   let description = "";
 
-  switch (currentViewComponent) {
-    case ViewComponents.splash:
+  switch (mainViewComponent) {
+    case General.ViewComponents.splash:
       title = "";
       description = "";
-    case ViewComponents.welcome:
+    case General.ViewComponents.welcome:
       title = translation.welcome.noPets.title;
       description = translation.welcome.noPets.description;
       break;
-    case ViewComponents.newPet:
+    case General.ViewComponents.newPet:
       title = translation.newPet.petSelection.title;
       description = translation.newPet.petSelection.description;
       break;
@@ -65,7 +71,7 @@ const changeLanguage = (
   next: LanguageTypes,
 ): IGeneralState => {
   let nextState = {...state};
-  nextState.currentLanguage = next;
+  nextState.language = next;
   return changeTitleAndDescription(nextState);
 }
 
@@ -73,7 +79,7 @@ const changeTheme = (
   state: IGeneralState,
   next: ThemeTypes
 ) =>
-  state.currentTheme === next ? state : ({
+  state.theme === next ? state : ({
     ...state,
     currentTheme: next,
   });
@@ -85,7 +91,7 @@ const reducer = (state = initialState(), action: Actions) => {
     case General.ON_CHANGE_LANGUAGE:
       return changeLanguage(state, action.next);
     case General.ON_CHANGE_VIEW_COMPONENT:
-      return changeViewComponent(state, action.next); 
+      return changeViewComponent(state, action.nextMainView, action.nextSubView); 
     case General.ON_CHANGE_CURRENT_THEME:
       return changeTheme(state, action.next);
     case Splash.ON_SPLASH_ANIMATION_COMPLETE:

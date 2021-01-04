@@ -8,19 +8,19 @@ import {ICombinedReducerState} from "../store/reducers";
 import {ViewComponents} from "../store/actions/general";
 
 interface IProps {
-  currentViewComponent: ViewComponents;
+  mainViewComponent: ViewComponents;
 }
 
 const stateToProps = (
   state: ICombinedReducerState
 ): IProps => ({
-  currentViewComponent: state.general.currentViewComponent,
+  mainViewComponent: state.general.mainViewComponent,
 });
 
 export const Route = (): JSX.Element =>  {
-  const {currentViewComponent} = useSelector(stateToProps);
+  const {mainViewComponent} = useSelector(stateToProps);
 
-  switch (currentViewComponent) {
+  switch (mainViewComponent) {
     case ViewComponents.splash: 
       return <Splash.Component/>;
     case ViewComponents.welcome:
