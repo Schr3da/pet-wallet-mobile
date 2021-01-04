@@ -15,7 +15,7 @@ export const Box = (props: ILayoutChildProps): JSX.Element =>  {
   const styles = createStyle(theme, applyStyles); 
 
   return (
-    <View style={styles.container as any}>
+    <View style={styles.container}>
       <Image
         style={styles.image}
         source={require("../../../../assets/png/animals-illustration.png")}

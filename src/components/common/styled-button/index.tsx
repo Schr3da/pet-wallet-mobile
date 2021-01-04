@@ -22,11 +22,11 @@ export const StyledButton = (
   const styles = createStyleWithoutTheme(applyStyles(color));
   
   return (
-    <View style={styles.container as any}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
         <View style={style}>
           {title ? 
-            <Text style={styles.text as any}>
+            <Text style={styles.text}>
               {title}
             </Text> : (children || [])
           } 

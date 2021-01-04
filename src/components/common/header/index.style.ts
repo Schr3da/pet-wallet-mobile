@@ -1,3 +1,5 @@
+import {ViewStyle} from "react-native";
+
 import {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
@@ -10,7 +12,7 @@ export const applyStyles = (theme: ITheme) => ({
     marginRight: "8%",
     display: "flex" as "flex",
     flexDirection: "row" as "row",
-  },
+  } as ViewStyle,
   backButton: {
     width: 20,
   },
@@ -21,7 +23,7 @@ export const applyStyles = (theme: ITheme) => ({
     backgroundColor: theme.color7,
     alignItems: "center",
     justifyContent: "center",
-  },
+  } as ViewStyle,
   image: {
     width: 72,
     height: 72,
@@ -32,12 +34,12 @@ export const applyStyles = (theme: ITheme) => ({
     marginBottom: "5%", 
     fontWeight: "bold",
     fontSize: 32,
-  },
+  } as ViewStyle,
   text: {
     marginLeft: "12%",
     marginRight: "12%",
     marginBottom: "10%",
     textAlign: "center",
     fontSize: 16,
-  }
+  } as ViewStyle
 });

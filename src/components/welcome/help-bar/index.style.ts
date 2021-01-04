@@ -1,11 +1,13 @@
+import {ViewStyle} from "react-native";
+
 import {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
-  buttonWrapper: {
+  container: {
     flex: 1,
-    display: "flex",
-    justifyContent: "flex-end",
-  },
+    display: "flex" as "flex",
+    justifyContent: "flex-end" as "flex-end",
+  } as ViewStyle,
   button: {},
   buttonText: {
     marginBottom: 0,

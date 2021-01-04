@@ -1,3 +1,5 @@
+import {ViewStyle} from "react-native";
+
 import {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
@@ -11,7 +13,7 @@ export const applyStyles = (theme: ITheme) => ({
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden"
-  },
+  } as ViewStyle,
   image: {
     width: "90%",
     height: "90%",

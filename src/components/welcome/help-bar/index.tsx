@@ -35,7 +35,7 @@ export const HelpBar = (
   const styles = createStyle(theme, applyStyles); 
 
   return (
-    <View style={styles.buttonWrapper as any}>
+    <View style={styles.container}>
       <StyledButton 
         style={styles.button} 
         color={colors.color3} 

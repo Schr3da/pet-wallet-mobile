@@ -56,10 +56,10 @@ export const Header = (
           />
         } 
       </View>
-      <View style={styles.meta as any}>
+      <View style={styles.meta}>
         <Image style={styles.image} source={source} />
-        <Text style={styles.title as any}>{title}</Text>
-        <Text style={styles.text as any}>{description || ""}</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.text}>{description || ""}</Text>
       </View>
     </View>
   );

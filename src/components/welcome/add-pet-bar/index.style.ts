@@ -1,3 +1,5 @@
+import {ViewStyle} from "react-native";
+
 import {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
@@ -12,7 +14,7 @@ export const applyStyles = (theme: ITheme) => ({
     display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",
-  },
+  } as ViewStyle,
   text: {
     flex: 2,
     fontSize: 14,

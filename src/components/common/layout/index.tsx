@@ -78,7 +78,7 @@ export const Layout = (props: IProps): JSX.Element =>  {
   const styles = createStyle(theme, applyStyles); 
 
   return (
-    <View style={styles.container as any}>
+    <View style={styles.container}>
       <Header
         {...childProps}
         title={title}

@@ -17,7 +17,7 @@ export const Component = () => {
         const styles = createStyle(theme, applyStyles); 
         return (
           <React.Fragment>
-            <View style={styles.container as any}>
+            <View style={styles.container}>
               <Text>Hilfe View</Text>
             </View>
           </React.Fragment>

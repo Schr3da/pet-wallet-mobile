@@ -40,7 +40,7 @@ export const AddPetBar = (props: ILayoutChildProps): JSX.Element =>  {
     language.welcome.welcomeNoPets.addPetBar;
 
   return (
-    <View style={styles.container as any}>
+    <View style={styles.container}>
       <Text style={styles.text}>{description}</Text>
       <StyledButton
         color={colors.color3}

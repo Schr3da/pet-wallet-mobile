@@ -1,3 +1,5 @@
+import {ViewStyle} from "react-native";
+
 import {ITheme} from "../../theme";
 
 export const applyStyles = (_: ITheme) => ({ 
@@ -5,5 +7,5 @@ export const applyStyles = (_: ITheme) => ({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
+  } as ViewStyle,
 });

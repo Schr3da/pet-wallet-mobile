@@ -64,7 +64,7 @@ export const Component = (): JSX.Element =>  {
   const styles = createStyle(theme, applyStyles); 
   
   return (
-    <View style={styles.container as any}>
+    <View style={styles.container}>
       <Image 
         source={require("../../../assets/png/app-icon.png")}
         style={styles.appIcon}  

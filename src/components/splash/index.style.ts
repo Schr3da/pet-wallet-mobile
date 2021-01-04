@@ -1,3 +1,5 @@
+import {ViewStyle} from "react-native";
+
 import {ITheme} from "../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
@@ -6,7 +8,7 @@ export const applyStyles = (theme: ITheme) => ({
     backgroundColor: theme.color1,
     alignItems: "center",
     justifyContent: "center",
-  },
+  } as ViewStyle,
   appIcon: {
     width: 72,
     height: 72,
