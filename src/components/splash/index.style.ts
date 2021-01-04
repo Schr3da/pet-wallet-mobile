@@ -8,7 +8,7 @@ export const applyStyles = (theme: ITheme) => ({
     justifyContent: "center",
   },
   appIcon: {
-    width: 180,
-    height: 180,
+    width: 72,
+    height: 72,
   }
 });

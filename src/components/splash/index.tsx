@@ -15,6 +15,7 @@ import {applyStyles} from "./index.style";
 interface IProps {
   isAnimating: boolean;
   theme: ThemeTypes;
+  hasPets: boolean;
 }
   
 const stateToProps = (
@@ -22,25 +23,34 @@ const stateToProps = (
 ): IProps => ({
   isAnimating: state.splash.isAnimating,
   theme: state.layout.theme,
+  hasPets: state.pets.data.length !== 0,
 });
 
-const startAnimation = (dispatch: any) => {
+const startAnimation = (
+  dispatch: any,
+  hasPets: boolean
+) => {
   dispatch(Splash.onSplashAnimationStart());
-  setTimeout(() => completeAnimation(dispatch), 2000);
+  setTimeout(() => completeAnimation(dispatch, hasPets), 2000);
 }
 
-const completeAnimation = (dispatch: any) =>
-  dispatch(Splash.onSplashAnimationComplete());
+const completeAnimation = (
+  dispatch: any,
+  hasPets: boolean,
+) =>
+  dispatch(Splash.onSplashAnimationComplete(hasPets));
 
-const didMount = (dispatch: any) =>
-  startAnimation(dispatch);
+const didMount = (
+  dispatch: any,
+  hasPets: boolean
+) => startAnimation(dispatch, hasPets);
 
 export const Component = (): JSX.Element =>  {
   const dispatch = useDispatch()
   
-  const {theme}= useSelector(stateToProps); 
+  const {hasPets, theme}= useSelector(stateToProps); 
   
-  React.useEffect(() => didMount(dispatch), []);
+  React.useEffect(() => didMount(dispatch, hasPets), []);
 
   const styles = createStyle(theme, applyStyles); 
   

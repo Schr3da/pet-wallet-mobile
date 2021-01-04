@@ -1,31 +1,57 @@
-import type {INewPet, IWelcome} from "../index";
+import {SubViewComponents, ViewComponents} from "../../store/actions/layout";
+
+import type {IHeader, IWelcome} from "../index";
+
+const header: IHeader = {
+  [ViewComponents.splash]: {
+    [SubViewComponents.none]: {
+      title: "",
+      description: "",
+    }
+  },
+  [ViewComponents.welcome]: {
+    [SubViewComponents.welcomeNoPets]: {
+      title: "Welcome",
+      description: "Please register a new pet in order to continue", 
+    },
+    [SubViewComponents.welcomeWithPets]: {
+      title: "Pet Wallet",
+      description: "",
+    }
+  },
+  [ViewComponents.newPet]: {
+    [SubViewComponents.newPetType]: {
+      title: "New Pet",
+      description: "Choose your pet and continue with next",
+    }
+  },
+  [ViewComponents.help]: {
+    [SubViewComponents.welcomeNoPets]: {
+      title: "Help",
+      description: "",
+    }
+  }
+};
 
 const welcome: IWelcome = {
-  noPets: {
-    title: "Welcome",
-    description: "Please register a new pet in order to continue", 
+  [SubViewComponents.welcomeNoPets]: {
+    addPetBar: {
+      description: "You can add additional pets to your personal wallet", 
+      button: "Add",
+    },
+    help: {
+      button: "Do you need help?"
+    }
   },
-  somePets: {
-    title: "Pet Wallet",
-    description: "",
-  },
-  addPetBar: {
-    description: "You can add additional pets to your personal wallet", 
-    button: "Add",
-  },
-  help: {
-    button: "Do you need help?"
+  [SubViewComponents.welcomeWithPets]: {
+    addPetBar: {
+      description: "You can add additional pets to your personal wallet", 
+      button: "Add",
+    },
   }
-}
-
-const newPet: INewPet = {
-  petSelection: {
-    title: "New Pet",
-    description: "Choose your pet and continue with next",
-  }
-}
+};
 
 export const EN = {
-  welcome,
-  newPet,
+  header,
+  [ViewComponents.welcome]: welcome,
 }

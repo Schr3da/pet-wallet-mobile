@@ -28,39 +28,27 @@ const changeViewComponent = (
   state: ILayoutState,
   nextMainViewComponent: Layout.ViewComponents,
   nextSubViewComponent?: Layout.SubViewComponents,
-) => {
+): ILayoutState => {
   const nextState = {...state};
   nextState.mainViewComponent = nextMainViewComponent;
   nextState.subViewComponent = nextSubViewComponent || Layout.SubViewComponents.none;
-  return changeTitleAndDescription(nextState);
+  return changeHeader(nextState);
 }
 
-const changeTitleAndDescription = (
+const changeHeader = (
   state: ILayoutState
 ): ILayoutState => {
-  const {language: currentLanguage, mainViewComponent} = state; 
-  const translation = getTranslation(currentLanguage);
+  const {language, mainViewComponent, subViewComponent} = state; 
+  const {header} = getTranslation(language);
 
-  let title = "";
-  let description = "";
-
-  switch (mainViewComponent) {
-    case Layout.ViewComponents.splash:
-      title = "";
-      description = "";
-    case Layout.ViewComponents.welcome:
-      title = translation.welcome.noPets.title;
-      description = translation.welcome.noPets.description;
-      break;
-    case Layout.ViewComponents.newPet:
-      title = translation.newPet.petSelection.title;
-      description = translation.newPet.petSelection.description;
-      break;
-    default: 
-      title = "-";
-      description = "-";
+  if (header[mainViewComponent] == null && header[subViewComponent] == null) {
+    return {...state,
+      title: "",
+      description: "",
+    };
   }
 
+  const {title, description} = header[mainViewComponent][subViewComponent]; 
   return {...state, 
     title, 
     description,
@@ -73,16 +61,16 @@ const changeLanguage = (
 ): ILayoutState => {
   let nextState = {...state};
   nextState.language = next;
-  return changeTitleAndDescription(nextState);
+  return changeHeader(nextState);
 }
 
 const changeTheme = (
   state: ILayoutState,
   next: ThemeTypes
-) =>
+): ILayoutState =>
   state.theme === next ? state : ({
     ...state,
-    currentTheme: next,
+    theme: next,
   });
 
 type Actions = Layout.Actions | Splash.Actions;
@@ -92,11 +80,19 @@ const reducer = (state = initialState(), action: Actions) => {
     case Layout.ON_CHANGE_LANGUAGE:
       return changeLanguage(state, action.next);
     case Layout.ON_CHANGE_VIEW_COMPONENT:
-      return changeViewComponent(state, action.nextMainView, action.nextSubView); 
+      return changeViewComponent(state,
+        action.nextMainView,
+        action.nextSubView
+      ); 
     case Layout.ON_CHANGE_CURRENT_THEME:
       return changeTheme(state, action.next);
     case Splash.ON_SPLASH_ANIMATION_COMPLETE:
-      return changeViewComponent(state, Layout.ViewComponents.welcome); 
+      return changeViewComponent(state, 
+        Layout.ViewComponents.welcome,
+        action.hasPets ? 
+          Layout.SubViewComponents.welcomeWithPets :
+          Layout.SubViewComponents.welcomeNoPets
+      ); 
     default:
       return state;
   }

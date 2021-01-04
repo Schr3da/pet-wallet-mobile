@@ -7,34 +7,37 @@ export enum LanguageTypes {
   de = "de",
 }
 
-export interface IWelcome {
-  noPets: {
-    title: string;
-    description: string;
-  },
-  somePets: {
-    title: string;
-    description: string;
-  },
-  addPetBar: {
-    description: string;
-    button: string;
-  }
-  help: {
-    button: string; 
-  }
+export interface IHeader {
+  [key: string]: {
+    [L in SubViewComponents]: {
+      title: string;
+      description: string;
+    };
+  };
 }
 
-export interface INewPet  {
-  petSelection: {
-    title: string;
-    description: string;
-  }
+interface IWelcomeAddPetBar {
+  description: string;
+  button: string;
+}
+
+interface IWelcomeHelpButton {
+  button: string;
+}
+
+export interface IWelcome {
+  [SubViewComponents.welcomeNoPets]: {
+    addPetBar: IWelcomeAddPetBar;
+    help: IWelcomeHelpButton;
+  };
+  [SubViewComponents.welcomeWithPets]: {
+    addPetBar: IWelcomeAddPetBar;
+  };
 }
 
 export interface ILanguage {
-  welcome: IWelcome;
-  newPet: INewPet;
+  header: IHeader
+  [ViewComponents.welcome]: IWelcome;
 }
 
 export const getTranslation = (

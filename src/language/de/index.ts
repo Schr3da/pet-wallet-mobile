@@ -1,31 +1,57 @@
-import type {INewPet, IWelcome} from "../index";
+import {SubViewComponents, ViewComponents} from "../../store/actions/layout";
 
-const welcome: IWelcome = {
-  noPets: {
-    title: "Willkommen",
-    description: "Bitte registriere zunächst dein Haustier um fortzufahren",
+import type {IHeader, IWelcome} from "../index";
+
+const header: IHeader = {
+  [ViewComponents.splash]: {
+    [SubViewComponents.none]: {
+      title: "",
+      description: "",
+    }
   },
-  somePets: {
-    title: "Pet Wallet",
-    description: "",
+  [ViewComponents.welcome]: {
+    [SubViewComponents.welcomeNoPets]: {
+      title: "Willkommen",
+      description: "Bitte registriere zunächst dein Haustier um fortzufahren",
+    },
+    [SubViewComponents.welcomeWithPets]: {
+      title: "Pet Wallet",
+      description: "",
+    }
   },
-  addPetBar: {
-    description: "Füge ein Haustier zu deiner persönlichen Pet Wallet hinzu.",
-    button: "Hinzufügen",
+  [ViewComponents.newPet]: {
+    [SubViewComponents.newPetType]: {
+      title: "Neues Haustier",
+      description: "Wähle dein Haustier und bestätige deine Auswahl mit Weiter",
+    }
   },
-  help: {
-    button: "Brauchst du Hilfe?"
-  }
+  [ViewComponents.help]: {
+    [SubViewComponents.welcomeNoPets]: {
+      title: "Hilfe",
+      description: "",
+    }
+  },
 }
 
-const newPet: INewPet = {
-  petSelection: {
-    title: "Neues Haustier",
-    description: "Wähle dein Haustier und bestätige deine Auswahl mit Weiter",
+const welcome: IWelcome = {
+  [SubViewComponents.welcomeNoPets]: {
+    addPetBar: {
+      description: "Füge ein Haustier zu deiner persönlichen Pet Wallet hinzu.",
+      button: "Hinzufügen",
+    },
+    help: {
+      button: "Brauchst du Hilfe?"
+    }
+  },
+  [SubViewComponents.welcomeWithPets]: {
+    addPetBar: {
+      description: "Füge ein weiteres Haustier zu deiner persönlichen Pet Wallet jederzeit hinzu.", 
+      button: "Hinzufügen",
+    },
   }
 }
 
 export const DE = {
-  welcome,
-  newPet,
+  header,
+  [ViewComponents.welcome]: welcome,
 }

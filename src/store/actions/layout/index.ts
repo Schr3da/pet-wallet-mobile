@@ -4,13 +4,15 @@ import {ThemeTypes} from "../../../theme";
 export enum ViewComponents {
   splash = "splash",
   welcome = "welcome",
-  newPet = "new-pet",
+  newPet = "newPet",
   help = "help",
 };
 
 export enum SubViewComponents {
   none = "none",
-  helpWelcome = "help-welcome",
+  welcomeNoPets = "welcomeNoPets",
+  welcomeWithPets = "welcomeWithPets",
+  newPetType = "newPetType",
 }
 
 export const ON_CHANGE_CURRENT_THEME = "ON_CHANGE_CURRENT_THEME";
@@ -36,12 +38,12 @@ export const ON_CHANGE_VIEW_COMPONENT = "ON_CHANGE_VIEW_COMPONENT";
 interface IOnChangeViewComponent {
   type: typeof ON_CHANGE_VIEW_COMPONENT;
   nextMainView: ViewComponents;
-  nextSubView?: SubViewComponents;
+  nextSubView: SubViewComponents;
 }
 
 export const onChangeViewComponent = (
   nextMainView: ViewComponents,
-  nextSubView?: SubViewComponents,
+  nextSubView: SubViewComponents,
 ): IOnChangeViewComponent => ({
   type: ON_CHANGE_VIEW_COMPONENT,
   nextMainView, 
