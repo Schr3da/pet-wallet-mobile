@@ -1,14 +1,14 @@
 import {combineReducers} from "@reduxjs/toolkit";
 
-import {IGeneralState, general} from "./general";
+import {ILayoutState, layout} from "./layout";
 import {ISplashState, splash} from "./splash";
 
 export interface ICombinedReducerState {
-  general: IGeneralState,
+  layout: ILayoutState,
   splash: ISplashState, 
 }
 
 export const reducer = combineReducers({
-  general,
+  layout,
   splash,
 });

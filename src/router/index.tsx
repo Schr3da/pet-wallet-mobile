@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 
 import {Help, NewPet, Splash, Welcome} from "../components";
 import {ICombinedReducerState} from "../store/reducers";
-import {ViewComponents} from "../store/actions/general";
+import {ViewComponents} from "../store/actions/layout";
 
 interface IProps {
   mainViewComponent: ViewComponents;
@@ -14,7 +14,7 @@ interface IProps {
 const stateToProps = (
   state: ICombinedReducerState
 ): IProps => ({
-  mainViewComponent: state.general.mainViewComponent,
+  mainViewComponent: state.layout.mainViewComponent,
 });
 
 export const Route = (): JSX.Element =>  {

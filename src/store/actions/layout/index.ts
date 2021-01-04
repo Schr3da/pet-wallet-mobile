@@ -61,7 +61,6 @@ export const onChangeSubViewComponent = (
   next, 
 });
 
-
 export type Actions = 
   | IOnChangeCurrentTheme
   | IOnChangeLanguage

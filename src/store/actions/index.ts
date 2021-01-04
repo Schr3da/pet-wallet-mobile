@@ -1,7 +1,7 @@
-import * as General from "./general";
+import * as Layout from "./layout";
 import * as Splash from "./splash";
 
 export {
-  General,
+  Layout,
   Splash,
 }

@@ -20,10 +20,10 @@ interface IStateProps {
 const stateToProps = (
   state: ICombinedReducerState
 ): IStateProps => ({
-  title: state.general.title,
-  description: state.general.description,
-  theme: state.general.theme,  
-  language: state.general.language,
+  title: state.layout.title,
+  description: state.layout.description,
+  theme: state.layout.theme,  
+  language: state.layout.language,
 });
 
 export interface ILayoutChildProps {

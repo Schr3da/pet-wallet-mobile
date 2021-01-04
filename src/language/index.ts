@@ -1,3 +1,4 @@
+import {ViewComponents, SubViewComponents} from "../store/actions/layout";
 import {DE} from "./de";
 import {EN} from "./en";
 

@@ -21,7 +21,7 @@ const stateToProps = (
   state: ICombinedReducerState
 ): IProps => ({
   isAnimating: state.splash.isAnimating,
-  theme: state.general.theme,
+  theme: state.layout.theme,
 });
 
 const startAnimation = (dispatch: any) => {
