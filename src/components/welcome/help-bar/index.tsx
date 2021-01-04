@@ -4,21 +4,25 @@ import {Text, View} from "react-native";
 
 import {useDispatch} from "react-redux";
 
-import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/layout";
+import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
 
 import {createStyle, getColors} from "../../../theme";
 
-import {ILayoutChildProps} from "../../common/layout";
+import {LanguageTypes} from "../../../language";
+
+import type {ILayoutChildProps} from "../../common/layout";
 
 import {StyledButton} from "../../common";
 
 import {applyStyles} from "./index.style";
 
 const handleHelp = (
-  dispatch: React.Dispatch<any>
+  dispatch: React.Dispatch<any>,
+  language: LanguageTypes
 ) => dispatch(onChangeViewComponent(
   ViewComponents.help,
-  SubViewComponents.welcomeNoPets
+  SubViewComponents.welcomeNoPets,
+  language
 )); 
 
 export const HelpBar = (
@@ -26,7 +30,7 @@ export const HelpBar = (
 ): JSX.Element =>  { 
   const dispatch = useDispatch();
 
-  const {language, theme} = props;
+  const {language, languageType, theme} = props;
   const colors = getColors(theme);
   const styles = createStyle(theme, applyStyles); 
 
@@ -35,7 +39,7 @@ export const HelpBar = (
       <StyledButton 
         style={styles.button} 
         color={colors.color3} 
-        onPress={() => handleHelp(dispatch)}
+        onPress={() => handleHelp(dispatch, languageType)}
       >
         <Text style={styles.buttonText}>
           {language.welcome.welcomeNoPets.help.button}

@@ -1,11 +1,14 @@
 import React from 'react';
 
 import {View} from 'react-native';
+
 import {useSelector} from "react-redux";
 
 import {Help, NewPet, Splash, Welcome} from "../components";
+
 import {ICombinedReducerState} from "../store/reducers";
-import {ViewComponents} from "../store/actions/layout";
+
+import {ViewComponents} from "../store/actions/navigation";
 
 interface IProps {
   mainViewComponent: ViewComponents;
@@ -14,7 +17,7 @@ interface IProps {
 const stateToProps = (
   state: ICombinedReducerState
 ): IProps => ({
-  mainViewComponent: state.layout.mainViewComponent,
+  mainViewComponent: state.navigation.mainViewComponent,
 });
 
 export const Route = (): JSX.Element =>  {

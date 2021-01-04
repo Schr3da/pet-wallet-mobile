@@ -8,7 +8,7 @@ export const applyStyles = (theme: ITheme) => ({
   },
   button: {},
   buttonText: {
-    marginBottom: "5%",
+    marginBottom: 0,
     color: theme.color3,
     fontSize: 16,
   }

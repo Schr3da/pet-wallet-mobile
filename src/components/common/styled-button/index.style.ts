@@ -7,6 +7,7 @@ export const applyStyles = (
   },
   text: {
     fontWeight: "bold",
+    fontSize: 12,
     color,
   }
 });

@@ -55,4 +55,4 @@ export const createStyle = <T>(
 }
 
 export const createStyleWithoutTheme =
-  (styles: any) => StyleSheet.create(styles);
+  <T>(styles: T) => StyleSheet.create(styles);

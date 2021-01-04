@@ -1,5 +1,7 @@
-import {ViewComponents, SubViewComponents} from "../store/actions/layout";
+import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
+
 import {DE} from "./de";
+
 import {EN} from "./en";
 
 export enum LanguageTypes {

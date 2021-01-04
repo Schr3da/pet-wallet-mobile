@@ -2,6 +2,22 @@ import {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
   container: {
+    width: "100%",
+  },
+  navigation: {
+    height: 20,
+    marginLeft: "8%",
+    marginRight: "8%",
+    display: "flex" as "flex",
+    flexDirection: "row" as "row",
+  },
+  backButton: {
+    width: 20,
+  },
+  settingsButton: {
+    width: 20,
+  },
+  meta: {
     backgroundColor: theme.color7,
     alignItems: "center",
     justifyContent: "center",

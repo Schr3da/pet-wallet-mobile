@@ -6,23 +6,29 @@ import {useDispatch} from "react-redux";
 
 import {ILayoutChildProps} from "../../common/layout";
 
-import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/layout";
+import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
 
 import {createStyle, getColors} from "../../../theme";
+
+import {LanguageTypes} from "../../../language";
 
 import {StyledButton} from "../../common";
 
 import {applyStyles} from './index.style';
 
-const addNewPet = (dispatch: Dispatch<any>) => { 
+const addNewPet = (
+  dispatch: Dispatch<any>,
+  language: LanguageTypes
+) => { 
   dispatch(onChangeViewComponent(
     ViewComponents.newPet,
-    SubViewComponents.newPetType
+    SubViewComponents.newPetType,
+    language,
   ));
 }
 
 export const AddPetBar = (props: ILayoutChildProps): JSX.Element =>  {
-  const {theme, language, hasPets} = props; 
+  const {theme, language, languageType, hasPets} = props; 
 
   const dispatch = useDispatch();
 
@@ -40,7 +46,7 @@ export const AddPetBar = (props: ILayoutChildProps): JSX.Element =>  {
         color={colors.color3}
         style={styles.button}
         title={button}
-        onPress={() => addNewPet(dispatch)}
+        onPress={() => addNewPet(dispatch, languageType)}
       />
   </View>
   );

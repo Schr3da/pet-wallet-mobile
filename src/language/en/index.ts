@@ -1,4 +1,4 @@
-import {SubViewComponents, ViewComponents} from "../../store/actions/layout";
+import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
 
 import type {IHeader, IWelcome} from "../index";
 

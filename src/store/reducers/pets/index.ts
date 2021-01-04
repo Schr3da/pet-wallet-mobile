@@ -6,7 +6,6 @@ const initialState = (): IPetsState => ({
   data: [],
 });
 
-
 const reducer = (
   state: IPetsState = initialState(),
   action: any

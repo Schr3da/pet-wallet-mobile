@@ -4,7 +4,7 @@ import {Text, View} from "react-native";
 
 import {createStyle} from "../../theme";
 
-import {Layout} from "../common/layout";
+import {Layout} from "../common";
 
 import {applyStyles} from "./index.style";
 
