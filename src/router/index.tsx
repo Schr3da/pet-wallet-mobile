@@ -4,7 +4,7 @@ import {View} from 'react-native';
 
 import {useSelector} from "react-redux";
 
-import {Help, NewPet, Splash, Welcome} from "../components";
+import {Help, NewPet, Settings, Splash, Welcome} from "../components";
 
 import {ICombinedReducerState} from "../store/reducers";
 
@@ -32,6 +32,8 @@ export const Route = (): JSX.Element =>  {
       return <NewPet.Component/>;
     case ViewComponents.help:
       return <Help.Component/>;
+    case ViewComponents.settings:
+      return <Settings.Component/>;
     default:
       return <View />;
   };

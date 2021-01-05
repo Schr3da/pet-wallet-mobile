@@ -25,6 +25,12 @@ const header: IHeader = {
       description: "Choose your pet and continue with next",
     }
   },
+  [ViewComponents.settings]: {
+    [SubViewComponents.none]: {
+      title: "Settings",
+      description: "You can review and set your app settings here.",
+    }
+  },
   [ViewComponents.help]: {
     [SubViewComponents.welcomeNoPets]: {
       title: "Help",

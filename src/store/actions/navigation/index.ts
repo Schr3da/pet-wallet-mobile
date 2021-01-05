@@ -5,6 +5,7 @@ export enum ViewComponents {
   welcome = "welcome",
   newPet = "newPet",
   help = "help",
+  settings = "settings",
 };
 
 export enum SubViewComponents {

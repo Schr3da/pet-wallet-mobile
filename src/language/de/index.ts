@@ -25,6 +25,12 @@ const header: IHeader = {
       description: "Wähle dein Haustier und bestätige deine Auswahl mit Weiter",
     }
   },
+  [ViewComponents.settings]: {
+    [SubViewComponents.none]: {
+      title: "Einstellungen",
+      description: "Hier kannst du die aktuellen App Einstellungen einsehen und verändern.",
+    }
+  },
   [ViewComponents.help]: {
     [SubViewComponents.welcomeNoPets]: {
       title: "Hilfe",

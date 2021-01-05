@@ -11,7 +11,7 @@ import {applyStyles} from "./index.style";
 export const Component = () => {
   return (
     <Layout
-      imageSource={require("../../../assets/png/help-icon.png")}
+      imageSource={require("../../../assets/png/help-header-icon.png")}
       render={(props) => {
         const {theme} = props;
         const styles = createStyle(theme, applyStyles); 

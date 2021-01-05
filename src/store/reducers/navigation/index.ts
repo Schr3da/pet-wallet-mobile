@@ -1,11 +1,13 @@
-import {getTranslation, LanguageTypes} from "language";
-import {SubViewComponents, ViewComponents} from "store/actions/navigation";
+import {getTranslation, LanguageTypes} from "../../../language";
+
+import {SubViewComponents, ViewComponents} from "../../actions/navigation";
 
 import {Layout, Navigation, Splash} from "../../actions";
 
 export interface INavigationState {
   title: string;
   description: string;
+  hasPets: boolean;
   mainViewComponent: Navigation.ViewComponents;
   subViewComponent: Navigation.SubViewComponents;
   previousPath: Array<Navigation.ViewComponents | Navigation.SubViewComponents>
@@ -15,6 +17,7 @@ export interface INavigationState {
 const initialState = (): INavigationState => ({
   title: "",
   description: "",
+  hasPets: false,
   mainViewComponent: Navigation.ViewComponents.splash,
   subViewComponent: Navigation.SubViewComponents.none,
   previousPath: [], 
@@ -36,6 +39,7 @@ const changeHeader = (
   }
 
   const {title, description} = header[mainViewComponent][subViewComponent]; 
+
   return {...state, 
     title, 
     description,
@@ -47,8 +51,10 @@ const changeViews = (
   nextMainView: Navigation.ViewComponents,
   nextSubView: Navigation.SubViewComponents,
   language: LanguageTypes,
+  hasPets?: boolean,
 ): INavigationState => changeHeader({
   ...state,
+  hasPets: hasPets == null ? state.hasPets : hasPets, 
   mainViewComponent: nextMainView,
   subViewComponent: nextSubView,
   previousPath: [...state.path],
@@ -59,31 +65,38 @@ const changeSubview = (
   state: INavigationState,
   next: Navigation.SubViewComponents,
   language: LanguageTypes,
-): INavigationState => changeViews(
-  state, 
-  state.mainViewComponent,
-  next,
-  language
-);
+): INavigationState => changeHeader({
+  ...state,
+  subViewComponent: next,
+  previousPath: [...state.path],
+  path: [...state.path, next],
+}, language);
 
 const goBack = (
   state: INavigationState,
   language: LanguageTypes,
 ): INavigationState => {
-  const previousPath = [...state.previousPath];
-  const newPreviousPath = previousPath.slice(0, -1); 
+  const path = [...state.previousPath];
+  const previousPath = path.slice(0, -1); 
 
-  const mainViewComponent = previousPath.length === 0 ? 
-    ViewComponents.welcome : previousPath[0] as ViewComponents;
+  if (path.length <= 1) {
+    const mainViewComponent = ViewComponents.welcome;
+    const subViewComponent = state.hasPets ? SubViewComponents.welcomeWithPets : SubViewComponents.welcomeNoPets;
 
-  const subViewComponent = previousPath.length > 1 ? 
-    SubViewComponents.welcomeNoPets : previousPath[previousPath.length - 1] as SubViewComponents;
+    return changeViews({...state,
+      path: [],
+      previousPath: []
+    }, mainViewComponent, subViewComponent, language);
+  }
+
+  const mainViewComponent = path[0] as ViewComponents;
+  const subViewComponent = path[path.length - 1] as SubViewComponents;
 
   return changeHeader({...state,
     mainViewComponent,
     subViewComponent,
-    previousPath: newPreviousPath,
-    path: previousPath,
+    previousPath,
+    path
   }, language);
 }
 

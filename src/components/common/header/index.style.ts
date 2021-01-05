@@ -7,11 +7,18 @@ export const applyStyles = (theme: ITheme) => ({
     width: "100%",
   },
   navigation: {
+    width: "100%",
     height: 20,
-    marginLeft: "8%",
-    marginRight: "8%",
-    display: "flex" as "flex",
-    flexDirection: "row" as "row",
+    display: "flex",
+    flexDirection: "row",
+  } as ViewStyle,
+  rowLeft: {
+    flex: 1,
+    alignItems: "flex-start",
+  } as ViewStyle,
+  rowRight: {
+    flex: 1,
+    alignItems: "flex-end",
   } as ViewStyle,
   backButton: {
     width: 20,
@@ -27,7 +34,6 @@ export const applyStyles = (theme: ITheme) => ({
   image: {
     width: 72,
     height: 72,
-    marginTop: "10%",
     marginBottom: "10%",
   },
   title: {
@@ -36,8 +42,7 @@ export const applyStyles = (theme: ITheme) => ({
     fontSize: 32,
   } as ViewStyle,
   text: {
-    marginLeft: "12%",
-    marginRight: "12%",
+    maxWidth: 280,
     marginBottom: "10%",
     textAlign: "center",
     fontSize: 16,

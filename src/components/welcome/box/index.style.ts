@@ -7,6 +7,8 @@ export const applyStyles = (theme: ITheme) => ({
     width: "80%",
     height: "40%",
     borderRadius: 12,
+    minWidth: 300,
+    minHeight: 320,
     maxHeight: 340,
     maxWidth: 320,
     backgroundColor: theme.color6,

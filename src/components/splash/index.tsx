@@ -66,7 +66,7 @@ export const Component = (): JSX.Element =>  {
   return (
     <View style={styles.container}>
       <Image 
-        source={require("../../../assets/png/app-icon.png")}
+        source={require("../../../assets/png/welcome-header-icon.png")}
         style={styles.appIcon}  
       />
     </View>

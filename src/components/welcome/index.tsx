@@ -9,7 +9,7 @@ import {HelpBar} from "./help-bar";
 export const Component = (): JSX.Element =>  {
   return (
     <Layout
-      imageSource={require("../../../assets/png/app-icon.png")}
+      imageSource={require("../../../assets/png/welcome-header-icon.png")}
       render={(props) => {
         return (
           <React.Fragment>

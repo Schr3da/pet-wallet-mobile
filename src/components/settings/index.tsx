@@ -11,14 +11,14 @@ import {applyStyles} from "./index.style";
 export const Component = () => {
   return (
     <Layout
-      imageSource={require("../../../assets/png/add-pet-header-icon.png")}
+      imageSource={require("../../../assets/png/settings-header-icon.png")}
       render={(props) => {
         const {theme} = props;
         const styles = createStyle(theme, applyStyles); 
         return (
           <React.Fragment>
             <View style={styles.container}>
-              <Text>New Pet View</Text>
+              <Text>Settings</Text>
             </View>
           </React.Fragment>
         );
