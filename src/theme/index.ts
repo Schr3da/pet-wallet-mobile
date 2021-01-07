@@ -21,7 +21,7 @@ const LightTheme: ITheme = {
 };
 
 const DarkTheme: ITheme = {
-  color1: "#ffffff",
+  color1: "#000000",
   color2: "#E6E6E6",
   color3: "#5BA4FF",
   color4: "#FF4340",

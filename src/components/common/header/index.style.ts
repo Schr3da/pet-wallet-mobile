@@ -2,7 +2,9 @@ import {ViewStyle} from "react-native";
 
 import {ITheme} from "../../../theme";
 
-export const applyStyles = (theme: ITheme) => ({ 
+export const applyStyles = (
+  theme: ITheme
+) => ({ 
   container: {
     width: "100%",
   },
@@ -42,7 +44,7 @@ export const applyStyles = (theme: ITheme) => ({
     fontSize: 32,
   } as ViewStyle,
   text: {
-    maxWidth: 280,
+    maxWidth: 300,
     marginBottom: "10%",
     textAlign: "center",
     fontSize: 16,

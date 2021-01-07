@@ -14,11 +14,16 @@ import {LanguageTypes} from "language";
 
 import {applyStyles} from "./index.style";
 
+import {Loader} from "components/common/loader";
+
+import {onLoadDataFromDatabase} from "store/actions/database";
+
 interface IProps {
   isAnimating: boolean;
   theme: ThemeTypes;
   hasPets: boolean;
   language: LanguageTypes;
+  hasLoadedDatabase: boolean;
 }
   
 const stateToProps = (
@@ -28,6 +33,7 @@ const stateToProps = (
   language: state.layout.language,
   theme: state.layout.theme,
   hasPets: state.pets.data.length !== 0,
+  hasLoadedDatabase: state.database.hasLoadedDatabase,
 });
 
 const startAnimation = (
@@ -48,6 +54,10 @@ const completeAnimation = (
 
 const didMount = (
   dispatch: any,
+) => dispatch(onLoadDataFromDatabase()); 
+
+const initAnimation = (
+  dispatch: any,
   hasPets: boolean,
   language: LanguageTypes,
 ) => startAnimation(dispatch, hasPets, language);
@@ -55,20 +65,25 @@ const didMount = (
 export const Component = (): JSX.Element =>  {
   const dispatch = useDispatch()
   
-  const {hasPets, language, theme}= useSelector(stateToProps); 
+  const {hasPets, hasLoadedDatabase, language, theme}= useSelector(stateToProps); 
   
-  React.useEffect(() => 
-    didMount(dispatch, hasPets, language),
-  []);
+  React.useEffect(() => { 
+    hasLoadedDatabase == false ?
+      didMount(dispatch) :      
+      initAnimation(dispatch, hasPets, language);
+  }, [hasLoadedDatabase]);
 
   const styles = createStyle(theme, applyStyles); 
-  
+
   return (
     <View style={styles.container}>
-      <Image 
-        source={require("../../../assets/png/welcome-header-icon.png")}
-        style={styles.appIcon}  
-      />
+      {hasLoadedDatabase === false ? 
+        <Loader theme={theme}/> : 
+        <Image 
+          source={require("../../../assets/png/welcome-header-icon.png")}
+          style={styles.appIcon}  
+        />
+    }
     </View>
   );
 };

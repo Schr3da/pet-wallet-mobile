@@ -2,7 +2,9 @@ import {ViewStyle} from "react-native";
 
 import {ITheme} from "../../theme";
 
-export const applyStyles = (_: ITheme) => ({ 
+export const applyStyles = (
+  _: ITheme
+) => ({ 
   container: {
     flex: 1,
     alignItems: "center",

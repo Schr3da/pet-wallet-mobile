@@ -37,6 +37,13 @@ export interface IWelcome {
   };
 }
 
+export interface ISettings {
+  [SubViewComponents.none]: {
+    language: string; 
+    theme: string; 
+  }
+}
+
 export interface ILanguage {
   header: IHeader
   [ViewComponents.welcome]: IWelcome;

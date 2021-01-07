@@ -21,6 +21,13 @@ interface IOnChangeLanguage{
   next: LanguageTypes;
 }
 
+export const onChangeLanguage = (
+  next: LanguageTypes,
+): IOnChangeLanguage => ({
+  type: ON_CHANGE_LANGUAGE,
+  next, 
+});
+
 export type Actions = 
   | IOnChangeCurrentTheme
   | IOnChangeLanguage
