@@ -3,7 +3,7 @@ import {ViewStyle} from "react-native";
 import {ITheme} from "../../theme";
 
 export const applyStyles = (
-  _: ITheme
+  theme: ITheme
 ) => ({ 
   container: {
     flex: 1,
@@ -13,6 +13,7 @@ export const applyStyles = (
     marginBottom: 24,
     fontWeight: "bold",
     textAlign: "center",
+    color: theme.color10,
   } as ViewStyle,
   buttonContainer: {
     alignItems: "center",
@@ -27,7 +28,7 @@ export const applyStyles = (
   languageButton: {
     width: 48,
     height: 48,
-    opacity: 0.5,
+    opacity: 0.3,
   },
   languageButtonActive: {
     opacity: 1,

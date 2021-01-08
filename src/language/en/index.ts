@@ -59,8 +59,8 @@ const welcome: IWelcome = {
 
 const settings: ISettings = {
   [SubViewComponents.none]: {
-    language: "Selected language",
-    theme: "Selected theme",
+    language: "Select language:",
+    theme: "Select theme:",
   },
 };
 

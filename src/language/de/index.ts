@@ -1,6 +1,6 @@
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
 
-import type {IHeader, IWelcome} from "../index";
+import type {IHeader, ISettings, IWelcome} from "../index";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -28,7 +28,7 @@ const header: IHeader = {
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
       title: "Einstellungen",
-      description: "Hier kannst du die aktuellen App Einstellungen einsehen und verändern.",
+      description: "Hier kannst du die aktuellen App Einstellungen einsehen und verändern.", 
     }
   },
   [ViewComponents.help]: {
@@ -57,7 +57,15 @@ const welcome: IWelcome = {
   }
 }
 
+const settings: ISettings = {
+  [SubViewComponents.none]: {
+    language: "Sprache auswählen:",
+    theme: "Farbmotiv auswählen:",
+  },
+};
+
 export const DE = {
   header,
   [ViewComponents.welcome]: welcome,
-}
+  [ViewComponents.settings]: settings,
+};

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, StatusBar, View} from 'react-native';
 
 import {useSelector} from "react-redux";
 
@@ -55,6 +55,7 @@ export const Route = (): JSX.Element =>  {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
+      <StatusBar barStyle={theme === ThemeTypes.Dark ? "light-content" : "dark-content"}/>  
       <View style={styles.container}>
         {childComponent}
       </View>

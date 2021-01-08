@@ -4,7 +4,7 @@ import {Text, View} from "react-native";
 
 import {useDispatch} from "react-redux";
 
-import {LanguageTypes} from "../../language";
+import {getTranslation, LanguageTypes} from "../../language";
 
 import {ImageButton} from "../../components/common/image-button";
 
@@ -33,12 +33,14 @@ export const Component = () => {
       imageSource={require("../../../assets/png/settings-header-icon.png")}
       render={(props) => {
         const {theme, languageType} = props;
+
         const styles = createStyle(theme, applyStyles); 
+        const translation = getTranslation(languageType);
 
         return (
           <View style={styles.container}>
             <View style={styles.separator}/>
-            <Text style={styles.text}>Selected Language</Text>
+            <Text style={styles.text}>{translation.settings.none.language}</Text>
             <View style={styles.buttonContainer}>
               <ImageButton
                 style={{...styles.languageButton, ...(languageType === LanguageTypes.en ? styles.languageButtonActive : {})}}
@@ -53,7 +55,7 @@ export const Component = () => {
               />
             </View>
             <View style={styles.separator}/>
-            <Text style={styles.text}>Selected Theme</Text>
+            <Text style={styles.text}>{translation.settings.none.theme}</Text>
             <View style={styles.buttonContainer}>
               <ImageButton
                 style={{...styles.languageButton, ...(theme === ThemeTypes.Light ? styles.languageButtonActive : {})}}

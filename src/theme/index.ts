@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet, ImageSourcePropType} from "react-native";
 
 export interface ITheme {
   color1: string;
@@ -8,6 +8,9 @@ export interface ITheme {
   color5: string;
   color6: string;
   color7: string;
+  color8: string;
+  color9: string;
+  color10: string;
 };
 
 const LightTheme: ITheme = {
@@ -18,16 +21,22 @@ const LightTheme: ITheme = {
   color5: "#FDCB02",
   color6: "#D9EFFF",
   color7: "transparent",
+  color8: "#000000",
+  color9: "#ffffff",
+  color10: "#000000",
 };
 
 const DarkTheme: ITheme = {
   color1: "#000000",
   color2: "#E6E6E6",
-  color3: "#5BA4FF",
+  color3: "#85AECB",
   color4: "#FF4340",
   color5: "#FDCB02",
-  color6: "#D9EFFF",
+  color6: "#1F4560",
   color7: "transparent",
+  color8: "#ffffff",
+  color9: "#ffffff",
+  color10: "#ffffff",
 }
 
 export enum ThemeTypes {

@@ -29,7 +29,6 @@ export const applyStyles = (
     width: 20,
   },
   meta: {
-    backgroundColor: theme.color7,
     alignItems: "center",
     justifyContent: "center",
   } as ViewStyle,
@@ -42,11 +41,13 @@ export const applyStyles = (
     marginBottom: "5%", 
     fontWeight: "bold",
     fontSize: 32,
+    color: theme.color10,
   } as ViewStyle,
   text: {
     maxWidth: 300,
     marginBottom: "10%",
     textAlign: "center",
     fontSize: 16,
+    color: theme.color10,
   } as ViewStyle
 });

@@ -2,7 +2,7 @@ import React from "react";
 
 import {Image, View} from "react-native";
 
-import {createStyle} from "../../../theme";
+import {createStyle, ThemeTypes} from "../../../theme";
 
 import {ILayoutChildProps} from "../../common/layout";
 
@@ -18,7 +18,11 @@ export const Box = (props: ILayoutChildProps): JSX.Element =>  {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require("../../../../assets/png/animals-illustration.png")}
+        source={
+          theme === ThemeTypes.Light ? 
+            require("../../../../assets/png/light/animals-illustration.png") :
+            require("../../../../assets/png/dark/animals-illustration.png")
+        }
       />
       <AddPetBar {...props}/>        
     </View>

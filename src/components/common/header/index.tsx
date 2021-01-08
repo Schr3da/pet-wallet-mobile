@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 
 import {onChangeViewComponent, onGoBackNavigation, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
 
-import {createStyle} from "../../../theme";
+import {createStyle, ThemeTypes} from "../../../theme";
 
 import {ILayoutChildProps} from "../layout";
 
@@ -70,7 +70,11 @@ export const Header = (
           {hasBackButton(path) === false ? null : 
           <ImageButton
             style={styles.backButton}
-            source={require("../../../../assets/png/back-icon.png")}
+            source={
+                theme === ThemeTypes.Dark ? 
+                require("../../../../assets/png/dark/back-icon.png") :
+                require("../../../../assets/png/light/back-icon.png")
+            }
             onPress={() => handleBackPressed(dispatch, languageType)}
           />
         } 
@@ -79,7 +83,11 @@ export const Header = (
           {hasSettingsButton(path) === false ? null : 
             <ImageButton
               style={styles.backButton}
-              source={require("../../../../assets/png/settings-icon.png")}
+              source={
+                theme === ThemeTypes.Dark ? 
+                require("../../../../assets/png/dark/settings-icon.png") :
+                require("../../../../assets/png/light/settings-icon.png")
+              }
               onPress={() => handleSettingsPressed(dispatch, languageType)}
             />
           }

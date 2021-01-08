@@ -18,7 +18,7 @@ export const applyStyles = (theme: ITheme) => ({
   text: {
     flex: 2,
     fontSize: 14,
-    color: theme.color1,
+    color: theme.color9,
   },
   button: {
     flexShrink: 0,

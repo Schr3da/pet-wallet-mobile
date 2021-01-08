@@ -47,6 +47,7 @@ export interface ISettings {
 export interface ILanguage {
   header: IHeader
   [ViewComponents.welcome]: IWelcome;
+  [ViewComponents.settings]: ISettings;
 }
 
 export const getTranslation = (
