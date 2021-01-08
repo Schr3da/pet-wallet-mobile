@@ -64,6 +64,19 @@ const settings: ISettings = {
   },
 };
 
+const addPet = {
+  [SubViewComponents.newPetType]: {
+    categories: {
+      
+
+    }
+  
+
+  }
+}
+
+
+
 export const DE = {
   header,
   [ViewComponents.welcome]: welcome,

@@ -16,7 +16,7 @@ import {applyStyles} from "./index.style";
 
 import {Loader} from "components/common/loader";
 
-import {onLoadDataFromDatabase} from "store/actions/database";
+import {onInitDataFromDatabase} from "store/actions/database";
 
 interface IProps {
   isAnimating: boolean;
@@ -54,7 +54,7 @@ const completeAnimation = (
 
 const didMount = (
   dispatch: any,
-) => dispatch(onLoadDataFromDatabase()); 
+) => dispatch(onInitDataFromDatabase()); 
 
 const initAnimation = (
   dispatch: any,

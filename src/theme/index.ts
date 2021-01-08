@@ -40,8 +40,8 @@ const DarkTheme: ITheme = {
 }
 
 export enum ThemeTypes {
-  Dark,
-  Light
+  Dark = "dark",
+  Light = "light"
 }
 
 export const getColors = (
