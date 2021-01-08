@@ -1,24 +1,41 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 platform :ios, '10.0'
 
-target 'app' do
-  use_unimodules!
+target 'petWallet' do
   config = use_native_modules!
+
+  pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
 
   use_react_native!(:path => config["reactNativePath"])
 
-  # Uncomment the code below to enable Flipper.
+  target 'petWalletTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
   #
-  # You should not install Flipper in CI environments when creating release
-  # builds, this will lead to significantly slower build times.
-  #
-  # Note that if you have use_frameworks! enabled, Flipper will not work.
-  #
-  #  use_flipper!
-  #  post_install do |installer|
-  #    flipper_post_install(installer)
-  #  end
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  use_flipper!
+  post_install do |installer|
+    flipper_post_install(installer)
+
+    installer.pods_project.targets.each do |t|
+      t.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      end
+    end
+  end
+end
+
+target 'petWallet-tvOS' do
+  # Pods for petWallet-tvOS
+
+  target 'petWallet-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
 end

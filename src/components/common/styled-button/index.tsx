@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {Text, TouchableOpacity, View} from "react-native";
 
-import {createStyleWithoutTheme} from "theme";
+import {createStyleWithoutTheme} from "../../../theme";
 
 import {applyStyles} from "./index.style";
 

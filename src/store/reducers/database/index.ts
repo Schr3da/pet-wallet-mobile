@@ -1,5 +1,4 @@
 import * as Database from "../../actions/database";
-import {getSettingsRepository} from "./repositories";
 
 export interface IDatabaseState {
   hasLoadedDatabase: boolean;
@@ -9,13 +8,9 @@ const initialState = (): IDatabaseState => ({
   hasLoadedDatabase: false, 
 });
 
-const handleInitDatabase = async (
+const handleInitDatabase = (
   state: IDatabaseState
-) => {
-
-  let repo = getSettingsRepository();
-  console.log(await repo.count());
-
+): IDatabaseState => {
   return {...state,
     hasLoadedDatabase: true,
   };

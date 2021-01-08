@@ -10,13 +10,13 @@ import {Splash} from "../../store/actions";
 
 import {createStyle, ThemeTypes} from "../../theme";
 
-import {LanguageTypes} from "language";
+import {LanguageTypes} from "../../language";
 
 import {applyStyles} from "./index.style";
 
-import {Loader} from "components/common/loader";
+import {Loader} from "../common/loader";
 
-import {onInitDataFromDatabase} from "store/actions/database";
+import {onInitDataFromDatabase} from "../../store/actions/database";
 
 interface IProps {
   isAnimating: boolean;

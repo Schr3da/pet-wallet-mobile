@@ -1,12 +1,4 @@
 {
-  "name": "app",
-  "displayName": "app",
-  "expo": {
-    "name": "app",
-    "slug": "app",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  }
+  "name": "petWallet",
+  "displayName": "Pet Wallet"
 }
