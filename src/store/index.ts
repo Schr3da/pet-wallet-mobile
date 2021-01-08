@@ -1,14 +1,11 @@
-import {configureStore} from '@reduxjs/toolkit'
+import {createStore, applyMiddleware} from '@reduxjs/toolkit'
+import thunk from "redux-thunk";
 import {reducer} from './reducers'
 
-const store = configureStore({ reducer });
-
-if (process.env.NODE_ENV === 'development' && (module as any).hot) {
-  (module as any).hot.accept('./reducers', () => {
-    const newRootReducer = require('./reducers').default
-    store.replaceReducer(newRootReducer)
-  });
-}
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk),
+);
 
 export type AppDispatch = typeof store.dispatch;
 

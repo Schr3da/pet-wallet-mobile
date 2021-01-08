@@ -1,12 +1,17 @@
 import { Connection, createConnection } from "typeorm/browser";
 
+import SQLite from "react-native-sqlite-storage";
+
 import * as Entities from "../entities/index";
+
+SQLite.DEBUG(process.env.NODE_ENV === "development");
+SQLite.enablePromise(true);
 
 export const initConnection = async (): Promise<Connection | null> => {
   try {
     const connection = await createConnection({
       type: "react-native",
-      database: "app",
+      database: "test",
       location: "default",
       logging: ["error", "query", "schema"],
       synchronize: true,
