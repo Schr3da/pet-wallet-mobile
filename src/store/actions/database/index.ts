@@ -1,13 +1,15 @@
-import {initConnection} from "../../reducers/database/connection";
+import {ICombinedReducerState} from "../../reducers";
 
 export const ON_INIT_DATA_FROM_DATABASE = "ON_INIT_DATA_FROM_DATABASE";
 interface IOnInitDataFromDatabase {
   type: typeof ON_INIT_DATA_FROM_DATABASE;
 }
 
-export const onInitDataFromDatabase = () => 
-  async (dispatch: any) => { 
-    const _ = await initConnection(); 
+export const onInitDataFromDatabase = () => async (
+    dispatch: any, 
+    getState: () => ICombinedReducerState
+  ) => { 
+    const _ = getState();
     dispatch({type: ON_INIT_DATA_FROM_DATABASE});
   };
 

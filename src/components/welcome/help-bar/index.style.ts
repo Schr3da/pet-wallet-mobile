@@ -13,5 +13,5 @@ export const applyStyles = (theme: ITheme) => ({
     marginBottom: 0,
     color: theme.color3,
     fontSize: 16,
-  }
+  } as ViewStyle
 });

@@ -7,7 +7,7 @@ import * as Entities from "../entities/index";
 SQLite.DEBUG(process.env.NODE_ENV === "development");
 SQLite.enablePromise(true);
 
-export const initConnection = async (): Promise<Connection | null> => {
+const initConnection = async (): Promise<Connection | null> => {
   try {
     const connection = await createConnection({
       type: "react-native",
@@ -26,6 +26,6 @@ export const initConnection = async (): Promise<Connection | null> => {
 
 let instance: Connection | null = null;
 
-export const getDbConnectionInstance = async () => 
-  instance == null ? 
-    await initConnection() : instance;
+export const getDbConnectionInstance = 
+  async (): Promise<Connection | null> => instance == null ? 
+    await initConnection() : Promise.resolve(instance);
