@@ -11,6 +11,7 @@ export interface ITheme {
   color8: string;
   color9: string;
   color10: string;
+  color11: string;
 };
 
 const LightTheme: ITheme = {
@@ -24,6 +25,7 @@ const LightTheme: ITheme = {
   color8: "#000000",
   color9: "#ffffff",
   color10: "#000000",
+  color11: "#efefef",
 };
 
 const DarkTheme: ITheme = {
@@ -37,6 +39,7 @@ const DarkTheme: ITheme = {
   color8: "#ffffff",
   color9: "#ffffff",
   color10: "#ffffff",
+  color11: "#333333",
 }
 
 export enum ThemeTypes {

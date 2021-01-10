@@ -1,6 +1,6 @@
 import {ViewStyle} from "react-native";
 
-import {ITheme} from "theme";
+import {ITheme} from "../../../theme";
 
 export const applyStyles = (
   _: ITheme
