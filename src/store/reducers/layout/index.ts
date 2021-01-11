@@ -1,6 +1,6 @@
-import {ThemeTypes} from "../../../theme";
+import {ThemeTypes, getDeviceTheme} from "../../../theme";
 
-import {LanguageTypes} from "../../../language";
+import {LanguageTypes, getDeviceLanguage} from "../../../language";
 
 import {Layout, Splash} from "../../actions";
 
@@ -10,8 +10,8 @@ export interface ILayoutState {
 }
 
 const initialState = (): ILayoutState => ({
-  language: LanguageTypes.de,
-  theme: ThemeTypes.Light,
+  language: getDeviceLanguage(),
+  theme: getDeviceTheme(),
 });
 
 const changeLanguage = (

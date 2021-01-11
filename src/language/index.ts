@@ -1,3 +1,5 @@
+import {Platform, NativeModules} from "react-native";
+
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 
 import {DE} from "./de";
@@ -69,4 +71,35 @@ export const getTranslation = (
     default:
       return EN;
   }
+};
+
+const getSystemLanguageIOS = (): LanguageTypes => {
+  const systemLanguage = NativeModules.SettingsManager.settings.AppleLocale 
+    || NativeModules.SettingsManager.settings.AppleLanguages[0]; 
+   
+  return (systemLanguage || "").toLowerCase().indexOf(LanguageTypes.de) != -1 ? 
+      LanguageTypes.de : LanguageTypes.en;
+};
+
+const getSystemLanguageAndroid = (): LanguageTypes => {
+  if (NativeModules.I18nManager == null || NativeModules.I18nManager.localeIdentifier == null) {
+    return LanguageTypes.en;
+  }
+  
+  const systemLanguage = NativeModules.I18nManager.localeIdentifier;
+  
+  return (systemLanguage || "").toLowerCase().indexOf(LanguageTypes.de) != -1 ? 
+      LanguageTypes.de : LanguageTypes.en;
+};
+
+export const getDeviceLanguage = () => {
+  const platform = Platform.OS || "";
+  switch (platform.toLowerCase()) {
+    case "ios":
+      return getSystemLanguageIOS();
+    case "android": 
+      return getSystemLanguageAndroid();
+    default:
+      return LanguageTypes.en;
+  };
 };

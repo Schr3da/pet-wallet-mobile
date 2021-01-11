@@ -12,7 +12,7 @@ const header: IHeader = {
   [ViewComponents.welcome]: {
     [SubViewComponents.welcomeNoPets]: {
       title: "Willkommen",
-      description: "Bitte registriere zunächst dein Haustier um fortzufahren",
+      description: "Bitte registriere zunächst dein Haustier um fortzufahren.",
     },
     [SubViewComponents.welcomeWithPets]: {
       title: "Pet Wallet",
@@ -22,7 +22,7 @@ const header: IHeader = {
   [ViewComponents.newPet]: {
     [SubViewComponents.newPetType]: {
       title: "Neues Haustier",
-      description: "Wähle dein Haustier und bestätige deine Auswahl mit Weiter",
+      description: "Wähle dein Haustier und bestätige deine Auswahl mit Weiter.",
     }
   },
   [ViewComponents.settings]: {

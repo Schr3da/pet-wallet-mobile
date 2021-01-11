@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {TextInput} from "react-native";
 
-import {createStyle, ThemeTypes} from "../../../theme";
+import {createStyle, ThemeTypes, getColors} from "../../../theme";
 
 import {InputValues} from "../../../store/actions/new-pet";
 
@@ -21,12 +21,14 @@ export const InputField = (props: IProps) => {
   const {id, placeholder, style, theme, value, onChange} = props;
 
   const styles = createStyle(theme, applyStyles);
+  const colors = getColors(theme);
 
   return (
     <TextInput
       style={{...styles.container, ...style}}
       placeholder={placeholder}
       onChangeText={text => onChange(id, text)}
+      placeholderTextColor={colors.color12}
       value={value as any}
     />
   );

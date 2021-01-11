@@ -12,7 +12,7 @@ const header: IHeader = {
   [ViewComponents.welcome]: {
     [SubViewComponents.welcomeNoPets]: {
       title: "Welcome",
-      description: "Please register a new pet in order to continue", 
+      description: "Please register a new pet in order to continue.", 
     },
     [SubViewComponents.welcomeWithPets]: {
       title: "Pet Wallet",
@@ -22,7 +22,7 @@ const header: IHeader = {
   [ViewComponents.newPet]: {
     [SubViewComponents.newPetType]: {
       title: "New Pet",
-      description: "Choose your pet and continue with next",
+      description: "Choose your pet and continue with next.",
     }
   },
   [ViewComponents.settings]: {
@@ -40,7 +40,7 @@ const header: IHeader = {
   [ViewComponents.termsAndConditions]: {
     [SubViewComponents.none]: {
       title: "Terms and conditions",
-      description: "You can review the terms and condition of the app here", 
+      description: "You can review the terms and condition of the app here.", 
     }
   }
 };
@@ -48,7 +48,7 @@ const header: IHeader = {
 const welcome: IWelcome = {
   [SubViewComponents.welcomeNoPets]: {
     addPetBar: {
-      description: "You can add additional pets to your personal wallet", 
+      description: "You can add additional pets to your personal wallet.", 
       button: "Add",
     },
     help: {
@@ -57,7 +57,7 @@ const welcome: IWelcome = {
   },
   [SubViewComponents.welcomeWithPets]: {
     addPetBar: {
-      description: "You can add additional pets to your personal wallet", 
+      description: "You can add additional pets to your personal wallet.", 
       button: "Add",
     },
   }
