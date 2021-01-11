@@ -37,6 +37,12 @@ const header: IHeader = {
       description: "",
     }
   },
+  [ViewComponents.termsAndConditions]: {
+    [SubViewComponents.none]: {
+      title: "Nutzungsbedingungen",
+      description: "Hier kannst du die Nutzungsbedingen dieser App einsehen.", 
+    }
+  }
 }
 
 const welcome: IWelcome = {
@@ -61,6 +67,14 @@ const settings: ISettings = {
   [SubViewComponents.none]: {
     language: "Sprache auswählen:",
     theme: "Farbmotiv auswählen:",
+    agbs: {
+      description: "Die Nutungsbedingungen können hier eingesehen werden.",
+      button: "Jetzt anzeigen"
+    },
+    accountDeletion: {
+      description: "Es ist jederzeit möglich die gespeicherten Daten zu löschen.",
+      button: "Daten löschen"
+    },
   },
 };
 
@@ -70,8 +84,6 @@ const addPet = {
       
 
     }
-  
-
   }
 }
 

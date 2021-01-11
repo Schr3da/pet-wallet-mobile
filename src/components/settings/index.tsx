@@ -10,11 +10,13 @@ import {ImageButton} from "../../components/common/image-button";
 
 import {onChangeCurrentTheme, onChangeLanguage} from "../../store/actions/layout";
 
-import {createStyle, ThemeTypes} from "../../theme";
+import {createStyle, ThemeTypes, getColors} from "../../theme";
 
-import {Layout} from "../common";
+import {Layout, Notification} from "../common";
 
 import {applyStyles} from "./index.style";
+import {onChangeViewComponent, ViewComponents, SubViewComponents} from "../../store/actions/navigation";
+import {onRequestDataDeletion} from "../../store/actions/database";
 
 const handleChangeLanguage = (
   dispatch: any,
@@ -26,6 +28,19 @@ const handleChangeTheme = (
   theme: ThemeTypes,
 ) => dispatch(onChangeCurrentTheme(theme));
 
+const handleShowTermsAndConditions = (
+  dispatch: any,
+  language: LanguageTypes,
+) => dispatch(onChangeViewComponent(
+  ViewComponents.termsAndConditions,
+  SubViewComponents.none,
+  language,
+));
+
+const handleRequestDataDeletion = (
+  dispatch: any,
+) => dispatch(onRequestDataDeletion());
+
 export const Component = () => {
   let dispatch = useDispatch();
   return (
@@ -36,6 +51,7 @@ export const Component = () => {
 
         const styles = createStyle(theme, applyStyles); 
         const translation = getTranslation(languageType);
+        const colors = getColors(theme);
 
         return (
           <View style={styles.container}>
@@ -68,6 +84,23 @@ export const Component = () => {
                 source={require("../../../assets/png/dark-theme-icon.png")}
                 onPress={() => handleChangeTheme(dispatch, ThemeTypes.Dark)}
               />
+            </View>
+            <View style={styles.notificationWrapper}>
+              <Notification 
+                description={props.language.settings.none.agbs.description}
+                buttonText={props.language.settings.none.agbs.button}
+                theme={props.theme}
+                color={colors.color5}
+                onPress={() => handleShowTermsAndConditions(dispatch, languageType)}
+              />            
+              <Notification
+                description={props.language.settings.none.accountDeletion.description}
+                buttonText={props.language.settings.none.accountDeletion.button}
+                theme={props.theme}
+                color={colors.color4}
+                style={{marginTop: 14}}
+                onPress={() => handleRequestDataDeletion(dispatch)}
+              />            
             </View>
           </View>
         );

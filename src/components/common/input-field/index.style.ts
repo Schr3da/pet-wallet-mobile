@@ -13,6 +13,7 @@ export const applyStyles = (
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
+    fontSize: 16,
     color: theme.color8,
     backgroundColor: theme.color11,
   } as ViewStyle

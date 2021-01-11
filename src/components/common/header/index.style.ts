@@ -35,12 +35,12 @@ export const applyStyles = (
   image: {
     width: 72,
     height: 72,
-    marginBottom: "10%",
+    marginBottom: "5%",
   },
   title: {
     marginBottom: "5%", 
     fontWeight: "bold",
-    fontSize: 32,
+    fontSize: 26,
     color: theme.color10,
   } as ViewStyle,
   text: {

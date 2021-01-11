@@ -4,7 +4,7 @@ import {SafeAreaView, StatusBar, View} from 'react-native';
 
 import {useSelector} from "react-redux";
 
-import {Help, NewPet, Settings, Splash, Welcome} from "../components";
+import {Help, NewPet, Settings, Splash, TermsAndConditions, Welcome} from "../components";
 
 import {ICombinedReducerState} from "../store/reducers";
 
@@ -48,6 +48,9 @@ export const Route = (): JSX.Element =>  {
       break;
     case ViewComponents.settings:
       childComponent = <Settings.Component/>;
+      break;
+    case ViewComponents.termsAndConditions:
+      childComponent = <TermsAndConditions.Component/>;
       break;
     default:
       childComponent = <View />;

@@ -6,6 +6,8 @@ import * as Settings from "./settings";
 
 import * as Splash from "./splash";
 
+import * as TermsAndConditions from "./terms-and-conditions";
+
 import * as Welcome from "./welcome";
 
 export {
@@ -13,5 +15,6 @@ export {
   NewPet,
   Settings,
   Splash,
+  TermsAndConditions,
   Welcome,
 }

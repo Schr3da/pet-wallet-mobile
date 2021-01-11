@@ -41,6 +41,14 @@ export interface ISettings {
   [SubViewComponents.none]: {
     language: string; 
     theme: string; 
+    accountDeletion: {
+      description: string;
+      button: string;
+    };
+    agbs: {
+      description: string;
+      button: string;
+    }
   }
 }
 

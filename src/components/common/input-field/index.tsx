@@ -10,19 +10,22 @@ import {applyStyles} from "./index.style";
 
 interface IProps {
   id: string;
+  style: any;
   theme: ThemeTypes;
   value: InputValues;
+  placeholder?: string;
   onChange: (id: string, value: InputValues) => void;
 }
 
 export const InputField = (props: IProps) => {
-  const {id, theme, value, onChange} = props;
+  const {id, placeholder, style, theme, value, onChange} = props;
 
-  const style = createStyle(theme, applyStyles);
+  const styles = createStyle(theme, applyStyles);
 
   return (
     <TextInput
-      style={style.container}
+      style={{...styles.container, ...style}}
+      placeholder={placeholder}
       onChangeText={text => onChange(id, text)}
       value={value as any}
     />

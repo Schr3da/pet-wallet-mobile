@@ -1,5 +1,8 @@
 export enum InputIds {
-  sample = "sample"
+  age = "age",
+  name = "name",
+  race = "race",
+  dateOfBirth = "dateOfBirth",
 }
 
 export type InputValues = string | number | null;

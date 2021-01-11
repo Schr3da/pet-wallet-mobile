@@ -7,6 +7,7 @@ export const applyStyles = (
 ) => ({ 
   container: {
     flex: 1,
+    width: "100%",
   },
   text: {
     fontSize: 16,
@@ -32,5 +33,11 @@ export const applyStyles = (
   },
   languageButtonActive: {
     opacity: 1,
-  }
+  },
+  notificationWrapper: {
+    position: "absolute",  
+    bottom: 0,
+    right: 0,
+    left: 0,
+  } as ViewStyle,
 });

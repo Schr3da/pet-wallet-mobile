@@ -6,6 +6,7 @@ export enum ViewComponents {
   newPet = "newPet",
   help = "help",
   settings = "settings",
+  termsAndConditions = "termsAndConditions"
 };
 
 export enum SubViewComponents {

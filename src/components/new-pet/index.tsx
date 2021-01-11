@@ -45,12 +45,40 @@ export const Component = () => {
         return (
           <React.Fragment>
             <View style={styles.container}>
-              <InputField 
-                id={InputIds.sample}
-                theme={theme}
-                value={stateProps.inputs[InputIds.sample]}
-                onChange={(id, value) => handleInputChange(id, value, dispatch)}
-              />
+              <View>
+                <InputField 
+                  id={InputIds.name}
+                  style={styles.inputField}
+                  placeholder="Name"
+                  theme={theme}
+                  value={stateProps.inputs[InputIds.name]}
+                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
+                />
+                <InputField 
+                  id={InputIds.race}
+                  style={styles.inputField}
+                  placeholder="Race"
+                  theme={theme}
+                  value={stateProps.inputs[InputIds.race]}
+                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
+                />
+                <InputField 
+                  id={InputIds.dateOfBirth}
+                  style={styles.inputField}
+                  placeholder="Date of birth"
+                  theme={theme}
+                  value={stateProps.inputs[InputIds.dateOfBirth]}
+                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
+                />
+                <InputField 
+                  id={InputIds.age}
+                  style={styles.inputField}
+                  placeholder="Age"
+                  theme={theme}
+                  value={stateProps.inputs[InputIds.age]}
+                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
+                />
+              </View>
             </View>
           </React.Fragment>
         );

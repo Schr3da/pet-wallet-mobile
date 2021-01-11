@@ -10,7 +10,4 @@ export const applyStyles = (
     alignItems: "center",
     justifyContent: "center",
   } as ViewStyle,
-  inputField: {
-    width: 280,
-  }
 });

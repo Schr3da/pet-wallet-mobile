@@ -36,6 +36,12 @@ const header: IHeader = {
       title: "Help",
       description: "",
     }
+  },
+  [ViewComponents.termsAndConditions]: {
+    [SubViewComponents.none]: {
+      title: "Terms and conditions",
+      description: "You can review the terms and condition of the app here", 
+    }
   }
 };
 
@@ -61,6 +67,14 @@ const settings: ISettings = {
   [SubViewComponents.none]: {
     language: "Select language:",
     theme: "Select theme:",
+    agbs: {
+      description: "The terms and conditions are accessable from here.",
+      button: "Show conditions"
+    },
+    accountDeletion: {
+      description: "If you want you can delete all saved data anytime.",
+      button: "Request deletion"
+    }
   },
 };
 
