@@ -4,7 +4,7 @@ import {Text, View} from "react-native";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 
-import {StyledButton} from "../../common";
+import {StyledButton} from "../styled-button";
 
 import {applyStyles} from './index.style';
 
