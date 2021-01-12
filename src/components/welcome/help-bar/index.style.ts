@@ -12,6 +12,7 @@ export const applyStyles = (theme: ITheme) => ({
   buttonText: {
     marginBottom: 0,
     color: theme.color3,
+    fontWeight: "bold",
     fontSize: 16,
   } as ViewStyle
 });

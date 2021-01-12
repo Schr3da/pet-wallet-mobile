@@ -2,7 +2,7 @@ import {ThemeTypes, getDeviceTheme} from "../../../theme";
 
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 
-import {Layout, Splash} from "../../actions";
+import {Layout, Splash, Database} from "../../actions";
 
 export interface ILayoutState {
   language: LanguageTypes,
@@ -31,7 +31,16 @@ const changeTheme = (
     theme,
   });
 
-type Actions = Layout.Actions | Splash.Actions;
+const applyLanguageAndTheme = (
+  state: ILayoutState,
+  language: LanguageTypes,
+  theme: ThemeTypes
+) => {
+  let next = changeTheme(state, theme);
+  return changeLanguage(next, language);
+};
+
+type Actions = Layout.Actions | Splash.Actions | Database.Actions;
 
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
@@ -39,6 +48,9 @@ const reducer = (state = initialState(), action: Actions) => {
       return changeLanguage(state, action.next);
     case Layout.ON_CHANGE_CURRENT_THEME:
       return changeTheme(state, action.next);
+    case Database.ON_INIT_DATA_FROM_DATABASE:
+      const {language, theme} = action.settings;
+      return applyLanguageAndTheme(state, language, theme);
     default:
       return state;
   }
