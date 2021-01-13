@@ -14,6 +14,7 @@ export const applyStyles = (color: string) => (theme: ITheme) => ({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: color,
+    backgroundColor: theme.color1,
   } as ViewStyle,
   text: {
     flex: 2,

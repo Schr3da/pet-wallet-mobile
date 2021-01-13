@@ -8,5 +8,30 @@ export const applyStyles = (
   container: {
     flex: 1,
     alignItems: "center",
-  } as ViewStyle
+    overflow: "hidden",
+  } as ViewStyle,
+  scrollContainer: {
+    flex: 1,
+  },
+  navigation: {
+    width: "100%",
+    marginTop: 10,
+    height: 20,
+    display: "flex",
+    flexDirection: "row",
+  } as ViewStyle,
+  rowLeft: {
+    flex: 1,
+    alignItems: "flex-start",
+  } as ViewStyle,
+  rowRight: {
+    flex: 1,
+    alignItems: "flex-end",
+  } as ViewStyle,
+  backButton: {
+    width: 20,
+  },
+  settingsButton: {
+    width: 20,
+  },
 });

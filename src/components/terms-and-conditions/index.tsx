@@ -12,7 +12,7 @@ export const Component = () => {
   return (
     <Layout
       imageSource={require("../../../assets/png/help-header-icon.png")}
-      render={(props) => {
+      childRenderer={(props) => {
         const {theme} = props;
         const styles = createStyle(theme, applyStyles); 
         return (

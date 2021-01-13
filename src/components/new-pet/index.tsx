@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import {View} from "react-native";
-
 import {useDispatch, useSelector} from "react-redux";
 
 import {createStyle} from "../../theme";
@@ -39,47 +37,67 @@ export const Component = () => {
   return (
     <Layout
       imageSource={require("../../../assets/png/add-pet-header-icon.png")}
-      render={(props) => {
+      childRenderer={(props) => {
         const {theme} = props;
         const styles = createStyle(theme, applyStyles); 
         return (
           <React.Fragment>
-            <View style={styles.container}>
-              <View>
-                <InputField 
-                  id={InputIds.name}
-                  style={styles.inputField}
-                  placeholder="Name"
-                  theme={theme}
-                  value={stateProps.inputs[InputIds.name]}
-                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
-                />
-                <InputField 
-                  id={InputIds.race}
-                  style={styles.inputField}
-                  placeholder="Race"
-                  theme={theme}
-                  value={stateProps.inputs[InputIds.race]}
-                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
-                />
-                <InputField 
-                  id={InputIds.dateOfBirth}
-                  style={styles.inputField}
-                  placeholder="Date of birth"
-                  theme={theme}
-                  value={stateProps.inputs[InputIds.dateOfBirth]}
-                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
-                />
-                <InputField 
-                  id={InputIds.age}
-                  style={styles.inputField}
-                  placeholder="Age"
-                  theme={theme}
-                  value={stateProps.inputs[InputIds.age]}
-                  onChange={(id, value) => handleInputChange(id, value, dispatch)}
-                />
-              </View>
-            </View>
+            <InputField 
+              id={InputIds.name}
+              style={styles.inputField}
+              placeholder="Name"
+              theme={theme}
+              value={stateProps.inputs[InputIds.name]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
+            <InputField 
+              id={InputIds.race}
+              style={styles.inputField}
+              placeholder="Race"
+              theme={theme}
+              value={stateProps.inputs[InputIds.race]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
+            <InputField 
+              id={InputIds.dateOfBirth}
+              style={styles.inputField}
+              placeholder="Date of birth"
+              theme={theme}
+              value={stateProps.inputs[InputIds.dateOfBirth]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
+            <InputField 
+              id={InputIds.age}
+              style={styles.inputField}
+              placeholder="Age"
+              theme={theme}
+              value={stateProps.inputs[InputIds.age]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
+             <InputField 
+              id={InputIds.age}
+              style={styles.inputField}
+              placeholder="Age"
+              theme={theme}
+              value={stateProps.inputs[InputIds.age]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
+            <InputField 
+              id={InputIds.age}
+              style={styles.inputField}
+              placeholder="Age"
+              theme={theme}
+              value={stateProps.inputs[InputIds.age]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
+            <InputField 
+              id={InputIds.age}
+              style={styles.inputField}
+              placeholder="Age"
+              theme={theme}
+              value={stateProps.inputs[InputIds.age]}
+              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            />
           </React.Fragment>
         );
       }}  

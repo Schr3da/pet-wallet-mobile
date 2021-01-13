@@ -10,13 +10,15 @@ import {ImageButton} from "../../components/common/image-button";
 
 import {onChangeCurrentTheme, onChangeLanguage} from "../../store/actions/layout";
 
+import {onChangeViewComponent, ViewComponents, SubViewComponents} from "../../store/actions/navigation";
+
+import {onRequestDataDeletion} from "../../store/actions/database";
+
 import {createStyle, ThemeTypes, getColors} from "../../theme";
 
 import {Layout, Notification} from "../common";
 
 import {applyStyles} from "./index.style";
-import {onChangeViewComponent, ViewComponents, SubViewComponents} from "../../store/actions/navigation";
-import {onRequestDataDeletion} from "../../store/actions/database";
 
 const handleChangeLanguage = (
   dispatch: any,
@@ -43,15 +45,41 @@ const handleRequestDataDeletion = (
 
 export const Component = () => {
   let dispatch = useDispatch();
+
   return (
     <Layout
       imageSource={require("../../../assets/png/settings-header-icon.png")}
-      render={(props) => {
+      footerRenderer={(props) => {
+        
+        const {theme, languageType} = props;
+        const styles = createStyle(theme, applyStyles); 
+        const colors = getColors(theme);
+
+        return (
+         <View style={styles.notificationWrapper}>
+          <Notification 
+            description={props.language.settings.none.agbs.description}
+            buttonText={props.language.settings.none.agbs.button}
+            theme={props.theme}
+            color={colors.color5}
+            onPress={() => handleShowTermsAndConditions(dispatch, languageType)}
+          />            
+          <Notification
+            description={props.language.settings.none.accountDeletion.description}
+            buttonText={props.language.settings.none.accountDeletion.button}
+            theme={props.theme}
+            color={colors.color4}
+            style={{marginTop: 14}}
+            onPress={() => handleRequestDataDeletion(dispatch)}
+          />            
+         </View>
+        );
+      }}
+      childRenderer={(props) => {
         const {theme, languageType} = props;
 
         const styles = createStyle(theme, applyStyles); 
         const translation = getTranslation(languageType);
-        const colors = getColors(theme);
 
         return (
           <View style={styles.container}>
@@ -84,23 +112,6 @@ export const Component = () => {
                 source={require("../../../assets/png/dark-theme-icon.png")}
                 onPress={() => handleChangeTheme(dispatch, ThemeTypes.Dark)}
               />
-            </View>
-            <View style={styles.notificationWrapper}>
-              <Notification 
-                description={props.language.settings.none.agbs.description}
-                buttonText={props.language.settings.none.agbs.button}
-                theme={props.theme}
-                color={colors.color5}
-                onPress={() => handleShowTermsAndConditions(dispatch, languageType)}
-              />            
-              <Notification
-                description={props.language.settings.none.accountDeletion.description}
-                buttonText={props.language.settings.none.accountDeletion.button}
-                theme={props.theme}
-                color={colors.color4}
-                style={{marginTop: 14}}
-                onPress={() => handleRequestDataDeletion(dispatch)}
-              />            
             </View>
           </View>
         );

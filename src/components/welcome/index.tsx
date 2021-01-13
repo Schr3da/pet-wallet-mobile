@@ -10,14 +10,20 @@ export const Component = (): JSX.Element =>  {
   return (
     <Layout
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
-      render={(props) => {
+      childRenderer={(props) => {
         return (
           <React.Fragment>
             <Box {...props}/>
-            <HelpBar {...props}/>
           </React.Fragment>
         );
       }}  
+      footerRenderer={(props) => {
+        return (
+          <React.Fragment>
+            <HelpBar {...props}/>
+          </React.Fragment>
+        );
+      }}
     />
   );
 };

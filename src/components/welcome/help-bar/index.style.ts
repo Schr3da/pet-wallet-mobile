@@ -4,7 +4,6 @@ import {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({ 
   container: {
-    flex: 1,
     display: "flex" as "flex",
     justifyContent: "flex-end" as "flex-end",
   } as ViewStyle,

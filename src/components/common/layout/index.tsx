@@ -1,16 +1,20 @@
 import * as React from "react";
 
-import {ImageSourcePropType, View} from "react-native";
+import {ImageSourcePropType, KeyboardAvoidingView, Platform, View} from "react-native";
 
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+
+import {ScrollView} from "react-native-gesture-handler";
 
 import {ICombinedReducerState} from "../../../store/reducers";
 
-import {SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
+import {onChangeViewComponent, onGoBackNavigation, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
 
 import {createStyle, ThemeTypes} from "../../../theme";
 
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
+
+import {ImageButton} from "../image-button";
 
 import {Header} from "../header";
 
@@ -51,7 +55,8 @@ export interface ILayoutChildProps {
 
 interface IProps {
   imageSource: ImageSourcePropType;
-  render: (props: ILayoutChildProps) => React.ReactFragment;
+  childRenderer: (props: ILayoutChildProps) => React.ReactFragment;
+  footerRenderer?: (props: ILayoutChildProps) => React.ReactChild; 
 }
 
 const getChildProps = (
@@ -68,25 +73,98 @@ const getChildProps = (
   };
 };
 
+const isiOS = (): boolean => {
+  const identifier = (Platform.OS || "").toLowerCase();
+  return identifier === "ios";
+}
+
+const hasBackButton = (
+  path: string[] 
+) => path == null || path.length === 0 ? false :
+  path[0] !== ViewComponents.welcome;
+
+const hasSettingsButton = (
+  path: string[] 
+) => path == null || path.length === 0 ? false :
+  path[0] !== ViewComponents.settings;
+
+const handleBackPressed = (
+  dispatch: any,
+  language: LanguageTypes,
+) => dispatch(onGoBackNavigation(language));
+
+const handleSettingsPressed = (
+  dispatch: any,
+  language: LanguageTypes,
+) => dispatch(
+  onChangeViewComponent(
+    ViewComponents.settings,
+    SubViewComponents.none,
+    language,
+  ));
+
 export const Layout = (props: IProps): JSX.Element =>  {
+
+  const dispatch = useDispatch();
+
   const stateProps = useSelector(stateToProps);
   
-  const {imageSource, render} = props;
-  const {path, theme, title, description} = stateProps;
+  const {imageSource, childRenderer, footerRenderer} = props;
+  const {path, theme, title, description, language} = stateProps;
 
   const childProps = getChildProps(stateProps);
   const styles = createStyle(theme, applyStyles); 
 
   return (
-    <View style={styles.container}>
-      <Header
-        {...childProps}
-        title={title}
-        description={description}
-        path={path}
-        source={imageSource}
-      />
-      {render(childProps)}  
-    </View>
+    <KeyboardAvoidingView
+      behavior={isiOS() ? "padding" : "height" }
+      style={styles.container}
+      keyboardVerticalOffset={50}
+    >
+      <View style={styles.navigation}>
+        <View style={styles.rowLeft}>
+          {hasBackButton(path) === false ? null : 
+          <ImageButton
+            style={styles.backButton}
+            source={
+                theme === ThemeTypes.Dark ? 
+                require("../../../../assets/png/dark/back-icon.png") :
+                require("../../../../assets/png/light/back-icon.png")
+            }
+            onPress={() => handleBackPressed(dispatch, language)}
+          />
+        } 
+        </View>
+        <View style={styles.rowRight}>
+          {hasSettingsButton(path) === false ? null : 
+            <ImageButton
+              style={styles.backButton}
+              source={
+                theme === ThemeTypes.Dark ? 
+                require("../../../../assets/png/dark/settings-icon.png") :
+                require("../../../../assets/png/light/settings-icon.png")
+              }
+              onPress={() => handleSettingsPressed(dispatch, language)}
+            />
+          }
+        </View>
+      </View>
+      <ScrollView 
+        bounces={true}
+        style={styles.scrollContainer}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <Header
+          {...childProps}
+          title={title}
+          description={description}
+          path={path}
+          source={imageSource}
+        />
+        {childRenderer(childProps)}  
+      </ScrollView>
+      {footerRenderer && footerRenderer(childProps)}
+    </KeyboardAvoidingView>
   );
 };

@@ -23,39 +23,11 @@ export interface IProps extends ILayoutChildProps{
   source: ImageSourcePropType;
 }
 
-const hasBackButton = (
-  path: string[] 
-) => path == null || path.length === 0 ? false :
-  path[0] !== ViewComponents.welcome;
-
-const hasSettingsButton = (
-  path: string[] 
-) => path == null || path.length === 0 ? false :
-  path[0] !== ViewComponents.settings;
-
-const handleBackPressed = (
-  dispatch: any,
-  language: LanguageTypes,
-) => dispatch(onGoBackNavigation(language));
-
-const handleSettingsPressed = (
-  dispatch: any,
-  language: LanguageTypes,
-) => dispatch(
-  onChangeViewComponent(
-    ViewComponents.settings,
-    SubViewComponents.none,
-    language,
-  ));
-
 export const Header = (
   props: IProps
 ) => {
-  const dispatch = useDispatch();
   const {
     description,
-    languageType,
-    path,
     source, 
     title,
     theme
@@ -65,34 +37,6 @@ export const Header = (
   
   return (
     <View style={styles.container}>
-      <View style={styles.navigation}>
-        <View style={styles.rowLeft}>
-          {hasBackButton(path) === false ? null : 
-          <ImageButton
-            style={styles.backButton}
-            source={
-                theme === ThemeTypes.Dark ? 
-                require("../../../../assets/png/dark/back-icon.png") :
-                require("../../../../assets/png/light/back-icon.png")
-            }
-            onPress={() => handleBackPressed(dispatch, languageType)}
-          />
-        } 
-        </View>
-        <View style={styles.rowRight}>
-          {hasSettingsButton(path) === false ? null : 
-            <ImageButton
-              style={styles.backButton}
-              source={
-                theme === ThemeTypes.Dark ? 
-                require("../../../../assets/png/dark/settings-icon.png") :
-                require("../../../../assets/png/light/settings-icon.png")
-              }
-              onPress={() => handleSettingsPressed(dispatch, languageType)}
-            />
-          }
-        </View>
-      </View>
       <View style={styles.meta}>
         <Image style={styles.image} source={source} />
         <Text style={styles.title}>{title}</Text>
