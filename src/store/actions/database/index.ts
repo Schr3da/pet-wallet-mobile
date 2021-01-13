@@ -1,7 +1,6 @@
 import {ICombinedReducerState} from "../../reducers";
 
 import {initDatabase} from "../../reducers/database/db";
-
 import {getSettings, ISettingsEntity} from "../../reducers/database/db/settings";
 
 export const ON_INIT_DATA_FROM_DATABASE = "ON_INIT_DATA_FROM_DATABASE";

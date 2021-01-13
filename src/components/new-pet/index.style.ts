@@ -1,5 +1,4 @@
 import {ViewStyle} from "react-native";
-import { reducer } from "../../store/reducers/navigation";
 
 import {ITheme} from "../../theme";
 

@@ -3,7 +3,6 @@ import React from "react";
 import {Text, View} from "react-native";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
-
 import {StyledButton} from "../styled-button";
 
 import {applyStyles} from './index.style';

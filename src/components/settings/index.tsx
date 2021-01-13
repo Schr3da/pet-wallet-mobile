@@ -1,21 +1,14 @@
 import * as React from "react";
 
 import {Text, View} from "react-native";
-
 import {useDispatch} from "react-redux";
 
-import {getTranslation, LanguageTypes} from "../../language";
-
 import {ImageButton} from "../../components/common/image-button";
-
+import {getTranslation, LanguageTypes} from "../../language";
 import {onChangeCurrentTheme, onChangeLanguage} from "../../store/actions/layout";
-
 import {onChangeViewComponent, ViewComponents, SubViewComponents} from "../../store/actions/navigation";
-
 import {onRequestDataDeletion} from "../../store/actions/database";
-
 import {createStyle, ThemeTypes, getColors} from "../../theme";
-
 import {Layout, Notification} from "../common";
 
 import {applyStyles} from "./index.style";

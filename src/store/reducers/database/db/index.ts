@@ -3,7 +3,6 @@ import SQLite from "react-native-sqlite-storage";
 import type {ILayoutState} from "../../layout";
 
 import {init, dropDatabase} from "./query";
-
 import {initSettingsTable} from "./settings";
 
 const initScheme = async (

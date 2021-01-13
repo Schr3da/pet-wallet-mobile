@@ -1,6 +1,6 @@
-import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
-
 import type {IHeader, ISettings, IWelcome} from "../index";
+
+import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
 
 const header: IHeader = {
   [ViewComponents.splash]: {

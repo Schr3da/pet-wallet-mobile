@@ -1,5 +1,4 @@
 import {ThemeTypes} from "../../../theme";
-
 import {LanguageTypes} from "../../../language";
 
 export const ON_CHANGE_CURRENT_THEME = "ON_CHANGE_CURRENT_THEME";

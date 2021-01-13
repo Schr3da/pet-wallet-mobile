@@ -1,22 +1,18 @@
 import * as React from "react";
 
 import {Image, View} from "react-native";
-
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ICombinedReducerState} from "../../store/reducers";
 
+import {Loader} from "../common/loader";
 import {Splash} from "../../store/actions";
-
 import {createStyle, ThemeTypes} from "../../theme";
-
 import {LanguageTypes} from "../../language";
 
 import {applyStyles} from "./index.style";
 
-import {Loader} from "../common/loader";
-
-import {onInitDataFromDatabase, initStateFromDatabase} from "../../store/actions/database";
+import {initStateFromDatabase} from "../../store/actions/database";
 
 interface IProps {
   isAnimating: boolean;

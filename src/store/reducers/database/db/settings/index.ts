@@ -1,7 +1,6 @@
 import {createTable, select, insert} from "../query";
 
 import {ThemeTypes} from "../../../../../theme";
-
 import {LanguageTypes} from "../../../../../language";
 
 export interface ISettingsEntity {

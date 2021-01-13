@@ -1,15 +1,11 @@
 import * as React from 'react';
 
 import {SafeAreaView, StatusBar, View} from 'react-native';
-
 import {useSelector} from "react-redux";
 
 import {Help, NewPet, Settings, Splash, TermsAndConditions, Welcome} from "../components";
-
 import {ICombinedReducerState} from "../store/reducers";
-
 import {ViewComponents} from "../store/actions/navigation";
-
 import {createStyle, ThemeTypes} from "../theme";
 
 import {applyStyles} from "./index.style";

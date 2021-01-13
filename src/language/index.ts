@@ -1,9 +1,7 @@
 import {Platform, NativeModules} from "react-native";
 
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
-
 import {DE} from "./de";
-
 import {EN} from "./en";
 
 export enum LanguageTypes {

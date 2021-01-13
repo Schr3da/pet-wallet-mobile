@@ -3,9 +3,7 @@ import React from "react";
 import {Image, View} from "react-native";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-
 import {ILayoutChildProps} from "../../common/layout";
-
 import {AddPetBar} from "../add-pet-bar";
 
 import {applyStyles} from './index.style';

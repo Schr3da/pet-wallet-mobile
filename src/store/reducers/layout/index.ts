@@ -1,7 +1,5 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
-
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
-
 import {Layout, Splash, Database} from "../../actions";
 
 export interface ILayoutState {

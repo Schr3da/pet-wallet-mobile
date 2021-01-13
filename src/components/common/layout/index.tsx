@@ -1,21 +1,20 @@
 import * as React from "react";
 
 import {ImageSourcePropType, KeyboardAvoidingView, Platform, View} from "react-native";
-
 import {useDispatch, useSelector} from "react-redux";
-
 import {ScrollView} from "react-native-gesture-handler";
 
+import {
+  onChangeViewComponent,
+  onGoBackNavigation,
+  SubViewComponents, 
+  ViewComponents
+} from "../../../store/actions/navigation";
+
 import {ICombinedReducerState} from "../../../store/reducers";
-
-import {onChangeViewComponent, onGoBackNavigation, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
-
 import {createStyle, ThemeTypes} from "../../../theme";
-
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
-
 import {ImageButton} from "../image-button";
-
 import {Header} from "../header";
 
 import {applyStyles} from "./index.style";

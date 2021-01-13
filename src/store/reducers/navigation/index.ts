@@ -1,7 +1,5 @@
 import {getTranslation, LanguageTypes} from "../../../language";
-
 import {SubViewComponents, ViewComponents} from "../../actions/navigation";
-
 import {Layout, Navigation, Splash} from "../../actions";
 
 export interface INavigationState {

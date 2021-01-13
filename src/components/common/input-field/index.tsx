@@ -3,7 +3,6 @@ import * as React from "react";
 import {TextInput} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
-
 import {InputValues} from "../../../store/actions/new-pet";
 
 import {applyStyles} from "./index.style";

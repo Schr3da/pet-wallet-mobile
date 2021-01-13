@@ -3,11 +3,8 @@ import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {createStyle} from "../../theme";
-
 import {Layout, InputField} from "../common";
-
 import {InputValues, onInputFieldChange, InputIds} from "../../store/actions/new-pet";
-
 import {ICombinedReducerState} from "../../store/reducers";
 
 import {applyStyles} from "./index.style";

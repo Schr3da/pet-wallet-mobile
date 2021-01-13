@@ -2,17 +2,8 @@ import * as React from "react";
 
 import {Image, ImageSourcePropType, Text, View} from "react-native";
 
-import {useDispatch} from "react-redux";
-
-import {onChangeViewComponent, onGoBackNavigation, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
-
 import {createStyle, ThemeTypes} from "../../../theme";
-
 import {ILayoutChildProps} from "../layout";
-
-import {LanguageTypes} from "../../../language";
-
-import {ImageButton} from "../image-button";
 
 import {applyStyles} from "./index.style";
 

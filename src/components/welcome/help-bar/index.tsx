@@ -1,17 +1,13 @@
 import * as React from "react";
 
 import {Text, View} from "react-native";
-
 import {useDispatch} from "react-redux";
-
-import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
-
-import {createStyle, getColors} from "../../../theme";
-
-import {LanguageTypes} from "../../../language";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
+import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
+import {createStyle, getColors} from "../../../theme";
+import {LanguageTypes} from "../../../language";
 import {StyledButton} from "../../common";
 
 import {applyStyles} from "./index.style";

@@ -3,7 +3,6 @@ import * as React from "react";
 import {Image, ImageSourcePropType} from "react-native";
 
 import {createStyleWithoutTheme} from "../../../theme";
-
 import {StyledButton} from "../styled-button";
 
 import {applyStyles} from "./index.style";

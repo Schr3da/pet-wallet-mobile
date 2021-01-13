@@ -1,5 +1,7 @@
-import {createStore, applyMiddleware} from '@reduxjs/toolkit'
 import thunk from "redux-thunk";
+
+import {createStore, applyMiddleware} from '@reduxjs/toolkit'
+
 import {reducer} from './reducers'
 
 const store = createStore(
