@@ -35,9 +35,6 @@ export const applyStyles = (
     opacity: 1,
   },
   notificationWrapper: {
-    position: "absolute",  
-    bottom: 0,
-    right: 0,
-    left: 0,
+      marginTop: 40
   } as ViewStyle,
 });

@@ -2,8 +2,10 @@ import * as React from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 
+import {launchCamera, launchImageLibrary} from "react-native-image-picker";
+
 import {createStyle} from "../../theme";
-import {Layout, InputField} from "../common";
+import {Layout, InputField, StyledButton} from "../common";
 import {InputValues, onInputFieldChange, InputIds} from "../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../store/reducers";
 
@@ -71,29 +73,17 @@ export const Component = () => {
               value={stateProps.inputs[InputIds.age]}
               onChange={(id, value) => handleInputChange(id, value, dispatch)}
             />
-             <InputField 
-              id={InputIds.age}
-              style={styles.inputField}
-              placeholder="Age"
-              theme={theme}
-              value={stateProps.inputs[InputIds.age]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            <StyledButton 
+              style={{marginTop: 40}}
+              color="#ff00ff"
+              title={"Take photo"}
+              onPress={() => launchCamera(null, () => undefined)}
             />
-            <InputField 
-              id={InputIds.age}
-              style={styles.inputField}
-              placeholder="Age"
-              theme={theme}
-              value={stateProps.inputs[InputIds.age]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
-            />
-            <InputField 
-              id={InputIds.age}
-              style={styles.inputField}
-              placeholder="Age"
-              theme={theme}
-              value={stateProps.inputs[InputIds.age]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
+            <StyledButton 
+              style={{marginTop: 40}}
+              color="#ff00ff"
+              title={"Image picker"}
+              onPress={() => launchImageLibrary(null, () => undefined)}
             />
           </React.Fragment>
         );

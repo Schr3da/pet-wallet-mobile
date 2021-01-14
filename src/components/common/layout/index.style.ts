@@ -11,14 +11,19 @@ export const applyStyles = (
     overflow: "hidden",
   } as ViewStyle,
   scrollContainer: {
+    width: "100%",
     flex: 1,
-  },
+  } as ViewStyle,
   navigation: {
     width: "100%",
     marginTop: 10,
     height: 20,
     display: "flex",
     flexDirection: "row",
+  } as ViewStyle,
+  layoutWrapper: {
+    alignItems: "center",
+    flex: 1,
   } as ViewStyle,
   rowLeft: {
     flex: 1,

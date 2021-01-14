@@ -12,11 +12,14 @@ export const applyStyles = (
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 10,
+    backgroundColor: theme.color11,
+  } as ViewStyle,
+  input: {
+    width: "100%",
     fontSize: 16,
     color: theme.color8,
-    backgroundColor: theme.color11,
-  } as ViewStyle
+  }
 });
 
 

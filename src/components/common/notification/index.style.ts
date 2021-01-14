@@ -5,6 +5,7 @@ import {ITheme} from "../../../theme";
 export const applyStyles = (color: string) => (theme: ITheme) => ({ 
   container: {
     width: "100%",
+    maxWidth: 320,
     height: 60,
     padding: 10,
     alignItems: "center",

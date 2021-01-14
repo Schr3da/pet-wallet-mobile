@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {TextInput} from "react-native";
+import {TextInput, View} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
@@ -23,13 +23,16 @@ export const InputField = (props: IProps) => {
   const colors = getColors(theme);
 
   return (
-    <TextInput
-      style={{...styles.container, ...style}}
-      placeholder={placeholder}
-      onChangeText={text => onChange(id, text)}
-      placeholderTextColor={colors.color12}
-      value={value as any}
-    />
+    <View style={{...styles.container, ...style}}>
+      <TextInput
+        clearButtonMode={"while-editing"}
+        style={styles.input}
+        placeholder={placeholder}
+        onChangeText={text => onChange(id, text)}
+        placeholderTextColor={colors.color12}
+        value={value as any}
+      />
+    </View>
   );
 }
 

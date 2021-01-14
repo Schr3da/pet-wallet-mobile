@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {ImageSourcePropType, KeyboardAvoidingView, Platform, View} from "react-native";
+import {Dimensions, ImageSourcePropType, KeyboardAvoidingView, Platform, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {ScrollView} from "react-native-gesture-handler";
 
@@ -12,6 +12,7 @@ import {
 } from "../../../store/actions/navigation";
 
 import {ICombinedReducerState} from "../../../store/reducers";
+import {DisplayModes, onChangeDisplayMode} from "../../../store/actions/layout";
 import {createStyle, ThemeTypes} from "../../../theme";
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
 import {ImageButton} from "../image-button";
@@ -28,6 +29,7 @@ interface IStateProps {
   path: string[];
   mainViewComponent: ViewComponents;
   subViewComponent: SubViewComponents;
+  displayMode: DisplayModes;
 }
 
 const stateToProps = (
@@ -37,6 +39,7 @@ const stateToProps = (
   description: state.navigation.description,
   theme: state.layout.theme,  
   language: state.layout.language,
+  displayMode: state.layout.displayMode,
   mainViewComponent: state.navigation.mainViewComponent,
   subViewComponent: state.navigation.subViewComponent,
   path: state.navigation.path,
@@ -50,6 +53,7 @@ export interface ILayoutChildProps {
   hasPets: boolean;
   mainViewComponent: ViewComponents, 
   subViewComponent: SubViewComponents,
+  displayMode: DisplayModes,
 }
 
 interface IProps {
@@ -61,13 +65,17 @@ interface IProps {
 const getChildProps = (
   props: IStateProps
 ): ILayoutChildProps => {
-  const language = getTranslation(props.language);
+  const {theme, hasPets, mainViewComponent, subViewComponent, displayMode} = props;
+  const languageType = props.language;
+  const language = getTranslation(languageType);
+
   return {
-    theme: props.theme, 
-    hasPets: props.hasPets,
-    mainViewComponent: props.mainViewComponent,
-    subViewComponent: props.subViewComponent,
-    languageType: props.language,
+    theme, 
+    hasPets,
+    mainViewComponent,
+    subViewComponent,
+    languageType,
+    displayMode,
     language,
   };
 };
@@ -75,7 +83,7 @@ const getChildProps = (
 const isiOS = (): boolean => {
   const identifier = (Platform.OS || "").toLowerCase();
   return identifier === "ios";
-}
+};
 
 const hasBackButton = (
   path: string[] 
@@ -102,14 +110,26 @@ const handleSettingsPressed = (
     language,
   ));
 
+const handleDisplayModeChange = (
+  dispatch: any,
+) => ({window}: any) => 
+  window.width > window.height ? 
+    dispatch(onChangeDisplayMode(DisplayModes.landscape)) :
+    dispatch(onChangeDisplayMode(DisplayModes.portrait));
+
 export const Layout = (props: IProps): JSX.Element =>  {
 
   const dispatch = useDispatch();
 
   const stateProps = useSelector(stateToProps);
   
+  React.useEffect(() => {
+    Dimensions.addEventListener("change", handleDisplayModeChange(dispatch));
+    return () => Dimensions.removeEventListener("change", handleDisplayModeChange(dispatch));
+  }, []);
+
   const {imageSource, childRenderer, footerRenderer} = props;
-  const {path, theme, title, description, language} = stateProps;
+  const {displayMode, path, theme, title, description, language} = stateProps;
 
   const childProps = getChildProps(stateProps);
   const styles = createStyle(theme, applyStyles); 
@@ -154,16 +174,25 @@ export const Layout = (props: IProps): JSX.Element =>  {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <Header
-          {...childProps}
-          title={title}
-          description={description}
-          path={path}
-          source={imageSource}
-        />
-        {childRenderer(childProps)}  
+        <View style={styles.layoutWrapper}>
+          <Header
+            {...childProps}
+            title={title}
+            description={description}
+            path={path}
+            source={imageSource}
+          />
+          {childRenderer(childProps)} 
+          {displayMode === DisplayModes.landscape &&
+            footerRenderer && 
+            footerRenderer(childProps)
+          } 
+        </View>
       </ScrollView>
-      {footerRenderer && footerRenderer(childProps)}
+      {displayMode === DisplayModes.portrait && 
+        footerRenderer &&
+        footerRenderer(childProps)
+      }
     </KeyboardAvoidingView>
   );
 };

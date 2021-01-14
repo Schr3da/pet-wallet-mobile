@@ -5,11 +5,21 @@ import {Layout, Splash, Database} from "../../actions";
 export interface ILayoutState {
   language: LanguageTypes,
   theme: ThemeTypes,
+  displayMode: Layout.DisplayModes,
 }
 
 const initialState = (): ILayoutState => ({
   language: getDeviceLanguage(),
   theme: getDeviceTheme(),
+  displayMode: Layout.DisplayModes.portrait,
+});
+
+const changeDisplayMode = (
+  state: ILayoutState,
+  displayMode: Layout.DisplayModes,
+): ILayoutState => state.displayMode === displayMode ? state : ({
+  ...state,
+  displayMode
 });
 
 const changeLanguage = (
@@ -42,6 +52,8 @@ type Actions = Layout.Actions | Splash.Actions | Database.Actions;
 
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
+    case Layout.ON_CHANGE_DISPLAY_MODE:
+      return changeDisplayMode(state, action.next);
     case Layout.ON_CHANGE_LANGUAGE:
       return changeLanguage(state, action.next);
     case Layout.ON_CHANGE_CURRENT_THEME:
