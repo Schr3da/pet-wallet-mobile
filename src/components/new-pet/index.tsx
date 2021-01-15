@@ -2,14 +2,13 @@ import * as React from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 
-import {launchCamera, launchImageLibrary} from "react-native-image-picker";
-
-import {createStyle} from "../../theme";
-import {Layout, InputField, StyledButton} from "../common";
+import {createStyle, ThemeTypes} from "../../theme";
+import {Layout, InputField, ImagePicker} from "../common";
 import {InputValues, onInputFieldChange, InputIds} from "../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../store/reducers";
 
 import {applyStyles} from "./index.style";
+import {Image} from "react-native";
 
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};
@@ -41,6 +40,17 @@ export const Component = () => {
         const styles = createStyle(theme, applyStyles); 
         return (
           <React.Fragment>
+            <Image
+              style={styles.placeholderIcon}
+              source={theme === ThemeTypes.Light ? 
+                require("../../../assets/png/light/new-pet-profile-icon.png") :
+                require("../../../assets/png/dark/new-pet-profile-icon.png")
+              }
+              />
+            <ImagePicker 
+              style={styles.picker}
+              theme={theme}
+            />
             <InputField 
               id={InputIds.name}
               style={styles.inputField}
@@ -72,18 +82,6 @@ export const Component = () => {
               theme={theme}
               value={stateProps.inputs[InputIds.age]}
               onChange={(id, value) => handleInputChange(id, value, dispatch)}
-            />
-            <StyledButton 
-              style={{marginTop: 40}}
-              color="#ff00ff"
-              title={"Take photo"}
-              onPress={() => launchCamera(null, () => undefined)}
-            />
-            <StyledButton 
-              style={{marginTop: 40}}
-              color="#ff00ff"
-              title={"Image picker"}
-              onPress={() => launchImageLibrary(null, () => undefined)}
             />
           </React.Fragment>
         );

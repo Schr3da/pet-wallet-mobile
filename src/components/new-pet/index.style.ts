@@ -14,6 +14,14 @@ export const applyStyles = (
   scrollContainer: {
     flex: 1,
   },
+  placeholderIcon: {
+    maxWidth: 180,
+    maxHeight: 170,
+  },
+  picker: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
   inputField: {
     marginBottom: 10,
     width: 280,

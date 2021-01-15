@@ -117,7 +117,9 @@ const handleDisplayModeChange = (
     dispatch(onChangeDisplayMode(DisplayModes.landscape)) :
     dispatch(onChangeDisplayMode(DisplayModes.portrait));
 
-export const Layout = (props: IProps): JSX.Element =>  {
+export const Layout = (
+  props: IProps
+): JSX.Element =>  {
 
   const dispatch = useDispatch();
 
