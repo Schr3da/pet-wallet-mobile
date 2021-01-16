@@ -13,7 +13,8 @@ export enum SubViewComponents {
   none = "none",
   welcomeNoPets = "welcomeNoPets",
   welcomeWithPets = "welcomeWithPets",
-  newPetType = "newPetType",
+  newPetInformation = "newPetInformation",
+  newPetScan = "newPetScan",
 }
 
 export const ON_CHANGE_VIEW_COMPONENT = "ON_CHANGE_VIEW_COMPONENT";

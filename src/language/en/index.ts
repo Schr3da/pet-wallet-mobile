@@ -1,4 +1,4 @@
-import type {IHeader, ISettings, IWelcome} from "../index";
+import type {IHeader, ISettings, IWelcome, INewPet} from "../index";
 
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
 
@@ -20,10 +20,14 @@ const header: IHeader = {
     }
   },
   [ViewComponents.newPet]: {
-    [SubViewComponents.newPetType]: {
+    [SubViewComponents.newPetInformation]: {
       title: "New Pet",
-      description: "Choose your pet and continue with next.",
-    }
+      description: "Enter some information of your pet and continue by pressing next.",
+    },
+    [SubViewComponents.newPetScan]: {
+      title: "Digital Pass",
+      description: "Take photos of your pets pass and we convert it in a digital form",
+    },
   },
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
@@ -78,8 +82,19 @@ const settings: ISettings = {
   },
 };
 
+const newPet: INewPet = {
+  [SubViewComponents.newPetInformation]: {
+    primaryButton: "Continue"
+  },
+  [SubViewComponents.newPetScan]: {
+    primaryButton: "Continue"
+  }
+}
+
+
 export const EN = {
   header,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
+  [ViewComponents.newPet]: newPet,
 }

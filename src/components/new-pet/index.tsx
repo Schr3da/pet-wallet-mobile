@@ -1,90 +1,25 @@
 import * as React from "react";
 
-import {useDispatch, useSelector} from "react-redux";
+import {Layout} from "../common";
+import {SubViewComponents} from "../../store/actions/navigation";
 
-import {createStyle, ThemeTypes} from "../../theme";
-import {Layout, InputField, ImagePicker} from "../common";
-import {InputValues, onInputFieldChange, InputIds} from "../../store/actions/new-pet";
-import {ICombinedReducerState} from "../../store/reducers";
-
-import {applyStyles} from "./index.style";
-import {Image} from "react-native";
-
-interface IStateProps {
-  inputs: {[key in InputIds]: InputValues};
-}
-
-const stateToProps = (
-  state: ICombinedReducerState
-): IStateProps => ({
-  inputs: state.newPet.inputs,
-});
-
-const handleInputChange = (
-  id: string,
-  value: InputValues,
-  dispatch: any,
-) => dispatch(onInputFieldChange(id, value)) ;
+import {InformationView} from "./information-view";
+import {PassView} from "./pass-view";
 
 export const Component = () => {
-
-  const stateProps = useSelector(stateToProps);
-  
-  const dispatch = useDispatch();
 
   return (
     <Layout
       imageSource={require("../../../assets/png/add-pet-header-icon.png")}
       childRenderer={(props) => {
-        const {theme} = props;
-        const styles = createStyle(theme, applyStyles); 
-        return (
-          <React.Fragment>
-            <Image
-              style={styles.placeholderIcon}
-              source={theme === ThemeTypes.Light ? 
-                require("../../../assets/png/light/new-pet-profile-icon.png") :
-                require("../../../assets/png/dark/new-pet-profile-icon.png")
-              }
-              />
-            <ImagePicker 
-              style={styles.picker}
-              theme={theme}
-            />
-            <InputField 
-              id={InputIds.name}
-              style={styles.inputField}
-              placeholder="Name"
-              theme={theme}
-              value={stateProps.inputs[InputIds.name]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
-            />
-            <InputField 
-              id={InputIds.race}
-              style={styles.inputField}
-              placeholder="Race"
-              theme={theme}
-              value={stateProps.inputs[InputIds.race]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
-            />
-            <InputField 
-              id={InputIds.dateOfBirth}
-              style={styles.inputField}
-              placeholder="Date of birth"
-              theme={theme}
-              value={stateProps.inputs[InputIds.dateOfBirth]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
-            />
-            <InputField 
-              id={InputIds.age}
-              style={styles.inputField}
-              placeholder="Age"
-              theme={theme}
-              value={stateProps.inputs[InputIds.age]}
-              onChange={(id, value) => handleInputChange(id, value, dispatch)}
-            />
-          </React.Fragment>
-        );
+        switch (props.subViewComponent) {            
+          case SubViewComponents.newPetInformation:
+            return <InformationView {...props}/>;
+          case SubViewComponents.newPetScan:
+            return <PassView {...props}/>; 
+          default: 
+            return null;
+        }
       }}  
     />
   );

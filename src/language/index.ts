@@ -52,10 +52,20 @@ export interface ISettings {
   }
 }
 
+export interface INewPet {
+  [SubViewComponents.newPetInformation]: {
+    primaryButton: string; 
+  },
+  [SubViewComponents.newPetScan]: {
+    primaryButton: string; 
+  }
+}
+
 export interface ILanguage {
   header: IHeader
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
+  [ViewComponents.newPet]: INewPet;
 }
 
 export const getTranslation = (

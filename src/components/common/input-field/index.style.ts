@@ -9,14 +9,14 @@ export const applyStyles = (
     width: "100%",
     maxWidth: 300,
     borderRadius: 1000,
-    paddingTop: 10,
-    paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 10,
     backgroundColor: theme.color11,
   } as ViewStyle,
   input: {
     width: "100%",
+    paddingTop: 10,
+    paddingBottom: 10,
     fontSize: 16,
     color: theme.color8,
   }

@@ -58,7 +58,7 @@ export interface ILayoutChildProps {
 
 interface IProps {
   imageSource: ImageSourcePropType;
-  childRenderer: (props: ILayoutChildProps) => React.ReactFragment;
+  childRenderer: (props: ILayoutChildProps) => React.ReactFragment | null;
   footerRenderer?: (props: ILayoutChildProps) => React.ReactChild; 
 }
 

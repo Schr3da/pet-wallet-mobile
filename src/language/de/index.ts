@@ -1,6 +1,6 @@
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
 
-import type {IHeader, ISettings, IWelcome} from "../index";
+import type {IHeader, ISettings, IWelcome, INewPet} from "../index";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -20,10 +20,14 @@ const header: IHeader = {
     }
   },
   [ViewComponents.newPet]: {
-    [SubViewComponents.newPetType]: {
+    [SubViewComponents.newPetInformation]: {
       title: "Neues Haustier",
-      description: "Wähle dein Haustier und bestätige deine Auswahl mit Weiter.",
-    }
+      description: "Gib ein paar Informationen über dein Haustier ein und bestätige diese mit Weiter.",
+    },
+    [SubViewComponents.newPetScan]: {
+      title: "Digitaler Impfpass",
+      description: "Photographiere den Impfass deines Haustieres und wir digitalisieren ihn sofort.",
+    },
   },
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
@@ -78,19 +82,18 @@ const settings: ISettings = {
   },
 };
 
-const addPet = {
-  [SubViewComponents.newPetType]: {
-    categories: {
-      
-
-    }
+const newPet: INewPet = {
+  [SubViewComponents.newPetInformation]: {
+    primaryButton: "Weiter"
+  },
+  [SubViewComponents.newPetScan]: {
+    primaryButton: "Weiter"
   }
-}
-
-
+};
 
 export const DE = {
   header,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
+  [ViewComponents.newPet]: newPet,
 };

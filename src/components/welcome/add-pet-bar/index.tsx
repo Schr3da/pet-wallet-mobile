@@ -17,7 +17,7 @@ const addNewPet = (
 ) => { 
   dispatch(onChangeViewComponent(
     ViewComponents.newPet,
-    SubViewComponents.newPetType,
+    SubViewComponents.newPetInformation,
     language,
   ));
 }

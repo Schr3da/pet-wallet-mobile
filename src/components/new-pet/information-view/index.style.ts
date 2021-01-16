@@ -1,6 +1,6 @@
 import {ViewStyle} from "react-native";
 
-import {ITheme} from "../../theme";
+import {ITheme} from "../../../theme";
 
 export const applyStyles = (
   _: ITheme
@@ -25,5 +25,19 @@ export const applyStyles = (
   inputField: {
     marginBottom: 10,
     width: 280,
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    maxWidth: 280,
+  } as ViewStyle,
+  dateOfBirth: {
+    flex: 2,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  age: {
+    flex: 1,
+    marginBottom: 10,
   }
 });

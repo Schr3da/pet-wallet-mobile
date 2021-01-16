@@ -1,3 +1,5 @@
+import * as RoundedButtons from "./rounded-button";
+
 import {Header} from "./header";
 import {Layout} from "./layout";
 import {StyledButton} from "./styled-button";
@@ -11,5 +13,6 @@ export {
   InputField,
   Layout,
   Notification,
+  RoundedButtons,
   StyledButton
 }
