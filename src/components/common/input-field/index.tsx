@@ -30,6 +30,7 @@ export const InputField = (props: IProps) => {
         placeholder={placeholder}
         onChangeText={text => onChange(id, text)}
         placeholderTextColor={colors.color12}
+        returnKeyType="done"
         value={value as any}
       />
     </View>

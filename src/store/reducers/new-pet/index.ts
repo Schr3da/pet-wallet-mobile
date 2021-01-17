@@ -28,6 +28,8 @@ const reducer = (
   switch (action.type) {
     case NewPet.ON_INPUT_FIELD_CHANGE: 
       return handleInputChange(state, action.id, action.value);
+    case NewPet.ON_CANCEL_NEW_PET:
+      return initialState();
     default:
       return state;
   };

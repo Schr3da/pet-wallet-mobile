@@ -1,3 +1,5 @@
+import {LanguageTypes} from "../../../language";
+
 export enum InputIds {
   age = "age",
   name = "name",
@@ -23,6 +25,23 @@ export const onInputFieldChange= (
   value
 });
 
+export const ON_CANCEL_NEW_PET = "ON_CANCEL_NEW_PET";
+interface IOnCancelNewPet {
+  type: typeof ON_CANCEL_NEW_PET;
+  language: LanguageTypes;
+  hasPets: boolean;
+}
+
+export const onCancelNewPet = (
+  language: LanguageTypes,
+  hasPets: boolean,
+): IOnCancelNewPet => ({
+  type: ON_CANCEL_NEW_PET,
+  language,
+  hasPets,
+});
+
 export type Actions = 
   | IOnInputFieldChange 
+  | IOnCancelNewPet
 ;

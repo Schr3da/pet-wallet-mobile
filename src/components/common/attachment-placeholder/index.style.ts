@@ -1,26 +1,30 @@
 import {ViewStyle} from "react-native";
 
-import {ITheme} from "../../../theme";
+import type {ITheme} from "../../../theme";
 
 export const applyStyles = (
-  theme: ITheme
-) => ({ 
+  theme: ITheme  
+) => ({
   container: {
-    width: "100%",
-    maxWidth: 300,
+    flex: 1,
     borderRadius: 1000,
     paddingLeft: 20,
     paddingRight: 10,
     backgroundColor: theme.color11,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   } as ViewStyle,
-  input: {
-    width: "100%",
+  text: {
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 16,
     color: theme.color12,
+    flex: 1,
+  },
+  button: {
+    flexBasis: 18,
+    width: 18,
+    height: 18,
   }
 });
-
-
-

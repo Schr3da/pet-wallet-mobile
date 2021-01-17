@@ -6,8 +6,10 @@ import {StyledButton} from "./styled-button";
 import {InputField} from "./input-field";
 import {Notification} from "./notification";
 import {ImagePicker} from "./image-picker";
+import {AttachmentPlaceholder} from "./attachment-placeholder";
 
 export {
+  AttachmentPlaceholder,
   Header,
   ImagePicker,
   InputField,

@@ -1,6 +1,7 @@
 import type {IHeader, ISettings, IWelcome, INewPet} from "../index";
 
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
+import {SecondaryButton} from "../../components/common/rounded-button";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -84,10 +85,12 @@ const settings: ISettings = {
 
 const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
-    primaryButton: "Continue"
+    primaryButton: "Continue",
+    secondaryButton: "Cancel"
   },
   [SubViewComponents.newPetScan]: {
-    primaryButton: "Continue"
+    primaryButton: "Save",
+    secondaryButton: "Cancel"
   }
 }
 

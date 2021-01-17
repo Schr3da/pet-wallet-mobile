@@ -1,6 +1,6 @@
 import {getTranslation, LanguageTypes} from "../../../language";
 import {SubViewComponents, ViewComponents} from "../../actions/navigation";
-import {Layout, Navigation, Splash} from "../../actions";
+import {Layout, Navigation, Splash, NewPet} from "../../actions";
 
 export interface INavigationState {
   title: string;
@@ -98,7 +98,19 @@ const goBack = (
   }, language);
 }
 
-type Actions = Layout.Actions | Navigation.Actions | Splash.Actions;
+export const showHome = (
+  state: INavigationState,
+  language: LanguageTypes,
+  hasPets: boolean,
+) => changeViews(state, 
+  Navigation.ViewComponents.welcome,
+  hasPets ? 
+    Navigation.SubViewComponents.welcomeWithPets :
+    Navigation.SubViewComponents.welcomeNoPets,
+  language,
+); 
+
+type Actions = Layout.Actions | Navigation.Actions | Splash.Actions | NewPet.Actions;
 
 export const reducer = (
   state: INavigationState = initialState(),
@@ -108,19 +120,15 @@ export const reducer = (
     case Layout.ON_CHANGE_LANGUAGE:
       return changeHeader(state, action.next);
     case Splash.ON_SPLASH_ANIMATION_COMPLETE:
-      return changeViews(state, 
-        Navigation.ViewComponents.welcome,
-        action.hasPets ? 
-          Navigation.SubViewComponents.welcomeWithPets :
-          Navigation.SubViewComponents.welcomeNoPets,
-        action.language,
-      ); 
+      return showHome(state, action.language, action.hasPets);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:
       return changeViews(state, action.nextMainView, action.nextSubView, action.language); 
     case Navigation.ON_CHANGE_SUBVIEW_COMPONENT:
       return changeSubview(state, action.next, action.language);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return goBack(state, action.language);
+    case NewPet.ON_CANCEL_NEW_PET:
+      return showHome(state, action.language, action.hasPets);
     default: 
       return state;
   }

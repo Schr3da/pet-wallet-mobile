@@ -15,11 +15,18 @@ export const applyStyles = (
     flex: 1,
   },
   placeholderIcon: {
-    maxWidth: 142,
-    maxHeight: 170,
+    maxWidth: 112,
+    maxHeight: 140,
   },
   picker: {
     marginTop: 20,
     marginBottom: 20,
   },
+  attachmentsWrapper: {
+    maxWidth: 260,
+    width: "100%",
+  },
+  attachment: {
+    marginBottom: 10,
+  }
 });

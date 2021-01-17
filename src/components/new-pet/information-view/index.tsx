@@ -9,7 +9,7 @@ import {createStyle, ThemeTypes} from "../../../theme";
 import {ImagePicker, InputField, RoundedButtons} from "../../common";
 import {InputIds, InputValues} from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {handleInputChange, handleChangeSubView} from "../hooks";
+import {handleInputChange, handleChangeSubView, handleCancelNewPet} from "../hooks";
 
 import {applyStyles} from "./index.style";
 import {SubViewComponents} from "../../../store/actions/navigation";
@@ -33,7 +33,7 @@ export const InformationView = (
   
   const stateProps = useSelector(stateToProps);
 
-  const {theme, languageType} = props;
+  const {hasPets, theme, languageType} = props;
   const styles = createStyle(theme, applyStyles); 
 
   const translation = getTranslation(languageType);
@@ -86,12 +86,17 @@ export const InformationView = (
         />
       </View>
       <RoundedButtons.PrimaryButton
-          theme={theme}
-          title={translation.newPet.newPetInformation.primaryButton}
-          style={{marginTop: 10}}
-          onPress={() => handleChangeSubView(dispatch, SubViewComponents.newPetScan, languageType)}
+        theme={theme}
+        title={translation.newPet.newPetInformation.primaryButton}
+        style={{marginTop: 20}}
+        onPress={() => handleChangeSubView(dispatch, SubViewComponents.newPetScan, languageType)}
+      />
+      <RoundedButtons.SecondaryButton
+        theme={theme}
+        title={translation.newPet.newPetInformation.secondaryButton}
+        style={{marginTop: 10}}
+        onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
         />
       </React.Fragment>
   );
-
 }

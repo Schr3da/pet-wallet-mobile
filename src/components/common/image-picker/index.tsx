@@ -24,12 +24,17 @@ const handlePress = (
 ) => {
   setState(type);
 
+  const options = {
+    includeBase64: true,
+    mediaType: "photo",
+  };
+
   if (type === ImagePickerTypes.camera) {
-    launchCamera(null, () => undefined);
+    launchCamera(options, (data: any) => console.log(data));
   }
 
   if (type === ImagePickerTypes.picker) {
-    launchImageLibrary(null, () => undefined);
+    launchImageLibrary(options, (data: any) => console.log(data));
   }
 };
 

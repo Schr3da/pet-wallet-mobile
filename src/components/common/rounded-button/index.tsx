@@ -60,8 +60,8 @@ export const SecondaryButton = (props: IButtonProps) => {
 
   return (
     <RoundedButton
-      background={colors.color6}
-      color={colors.color3}
+      background={colors.color1}
+      color={colors.color4}
       title={title}
       style={style}
       onPress={onPress}

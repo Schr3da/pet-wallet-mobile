@@ -1,0 +1,26 @@
+import * as React from "react";
+
+import {View, Text} from "react-native";
+
+import {createStyle, ThemeTypes} from "../../../theme";
+
+import {applyStyles} from "./index.style";
+
+interface IProps {
+  theme: ThemeTypes;
+}
+
+export const AttachmentPlaceholder = (
+  props: IProps
+) => {
+  const {theme} = props;
+  const styles = createStyle(theme, applyStyles);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        Placeholder
+      </Text>
+    </View>
+  );
+}

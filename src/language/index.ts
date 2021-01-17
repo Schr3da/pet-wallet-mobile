@@ -55,9 +55,11 @@ export interface ISettings {
 export interface INewPet {
   [SubViewComponents.newPetInformation]: {
     primaryButton: string; 
+    secondaryButton: string;
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: string; 
+    secondaryButton: string;
   }
 }
 

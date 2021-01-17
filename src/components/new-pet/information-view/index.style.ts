@@ -15,8 +15,8 @@ export const applyStyles = (
     flex: 1,
   },
   placeholderIcon: {
-    maxWidth: 180,
-    maxHeight: 170,
+    maxWidth: 150,
+    maxHeight: 140,
   },
   picker: {
     marginTop: 20,
