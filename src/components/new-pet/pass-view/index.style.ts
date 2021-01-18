@@ -23,8 +23,7 @@ export const applyStyles = (
     marginBottom: 20,
   },
   attachmentsWrapper: {
-    maxWidth: 260,
-    width: "100%",
+    width: 280,
   },
   attachment: {
     marginBottom: 10,

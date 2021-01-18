@@ -132,6 +132,6 @@ export const reducer = (
     default: 
       return state;
   }
-}
+};
 
 export const navigation = reducer; 

@@ -30,6 +30,7 @@ interface IStateProps {
   mainViewComponent: ViewComponents;
   subViewComponent: SubViewComponents;
   displayMode: DisplayModes;
+  focus: string | null;
 }
 
 const stateToProps = (
@@ -44,6 +45,7 @@ const stateToProps = (
   subViewComponent: state.navigation.subViewComponent,
   path: state.navigation.path,
   hasPets: (state.pets.data || []).length !== 0, 
+  focus: state.layout.focus,
 });
 
 export interface ILayoutChildProps {
@@ -59,7 +61,7 @@ export interface ILayoutChildProps {
 interface IProps {
   imageSource: ImageSourcePropType;
   childRenderer: (props: ILayoutChildProps) => React.ReactFragment | null;
-  footerRenderer?: (props: ILayoutChildProps) => React.ReactChild; 
+  footerRenderer?: (props: ILayoutChildProps) => React.ReactChild | null; 
 }
 
 const getChildProps = (
@@ -131,7 +133,7 @@ export const Layout = (
   }, []);
 
   const {imageSource, childRenderer, footerRenderer} = props;
-  const {displayMode, path, theme, title, description, language} = stateProps;
+  const {displayMode, focus, path, theme, title, description, language} = stateProps;
 
   const childProps = getChildProps(stateProps);
   const styles = createStyle(theme, applyStyles); 
@@ -192,6 +194,7 @@ export const Layout = (
         </View>
       </ScrollView>
       {displayMode === DisplayModes.portrait && 
+        focus == null &&
         footerRenderer &&
         footerRenderer(childProps)
       }

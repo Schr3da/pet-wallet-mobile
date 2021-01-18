@@ -56,10 +56,15 @@ export interface INewPet {
   [SubViewComponents.newPetInformation]: {
     primaryButton: string; 
     secondaryButton: string;
+    scanErrorTitle: string;
+    scanErrorMessage: string;
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: string; 
     secondaryButton: string;
+    scanErrorTitle: string;
+    scanErrorMessage: string;
+    attachmentLabel: string;
   }
 }
 

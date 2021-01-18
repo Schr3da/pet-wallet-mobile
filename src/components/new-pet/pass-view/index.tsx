@@ -1,26 +1,54 @@
 import React from "react";
 
-import {Image, View, Text} from "react-native";
-import {useDispatch} from "react-redux";
+import {Image, View} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {getTranslation} from "../../../language";
 import {ImagePicker, RoundedButtons, AttachmentPlaceholder} from "../../common";
-import {handleCancelNewPet} from "../hooks";
+import {ICombinedReducerState} from "../../../store/reducers";
+import {onScan, IImageData, onRemoveScan, InputValues, onPreviewScan, onSaveNewPet} from "../../../store/actions/new-pet";
+import {handleCancelNewPet, handleError, handleInputChange} from "../hooks";
 
 import {applyStyles} from "./index.style";
 
-export const PassView = (props: ILayoutChildProps) => {
+interface IStateProps {
+  attachments: IImageData[];
+  inputs: {[key: string]: InputValues}; 
+}
+
+const stateToProps = (
+  state: ICombinedReducerState
+): IStateProps => ({
+  attachments: state.newPet.scans,
+  inputs: state.newPet.inputs,
+});
+
+const handleScanImage = (
+  dispatch: any,
+  data: IImageData
+) => dispatch(onScan(data));
+
+const handleRemove = (
+  dispatch: any,
+  id: string
+) => dispatch(onRemoveScan(id));
+
+const handlePreview = (
+  dispatch: any,
+  id: string
+) => dispatch(onPreviewScan(id));
+
+export const ChildView = (props: ILayoutChildProps) => {
 
   const dispatch = useDispatch();
 
-  const {theme, languageType, hasPets} = props;
+  const stateProps = useSelector(stateToProps);
+
+  const {theme, language} = props;
   const styles = createStyle(theme, applyStyles); 
   
-  const translation = getTranslation(languageType);
-
   return (
     <React.Fragment>
       <Image
@@ -33,37 +61,61 @@ export const PassView = (props: ILayoutChildProps) => {
       <ImagePicker 
         style={styles.picker}
         theme={theme}
+        maxWidth={280}
+        maxHeight={280}
+        onError={() => handleError(dispatch,
+          language.newPet.newPetScan.scanErrorTitle,
+          language.newPet.newPetScan.scanErrorMessage,
+        )}
+        onData={(data) => handleScanImage(dispatch, data)}
       />
       <View style={styles.attachmentsWrapper}>
-        <AttachmentPlaceholder 
-          theme={theme}
-          title="Attachment-1"
-          style={styles.attachment}
-        />
-        <AttachmentPlaceholder 
-          theme={theme} 
-          title="Attachment-2"
-          style={styles.attachment}
-        />
-        <AttachmentPlaceholder 
-          theme={theme} 
-          title="Attachment-3"
-          style={styles.attachment}
-        />
+        {stateProps.attachments.map((a, index) => {
+          let title = stateProps.inputs[a.id];
+          
+          if (title === null) {
+            title = language.newPet.newPetScan.attachmentLabel + " " + (index + 1);
+          }
+
+          return (
+            <AttachmentPlaceholder 
+              id={a.id}
+              key={a.id}
+              theme={theme}
+              title={title}
+              style={styles.attachment}
+              onChange={(id, text) => handleInputChange(id, text, dispatch)}
+              onRemove={(id) => handleRemove(dispatch, id)}
+              onPreview={(id) => handlePreview(dispatch, id)}
+            />
+          );
+        })}
       </View>
+    </React.Fragment>
+  );
+}
+
+export const Footer = (
+  props: ILayoutChildProps
+) => {
+  const dispatch = useDispatch();
+  
+  const {theme, language, languageType, hasPets} = props;
+
+  return (
+    <React.Fragment>
       <RoundedButtons.PrimaryButton
         theme={theme}
-        title={translation.newPet.newPetScan.primaryButton}
+        title={language.newPet.newPetScan.primaryButton}
         style={{marginTop: 20}}
-        onPress={() => undefined}
+        onPress={() => dispatch(onSaveNewPet())}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
-        title={translation.newPet.newPetScan.secondaryButton}
+        title={language.newPet.newPetScan.secondaryButton}
         style={{marginTop: 10}}
         onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
-        />
+      />
     </React.Fragment>
   );
-
 }

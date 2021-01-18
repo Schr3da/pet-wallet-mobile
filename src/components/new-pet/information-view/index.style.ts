@@ -3,7 +3,7 @@ import {ViewStyle} from "react-native";
 import {ITheme} from "../../../theme";
 
 export const applyStyles = (
-  _: ITheme
+  theme: ITheme
 ) => ({ 
   container: {
     flex: 1,
@@ -15,8 +15,16 @@ export const applyStyles = (
     flex: 1,
   },
   placeholderIcon: {
-    maxWidth: 150,
-    maxHeight: 140,
+    width: 150,
+    height: 140,
+  },
+  profileImage: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    borderWidth: 6,
+    backgroundColor: theme.color11,
+    borderColor: theme.color11,
   },
   picker: {
     marginTop: 20,

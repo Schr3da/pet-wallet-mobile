@@ -1,14 +1,16 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
-import {Layout, Splash, Database} from "../../actions";
+import {Layout, Splash, Database, Navigation} from "../../actions";
 
 export interface ILayoutState {
-  language: LanguageTypes,
-  theme: ThemeTypes,
-  displayMode: Layout.DisplayModes,
+  focus: string | null;
+  language: LanguageTypes;
+  theme: ThemeTypes;
+  displayMode: Layout.DisplayModes;
 }
 
 const initialState = (): ILayoutState => ({
+  focus: null,
   language: getDeviceLanguage(),
   theme: getDeviceTheme(),
   displayMode: Layout.DisplayModes.portrait,
@@ -48,7 +50,20 @@ const applyLanguageAndTheme = (
   return changeLanguage(next, language);
 };
 
-type Actions = Layout.Actions | Splash.Actions | Database.Actions;
+const changeFocus = (
+  state: ILayoutState,
+  id: string | null,
+) => ({
+  ...state,
+  focus: id,
+});
+
+type Actions = 
+  | Database.Actions 
+  | Layout.Actions 
+  | Navigation.Actions 
+  | Splash.Actions
+;
 
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
@@ -58,6 +73,14 @@ const reducer = (state = initialState(), action: Actions) => {
       return changeLanguage(state, action.next);
     case Layout.ON_CHANGE_CURRENT_THEME:
       return changeTheme(state, action.next);
+    case Layout.ON_FOCUS:
+      return changeFocus(state, action.id);
+    case Navigation.ON_GO_BACK_NAVIGATION:
+      return changeFocus(state, null);
+    case Navigation.ON_CHANGE_VIEW_COMPONENT:
+      return changeFocus(state, null);
+    case Navigation.ON_CHANGE_SUBVIEW_COMPONENT:
+      return changeFocus(state, null);
     case Database.ON_INIT_DATA_FROM_DATABASE:
       const {language, theme} = action.settings;
       return applyLanguageAndTheme(state, language, theme);

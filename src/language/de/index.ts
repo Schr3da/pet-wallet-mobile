@@ -86,11 +86,16 @@ const settings: ISettings = {
 const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
     primaryButton: "Weiter",
-    secondaryButton: "Abbrechen"
+    secondaryButton: "Abbrechen",
+    scanErrorTitle: "Zurgiff verweigert",
+    scanErrorMessage: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen."
   },
   [SubViewComponents.newPetScan]: {
-    primaryButton: "Speichern",
-    secondaryButton: "Abbrechen"
+    primaryButton: "Übernehmen",
+    secondaryButton: "Abbrechen",
+    scanErrorTitle: "Zurgiff verweigert",
+    scanErrorMessage: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
+    attachmentLabel: "Anhang mit Titel"
   }
 };
 

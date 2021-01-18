@@ -45,8 +45,39 @@ export const onChangeLanguage = (
   next, 
 });
 
+export const ON_SHOW_ERROR = "ON_SHOW_ERROR";
+interface IOnShowError {
+  type: typeof ON_SHOW_ERROR;
+  title: string;
+  message: string;
+};
+
+export const showError = (
+  title: string,
+  message: string,
+): IOnShowError => ({
+  type: ON_SHOW_ERROR,
+  title, 
+  message,
+});
+
+
+export const ON_FOCUS = "ON_FOCUS";
+export interface IOnFocus{
+  type: typeof ON_FOCUS
+  id: string | null
+}
+
+export const onFocus = (
+  id: string | null
+): IOnFocus => ({
+  type: ON_FOCUS,
+  id,
+})
+
 export type Actions = 
   | IOnChangeCurrentTheme
   | IOnChangeLanguage
   | IOnChangeDisplayMode
+  | IOnFocus
 ;

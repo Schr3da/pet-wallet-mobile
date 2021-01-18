@@ -3,6 +3,8 @@ import * as React from "react";
 import {View, ViewStyle} from "react-native";
 import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 
+import type {IImageData} from "../../../store/actions/new-pet";
+
 import {createStyle, ThemeTypes} from "../../../theme";
 import {ImageButton} from "../image-button";
 
@@ -13,42 +15,87 @@ enum ImagePickerTypes {
   picker,
 }
 
-interface IProps {
-  theme: ThemeTypes;
-  style?: ViewStyle;
+export enum ScanErrorTypes {
+  unavailable = "camera_unavailable",
+  permission = "permission",
+  others = "others"
 }
 
 const handlePress = (
   type: ImagePickerTypes,
   setState: (type: ImagePickerTypes) => void,
-) => {
+  maxWidth: number,
+  maxHeight: number,
+) => new Promise<IImageData | null> ((resolve) => {
   setState(type);
 
   const options = {
     includeBase64: true,
     mediaType: "photo",
+    maxWidth,
+    maxHeight,
   };
 
   if (type === ImagePickerTypes.camera) {
-    launchCamera(options, (data: any) => console.log(data));
+    return launchCamera(options, async (data: any) =>
+      hasError(data) === true || data.imageBase64 == null ? resolve(null) :
+      resolve({
+        id: Date.now().toString(),
+        uri: data.uri,
+        imageBase64: data.base64,
+        fileSize: data.fileSize,
+        width: data.width,
+        height: data.height,
+        fileType: data.type,
+        didCancel: data.didCancel,
+      })
+    );
   }
 
   if (type === ImagePickerTypes.picker) {
-    launchImageLibrary(options, (data: any) => console.log(data));
+    return launchImageLibrary(options, async (data: any) => { 
+      hasError(data) === true ? resolve(null) : 
+      resolve({
+        id: Date.now().toString(),
+        uri: data.uri,
+        imageBase64: data.base64,
+        fileSize: data.fileSize,
+        width: data.width,
+        height: data.height,
+        fileType: data.type,
+        didCancel: data.didCancel,
+      })
+    });
   }
-};
+});
+
+const hasError = (
+  code: string
+): boolean => 
+  ScanErrorTypes.permission === code ||
+  ScanErrorTypes.unavailable === code ||
+  ScanErrorTypes.others === code;
 
 const isSelected = (
   type: ImagePickerTypes,
   condition: ImagePickerTypes
 ) => type === condition; 
 
+interface IProps {
+  theme: ThemeTypes;
+  style?: ViewStyle;
+  maxWidth: number;
+  maxHeight: number;
+  onData: (data: IImageData) => void;
+  onError: () => void;
+}
+
 export const ImagePicker = (
   props: IProps
 ): JSX.Element => {
   const [currentType, setType]= React.useState(ImagePickerTypes.camera)
 
-  const {theme} = props;
+  const {maxWidth, maxHeight, theme, onData, onError} = props;
   const style = props.style || {};
 
   const styles = createStyle(theme, applyStyles);
@@ -72,7 +119,18 @@ export const ImagePicker = (
         )
       }
         style={styles.image(isCameraSelected)}
-        onPress={() => handlePress(ImagePickerTypes.camera, setType)}
+        onPress={async () => {
+          const data = await handlePress(ImagePickerTypes.camera, setType, maxWidth, maxHeight);
+          if (data == null) {
+            return onError();
+          }
+          
+          if (data.didCancel === true) {
+            return;
+          }
+
+          onData(data);
+        }}
       />
       <ImageButton
         source={theme === ThemeTypes.Light ? 
@@ -88,7 +146,18 @@ export const ImagePicker = (
           )
         }
         style={styles.image(isPickerSelected)}
-        onPress={() => handlePress(ImagePickerTypes.picker, setType)}
+        onPress={async () => {
+          const data = await handlePress(ImagePickerTypes.picker, setType, maxWidth, maxHeight);
+          if (data == null) {
+            return onError();
+          }
+
+          if (data.didCancel === true) {
+            return;
+          }
+
+          onData(data);
+        }}
       />
     </View>
   );

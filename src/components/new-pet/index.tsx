@@ -1,10 +1,11 @@
 import * as React from "react";
 
+import * as InformationViews from "./information-view";
+
 import {Layout} from "../common";
 import {SubViewComponents} from "../../store/actions/navigation";
 
-import {InformationView} from "./information-view";
-import {PassView} from "./pass-view";
+import * as PassViews from "./pass-view";
 
 export const Component = () => {
 
@@ -14,13 +15,23 @@ export const Component = () => {
       childRenderer={(props) => {
         switch (props.subViewComponent) {            
           case SubViewComponents.newPetInformation:
-            return <InformationView {...props}/>;
+            return <InformationViews.ChildView {...props}/>;
           case SubViewComponents.newPetScan:
-            return <PassView {...props}/>; 
+            return <PassViews.ChildView {...props}/>; 
           default: 
             return null;
         }
-      }}  
+      }}
+      footerRenderer={(props) => {
+        switch (props.subViewComponent) {            
+          case SubViewComponents.newPetInformation:
+            return <InformationViews.Footer {...props} />;
+          case SubViewComponents.newPetScan:
+            return <PassViews.Footer {...props} />;
+          default: 
+            return null;
+        }
+      }}
     />
   );
 }

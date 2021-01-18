@@ -89,11 +89,11 @@ const newPet: INewPet = {
     secondaryButton: "Cancel"
   },
   [SubViewComponents.newPetScan]: {
-    primaryButton: "Save",
-    secondaryButton: "Cancel"
+    primaryButton: "Finish",
+    secondaryButton: "Cancel",
+    attachmentLabel: "Attachment with label"
   }
 }
-
 
 export const EN = {
   header,

@@ -4,8 +4,15 @@ import {TextInput, View} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
+import {onFocus} from "../../../store/actions/layout";
 
 import {applyStyles} from "./index.style";
+import {useDispatch} from "react-redux";
+
+const handleFocus = (
+  dispatch: any,
+  id: string | null
+) => dispatch(onFocus(id));
 
 interface IProps {
   id: string;
@@ -17,6 +24,9 @@ interface IProps {
 }
 
 export const InputField = (props: IProps) => {
+
+  const dispatch = useDispatch();
+
   const {id, placeholder, style, theme, value, onChange} = props;
 
   const styles = createStyle(theme, applyStyles);
@@ -29,6 +39,8 @@ export const InputField = (props: IProps) => {
         style={styles.input}
         placeholder={placeholder}
         onChangeText={text => onChange(id, text)}
+        onFocus={() => handleFocus(dispatch, id)}
+        onEndEditing={() => handleFocus(dispatch, null)}
         placeholderTextColor={colors.color12}
         returnKeyType="done"
         value={value as any}

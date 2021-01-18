@@ -15,10 +15,11 @@ export const applyStyles = (
     flexDirection: "row",
     alignItems: "center",
   } as ViewStyle,
-  text: {
+  input: {
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 16,
+    marginRight: 40,
     color: theme.color12,
     flex: 1,
   },
