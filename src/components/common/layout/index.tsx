@@ -44,7 +44,7 @@ const stateToProps = (
   mainViewComponent: state.navigation.mainViewComponent,
   subViewComponent: state.navigation.subViewComponent,
   path: state.navigation.path,
-  hasPets: (state.pets.data || []).length !== 0, 
+  hasPets: state.navigation.hasPets, 
   focus: state.layout.focus,
 });
 

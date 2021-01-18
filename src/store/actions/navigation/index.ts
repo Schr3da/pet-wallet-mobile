@@ -65,8 +65,25 @@ export const onGoBackNavigation = (
   language,
 });
 
+export const ON_SHOW_HOME_COMPONENT = "ON_SHOW_HOME_COMPONENT";
+interface IOnShowHomeComponent {
+  type: typeof ON_SHOW_HOME_COMPONENT;
+  language: LanguageTypes;
+  hasPets: boolean;
+}
+
+export const onShowHomeComponent = (
+  language: LanguageTypes,
+  hasPets: boolean
+): IOnShowHomeComponent => ({
+  type: ON_SHOW_HOME_COMPONENT,
+  language,
+  hasPets,
+});
+
 export type Actions =  
   | IOnGoBackNavigation
   | IOnChangeViewComponent
   | IOnChangeSubViewComponent
+  | IOnShowHomeComponent
 ;

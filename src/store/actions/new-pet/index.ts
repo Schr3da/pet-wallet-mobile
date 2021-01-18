@@ -1,5 +1,6 @@
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
+import {onShowHomeComponent} from "../navigation";
 
 export interface IImageData {
   id: string;
@@ -111,9 +112,14 @@ export const onPreviewScan = (
 
 export const onSaveNewPet = () => (
   dispatch: any,
-  _: () => ICombinedReducerState
+  getState: () => ICombinedReducerState
 ) => {
-  console.log("on save new pet");
+  const state = getState();
+
+  dispatch(onShowHomeComponent(
+    state.layout.language,
+    true,
+  ));
 };
 
 export type Actions = 

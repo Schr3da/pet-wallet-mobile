@@ -62,7 +62,7 @@ const welcome: IWelcome = {
   },
   [SubViewComponents.welcomeWithPets]: {
     addPetBar: {
-      description: "Füge ein weiteres Haustier zu deiner persönlichen Pet Wallet jederzeit hinzu.", 
+      description: "Füge ein weiteres Haustier jederzeit hinzu.", 
       button: "Hinzufügen",
     },
   }
@@ -95,7 +95,7 @@ const newPet: INewPet = {
     secondaryButton: "Abbrechen",
     scanErrorTitle: "Zurgiff verweigert",
     scanErrorMessage: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
-    attachmentLabel: "Anhang mit Titel"
+    attachmentLabel: "Anhang"
   }
 };
 

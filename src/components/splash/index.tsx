@@ -28,7 +28,7 @@ const stateToProps = (
   isAnimating: state.splash.isAnimating,
   language: state.layout.language,
   theme: state.layout.theme,
-  hasPets: state.pets.data.length !== 0,
+  hasPets: state.navigation.hasPets,
   hasLoadedDatabase: state.database.hasLoadedDatabase,
 });
 

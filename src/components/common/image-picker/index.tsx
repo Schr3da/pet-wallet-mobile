@@ -38,7 +38,7 @@ const handlePress = (
 
   if (type === ImagePickerTypes.camera) {
     return launchCamera(options, async (data: any) =>
-      hasError(data) === true || data.imageBase64 == null ? resolve(null) :
+      hasError(data) === true ? resolve(null) :
       resolve({
         id: Date.now().toString(),
         uri: data.uri,

@@ -91,7 +91,7 @@ const newPet: INewPet = {
   [SubViewComponents.newPetScan]: {
     primaryButton: "Finish",
     secondaryButton: "Cancel",
-    attachmentLabel: "Attachment with label"
+    attachmentLabel: "Attachment"
   }
 }
 

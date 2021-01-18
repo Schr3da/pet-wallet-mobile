@@ -45,6 +45,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
   const stateProps = useSelector(stateToProps);
+  const {inputs, attachments} = stateProps;
 
   const {theme, language} = props;
   const styles = createStyle(theme, applyStyles); 
@@ -70,8 +71,8 @@ export const ChildView = (props: ILayoutChildProps) => {
         onData={(data) => handleScanImage(dispatch, data)}
       />
       <View style={styles.attachmentsWrapper}>
-        {stateProps.attachments.map((a, index) => {
-          let title = stateProps.inputs[a.id];
+        {attachments.map((a, index) => {
+          let title = inputs[a.id];
           
           if (title === null) {
             title = language.newPet.newPetScan.attachmentLabel + " " + (index + 1);

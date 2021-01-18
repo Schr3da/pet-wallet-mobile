@@ -1,6 +1,6 @@
 import React, {Dispatch} from "react";
 
-import {Text, View} from "react-native";
+import {Text, View, ViewStyle} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {ILayoutChildProps} from "../../common/layout";
@@ -22,8 +22,12 @@ const addNewPet = (
   ));
 }
 
-export const AddPetBar = (props: ILayoutChildProps): JSX.Element =>  {
-  const {theme, language, languageType, hasPets} = props; 
+interface IProps extends ILayoutChildProps {
+  style: ViewStyle; 
+}
+
+export const AddPetBar = (props: IProps): JSX.Element =>  {
+  const {theme, language, languageType, hasPets, style} = props; 
 
   const dispatch = useDispatch();
 
@@ -35,7 +39,7 @@ export const AddPetBar = (props: ILayoutChildProps): JSX.Element =>  {
     language.welcome.welcomeNoPets.addPetBar;
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...(style || {})}}>
       <Text style={styles.text}>{description}</Text>
       <StyledButton
         color={colors.color3}
