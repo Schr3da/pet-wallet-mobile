@@ -5,7 +5,8 @@ import {
   ImageSourcePropType,
   KeyboardAvoidingView,
   Platform,
-  View
+  ScrollView,
+  View,
 } from "react-native";
 
 import {useDispatch, useSelector} from "react-redux";
@@ -18,12 +19,11 @@ import {
 } from "../../../store/actions/navigation";
 
 import {ICombinedReducerState} from "../../../store/reducers";
-import {DisplayModes, onChangeDisplayMode} from "../../../store/actions/layout";
+import {DisplayModes, onChangeDisplayMode, getDisplayMode} from "../../../store/actions/layout";
 import {createStyle, ThemeTypes} from "../../../theme";
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
 import {ImageButton} from "../image-button";
 import {Header} from "../header";
-import {LayoutWrapper} from "./wrapper";
 
 import {applyStyles} from "./index.style";
 
@@ -131,9 +131,8 @@ const handleDisplayModeChange = (
   dispatch: any,
 ) => ({window}: any) => { 
   const {width, height} = window;
-  width > height ? 
-    dispatch(onChangeDisplayMode(DisplayModes.landscape, width, height)) :
-    dispatch(onChangeDisplayMode(DisplayModes.portrait, width, height));
+  const mode = getDisplayMode(width, height);
+  dispatch(onChangeDisplayMode(mode, width, height));
 };
 
 export const Layout = (
@@ -150,7 +149,7 @@ export const Layout = (
   }, []);
 
   const {imageSource, childRenderer, footerRenderer} = props;
-  const {displayMode, focus, path, theme, title, description, language, mainViewComponent, subViewComponent} = stateProps;
+  const {displayMode, focus, path, theme, title, description, language} = stateProps;
 
   const childProps = getChildProps(stateProps);
   const styles = createStyle(theme, applyStyles); 
@@ -189,10 +188,12 @@ export const Layout = (
           }
         </View>
       </View>
-      <LayoutWrapper 
-        mainViewComponent={mainViewComponent}
-        subViewComponent={subViewComponent}
+      <ScrollView 
+        bounces={true}
         style={styles.layoutWrapper}
+        nestedScrollEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.contentViewWrapper}>
           <Header
@@ -208,7 +209,7 @@ export const Layout = (
             footerRenderer(childProps)
           } 
         </View>
-      </LayoutWrapper>
+      </ScrollView>
       {displayMode === DisplayModes.portrait && 
         focus == null &&
         footerRenderer &&

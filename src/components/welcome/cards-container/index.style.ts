@@ -7,9 +7,13 @@ export const applyStyles = (
 ) => ({
   container: {
     width: "100%",
-    height: 200,
+    height: 180,
+    maxWidth: 380,
+    marginTop: 18,
+    marginBottom: 20,
+    alignItems: "center",
   } as ViewStyle,
   list: {
-
-  }
+    width: "100%",
+  } as ViewStyle,
 });

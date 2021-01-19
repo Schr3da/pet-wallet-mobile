@@ -1,5 +1,3 @@
-import {Dimensions} from "react-native";
-
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
@@ -13,21 +11,15 @@ export interface ILayoutState {
   screenHeight: number;
 }
 
-const getScreenSize = () => {
-  const window = Dimensions.get("window");
-  return {
-    width: window.width,
-    height: window.height,
-  }
-}
-
 const initialState = (): ILayoutState => {
-  const screen = getScreenSize();
+  const screen = Layout.getScreenSize();
+  const mode = Layout.getDisplayMode(screen.width, screen.height);
+
   return {
     focus: null,
     language: getDeviceLanguage(),
     theme: getDeviceTheme(),
-    displayMode: Layout.DisplayModes.portrait,
+    displayMode: mode,
     screenWidth: screen.width,
     screenHeight: screen.height,
   };

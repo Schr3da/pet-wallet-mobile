@@ -6,8 +6,9 @@ export const applyStyles = (
   hasProfile: boolean
 ) => (theme: ITheme) => ({
   container: {
-    width: 300,
+    width: "100%",
     height: 120,
+    maxWidth: 380,
     borderRadius: 25,
     display: "flex",
     overflow: "hidden",

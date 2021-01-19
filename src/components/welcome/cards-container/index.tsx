@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {View, FlatList} from "react-native";
+import {View, ScrollView} from "react-native";
 import {connect} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
@@ -29,11 +29,13 @@ class Container extends React.Component<IProps, {}> {
 
     return (
       <View style={styles.container}>
-        <FlatList 
+        <ScrollView
           style={styles.list}
-          data={data} 
-          keyExtractor={(_) => "1"}
-          renderItem={(_) => {
+          bounces={true}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          {data.map((_, index) => {
             const entity = {
               id: "1",
               name: "Gino",
@@ -44,10 +46,14 @@ class Container extends React.Component<IProps, {}> {
             };
 
             return (
-              <Card data={entity} theme={theme}/>
+              <Card 
+                key={index}
+                data={entity} 
+                theme={theme}
+              />
             );
-          }}
-        />
+          })}
+        </ScrollView>
       </View>
     );
   }
@@ -57,7 +63,7 @@ const mapStateToProps = (
   state: ICombinedReducerState, 
   ownProps: ILayoutChildProps
 ): IProps => ({
-  data: [state.pets.data],
+  data: [1],
   ...ownProps
 })
 

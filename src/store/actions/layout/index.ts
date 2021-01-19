@@ -1,5 +1,22 @@
+import {Dimensions} from "react-native"; 
+
 import {ThemeTypes} from "../../../theme";
 import {LanguageTypes} from "../../../language";
+
+export const getScreenSize = () => {
+  const window = Dimensions.get("window");
+  return {
+    width: window.width,
+    height: window.height,
+  };
+};
+
+export const getDisplayMode = (
+  width: number,
+  height: number,
+) => width > height ? 
+  DisplayModes.landscape :
+  DisplayModes.portrait; 
 
 export enum DisplayModes {
   portrait = "portrait",

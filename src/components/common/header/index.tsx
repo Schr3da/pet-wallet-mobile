@@ -31,7 +31,10 @@ export const Header = (
       <View style={styles.meta}>
         <Image style={styles.image} source={source} />
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.text}>{description || ""}</Text>
+        {description == null || description === "" ? null :
+        <Text style={styles.text}>
+          {description} 
+        </Text>}
       </View>
     </View>
   );
