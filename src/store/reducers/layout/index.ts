@@ -1,3 +1,5 @@
+import {Dimensions} from "react-native";
+
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
@@ -7,21 +9,40 @@ export interface ILayoutState {
   language: LanguageTypes;
   theme: ThemeTypes;
   displayMode: Layout.DisplayModes;
+  screenWidth: number;
+  screenHeight: number;
 }
 
-const initialState = (): ILayoutState => ({
-  focus: null,
-  language: getDeviceLanguage(),
-  theme: getDeviceTheme(),
-  displayMode: Layout.DisplayModes.portrait,
-});
+const getScreenSize = () => {
+  const window = Dimensions.get("window");
+  return {
+    width: window.width,
+    height: window.height,
+  }
+}
+
+const initialState = (): ILayoutState => {
+  const screen = getScreenSize();
+  return {
+    focus: null,
+    language: getDeviceLanguage(),
+    theme: getDeviceTheme(),
+    displayMode: Layout.DisplayModes.portrait,
+    screenWidth: screen.width,
+    screenHeight: screen.height,
+  };
+}
 
 const changeDisplayMode = (
   state: ILayoutState,
   displayMode: Layout.DisplayModes,
+  screenWidth: number,
+  screenHeight: number,
 ): ILayoutState => state.displayMode === displayMode ? state : ({
   ...state,
-  displayMode
+  displayMode,
+  screenWidth,
+  screenHeight,
 });
 
 const changeLanguage = (
@@ -68,7 +89,7 @@ type Actions =
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
     case Layout.ON_CHANGE_DISPLAY_MODE:
-      return changeDisplayMode(state, action.next);
+      return changeDisplayMode(state, action.mode, action.width, action.height);
     case Layout.ON_CHANGE_LANGUAGE:
       return changeLanguage(state, action.next);
     case Layout.ON_CHANGE_CURRENT_THEME:

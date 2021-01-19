@@ -9,14 +9,20 @@ export enum DisplayModes {
 export const ON_CHANGE_DISPLAY_MODE = "ON_CHANGE_DISPLAY_MODE";
 interface IOnChangeDisplayMode{
   type: typeof ON_CHANGE_DISPLAY_MODE;
-  next: DisplayModes;
+  mode: DisplayModes;
+  width: number;
+  height: number;
 }
 
 export const onChangeDisplayMode = (
-  next: DisplayModes
+  mode: DisplayModes,
+  width: number,
+  height: number,
 ): IOnChangeDisplayMode => ({
   type: ON_CHANGE_DISPLAY_MODE,
-  next, 
+  mode, 
+  width,
+  height,
 });
 
 export const ON_CHANGE_CURRENT_THEME = "ON_CHANGE_CURRENT_THEME";

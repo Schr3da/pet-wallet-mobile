@@ -10,10 +10,6 @@ export const applyStyles = (
     alignItems: "center",
     overflow: "hidden",
   } as ViewStyle,
-  scrollContainer: {
-    width: "100%",
-    flex: 1,
-  } as ViewStyle,
   navigation: {
     width: "100%",
     marginTop: 10,
@@ -22,6 +18,10 @@ export const applyStyles = (
     flexDirection: "row",
   } as ViewStyle,
   layoutWrapper: {
+    width: "100%",
+    flex: 1,
+  } as ViewStyle,
+  contentViewWrapper: {
     alignItems: "center",
     flex: 1,
   } as ViewStyle,

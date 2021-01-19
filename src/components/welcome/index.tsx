@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import {View} from "react-native";
 
 import {createStyleWithoutTheme} from "../../theme";
 import {AddPetBar} from "./add-pet-bar";
 import {Layout} from "../common";
 import {Box} from "./box";
 import {HelpBar} from "./help-bar";
+import {CardsContainer} from "./cards-container";
 
 import {applyStyles} from "./index.style";
 
@@ -21,10 +21,7 @@ export const Component = (): JSX.Element =>  {
         const {hasPets} = props;
         return (
           <React.Fragment>
-            {hasPets === false ?
-              <Box {...props}/> :
-              <View></View>
-            }
+            {hasPets === false ? <Box {...props}/> : <CardsContainer {...props}/>}
           </React.Fragment>
         );
       }}  
@@ -32,10 +29,7 @@ export const Component = (): JSX.Element =>  {
         const {hasPets} = props;
         return (
           <React.Fragment>
-            {hasPets === false ?
-              <HelpBar {...props}/> :
-              <AddPetBar {...props} style={styles}/>
-            }
+            {hasPets === false ? <HelpBar {...props}/> : <AddPetBar {...props} style={styles}/>}
           </React.Fragment>
         );
       }}

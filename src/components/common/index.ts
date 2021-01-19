@@ -7,9 +7,11 @@ import {InputField} from "./input-field";
 import {Notification} from "./notification";
 import {ImagePicker} from "./image-picker";
 import {AttachmentPlaceholder} from "./attachment-placeholder";
+import {Card} from "./card";
 
 export {
   AttachmentPlaceholder,
+  Card,
   Header,
   ImagePicker,
   InputField,

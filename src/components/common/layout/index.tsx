@@ -1,8 +1,14 @@
 import * as React from "react";
 
-import {Dimensions, ImageSourcePropType, KeyboardAvoidingView, Platform, View} from "react-native";
+import {
+  Dimensions, 
+  ImageSourcePropType,
+  KeyboardAvoidingView,
+  Platform,
+  View
+} from "react-native";
+
 import {useDispatch, useSelector} from "react-redux";
-import {ScrollView} from "react-native-gesture-handler";
 
 import {
   onChangeViewComponent,
@@ -17,6 +23,7 @@ import {createStyle, ThemeTypes} from "../../../theme";
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
 import {ImageButton} from "../image-button";
 import {Header} from "../header";
+import {LayoutWrapper} from "./wrapper";
 
 import {applyStyles} from "./index.style";
 
@@ -31,6 +38,8 @@ interface IStateProps {
   subViewComponent: SubViewComponents;
   displayMode: DisplayModes;
   focus: string | null;
+  screenWidth: number;
+  screenHeight: number;
 }
 
 const stateToProps = (
@@ -46,6 +55,8 @@ const stateToProps = (
   path: state.navigation.path,
   hasPets: state.navigation.hasPets, 
   focus: state.layout.focus,
+  screenWidth: state.layout.screenWidth,
+  screenHeight: state.layout.screenHeight,
 });
 
 export interface ILayoutChildProps {
@@ -53,9 +64,11 @@ export interface ILayoutChildProps {
   language: ILanguage;
   languageType: LanguageTypes;
   hasPets: boolean;
-  mainViewComponent: ViewComponents, 
-  subViewComponent: SubViewComponents,
-  displayMode: DisplayModes,
+  mainViewComponent: ViewComponents;
+  subViewComponent: SubViewComponents;
+  displayMode: DisplayModes;
+  screenWidth: number;
+  screenHeight: number;
 }
 
 interface IProps {
@@ -67,7 +80,7 @@ interface IProps {
 const getChildProps = (
   props: IStateProps
 ): ILayoutChildProps => {
-  const {theme, hasPets, mainViewComponent, subViewComponent, displayMode} = props;
+  const {theme, hasPets, mainViewComponent, subViewComponent, displayMode, screenWidth, screenHeight} = props;
   const languageType = props.language;
   const language = getTranslation(languageType);
 
@@ -79,6 +92,8 @@ const getChildProps = (
     languageType,
     displayMode,
     language,
+    screenWidth,
+    screenHeight,
   };
 };
 
@@ -114,10 +129,12 @@ const handleSettingsPressed = (
 
 const handleDisplayModeChange = (
   dispatch: any,
-) => ({window}: any) => 
-  window.width > window.height ? 
-    dispatch(onChangeDisplayMode(DisplayModes.landscape)) :
-    dispatch(onChangeDisplayMode(DisplayModes.portrait));
+) => ({window}: any) => { 
+  const {width, height} = window;
+  width > height ? 
+    dispatch(onChangeDisplayMode(DisplayModes.landscape, width, height)) :
+    dispatch(onChangeDisplayMode(DisplayModes.portrait, width, height));
+};
 
 export const Layout = (
   props: IProps
@@ -133,7 +150,7 @@ export const Layout = (
   }, []);
 
   const {imageSource, childRenderer, footerRenderer} = props;
-  const {displayMode, focus, path, theme, title, description, language} = stateProps;
+  const {displayMode, focus, path, theme, title, description, language, mainViewComponent, subViewComponent} = stateProps;
 
   const childProps = getChildProps(stateProps);
   const styles = createStyle(theme, applyStyles); 
@@ -172,13 +189,12 @@ export const Layout = (
           }
         </View>
       </View>
-      <ScrollView 
-        bounces={true}
-        style={styles.scrollContainer}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
+      <LayoutWrapper 
+        mainViewComponent={mainViewComponent}
+        subViewComponent={subViewComponent}
+        style={styles.layoutWrapper}
       >
-        <View style={styles.layoutWrapper}>
+        <View style={styles.contentViewWrapper}>
           <Header
             {...childProps}
             title={title}
@@ -192,7 +208,7 @@ export const Layout = (
             footerRenderer(childProps)
           } 
         </View>
-      </ScrollView>
+      </LayoutWrapper>
       {displayMode === DisplayModes.portrait && 
         focus == null &&
         footerRenderer &&

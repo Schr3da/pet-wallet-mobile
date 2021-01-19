@@ -21,3 +21,8 @@ export enum PetTypes {
   burro,
   other,
 };
+
+export interface IPetDto {
+  
+}
+

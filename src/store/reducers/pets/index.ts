@@ -1,5 +1,7 @@
+import type {IPetDto} from "../../../dto/pets";
+
 export interface IPetsState {
-  data: any[];
+  data: IPetDto[];
 }
 
 const initialState = (): IPetsState => ({
