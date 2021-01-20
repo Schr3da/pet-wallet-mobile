@@ -10,8 +10,8 @@ export enum LanguageTypes {
 }
 
 export interface IHeader {
-  [key: string]: {
-    [L in SubViewComponents]: {
+  [K: string]: {
+    [L: string]: {
       title: string;
       description: string;
     };

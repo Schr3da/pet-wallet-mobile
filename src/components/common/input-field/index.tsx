@@ -37,6 +37,7 @@ export const InputField = (props: IProps) => {
       <TextInput
         clearButtonMode={"while-editing"}
         style={styles.input}
+        autoCorrect={false}
         placeholder={placeholder}
         onChangeText={text => onChange(id, text)}
         onFocus={() => handleFocus(dispatch, id)}

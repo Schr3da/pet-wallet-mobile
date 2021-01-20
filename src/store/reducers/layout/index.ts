@@ -3,6 +3,7 @@ import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
 
 export interface ILayoutState {
+  isApplePlatform: boolean;
   focus: string | null;
   language: LanguageTypes;
   theme: ThemeTypes;
@@ -14,8 +15,10 @@ export interface ILayoutState {
 const initialState = (): ILayoutState => {
   const screen = Layout.getScreenSize();
   const mode = Layout.getDisplayMode(screen.width, screen.height);
+  const isApplePlatform = Layout.isiOS();
 
   return {
+    isApplePlatform,
     focus: null,
     language: getDeviceLanguage(),
     theme: getDeviceTheme(),

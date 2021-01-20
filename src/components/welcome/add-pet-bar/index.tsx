@@ -1,4 +1,4 @@
-import React, {Dispatch} from "react";
+import * as React from "react";
 
 import {Text, View, ViewStyle} from "react-native";
 import {useDispatch} from "react-redux";
@@ -12,7 +12,7 @@ import {StyledButton} from "../../common";
 import {applyStyles} from './index.style';
 
 const addNewPet = (
-  dispatch: Dispatch<any>,
+  dispatch: any,
   language: LanguageTypes
 ) => { 
   dispatch(onChangeViewComponent(
@@ -23,7 +23,7 @@ const addNewPet = (
 }
 
 interface IProps extends ILayoutChildProps {
-  style: ViewStyle; 
+  style?: ViewStyle; 
 }
 
 export const AddPetBar = (props: IProps): JSX.Element =>  {

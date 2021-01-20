@@ -113,7 +113,7 @@ export const showHome = (
   );
 }; 
 
-type Actions = Layout.Actions | Navigation.Actions | Splash.Actions | NewPet.Actions;
+type Actions = Layout.Actions | Navigation.Actions | NewPet.Actions;
 
 export const reducer = (
   state: INavigationState = initialState(),
@@ -122,8 +122,6 @@ export const reducer = (
   switch (action.type) {
     case Layout.ON_CHANGE_LANGUAGE:
       return changeHeader(state, action.next);
-    case Splash.ON_SPLASH_ANIMATION_COMPLETE:
-      return showHome(state, action.language, action.hasPets);
     case Navigation.ON_SHOW_HOME_COMPONENT:
       return showHome(state, action.language, action.hasPets);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

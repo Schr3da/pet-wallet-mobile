@@ -6,13 +6,14 @@ import {useSelector} from "react-redux";
 import {Help, NewPet, Settings, Splash, TermsAndConditions, Welcome} from "../components";
 import {ICombinedReducerState} from "../store/reducers";
 import {ViewComponents} from "../store/actions/navigation";
-import {createStyle, ThemeTypes} from "../theme";
+import {createStyle, ThemeTypes, getColors} from "../theme";
 
 import {applyStyles} from "./index.style";
 
 interface IProps {
   mainViewComponent: ViewComponents;
   theme: ThemeTypes;
+  isApplePlatform: boolean;
 }
 
 const stateToProps = (
@@ -20,12 +21,14 @@ const stateToProps = (
 ): IProps => ({
   mainViewComponent: state.navigation.mainViewComponent,
   theme: state.layout.theme,
+  isApplePlatform: state.layout.isApplePlatform,
 });
 
 export const Route = (): JSX.Element =>  {
-  const {mainViewComponent, theme} = useSelector(stateToProps);
+  const {isApplePlatform, mainViewComponent, theme} = useSelector(stateToProps);
 
-  const styles = createStyle(theme, applyStyles);
+  const styles = createStyle(theme, applyStyles(isApplePlatform));
+  const colors = getColors(theme);
 
   let childComponent: React.ReactElement;
 
@@ -54,7 +57,11 @@ export const Route = (): JSX.Element =>  {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <StatusBar barStyle={theme === ThemeTypes.Dark ? "light-content" : "dark-content"}/>  
+      <StatusBar 
+        translucent
+        backgroundColor={colors.color1}
+        barStyle={theme === ThemeTypes.Dark ? "light-content" : "dark-content"}
+      />  
       <View style={styles.container}>
         {childComponent}
       </View>

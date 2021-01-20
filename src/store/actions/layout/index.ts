@@ -1,7 +1,12 @@
-import {Dimensions} from "react-native"; 
+import {Dimensions, Platform} from "react-native"; 
 
 import {ThemeTypes} from "../../../theme";
 import {LanguageTypes} from "../../../language";
+
+export enum DisplayModes {
+  portrait = "portrait",
+  landscape = "landscape"
+}
 
 export const getScreenSize = () => {
   const window = Dimensions.get("window");
@@ -18,10 +23,10 @@ export const getDisplayMode = (
   DisplayModes.landscape :
   DisplayModes.portrait; 
 
-export enum DisplayModes {
-  portrait = "portrait",
-  landscape = "landscape"
-}
+export const isiOS = (): boolean => {
+  const identifier = (Platform.OS || "").toLowerCase();
+  return identifier === "ios";
+};
 
 export const ON_CHANGE_DISPLAY_MODE = "ON_CHANGE_DISPLAY_MODE";
 interface IOnChangeDisplayMode{

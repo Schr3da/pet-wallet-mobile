@@ -1,25 +1,26 @@
-import {ViewStyle} from "react-native";
+import type {ViewStyle} from "react-native";
 
-import {ITheme} from "../../../theme";
+import type {ITheme} from "../../../theme";
 
 export const applyStyles = (color: string) => (theme: ITheme) => ({ 
   container: {
     width: "100%",
     maxWidth: 320,
     height: 60,
-    padding: 10,
+    padding: 12,
     alignItems: "center",
     display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",
-    borderRadius: 10,
+    overflow: "hidden",
+    borderRadius: 100,
     borderWidth: 1,
     borderColor: color,
     backgroundColor: theme.color1,
   } as ViewStyle,
   text: {
     flex: 2,
-    fontSize: 14,
+    fontSize: 13,
     color: theme.color8,
   },
   button: {

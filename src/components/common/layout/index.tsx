@@ -4,7 +4,6 @@ import {
   Dimensions, 
   ImageSourcePropType,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   View,
 } from "react-native";
@@ -40,6 +39,7 @@ interface IStateProps {
   focus: string | null;
   screenWidth: number;
   screenHeight: number;
+  isApplePlatform: boolean;
 }
 
 const stateToProps = (
@@ -57,12 +57,14 @@ const stateToProps = (
   focus: state.layout.focus,
   screenWidth: state.layout.screenWidth,
   screenHeight: state.layout.screenHeight,
+  isApplePlatform: state.layout.isApplePlatform,
 });
 
 export interface ILayoutChildProps {
   theme: ThemeTypes;
   language: ILanguage;
   languageType: LanguageTypes;
+  isApplePlatform: boolean;
   hasPets: boolean;
   mainViewComponent: ViewComponents;
   subViewComponent: SubViewComponents;
@@ -80,11 +82,12 @@ interface IProps {
 const getChildProps = (
   props: IStateProps
 ): ILayoutChildProps => {
-  const {theme, hasPets, mainViewComponent, subViewComponent, displayMode, screenWidth, screenHeight} = props;
+  const {theme, hasPets, mainViewComponent, subViewComponent, displayMode, screenWidth, screenHeight, isApplePlatform} = props;
   const languageType = props.language;
   const language = getTranslation(languageType);
 
   return {
+    isApplePlatform,
     theme, 
     hasPets,
     mainViewComponent,
@@ -95,11 +98,6 @@ const getChildProps = (
     screenWidth,
     screenHeight,
   };
-};
-
-const isiOS = (): boolean => {
-  const identifier = (Platform.OS || "").toLowerCase();
-  return identifier === "ios";
 };
 
 const hasBackButton = (
@@ -149,16 +147,16 @@ export const Layout = (
   }, []);
 
   const {imageSource, childRenderer, footerRenderer} = props;
-  const {displayMode, focus, path, theme, title, description, language} = stateProps;
+  const {displayMode, focus, path, theme, title, description, language, isApplePlatform} = stateProps;
 
   const childProps = getChildProps(stateProps);
   const styles = createStyle(theme, applyStyles); 
 
   return (
     <KeyboardAvoidingView
-      behavior={isiOS() ? "padding" : "height" }
+      behavior={isApplePlatform ? "padding" : "height" }
       style={styles.container}
-      keyboardVerticalOffset={50}
+      keyboardVerticalOffset={isApplePlatform ? 50 : 20}
     >
       <View style={styles.navigation}>
         <View style={styles.rowLeft}>

@@ -1,6 +1,6 @@
-import {ViewStyle, ImageStyle} from "react-native";
+import type {ViewStyle, ImageStyle} from "react-native";
 
-import {ITheme} from "../../../theme";
+import type {ITheme} from "../../../theme";
 
 export const applyStyles = (
   hasProfile: boolean

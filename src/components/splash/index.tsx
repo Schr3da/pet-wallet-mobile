@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ICombinedReducerState} from "../../store/reducers";
 
 import {Loader} from "../common/loader";
-import {Splash} from "../../store/actions";
+import {Splash, Navigation} from "../../store/actions";
 import {createStyle, ThemeTypes} from "../../theme";
 import {LanguageTypes} from "../../language";
 
@@ -45,8 +45,7 @@ const completeAnimation = (
   dispatch: any,
   hasPets: boolean,
   language: LanguageTypes,
-) =>
-  dispatch(Splash.onSplashAnimationComplete(hasPets, language));
+) => dispatch(Navigation.onShowHomeComponent(language, hasPets));
 
 const didMount = (
   dispatch: any,

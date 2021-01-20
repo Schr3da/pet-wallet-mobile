@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 import {Image, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";

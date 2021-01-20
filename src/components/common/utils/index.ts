@@ -1,5 +1,6 @@
+import {ImageSourcePropType, Platform} from "react-native";
+
 import {IImageData} from "../../../store/actions/new-pet";
-import {ImageSourcePropType} from "react-native";
 
 export interface IMeasureResult {
   width: number;

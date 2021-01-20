@@ -1,6 +1,5 @@
 import * as React from "react";
 
-
 import {createStyleWithoutTheme} from "../../theme";
 import {Layout, CardsContainer} from "../common";
 import {AddPetBar} from "./add-pet-bar";

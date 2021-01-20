@@ -1,7 +1,6 @@
 import type {IHeader, ISettings, IWelcome, INewPet, ICard} from "../index";
 
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
-import {SecondaryButton} from "../../components/common/rounded-button";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -25,7 +24,7 @@ const header: IHeader = {
       title: "New Pet",
       description: "Enter some information of your pet and continue by pressing next.",
     },
-    [SubViewComponents.newPetScan]: {
+    [SubViewComponents.newPetScan ]: {
       title: "Digital Pass",
       description: "Take photos of your pets pass and we convert it in a digital form",
     },
@@ -91,12 +90,16 @@ const card: ICard = {
 const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
     primaryButton: "Continue",
-    secondaryButton: "Cancel"
+    secondaryButton: "Cancel",
+    scanErrorTitle: "Access denied",
+    scanErrorMessage: "Photos can not be accessed. Please check your app permissions and enable photo access."
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: "Finish",
     secondaryButton: "Cancel",
-    attachmentLabel: "Attachment"
+    scanErrorTitle: "Access denied",
+    scanErrorMessage: "Photos can not be accessed. Please check your app permissions and enable photo access.",
+    attachmentLabel: "Attachment",
   }
 }
 
