@@ -3,27 +3,29 @@ import * as React from "react";
 import {View, ScrollView} from "react-native";
 import {connect} from "react-redux";
 
-import type {ILayoutChildProps} from "../../common/layout";
+import type {ILayoutChildProps} from "../layout";
 import type {IPetDto} from "../../../dto/pets";
 
 import {createStyle} from "../../../theme";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {Card} from "../../common";
+import {Card, CardEventCallback} from "../card";
 
 import {applyStyles} from "./index.style";
 
 interface IProps extends ILayoutChildProps {
   data: IPetDto[];
+  onCardPress: CardEventCallback;
+  onSharePress: CardEventCallback; 
 }
 
 class Container extends React.Component<IProps, {}> {
-  
+
   constructor(props: IProps, context: any) {
     super(props, context);
   }
 
   public render() {
-    const {data, theme} = this.props;
+    const {data, language, theme, onCardPress, onSharePress} = this.props;
 
     const styles = createStyle(theme, applyStyles);
 
@@ -35,21 +37,15 @@ class Container extends React.Component<IProps, {}> {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          {data.map((_, index) => {
-            const entity = {
-              id: "1",
-              name: "Gino",
-              dateOfBirth: "23/01/11",
-              age: "8",
-              profile: undefined,
-              race: "Dog",
-            };
-
+          {data.map((animal, index) => {
             return (
-              <Card 
+              <Card
                 key={index}
-                data={entity} 
+                data={animal} 
+                language={language}
                 theme={theme}
+                onPress={onCardPress}
+                onShare={onSharePress}
               />
             );
           })}
@@ -61,15 +57,15 @@ class Container extends React.Component<IProps, {}> {
 
 const mapStateToProps = (
   state: ICombinedReducerState, 
-  ownProps: ILayoutChildProps
+  ownProps: ILayoutChildProps & Pick<IProps, "onCardPress" | "onSharePress"> 
 ): IProps => ({
-  data: [1],
+  data: state.pets.data,
   ...ownProps
 })
 
-const mapDispatchToProps = {
-
-}
+const mapDispatchToProps = (
+  _: any
+) => ({});
 
 export const CardsContainer = connect(
   mapStateToProps,

@@ -1,4 +1,4 @@
-import {InputValues, onInputFieldChange, onCancelNewPet, IImageData} from "../../../store/actions/new-pet";
+import {InputValues, onInputFieldChange, onCancelNewPet} from "../../../store/actions/new-pet";
 import {onChangeSubViewComponent, SubViewComponents} from "../../../store/actions/navigation";
 import {showError} from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
@@ -32,9 +32,3 @@ export const handleError = (
   title: string,
   message: string,
 ) => dispatch(showError(title, message));
-
-export const base64ImageToUri = (
-  image: IImageData 
-) => ({
-  uri: `data:image/${image.fileType};base64, ${image.imageBase64}`
-});

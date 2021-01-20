@@ -1,36 +1,45 @@
 import * as React from "react";
 
-import {View, Text, Image} from "react-native";
+import {View, Image} from "react-native";
 
+import {ILanguage} from "../../../language";
 import {createStyle, ThemeTypes} from "../../../theme";
+import {IPetDto} from "../../../dto/pets";
+import {Label, LabelTypes} from "./label";
+import {ImageButton} from "../image-button";
+import {measureComponent, IMeasureResult} from "../utils";
 
 import {applyStyles} from "./index.style";
-import {Label, LabelTypes} from "./label";
-import {StyledButton} from "../styled-button";
-import {ImageButton} from "../image-button";
+
+export type CardEventCallback = (
+  id: string, 
+  measure: IMeasureResult | null
+) => void;
 
 interface IProps {
+  data: IPetDto;
   theme: ThemeTypes;
-  data: {
-    id: string;
-    name: string;
-    dateOfBirth: string;
-    age: string;
-    profile: string | undefined;
-    race: string;
-  },
+  language: ILanguage;
+  onPress: CardEventCallback; 
+  onShare: CardEventCallback;
 }
 
 export const Card = (
   props: IProps
 ) => {
-  const {data, theme} = props;
 
-  const hasProfile = data.profile != null;
+  const ref = React.useRef(null);
+
+  const {data, language, theme, onPress, onShare} = props;
+
+  const hasProfileImage = data.profileImage != null;
+  const hasProfileUrl = data.profileUri != null;
+  const hasProfile = hasProfileImage || hasProfileUrl; 
+
   const styles = createStyle(theme, applyStyles(hasProfile));
 
   return (
-    <View style={styles.container}>
+    <View ref={ref} style={styles.container}>
       <Image
         style={styles.backgroundImage} 
         source={theme === ThemeTypes.Dark ?
@@ -41,23 +50,25 @@ export const Card = (
       <View style={styles.row}>
         <View style={{flexBasis: 58}}>
           <View style={styles.profileWrapper}>
-            <Image
-              style={styles.image} 
-              source={{uri: data.profile}}
-            />
+            {hasProfile == null ? null : 
+              <Image
+                style={styles.image} 
+                source={{uri: data.profileUri! || data.profileImage! }}
+              />
+            }
           </View>
         </View>
         <View style={styles.middleWrapper}>
           <Label 
             theme={theme}
             type={LabelTypes.Large}
-            title={"Name: " + data.name}
+            title={`${language.card.nameProperty}: ${data.name}`}
             style={{marginBottom: 6}}
           />
           <Label 
             theme={theme}
             type={LabelTypes.Small}
-            title={"Animal: " + data.race}
+            title={`${language.card.animalProperty}: ${data.animal}`}
             style={{width: "80%"}}
           />
         </View>
@@ -69,7 +80,10 @@ export const Card = (
               require("../../../../assets/png/dark/overflow-button-icon.png") :
               require("../../../../assets/png/light/overflow-button-icon.png")
             }
-            onPress={() => undefined}
+            onPress={async () => {
+              const measures = await measureComponent(ref);
+              onPress(data.id, measures);
+            }}
           />
           <ImageButton
             style={styles.buttonShare} 
@@ -78,10 +92,13 @@ export const Card = (
               require("../../../../assets/png/dark/share-icon.png") :
               require("../../../../assets/png/light/share-icon.png")
             }
-            onPress={() => undefined}
+            onPress={async () => {
+              const measures = await measureComponent(ref);
+              onShare(data.id, measures);
+            }}
           />
         </View>
       </View>
     </View>
-  )
+  );
 };

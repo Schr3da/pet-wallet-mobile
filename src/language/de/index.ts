@@ -1,7 +1,6 @@
-import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
+import type {IHeader, ISettings, IWelcome, INewPet, ICard} from "../index";
 
-import type {IHeader, ISettings, IWelcome, INewPet} from "../index";
-import {SecondaryButton} from "../../components/common/rounded-button";
+import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -83,6 +82,11 @@ const settings: ISettings = {
   },
 };
 
+const card: ICard = {
+  nameProperty: "Name",
+  animalProperty: "Tier",
+};
+
 const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
     primaryButton: "Weiter",
@@ -101,6 +105,7 @@ const newPet: INewPet = {
 
 export const DE = {
   header,
+  card,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

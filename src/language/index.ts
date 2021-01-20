@@ -68,8 +68,14 @@ export interface INewPet {
   }
 }
 
+export interface ICard {
+  nameProperty: string;
+  animalProperty: string;
+}
+
 export interface ILanguage {
-  header: IHeader
+  header: IHeader;
+  card: ICard;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;

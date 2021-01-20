@@ -1,6 +1,7 @@
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
-import {onShowHomeComponent} from "../navigation";
+import {IPetDto} from "../../../dto/pets";
+import {base64ImageString} from "../../../components/common/utils";
 
 export interface IImageData {
   id: string;
@@ -110,16 +111,32 @@ export const onPreviewScan = (
   id, 
 });
 
+export const ON_SAVE_NEW_PET = "ON_SAVE_NEW_PET";
+interface IOnSaveNewPet {
+  type: typeof ON_SAVE_NEW_PET;
+  language: LanguageTypes;
+  data: IPetDto;
+}
+
 export const onSaveNewPet = () => (
   dispatch: any,
   getState: () => ICombinedReducerState
 ) => {
   const state = getState();
+  const newPet = state.newPet;
 
-  dispatch(onShowHomeComponent(
-    state.layout.language,
-    true,
-  ));
+  dispatch({
+    type: ON_SAVE_NEW_PET,
+    language: state.layout.language,
+    data: {
+      id: Date.now().toString(),
+      animal: newPet.inputs[InputIds.race],
+      name: newPet.inputs[InputIds.name] || "",
+      dateOfBirth: newPet.inputs[InputIds.dateOfBirth] || "",
+      age: newPet.inputs[InputIds.age] || "",
+      profileImage: base64ImageString(newPet.profile),
+    }
+  } as IOnSaveNewPet);
 };
 
 export type Actions = 
@@ -129,4 +146,5 @@ export type Actions =
   | IOnProfileImageNewPet
   | IOnRemoveNewPetPass
   | IOnPreviewNewPetPassScan
+  | IOnSaveNewPet
 ;

@@ -15,7 +15,7 @@ const initialState = (): INewPetState => ({
 const handleInputChange = (
   state: INewPetState,
   id: string,
-  value: string | number | null
+  value: NewPet.InputValues 
 ) => ({
   ...state,
   inputs: {...state.inputs,
@@ -70,6 +70,8 @@ const reducer = (
       return handleNewScan(state, action.data);
     case NewPet.ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT:
       return handleRemoveScan(state, action.id);
+    case NewPet.ON_SAVE_NEW_PET:
+      return initialState();
     default:
       return state;
   };

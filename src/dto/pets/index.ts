@@ -23,6 +23,11 @@ export enum PetTypes {
 };
 
 export interface IPetDto {
-  
+  id: string;
+  name: string;
+  dateOfBirth: string;
+  age: string;
+  profileImage: string | undefined;
+  profileUri: string | undefined;
+  animal: string;
 }
-

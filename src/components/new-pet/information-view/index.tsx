@@ -9,9 +9,9 @@ import {createStyle, ThemeTypes} from "../../../theme";
 import {ImagePicker, InputField, RoundedButtons} from "../../common";
 import {InputIds, InputValues, IImageData, onProfileImage} from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {handleInputChange, handleChangeSubView, handleCancelNewPet, handleError, base64ImageToUri} from "../hooks";
-
+import {handleInputChange, handleChangeSubView, handleCancelNewPet, handleError} from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
+import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
 
