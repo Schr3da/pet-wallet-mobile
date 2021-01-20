@@ -19,14 +19,14 @@ export const applyStyles = (
     right: 0,
     bottom: 0,
     backgroundColor: theme.color6,
-    opacity: 0.3,
+    opacity: 0.2,
   } as ViewStyle,
   largeText: {
     fontSize: 16,
-    color: theme.color10,
+    color: theme.color9,
   } as ViewStyle,
   smallText: {
-    color: theme.color10,
+    color: theme.color9,
     fontSize: 12,
     fontWeight: "bold",
   } as ViewStyle,

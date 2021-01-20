@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Image, ImageSourcePropType} from "react-native";
+import {Image, ImageSourcePropType, ImageStyle, ViewStyle} from "react-native";
 
 import {createStyleWithoutTheme} from "../../../theme";
 import {StyledButton} from "../styled-button";
@@ -8,7 +8,8 @@ import {StyledButton} from "../styled-button";
 import {applyStyles} from "./index.style";
 
 export interface IProps {
-  style: any;
+  style: ViewStyle;
+  imageStyle?: ImageStyle
   source: ImageSourcePropType;
   onPress: () => void;
 }
@@ -16,7 +17,7 @@ export interface IProps {
 export const ImageButton = (
   props: IProps
 ) => {
-  const {source, style, onPress} = props;
+  const {imageStyle, source, style, onPress} = props;
 
   const styles = createStyleWithoutTheme(applyStyles());
 
@@ -27,7 +28,7 @@ export const ImageButton = (
       onPress={onPress}
     >
       <Image 
-        style={styles.image}
+        style={{...styles.image, ...(imageStyle || {})}}
         source={source}
       />
     </StyledButton>

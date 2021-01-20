@@ -28,11 +28,11 @@ export const applyStyles = (
     width: 58,
     height: 58,
     flexBasis: 58,
-    borderWidth: 2,
+    borderWidth: 0,
     borderRadius: 29,
     borderColor: theme.color6,
     backgroundColor: theme.color6,
-    opacity: hasProfile ? 0.3 : 1, 
+    opacity: hasProfile ? 1 : 0.3, 
     overflow: "hidden",
   } as ViewStyle,
   image: {
@@ -46,4 +46,26 @@ export const applyStyles = (
     marginRight: 10,
     overflow: "hidden",
   } as ViewStyle,
+  buttonOverflow: {
+    width: 32,
+    minHeight: 24,
+    display: "flex",
+    alignItems: "flex-end"
+  } as ViewStyle,
+  overflowIcon: {
+    width: 24,
+    height: 6,
+  },
+  buttonShare: {
+    width: 32,
+    height: 32,
+    marginLeft: 8,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  } as ViewStyle,
+  shareIcon: {
+    width: 22,
+    height: 22,
+  }
 });
