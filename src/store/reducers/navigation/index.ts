@@ -1,6 +1,6 @@
 import {getTranslation, LanguageTypes} from "../../../language";
 import {SubViewComponents, ViewComponents} from "../../actions/navigation";
-import {Layout, Navigation, Splash, NewPet} from "../../actions";
+import {Layout, Navigation, NewPet} from "../../actions";
 
 export interface INavigationState {
   title: string;

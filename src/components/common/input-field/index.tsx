@@ -9,10 +9,23 @@ import {onFocus} from "../../../store/actions/layout";
 import {applyStyles} from "./index.style";
 import {useDispatch} from "react-redux";
 
+let timeout: any = null;
+
 const handleFocus = (
   dispatch: any,
   id: string | null
-) => dispatch(onFocus(id));
+) => {
+  clearTimeout(timeout);
+  dispatch(onFocus(id))
+};
+
+const handleFocusDelayed = (
+  dispatch: any,
+  id: string | null,
+) => {
+  timeout = setTimeout(() =>
+    handleFocus(dispatch, id), 100);
+}
 
 interface IProps {
   id: string;
@@ -41,7 +54,7 @@ export const InputField = (props: IProps) => {
         placeholder={placeholder}
         onChangeText={text => onChange(id, text)}
         onFocus={() => handleFocus(dispatch, id)}
-        onEndEditing={() => handleFocus(dispatch, null)}
+        onEndEditing={() => handleFocusDelayed(dispatch, null)}
         placeholderTextColor={colors.color12}
         returnKeyType="done"
         value={value as any}

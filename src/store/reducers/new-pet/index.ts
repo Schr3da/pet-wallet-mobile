@@ -1,4 +1,4 @@
-import * as NewPet from "../../actions/new-pet";
+import {Database, NewPet} from "../../actions";
 
 export interface INewPetState {
   inputs: {[key in NewPet.InputIds]: NewPet.InputValues};
@@ -53,13 +53,15 @@ const handleRemoveScan = (
   scans: state.scans.filter((s) => s.id !== id),
 });
 
-type Actions = NewPet.Actions;
+type Actions = NewPet.Actions | Database.Actions;
 
 const reducer = (
   state: INewPetState = initialState(),
   action: Actions 
 ) => {
   switch (action.type) {
+    case Database.ON_CLEAR_IN_MEMORY_DATA:
+      return initialState(); 
     case NewPet.ON_CANCEL_NEW_PET:
       return initialState();
     case NewPet.ON_INPUT_FIELD_CHANGE: 

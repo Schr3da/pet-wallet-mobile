@@ -30,6 +30,15 @@ interface IOnRequesDataDeletion {
   type: typeof ON_REQUEST_DATA_DELETION;
 }
 
+export const ON_CLEAR_IN_MEMORY_DATA = "ON_CLEAR_IN_MEMORY_DATA";
+interface IOnClearInMemoryData {
+  type: typeof ON_CLEAR_IN_MEMORY_DATA;
+}
+
+export const onClearInMemoryData = () => ({
+  type: ON_CLEAR_IN_MEMORY_DATA,
+});
+
 export const onRequestDataDeletion = () => async (
   dispatch: any, 
 ) => {
@@ -61,4 +70,5 @@ export type Actions =
   | IOnInitDataFromDatabase
   | IOnLoadedDataFromDatabase
   | IOnRequesDataDeletion
+  | IOnClearInMemoryData 
 ;

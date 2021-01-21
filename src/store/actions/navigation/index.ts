@@ -1,4 +1,6 @@
 import {LanguageTypes} from "../../../language";
+import {ICombinedReducerState} from "../../reducers";
+import {onClearInMemoryData} from "../database";
 
 export enum ViewComponents {
   splash = "splash",
@@ -60,10 +62,21 @@ interface IOnGoBackNavigation{
 
 export const onGoBackNavigation = (
   language: LanguageTypes
-): IOnGoBackNavigation => ({
-  type: ON_GO_BACK_NAVIGATION,
-  language,
-});
+) => (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => { 
+  dispatch({ 
+    type: ON_GO_BACK_NAVIGATION, language,
+  } as IOnGoBackNavigation);
+  
+  const state = getState();
+  if (state.navigation.mainViewComponent !== ViewComponents.welcome) {
+    return; 
+  }
+
+  dispatch(onClearInMemoryData());
+};
 
 export const ON_SHOW_HOME_COMPONENT = "ON_SHOW_HOME_COMPONENT";
 interface IOnShowHomeComponent {
