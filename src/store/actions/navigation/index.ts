@@ -7,6 +7,7 @@ export enum ViewComponents {
   welcome = "welcome",
   newPet = "newPet",
   help = "help",
+  petDetails = "petDetails",
   settings = "settings",
   termsAndConditions = "termsAndConditions"
 };

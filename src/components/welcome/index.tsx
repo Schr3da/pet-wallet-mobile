@@ -7,8 +7,17 @@ import {Box} from "./box";
 import {HelpBar} from "./help-bar";
 
 import {applyStyles} from "./index.style";
+import {onShowPetDetails} from "../../store/actions/pets";
+import {useDispatch} from "react-redux";
+
+const handleCardPress = (
+  dispatch: any,
+  id: string,
+) => dispatch(onShowPetDetails(id));
 
 export const Component = (): JSX.Element =>  {
+
+  const dispatch = useDispatch();
 
   const styles = createStyleWithoutTheme(applyStyles());
 
@@ -21,7 +30,7 @@ export const Component = (): JSX.Element =>  {
           <React.Fragment>
             {hasPets === false ? <Box {...props}/> : 
               <CardsContainer {...props}
-                onCardPress={(id, measures) => console.log("card press", id, measures)}
+                onCardPress={(id, measures) => handleCardPress(dispatch, id)}
                 onSharePress={(id, measures) => console.log("share press", id, measures)} 
               />
             }

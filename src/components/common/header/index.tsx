@@ -25,7 +25,7 @@ export const Header = (
   } = props;
   
   const styles = createStyle(theme, applyStyles);
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.meta}>

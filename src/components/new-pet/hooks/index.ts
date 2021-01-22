@@ -1,6 +1,6 @@
 import {InputValues, onInputFieldChange, onCancelNewPet} from "../../../store/actions/new-pet";
 import {onChangeSubViewComponent, SubViewComponents} from "../../../store/actions/navigation";
-import {showError} from "../../../store/actions/layout";
+import {onSetErrorCode, ErrorTypes} from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
 
 export const handleInputChange = (
@@ -29,6 +29,5 @@ export const handleCancelNewPet = (
 
 export const handleError = (
   dispatch: any,
-  title: string,
-  message: string,
-) => dispatch(showError(title, message));
+  errorType: ErrorTypes,
+) => dispatch(onSetErrorCode(errorType));

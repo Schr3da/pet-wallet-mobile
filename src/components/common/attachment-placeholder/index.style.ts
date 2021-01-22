@@ -20,7 +20,7 @@ export const applyStyles = (
     paddingBottom: 10,
     fontSize: 16,
     marginRight: 40,
-    color: theme.color12,
+    color: theme.color8,
     flex: 1,
   },
   button: {

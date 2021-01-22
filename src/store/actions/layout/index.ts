@@ -3,6 +3,12 @@ import {Dimensions, Platform} from "react-native";
 import {ThemeTypes} from "../../../theme";
 import {LanguageTypes} from "../../../language";
 
+export enum ErrorTypes {
+  inputField = "inputFieldError",
+  camera = "cameraError",
+  photoLibrary = "photoLibraryError",
+}
+
 export enum DisplayModes {
   portrait = "portrait",
   landscape = "landscape"
@@ -73,22 +79,21 @@ export const onChangeLanguage = (
   next, 
 });
 
-export const ON_SHOW_ERROR = "ON_SHOW_ERROR";
-interface IOnShowError {
-  type: typeof ON_SHOW_ERROR;
-  title: string;
-  message: string;
+export const ON_SET_ERROR_TYPE = "ON_SHOW_ERROR";
+interface IOnSetErrorType {
+  type: typeof ON_SET_ERROR_TYPE;
+  errorType: ErrorTypes | null;
 };
 
-export const showError = (
-  title: string,
-  message: string,
-): IOnShowError => ({
-  type: ON_SHOW_ERROR,
-  title, 
-  message,
+export const onSetErrorCode = (
+  errorType: ErrorTypes | null,
+): IOnSetErrorType => ({
+  type: ON_SET_ERROR_TYPE,
+  errorType,
 });
 
+export const clearErrors = () => 
+  onSetErrorCode(null);
 
 export const ON_FOCUS = "ON_FOCUS";
 export interface IOnFocus{
@@ -108,4 +113,5 @@ export type Actions =
   | IOnChangeLanguage
   | IOnChangeDisplayMode
   | IOnFocus
+  | IOnSetErrorType
 ;

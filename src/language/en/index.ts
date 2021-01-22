@@ -1,6 +1,7 @@
-import type {IHeader, ISettings, IWelcome, INewPet, ICard} from "../index";
+import type {IHeader, ISettings, IWelcome, INewPet, ICard, IErrors} from "../index";
 
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
+import {ErrorTypes} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -45,6 +46,12 @@ const header: IHeader = {
     [SubViewComponents.none]: {
       title: "Terms and conditions",
       description: "You can review the terms and condition of the app here.", 
+    }
+  },
+  [ViewComponents.petDetails]: {
+    [SubViewComponents.none]: {
+      title: "",
+      description: "",
     }
   }
 };
@@ -91,21 +98,33 @@ const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
     primaryButton: "Continue",
     secondaryButton: "Cancel",
-    scanErrorTitle: "Access denied",
-    scanErrorMessage: "Photos can not be accessed. Please check your app permissions and enable photo access."
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: "Finish",
     secondaryButton: "Cancel",
-    scanErrorTitle: "Access denied",
-    scanErrorMessage: "Photos can not be accessed. Please check your app permissions and enable photo access.",
     attachmentLabel: "Attachment",
+  }
+}
+
+const errors: IErrors = {
+  [ErrorTypes.inputField]: {
+    title: "Missing information",
+    text: "Please ensure all required inputs fields are filled out.",
+  },
+  [ErrorTypes.camera]: {
+    title: "Access denied",
+    text: "Photos can not be accessed. Please check your app permissions and enable photo access.",
+  },
+  [ErrorTypes.photoLibrary]: {
+    title: "Access denied",
+    text: "Photos can not be accessed. Please check your app permissions and enable photo access.",
   }
 }
 
 export const EN = {
   header,
   card,
+  errors,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

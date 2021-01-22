@@ -3,7 +3,16 @@ import * as React from 'react';
 import {SafeAreaView, StatusBar, View} from 'react-native';
 import {useSelector} from "react-redux";
 
-import {Help, NewPet, Settings, Splash, TermsAndConditions, Welcome} from "../components";
+import {
+  Help,
+  NewPet,
+  Settings,
+  Splash,
+  TermsAndConditions,
+  Welcome,
+  PetDetails
+} from "../components";
+
 import {ICombinedReducerState} from "../store/reducers";
 import {ViewComponents} from "../store/actions/navigation";
 import {createStyle, ThemeTypes, getColors} from "../theme";
@@ -41,6 +50,9 @@ export const Route = (): JSX.Element =>  {
       break;
     case ViewComponents.newPet:
       childComponent = <NewPet.Component/>;
+      break;
+    case ViewComponents.petDetails:
+      childComponent = <PetDetails.Component/>;
       break;
     case ViewComponents.help:
       childComponent = <Help.Component/>;

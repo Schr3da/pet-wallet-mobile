@@ -18,7 +18,7 @@ export const applyStyles = (
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 16,
-    color: theme.color12,
+    color: theme.color8,
   }
 });
 

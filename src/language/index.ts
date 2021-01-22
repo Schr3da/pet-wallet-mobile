@@ -1,5 +1,6 @@
 import {Platform, NativeModules} from "react-native";
 
+import {ErrorTypes} from "../store/actions/layout";
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 import {DE} from "./de";
 import {EN} from "./en";
@@ -56,14 +57,10 @@ export interface INewPet {
   [SubViewComponents.newPetInformation]: {
     primaryButton: string; 
     secondaryButton: string;
-    scanErrorTitle: string;
-    scanErrorMessage: string;
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: string; 
     secondaryButton: string;
-    scanErrorTitle: string;
-    scanErrorMessage: string;
     attachmentLabel: string;
   }
 }
@@ -73,9 +70,17 @@ export interface ICard {
   animalProperty: string;
 }
 
+export interface IError {
+  title: string;
+  text: string;
+};
+
+export type IErrors = {[k in ErrorTypes]: IError};  
+
 export interface ILanguage {
   header: IHeader;
   card: ICard;
+  errors: IErrors;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;

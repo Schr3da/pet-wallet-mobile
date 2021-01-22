@@ -1,6 +1,7 @@
-import type {IHeader, ISettings, IWelcome, INewPet, ICard} from "../index";
+import type {IHeader, ISettings, IWelcome, INewPet, ICard, IErrors} from "../index";
 
 import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
+import {ErrorTypes} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -45,6 +46,12 @@ const header: IHeader = {
     [SubViewComponents.none]: {
       title: "Nutzungsbedingungen",
       description: "Hier kannst du die Nutzungsbedingen dieser App einsehen.", 
+    }
+  },
+  [ViewComponents.petDetails]: {
+    [SubViewComponents.none]: {
+      title: "",
+      description: "",
     }
   }
 }
@@ -91,21 +98,33 @@ const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
     primaryButton: "Weiter",
     secondaryButton: "Abbrechen",
-    scanErrorTitle: "Zurgiff verweigert",
-    scanErrorMessage: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen."
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: "Übernehmen",
     secondaryButton: "Abbrechen",
-    scanErrorTitle: "Zurgiff verweigert",
-    scanErrorMessage: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
     attachmentLabel: "Anhang"
   }
 };
 
+const errors: IErrors = {
+  [ErrorTypes.inputField]: {
+    title: "Zurgiff verweigert",
+    text: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
+  },
+  [ErrorTypes.camera]: {
+    title: "Zurgiff verweigert",
+    text: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen."
+  },
+  [ErrorTypes.photoLibrary]: {
+    title: "Zurgiff verweigert",
+    text: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen."
+  }
+}
+
 export const DE = {
   header,
   card,
+  errors,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

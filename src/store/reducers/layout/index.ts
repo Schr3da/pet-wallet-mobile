@@ -1,8 +1,11 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
+import {ErrorTypes} from "../../actions/layout";
 
 export interface ILayoutState {
+  errorType: ErrorTypes | null;
+  hasError: boolean;
   isApplePlatform: boolean;
   focus: string | null;
   language: LanguageTypes;
@@ -18,6 +21,8 @@ const initialState = (): ILayoutState => {
   const isApplePlatform = Layout.isiOS();
 
   return {
+    errorType: null,
+    hasError: false,
     isApplePlatform,
     focus: null,
     language: getDeviceLanguage(),
@@ -74,6 +79,15 @@ const changeFocus = (
   focus: id,
 });
 
+const handleError = (
+  state: ILayoutState,
+  errorType: ErrorTypes | null,
+): ILayoutState => ({
+  ...state,
+  errorType,
+  hasError: errorType != null,
+})
+
 type Actions = 
   | Database.Actions 
   | Layout.Actions 
@@ -91,6 +105,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return changeTheme(state, action.next);
     case Layout.ON_FOCUS:
       return changeFocus(state, action.id);
+    case Layout.ON_SET_ERROR_TYPE:
+      return handleError(state, action.errorType);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return changeFocus(state, null);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

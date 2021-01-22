@@ -1,12 +1,14 @@
 import type {IPetDto} from "../../../dto/pets";
 
-import {NewPet} from "../../actions";
+import {NewPet, Pets} from "../../actions";
 
 export interface IPetsState {
+  selectedId: string | null; 
   data: IPetDto[];
 }
 
 const initialState = (): IPetsState => ({
+  selectedId: null,
   data: [],
 });
 
@@ -18,7 +20,15 @@ const saveNewPet = (
   data: [...state.data, data],
 });
 
-type Actions = NewPet.Actions;
+const setSelectedId = (
+  state: IPetsState,
+  id: string | null,
+): IPetsState => ({
+  ...state,
+  selectedId: id,
+});
+
+type Actions = NewPet.Actions | Pets.Actions;
 
 const reducer = (
   state: IPetsState = initialState(),
@@ -27,6 +37,8 @@ const reducer = (
   switch (action.type) {
     case NewPet.ON_SAVE_NEW_PET:
       return saveNewPet(state, action.data);
+    case Pets.ON_SHOW_PET_DETAILS:
+      return setSelectedId(state, action.id);
     default:
       return state;
   }

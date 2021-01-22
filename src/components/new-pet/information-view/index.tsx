@@ -11,6 +11,7 @@ import {InputIds, InputValues, IImageData, onProfileImage} from "../../../store/
 import {ICombinedReducerState} from "../../../store/reducers";
 import {handleInputChange, handleChangeSubView, handleCancelNewPet, handleError} from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
+import {ErrorTypes} from "../../../store/actions/layout";
 import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
@@ -41,7 +42,7 @@ export const ChildView = (
   const stateProps = useSelector(stateToProps);
   const {profile} = stateProps;
 
-  const {theme, language} = props;
+  const {theme} = props;
   const styles = createStyle(theme, applyStyles); 
 
   return (
@@ -64,10 +65,7 @@ export const ChildView = (
         theme={theme}
         maxWidth={512}
         maxHeight={512}
-        onError={() => handleError(dispatch, 
-          language.newPet.newPetInformation.scanErrorTitle,
-          language.newPet.newPetInformation.scanErrorMessage
-        )}
+        onError={() => handleError(dispatch, ErrorTypes.photoLibrary)}
         onData={(data) => handleProfileImage(dispatch, data)}
       />
       <InputField 
