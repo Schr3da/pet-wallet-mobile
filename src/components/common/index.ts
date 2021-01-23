@@ -9,6 +9,7 @@ import {ImagePicker} from "./image-picker";
 import {AttachmentPlaceholder} from "./attachment-placeholder";
 import {CardsContainer} from "./cards-container";
 import {Card} from "./card";
+import {Navigation} from "./navigation";
 
 export {
   AttachmentPlaceholder,
@@ -20,5 +21,6 @@ export {
   Layout,
   Notification,
   RoundedButtons,
-  StyledButton
+  StyledButton,
+  Navigation
 }

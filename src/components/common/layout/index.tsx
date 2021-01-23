@@ -11,8 +11,6 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 
 import {
-  onChangeViewComponent,
-  onGoBackNavigation,
   SubViewComponents, 
   ViewComponents
 } from "../../../store/actions/navigation";
@@ -21,7 +19,7 @@ import {ICombinedReducerState} from "../../../store/reducers";
 import {DisplayModes, onChangeDisplayMode, getDisplayMode} from "../../../store/actions/layout";
 import {createStyle, ThemeTypes} from "../../../theme";
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
-import {ImageButton} from "../image-button";
+import {Navigation} from "../navigation";
 import {Header} from "../header";
 
 import {applyStyles} from "./index.style";
@@ -77,6 +75,7 @@ interface IProps {
   imageSource: ImageSourcePropType;
   childRenderer: (props: ILayoutChildProps) => React.ReactFragment | null;
   footerRenderer?: (props: ILayoutChildProps) => React.ReactChild | null; 
+  hasHeader?: boolean;
 }
 
 const getChildProps = (
@@ -110,21 +109,6 @@ const hasSettingsButton = (
 ) => path == null || path.length === 0 ? false :
   path[0] !== ViewComponents.settings;
 
-const handleBackPressed = (
-  dispatch: any,
-  language: LanguageTypes,
-) => dispatch(onGoBackNavigation(language));
-
-const handleSettingsPressed = (
-  dispatch: any,
-  language: LanguageTypes,
-) => dispatch(
-  onChangeViewComponent(
-    ViewComponents.settings,
-    SubViewComponents.none,
-    language,
-  ));
-
 const handleDisplayModeChange = (
   dispatch: any,
 ) => ({window}: any) => { 
@@ -146,7 +130,7 @@ export const Layout = (
     return () => Dimensions.removeEventListener("change", handleDisplayModeChange(dispatch));
   }, []);
 
-  const {imageSource, childRenderer, footerRenderer} = props;
+  const {hasHeader, imageSource, childRenderer, footerRenderer} = props;
   const {displayMode, focus, path, theme, title, description, language, isApplePlatform} = stateProps;
 
   const childProps = getChildProps(stateProps);
@@ -158,34 +142,12 @@ export const Layout = (
       style={styles.container}
       keyboardVerticalOffset={isApplePlatform ? 50 : 20}
     >
-      <View style={styles.navigation}>
-        <View style={styles.rowLeft}>
-          {hasBackButton(path) === false ? null : 
-          <ImageButton
-            style={styles.backButton}
-            source={
-                theme === ThemeTypes.Dark ? 
-                require("../../../../assets/png/dark/back-icon.png") :
-                require("../../../../assets/png/light/back-icon.png")
-            }
-            onPress={() => handleBackPressed(dispatch, language)}
-          />
-        } 
-        </View>
-        <View style={styles.rowRight}>
-          {hasSettingsButton(path) === false ? null : 
-            <ImageButton
-              style={styles.backButton}
-              source={
-                theme === ThemeTypes.Dark ? 
-                require("../../../../assets/png/dark/settings-icon.png") :
-                require("../../../../assets/png/light/settings-icon.png")
-              }
-              onPress={() => handleSettingsPressed(dispatch, language)}
-            />
-          }
-        </View>
-      </View>
+      <Navigation 
+        theme={theme}
+        language={language}
+        hasBackButton={hasBackButton(path)}
+        hasSettingsButton={hasSettingsButton(path)}
+      />
       <ScrollView 
         bounces={true}
         style={styles.layoutWrapper}
@@ -194,13 +156,15 @@ export const Layout = (
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.contentViewWrapper}>
-          <Header
-            {...childProps}
-            title={title}
-            description={description}
-            path={path}
-            source={imageSource}
-          />
+          {hasHeader === false ? null : 
+            <Header
+              {...childProps}
+              title={title}
+              description={description}
+              path={path}
+              source={imageSource}
+            />
+          }
           {childRenderer(childProps)} 
           {displayMode === DisplayModes.landscape &&
             footerRenderer && 

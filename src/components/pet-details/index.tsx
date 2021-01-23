@@ -1,10 +1,14 @@
 import * as React from "react";
 
-import type {ICombinedReducerState} from "../../store/reducers";
+import {View} from "react-native";
+import {useSelector} from "react-redux";
 
+import type {ICombinedReducerState} from "../../store/reducers";
+import {createStyle} from "../../theme";
 import {Card, Layout} from "../common";
 
-import {useSelector} from "react-redux";
+import {applyStyles} from "./index.style";
+import {getTranslation} from "../../language";
 
 const stateToProps = (
   state: ICombinedReducerState,
@@ -15,34 +19,34 @@ const stateToProps = (
 });
 
 export const Component = (): JSX.Element =>  {
-  
+
   const {selectedPet}= useSelector(stateToProps);
 
   return (
     <Layout
+      hasHeader={false}
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
       childRenderer={(props) => {
-        const {language, theme} = props;
+
+        const {theme, language} = props;
+        const styles = createStyle(theme, applyStyles);
+
         return (
           <React.Fragment>
             {selectedPet == null ? null : 
-              <Card
-                data={selectedPet!} 
-                language={language}
-                theme={theme}
-                onPress={() => undefined}
-                onShare={() => undefined}
-              />
+              <View style={styles.container}>
+                <Card
+                  data={selectedPet!} 
+                  language={language}
+                  theme={theme}
+                  onPress={() => undefined}
+                  onShare={() => undefined}
+                />
+              </View>
             }
           </React.Fragment>
         );
-      }}
-      footerRenderer={(props) => {
-        return (
-          <React.Fragment>
-          </React.Fragment>
-        );
-      }}
+      }}  
     />
   );
 };
