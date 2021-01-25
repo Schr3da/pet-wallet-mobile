@@ -20,13 +20,12 @@ const RoundedButton = (props: IProps) => {
   const styles = createStyleWithoutTheme(applyStyles(background, color));
 
   return (
-      <StyledButton
-        color={background}
-        style={{...styles.container, ...style}}
-        onPress={onPress}
-      >
-        <Text style={styles.title}>{title}</Text>
-      </StyledButton>
+    <StyledButton
+      color={background}
+      style={{...styles.container, ...style}}
+      onPress={onPress}>
+      <Text style={styles.title}>{title}</Text>
+    </StyledButton>
   );
 };
 
@@ -51,7 +50,7 @@ export const PrimaryButton = (props: IButtonProps) => {
       onPress={onPress}
     />
   );
-}
+};
 
 export const SecondaryButton = (props: IButtonProps) => {
   const {style, theme, title, onPress} = props;
@@ -67,4 +66,4 @@ export const SecondaryButton = (props: IButtonProps) => {
       onPress={onPress}
     />
   );
-}
+};

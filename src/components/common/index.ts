@@ -22,5 +22,5 @@ export {
   Notification,
   RoundedButtons,
   StyledButton,
-  Navigation
-}
+  Navigation,
+};

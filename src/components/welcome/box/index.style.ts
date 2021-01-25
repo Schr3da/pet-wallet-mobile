@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  theme: ITheme
- ) => ({ 
+export const applyStyles = (theme: ITheme) => ({
   container: {
     width: "80%",
     height: "40%",
@@ -16,7 +14,7 @@ export const applyStyles = (
     backgroundColor: theme.color6,
     alignItems: "center",
     justifyContent: "center",
-    overflow: "hidden"
+    overflow: "hidden",
   } as ViewStyle,
   image: {
     width: "90%",
@@ -24,5 +22,5 @@ export const applyStyles = (
     marginLeft: "5%",
     marginRight: "5%",
     marginBottom: 60,
-  }
+  },
 });

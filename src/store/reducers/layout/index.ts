@@ -31,50 +31,52 @@ const initialState = (): ILayoutState => {
     screenWidth: screen.width,
     screenHeight: screen.height,
   };
-}
+};
 
 const changeDisplayMode = (
   state: ILayoutState,
   displayMode: Layout.DisplayModes,
   screenWidth: number,
   screenHeight: number,
-): ILayoutState => state.displayMode === displayMode ? state : ({
-  ...state,
-  displayMode,
-  screenWidth,
-  screenHeight,
-});
+): ILayoutState =>
+  state.displayMode === displayMode
+    ? state
+    : {
+        ...state,
+        displayMode,
+        screenWidth,
+        screenHeight,
+      };
 
 const changeLanguage = (
   state: ILayoutState,
   language: LanguageTypes,
-): ILayoutState => state.language === language ? state : ({
-  ...state,
-  language
-});
-
-const changeTheme = (
-  state: ILayoutState,
-  theme: ThemeTypes
 ): ILayoutState =>
-  state.theme === theme ? state : ({
-    ...state,
-    theme,
-  });
+  state.language === language
+    ? state
+    : {
+        ...state,
+        language,
+      };
+
+const changeTheme = (state: ILayoutState, theme: ThemeTypes): ILayoutState =>
+  state.theme === theme
+    ? state
+    : {
+        ...state,
+        theme,
+      };
 
 const applyLanguageAndTheme = (
   state: ILayoutState,
   language: LanguageTypes,
-  theme: ThemeTypes
+  theme: ThemeTypes,
 ) => {
   let next = changeTheme(state, theme);
   return changeLanguage(next, language);
 };
 
-const changeFocus = (
-  state: ILayoutState,
-  id: string | null,
-) => ({
+const changeFocus = (state: ILayoutState, id: string | null) => ({
   ...state,
   focus: id,
 });
@@ -86,14 +88,13 @@ const handleError = (
   ...state,
   errorType,
   hasError: errorType != null,
-})
+});
 
-type Actions = 
-  | Database.Actions 
-  | Layout.Actions 
-  | Navigation.Actions 
-  | Splash.Actions
-;
+type Actions =
+  | Database.Actions
+  | Layout.Actions
+  | Navigation.Actions
+  | Splash.Actions;
 
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {

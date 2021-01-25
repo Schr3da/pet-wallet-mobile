@@ -11,21 +11,14 @@ import {useDispatch} from "react-redux";
 
 let timeout: any = null;
 
-const handleFocus = (
-  dispatch: any,
-  id: string | null
-) => {
+const handleFocus = (dispatch: any, id: string | null) => {
   clearTimeout(timeout);
-  dispatch(onFocus(id))
+  dispatch(onFocus(id));
 };
 
-const handleFocusDelayed = (
-  dispatch: any,
-  id: string | null,
-) => {
-  timeout = setTimeout(() =>
-    handleFocus(dispatch, id), 100);
-}
+const handleFocusDelayed = (dispatch: any, id: string | null) => {
+  timeout = setTimeout(() => handleFocus(dispatch, id), 100);
+};
 
 interface IProps {
   id: string;
@@ -37,7 +30,6 @@ interface IProps {
 }
 
 export const InputField = (props: IProps) => {
-
   const dispatch = useDispatch();
 
   const {id, placeholder, style, theme, value, onChange} = props;
@@ -52,7 +44,7 @@ export const InputField = (props: IProps) => {
         style={styles.input}
         autoCorrect={false}
         placeholder={placeholder}
-        onChangeText={text => onChange(id, text)}
+        onChangeText={(text) => onChange(id, text)}
         onFocus={() => handleFocus(dispatch, id)}
         onEndEditing={() => handleFocusDelayed(dispatch, null)}
         placeholderTextColor={colors.color12}
@@ -61,6 +53,4 @@ export const InputField = (props: IProps) => {
       />
     </View>
   );
-}
-
-
+};

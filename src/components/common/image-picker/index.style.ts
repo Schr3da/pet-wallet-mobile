@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  theme: ITheme
-) => ({
+export const applyStyles = (theme: ITheme) => ({
   container: {
     padding: 4,
     borderRadius: 100,
@@ -18,5 +16,5 @@ export const applyStyles = (
     height: 34,
     borderRadius: 17,
     backgroundColor: isSelected ? theme.color3 : theme.color6,
-  })
+  }),
 });

@@ -12,21 +12,14 @@ import {applyStyles} from "./index.style";
 
 let timeout: any = null;
 
-const handleFocus = (
-  dispatch: any,
-  id: string | null
-) => {
+const handleFocus = (dispatch: any, id: string | null) => {
   clearTimeout(timeout);
-  dispatch(onFocus(id))
+  dispatch(onFocus(id));
 };
 
-const handleFocusDelayed = (
-  dispatch: any,
-  id: string | null,
-) => {
-  timeout = setTimeout(() =>
-    handleFocus(dispatch, id), 100);
-}
+const handleFocusDelayed = (dispatch: any, id: string | null) => {
+  timeout = setTimeout(() => handleFocus(dispatch, id), 100);
+};
 
 interface IProps {
   id: string;
@@ -38,9 +31,7 @@ interface IProps {
   onPreview: (id: string) => void;
 }
 
-export const AttachmentPlaceholder = (
-  props: IProps
-) => {
+export const AttachmentPlaceholder = (props: IProps) => {
   const dispatch = useDispatch();
 
   const {id, theme, title, style, onChange, onRemove, onPreview} = props;
@@ -59,20 +50,22 @@ export const AttachmentPlaceholder = (
       />
       <ImageButton
         style={styles.button}
-        source={theme === ThemeTypes.Dark ? 
-          require("../../../../assets/png/preview-icon.png") :
-          require("../../../../assets/png/preview-icon.png")
+        source={
+          theme === ThemeTypes.Dark
+            ? require("../../../../assets/png/preview-icon.png")
+            : require("../../../../assets/png/preview-icon.png")
         }
         onPress={() => onPreview(id)}
       />
       <ImageButton
         style={{...styles.button, ...{marginLeft: 10}}}
-        source={theme === ThemeTypes.Dark ?
-          require("../../../../assets/png/remove-icon.png") :
-          require("../../../../assets/png/remove-icon.png")
+        source={
+          theme === ThemeTypes.Dark
+            ? require("../../../../assets/png/remove-icon.png")
+            : require("../../../../assets/png/remove-icon.png")
         }
         onPress={() => onRemove(id)}
       />
     </View>
   );
-}
+};

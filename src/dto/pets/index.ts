@@ -1,6 +1,6 @@
 export enum PetTypes {
   dog,
-  cat, 
+  cat,
   fish,
   bird,
   mice,
@@ -20,7 +20,7 @@ export enum PetTypes {
   cow,
   burro,
   other,
-};
+}
 
 export interface IPetDto {
   id: string;

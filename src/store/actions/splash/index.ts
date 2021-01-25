@@ -8,6 +8,4 @@ export const onSplashAnimationStart = (): IOnSplashAnimationStart => ({
   type: ON_SPLASH_ANIMATION_START,
 });
 
-export type Actions = 
-  | IOnSplashAnimationStart
-;
+export type Actions = IOnSplashAnimationStart;

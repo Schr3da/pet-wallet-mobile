@@ -5,7 +5,7 @@ import {Text, View} from "react-native";
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {StyledButton} from "../styled-button";
 
-import {applyStyles} from './index.style';
+import {applyStyles} from "./index.style";
 
 export interface IProps {
   description: string;
@@ -16,10 +16,10 @@ export interface IProps {
   onPress: () => void;
 }
 
-export const Notification = (props: IProps): JSX.Element =>  {
-  const {buttonText, color, description, style, theme, onPress} = props; 
+export const Notification = (props: IProps): JSX.Element => {
+  const {buttonText, color, description, style, theme, onPress} = props;
 
-  const styles = createStyle(theme, applyStyles(color)); 
+  const styles = createStyle(theme, applyStyles(color));
   const colors = getColors(theme);
 
   return (
@@ -31,6 +31,6 @@ export const Notification = (props: IProps): JSX.Element =>  {
         title={buttonText}
         onPress={() => onPress()}
       />
-  </View>
+    </View>
   );
 };

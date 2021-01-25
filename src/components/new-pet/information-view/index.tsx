@@ -7,9 +7,19 @@ import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
 import {ImagePicker, InputField, RoundedButtons} from "../../common";
-import {InputIds, InputValues, IImageData, onProfileImage} from "../../../store/actions/new-pet";
+import {
+  InputIds,
+  InputValues,
+  IImageData,
+  onProfileImage,
+} from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {handleInputChange, handleChangeSubView, handleCancelNewPet, handleError} from "../hooks";
+import {
+  handleInputChange,
+  handleChangeSubView,
+  handleCancelNewPet,
+  handleError,
+} from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
 import {ErrorTypes} from "../../../store/actions/layout";
 import {base64ImageToUri} from "../../common/utils";
@@ -21,46 +31,38 @@ interface IStateProps {
   profile: IImageData | null;
 }
 
-const stateToProps = (
-  state: ICombinedReducerState
-): IStateProps => ({
+const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   inputs: state.newPet.inputs,
   profile: state.newPet.profile,
 });
 
-const handleProfileImage = (
-  dispatch: any,
-  data: IImageData
-) => dispatch(onProfileImage(data));
+const handleProfileImage = (dispatch: any, data: IImageData) =>
+  dispatch(onProfileImage(data));
 
-export const ChildView = (
-  props: ILayoutChildProps
-) => {
-
+export const ChildView = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
-  
+
   const stateProps = useSelector(stateToProps);
   const {profile} = stateProps;
 
   const {theme} = props;
-  const styles = createStyle(theme, applyStyles); 
+  const styles = createStyle(theme, applyStyles);
 
   return (
     <React.Fragment>
-      {profile == null ? 
+      {profile == null ? (
         <Image
           style={styles.placeholderIcon}
-          source={theme === ThemeTypes.Light ? 
-            require("../../../../assets/png/light/new-pet-profile-icon.png") :
-            require("../../../../assets/png/dark/new-pet-profile-icon.png")
+          source={
+            theme === ThemeTypes.Light
+              ? require("../../../../assets/png/light/new-pet-profile-icon.png")
+              : require("../../../../assets/png/dark/new-pet-profile-icon.png")
           }
-        /> :
-        <Image
-          style={styles.profileImage}
-          source={base64ImageToUri(profile)}
         />
-      }
-      <ImagePicker 
+      ) : (
+        <Image style={styles.profileImage} source={base64ImageToUri(profile)} />
+      )}
+      <ImagePicker
         style={styles.picker}
         theme={theme}
         maxWidth={512}
@@ -68,7 +70,7 @@ export const ChildView = (
         onError={() => handleError(dispatch, ErrorTypes.photoLibrary)}
         onData={(data) => handleProfileImage(dispatch, data)}
       />
-      <InputField 
+      <InputField
         id={InputIds.name}
         style={styles.inputField}
         placeholder="Name"
@@ -76,7 +78,7 @@ export const ChildView = (
         value={stateProps.inputs[InputIds.name]}
         onChange={(id, value) => handleInputChange(id, value, dispatch)}
       />
-      <InputField 
+      <InputField
         id={InputIds.race}
         style={styles.inputField}
         placeholder="Race"
@@ -85,7 +87,7 @@ export const ChildView = (
         onChange={(id, value) => handleInputChange(id, value, dispatch)}
       />
       <View style={styles.row}>
-        <InputField 
+        <InputField
           id={InputIds.dateOfBirth}
           style={styles.dateOfBirth}
           placeholder="Date of birth"
@@ -93,7 +95,7 @@ export const ChildView = (
           value={stateProps.inputs[InputIds.dateOfBirth]}
           onChange={(id, value) => handleInputChange(id, value, dispatch)}
         />
-        <InputField 
+        <InputField
           id={InputIds.age}
           style={styles.age}
           placeholder="Age"
@@ -104,12 +106,9 @@ export const ChildView = (
       </View>
     </React.Fragment>
   );
-}
+};
 
-export const Footer = (
-  props: ILayoutChildProps
-) => {
-  
+export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
   const {hasPets, language, languageType, theme} = props;
@@ -120,14 +119,20 @@ export const Footer = (
         theme={theme}
         title={language.newPet.newPetInformation.primaryButton}
         style={{marginTop: 20}}
-        onPress={() => handleChangeSubView(dispatch, SubViewComponents.newPetScan, languageType)}
+        onPress={() =>
+          handleChangeSubView(
+            dispatch,
+            SubViewComponents.newPetScan,
+            languageType,
+          )
+        }
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
         title={language.newPet.newPetInformation.secondaryButton}
         style={{marginTop: 10}}
         onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
-        />
+      />
     </React.Fragment>
   );
-}
+};

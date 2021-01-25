@@ -9,8 +9,8 @@ export enum ViewComponents {
   help = "help",
   petDetails = "petDetails",
   settings = "settings",
-  termsAndConditions = "termsAndConditions"
-};
+  termsAndConditions = "termsAndConditions",
+}
 
 export enum SubViewComponents {
   none = "none",
@@ -34,46 +34,45 @@ export const onChangeViewComponent = (
   language: LanguageTypes,
 ): IOnChangeViewComponent => ({
   type: ON_CHANGE_VIEW_COMPONENT,
-  nextMainView, 
+  nextMainView,
   nextSubView,
-  language
+  language,
 });
 
 export const ON_CHANGE_SUBVIEW_COMPONENT = "ON_CHANGE_SUBVIEW_COMPONENT";
-interface IOnChangeSubViewComponent{
+interface IOnChangeSubViewComponent {
   type: typeof ON_CHANGE_SUBVIEW_COMPONENT;
   next: SubViewComponents;
   language: LanguageTypes;
 }
 
 export const onChangeSubViewComponent = (
-  next: SubViewComponents, 
+  next: SubViewComponents,
   language: LanguageTypes,
 ): IOnChangeSubViewComponent => ({
   type: ON_CHANGE_SUBVIEW_COMPONENT,
-  next, 
-  language
+  next,
+  language,
 });
 
 export const ON_GO_BACK_NAVIGATION = "ON_GO_BACK_NAVIGATION";
-interface IOnGoBackNavigation{
+interface IOnGoBackNavigation {
   type: typeof ON_GO_BACK_NAVIGATION;
   language: LanguageTypes;
 }
 
-export const onGoBackNavigation = (
-  language: LanguageTypes
-) => (
+export const onGoBackNavigation = (language: LanguageTypes) => (
   dispatch: any,
   getState: () => ICombinedReducerState,
-) => { 
-  dispatch({ 
-    type: ON_GO_BACK_NAVIGATION, language,
+) => {
+  dispatch({
+    type: ON_GO_BACK_NAVIGATION,
+    language,
   } as IOnGoBackNavigation);
-  
+
   const state = getState();
   if (state.navigation.mainViewComponent !== ViewComponents.welcome) {
-    return; 
+    return;
   }
 
   dispatch(onClearInMemoryData());
@@ -88,16 +87,15 @@ interface IOnShowHomeComponent {
 
 export const onShowHomeComponent = (
   language: LanguageTypes,
-  hasPets: boolean
+  hasPets: boolean,
 ): IOnShowHomeComponent => ({
   type: ON_SHOW_HOME_COMPONENT,
   language,
   hasPets,
 });
 
-export type Actions =  
+export type Actions =
   | IOnGoBackNavigation
   | IOnChangeViewComponent
   | IOnChangeSubViewComponent
-  | IOnShowHomeComponent
-;
+  | IOnShowHomeComponent;

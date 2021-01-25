@@ -5,11 +5,4 @@ import * as Database from "./database";
 import * as NewPet from "./new-pet";
 import * as Pets from "./pets";
 
-export {
-  Database,
-  Layout,
-  Navigation,
-  NewPet,
-  Splash,
-  Pets,
-};
+export {Database, Layout, Navigation, NewPet, Splash, Pets};

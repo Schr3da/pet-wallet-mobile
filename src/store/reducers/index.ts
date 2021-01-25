@@ -8,12 +8,12 @@ import {IDatabaseState, database} from "./database";
 import {INewPetState, newPet} from "./new-pet";
 
 export interface ICombinedReducerState {
-  database: IDatabaseState,
-  layout: ILayoutState,
-  navigation: INavigationState,
-  newPet: INewPetState,
-  pets: IPetsState,
-  splash: ISplashState, 
+  database: IDatabaseState;
+  layout: ILayoutState;
+  navigation: INavigationState;
+  newPet: INewPetState;
+  pets: IPetsState;
+  splash: ISplashState;
 }
 
 export const reducer = combineReducers({

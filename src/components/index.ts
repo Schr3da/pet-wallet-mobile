@@ -14,4 +14,4 @@ export {
   Splash,
   TermsAndConditions,
   Welcome,
-}
+};

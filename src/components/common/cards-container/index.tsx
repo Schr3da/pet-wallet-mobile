@@ -15,11 +15,10 @@ import {applyStyles} from "./index.style";
 interface IProps extends ILayoutChildProps {
   data: IPetDto[];
   onCardPress: CardEventCallback;
-  onSharePress: CardEventCallback; 
+  onSharePress: CardEventCallback;
 }
 
 class Container extends React.Component<IProps, {}> {
-
   constructor(props: IProps, context: any) {
     super(props, context);
   }
@@ -35,13 +34,12 @@ class Container extends React.Component<IProps, {}> {
           style={styles.list}
           bounces={true}
           showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        >
+          showsVerticalScrollIndicator={false}>
           {data.map((animal, index) => {
             return (
               <Card
                 key={index}
-                data={animal} 
+                data={animal}
                 language={language}
                 theme={theme}
                 onPress={onCardPress}
@@ -56,18 +54,16 @@ class Container extends React.Component<IProps, {}> {
 }
 
 const mapStateToProps = (
-  state: ICombinedReducerState, 
-  ownProps: ILayoutChildProps & Pick<IProps, "onCardPress" | "onSharePress"> 
+  state: ICombinedReducerState,
+  ownProps: ILayoutChildProps & Pick<IProps, "onCardPress" | "onSharePress">,
 ): IProps => ({
   data: state.pets.data,
-  ...ownProps
-})
+  ...ownProps,
+});
 
-const mapDispatchToProps = (
-  _: any
-) => ({});
+const mapDispatchToProps = (_: any) => ({});
 
 export const CardsContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Container);

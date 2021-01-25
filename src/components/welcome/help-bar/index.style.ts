@@ -2,7 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (theme: ITheme) => ({ 
+export const applyStyles = (theme: ITheme) => ({
   container: {
     marginTop: 20,
     display: "flex" as "flex",
@@ -14,5 +14,5 @@ export const applyStyles = (theme: ITheme) => ({
     color: theme.color3,
     fontWeight: "bold",
     fontSize: 16,
-  } as ViewStyle
+  } as ViewStyle,
 });

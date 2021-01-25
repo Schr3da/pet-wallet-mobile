@@ -17,10 +17,10 @@ export const Loader = (props: IProps) => {
 
   return (
     <View style={styles.container}>
-        <Image 
-          source={require("../../../../assets/png/icon-clean.png")}
-          style={styles.appIcon}  
-        />
+      <Image
+        source={require("../../../../assets/png/icon-clean.png")}
+        style={styles.appIcon}
+      />
     </View>
   );
 };

@@ -8,20 +8,18 @@ const initialState = (): ISplashState => ({
   isAnimating: false,
 });
 
-const animationStart = (
-  state: ISplashState, 
-): ISplashState => ({
+const animationStart = (state: ISplashState): ISplashState => ({
   ...state,
   isAnimating: true,
 });
 
-const animationComplete = (
-  state: ISplashState, 
-): ISplashState => 
-  state.isAnimating === false ? state : ({
-  ...state,
-  isAnimating: false,
-});
+const animationComplete = (state: ISplashState): ISplashState =>
+  state.isAnimating === false
+    ? state
+    : {
+        ...state,
+        isAnimating: false,
+      };
 
 type Actions = Splash.Actions | Navigation.Actions;
 

@@ -4,39 +4,42 @@ import {Text, View, ViewStyle} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {ILayoutChildProps} from "../../common/layout";
-import {onChangeViewComponent, SubViewComponents, ViewComponents} from "../../../store/actions/navigation";
+import {
+  onChangeViewComponent,
+  SubViewComponents,
+  ViewComponents,
+} from "../../../store/actions/navigation";
 import {createStyle, getColors} from "../../../theme";
 import {LanguageTypes} from "../../../language";
 import {StyledButton} from "../../common";
 
-import {applyStyles} from './index.style';
+import {applyStyles} from "./index.style";
 
-const addNewPet = (
-  dispatch: any,
-  language: LanguageTypes
-) => { 
-  dispatch(onChangeViewComponent(
-    ViewComponents.newPet,
-    SubViewComponents.newPetInformation,
-    language,
-  ));
-}
+const addNewPet = (dispatch: any, language: LanguageTypes) => {
+  dispatch(
+    onChangeViewComponent(
+      ViewComponents.newPet,
+      SubViewComponents.newPetInformation,
+      language,
+    ),
+  );
+};
 
 interface IProps extends ILayoutChildProps {
-  style?: ViewStyle; 
+  style?: ViewStyle;
 }
 
-export const AddPetBar = (props: IProps): JSX.Element =>  {
-  const {theme, language, languageType, hasPets, style} = props; 
+export const AddPetBar = (props: IProps): JSX.Element => {
+  const {theme, language, languageType, hasPets, style} = props;
 
   const dispatch = useDispatch();
 
-  const styles = createStyle(theme, applyStyles); 
+  const styles = createStyle(theme, applyStyles);
   const colors = getColors(theme);
 
-  let {button, description}= hasPets ? 
-    language.welcome.welcomeWithPets.addPetBar :
-    language.welcome.welcomeNoPets.addPetBar;
+  let {button, description} = hasPets
+    ? language.welcome.welcomeWithPets.addPetBar
+    : language.welcome.welcomeNoPets.addPetBar;
 
   return (
     <View style={{...styles.container, ...(style || {})}}>
@@ -47,6 +50,6 @@ export const AddPetBar = (props: IProps): JSX.Element =>  {
         title={button}
         onPress={() => addNewPet(dispatch, languageType)}
       />
-  </View>
+    </View>
   );
 };

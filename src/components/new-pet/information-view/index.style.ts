@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  theme: ITheme
-) => ({ 
+export const applyStyles = (theme: ITheme) => ({
   container: {
     flex: 1,
     alignItems: "center",
@@ -47,5 +45,5 @@ export const applyStyles = (
   age: {
     flex: 1,
     marginBottom: 10,
-  }
+  },
 });

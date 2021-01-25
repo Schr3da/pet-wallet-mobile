@@ -2,9 +2,7 @@ import {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  _: ITheme,
-) => ({
+export const applyStyles = (_: ITheme) => ({
   navigation: {
     width: "100%",
     marginTop: 10,

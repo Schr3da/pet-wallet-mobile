@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  _: ITheme
-) => ({ 
+export const applyStyles = (_: ITheme) => ({
   container: {
     position: "absolute",
     top: 0,
@@ -18,5 +16,5 @@ export const applyStyles = (
   appIcon: {
     width: 72,
     height: 72,
-  }
+  },
 });

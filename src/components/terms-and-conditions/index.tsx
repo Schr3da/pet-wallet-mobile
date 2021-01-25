@@ -13,7 +13,7 @@ export const Component = () => {
       imageSource={require("../../../assets/png/help-header-icon.png")}
       childRenderer={(props) => {
         const {theme} = props;
-        const styles = createStyle(theme, applyStyles); 
+        const styles = createStyle(theme, applyStyles);
         return (
           <React.Fragment>
             <View style={styles.container}>
@@ -21,7 +21,7 @@ export const Component = () => {
             </View>
           </React.Fragment>
         );
-      }}  
+      }}
     />
   );
 };

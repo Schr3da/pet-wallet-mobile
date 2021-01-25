@@ -5,23 +5,16 @@ export interface IDatabaseState {
 }
 
 const initialState = (): IDatabaseState => ({
-  hasLoadedDatabase: false, 
+  hasLoadedDatabase: false,
 });
 
-const handleInitDatabase = (
-  state: IDatabaseState
-): IDatabaseState => {
-  return {...state,
-    hasLoadedDatabase: true,
-  };
+const handleInitDatabase = (state: IDatabaseState): IDatabaseState => {
+  return {...state, hasLoadedDatabase: true};
 };
 
 type Actions = Database.Actions;
 
-const reducer = (
-  state = initialState(),
-  action: Actions, 
-) => {
+const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
     case Database.ON_INIT_DATA_FROM_DATABASE:
       return handleInitDatabase(state);
@@ -30,6 +23,6 @@ const reducer = (
     default:
       return state;
   }
-}
+};
 
 export const database = reducer;

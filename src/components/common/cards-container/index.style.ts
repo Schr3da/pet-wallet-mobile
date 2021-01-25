@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  _: ITheme
-) => ({
+export const applyStyles = (_: ITheme) => ({
   container: {
     width: "100%",
     height: 180,

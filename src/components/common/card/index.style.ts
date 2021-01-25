@@ -2,9 +2,7 @@ import type {ViewStyle, ImageStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  hasProfile: boolean
-) => (theme: ITheme) => ({
+export const applyStyles = (hasProfile: boolean) => (theme: ITheme) => ({
   container: {
     width: "100%",
     height: 120,
@@ -32,7 +30,7 @@ export const applyStyles = (
     borderRadius: 29,
     borderColor: theme.color6,
     backgroundColor: theme.color6,
-    opacity: hasProfile ? 1 : 0.3, 
+    opacity: hasProfile ? 1 : 0.3,
     overflow: "hidden",
   } as ViewStyle,
   image: {
@@ -50,7 +48,7 @@ export const applyStyles = (
     width: 32,
     minHeight: 24,
     display: "flex",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
   } as ViewStyle,
   overflowIcon: {
     width: 24,
@@ -67,5 +65,5 @@ export const applyStyles = (
   shareIcon: {
     width: 22,
     height: 22,
-  }
+  },
 });

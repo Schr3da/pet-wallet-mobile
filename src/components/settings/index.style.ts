@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../theme";
 
-export const applyStyles = (
-  theme: ITheme
-) => ({ 
+export const applyStyles = (theme: ITheme) => ({
   container: {
     flex: 1,
     width: "100%",
@@ -35,6 +33,6 @@ export const applyStyles = (
     opacity: 1,
   },
   notificationWrapper: {
-      marginTop: 40
+    marginTop: 40,
   } as ViewStyle,
 });

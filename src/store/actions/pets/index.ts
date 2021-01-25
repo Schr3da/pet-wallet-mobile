@@ -3,7 +3,7 @@ import type {ICombinedReducerState} from "../../reducers";
 import {
   onChangeViewComponent,
   ViewComponents,
-  SubViewComponents
+  SubViewComponents,
 } from "../navigation";
 
 export const ON_SHOW_PET_DETAILS = "ON_SHOW_PET_DETAILS";
@@ -24,9 +24,13 @@ export const onShowPetDetails = (id: string) => (
   }
 
   const language = state.layout.language;
-  dispatch(onChangeViewComponent(ViewComponents.petDetails, SubViewComponents.none, language));
+  dispatch(
+    onChangeViewComponent(
+      ViewComponents.petDetails,
+      SubViewComponents.none,
+      language,
+    ),
+  );
 };
 
-export type Actions = 
-  | IOnShowPetDetails
-;
+export type Actions = IOnShowPetDetails;

@@ -1,6 +1,16 @@
-import type {IHeader, ISettings, IWelcome, INewPet, ICard, IErrors} from "../index";
+import type {
+  IHeader,
+  ISettings,
+  IWelcome,
+  INewPet,
+  ICard,
+  IErrors,
+} from "../index";
 
-import {SubViewComponents, ViewComponents} from "../../store/actions/navigation";
+import {
+  SubViewComponents,
+  ViewComponents,
+} from "../../store/actions/navigation";
 import {ErrorTypes} from "../../store/actions/layout";
 
 const header: IHeader = {
@@ -8,7 +18,7 @@ const header: IHeader = {
     [SubViewComponents.none]: {
       title: "",
       description: "",
-    }
+    },
   },
   [ViewComponents.welcome]: {
     [SubViewComponents.welcomeNoPets]: {
@@ -18,43 +28,46 @@ const header: IHeader = {
     [SubViewComponents.welcomeWithPets]: {
       title: "Pet Wallet",
       description: "",
-    }
+    },
   },
   [ViewComponents.newPet]: {
     [SubViewComponents.newPetInformation]: {
       title: "Neues Haustier",
-      description: "Gib ein paar Informationen über dein Haustier ein und bestätige diese mit Weiter.",
+      description:
+        "Gib ein paar Informationen über dein Haustier ein und bestätige diese mit Weiter.",
     },
     [SubViewComponents.newPetScan]: {
       title: "Digitaler Impfpass",
-      description: "Photographiere den Impfass deines Haustieres und wir digitalisieren ihn sofort.",
+      description:
+        "Photographiere den Impfass deines Haustieres und wir digitalisieren ihn sofort.",
     },
   },
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
       title: "Einstellungen",
-      description: "Hier kannst du die aktuellen App Einstellungen einsehen und verändern.", 
-    }
+      description:
+        "Hier kannst du die aktuellen App Einstellungen einsehen und verändern.",
+    },
   },
   [ViewComponents.help]: {
     [SubViewComponents.welcomeNoPets]: {
       title: "Hilfe",
       description: "",
-    }
+    },
   },
   [ViewComponents.termsAndConditions]: {
     [SubViewComponents.none]: {
       title: "Nutzungsbedingungen",
-      description: "Hier kannst du die Nutzungsbedingen dieser App einsehen.", 
-    }
+      description: "Hier kannst du die Nutzungsbedingen dieser App einsehen.",
+    },
   },
   [ViewComponents.petDetails]: {
     [SubViewComponents.none]: {
       title: "",
       description: "",
-    }
-  }
-}
+    },
+  },
+};
 
 const welcome: IWelcome = {
   [SubViewComponents.welcomeNoPets]: {
@@ -63,16 +76,16 @@ const welcome: IWelcome = {
       button: "Hinzufügen",
     },
     help: {
-      button: "Brauchst du Hilfe?"
-    }
+      button: "Brauchst du Hilfe?",
+    },
   },
   [SubViewComponents.welcomeWithPets]: {
     addPetBar: {
-      description: "Füge ein weiteres Haustier jederzeit hinzu.", 
+      description: "Füge ein weiteres Haustier jederzeit hinzu.",
       button: "Hinzufügen",
     },
-  }
-}
+  },
+};
 
 const settings: ISettings = {
   [SubViewComponents.none]: {
@@ -80,11 +93,12 @@ const settings: ISettings = {
     theme: "Farbmotiv auswählen:",
     agbs: {
       description: "Die Nutungsbedingungen können hier eingesehen werden.",
-      button: "Jetzt anzeigen"
+      button: "Jetzt anzeigen",
     },
     accountDeletion: {
-      description: "Es ist jederzeit möglich die gespeicherten Daten zu löschen.",
-      button: "Daten löschen"
+      description:
+        "Es ist jederzeit möglich die gespeicherten Daten zu löschen.",
+      button: "Daten löschen",
     },
   },
 };
@@ -102,24 +116,27 @@ const newPet: INewPet = {
   [SubViewComponents.newPetScan]: {
     primaryButton: "Übernehmen",
     secondaryButton: "Abbrechen",
-    attachmentLabel: "Anhang"
-  }
+    attachmentLabel: "Anhang",
+  },
 };
 
 const errors: IErrors = {
   [ErrorTypes.inputField]: {
     title: "Zurgiff verweigert",
-    text: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
+    text:
+      "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
   },
   [ErrorTypes.camera]: {
     title: "Zurgiff verweigert",
-    text: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen."
+    text:
+      "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
   },
   [ErrorTypes.photoLibrary]: {
     title: "Zurgiff verweigert",
-    text: "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen."
-  }
-}
+    text:
+      "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
+  },
+};
 
 export const DE = {
   header,

@@ -1,5 +1,12 @@
-import {InputValues, onInputFieldChange, onCancelNewPet} from "../../../store/actions/new-pet";
-import {onChangeSubViewComponent, SubViewComponents} from "../../../store/actions/navigation";
+import {
+  InputValues,
+  onInputFieldChange,
+  onCancelNewPet,
+} from "../../../store/actions/new-pet";
+import {
+  onChangeSubViewComponent,
+  SubViewComponents,
+} from "../../../store/actions/navigation";
 import {onSetErrorCode, ErrorTypes} from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
 
@@ -27,7 +34,5 @@ export const handleCancelNewPet = (
   hasPets: boolean,
 ) => dispatch(onCancelNewPet(language, hasPets));
 
-export const handleError = (
-  dispatch: any,
-  errorType: ErrorTypes,
-) => dispatch(onSetErrorCode(errorType));
+export const handleError = (dispatch: any, errorType: ErrorTypes) =>
+  dispatch(onSetErrorCode(errorType));

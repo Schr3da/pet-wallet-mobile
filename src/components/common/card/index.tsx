@@ -12,60 +12,58 @@ import {measureComponent, IMeasureResult} from "../utils";
 import {applyStyles} from "./index.style";
 
 export type CardEventCallback = (
-  id: string, 
-  measure: IMeasureResult | null
+  id: string,
+  measure: IMeasureResult | null,
 ) => void;
 
 interface IProps {
   data: IPetDto;
   theme: ThemeTypes;
   language: ILanguage;
-  onPress: CardEventCallback; 
+  onPress: CardEventCallback;
   onShare: CardEventCallback;
 }
 
-export const Card = (
-  props: IProps
-) => {
-
+export const Card = (props: IProps) => {
   const ref = React.useRef(null);
 
   const {data, language, theme, onPress, onShare} = props;
 
   const hasProfileImage = data.profileImage != null;
   const hasProfileUrl = data.profileUri != null;
-  const hasProfile = hasProfileImage || hasProfileUrl; 
+  const hasProfile = hasProfileImage || hasProfileUrl;
 
   const styles = createStyle(theme, applyStyles(hasProfile));
 
   return (
     <View ref={ref} style={styles.container}>
       <Image
-        style={styles.backgroundImage} 
-        source={theme === ThemeTypes.Dark ?
-          require("../../../../assets/png/dark/card-background.png") :
-          require("../../../../assets/png/light/card-background.png")
+        style={styles.backgroundImage}
+        source={
+          theme === ThemeTypes.Dark
+            ? require("../../../../assets/png/dark/card-background.png")
+            : require("../../../../assets/png/light/card-background.png")
         }
       />
       <View style={styles.row}>
         <View style={{flexBasis: 58}}>
           <View style={styles.profileWrapper}>
-            {hasProfile == null ? null : 
+            {hasProfile == null ? null : (
               <Image
-                style={styles.image} 
-                source={{uri: data.profileUri! || data.profileImage! }}
+                style={styles.image}
+                source={{uri: data.profileUri! || data.profileImage!}}
               />
-            }
+            )}
           </View>
         </View>
         <View style={styles.middleWrapper}>
-          <Label 
+          <Label
             theme={theme}
             type={LabelTypes.Large}
             title={`${language.card.nameProperty}: ${data.name}`}
             style={{marginBottom: 6}}
           />
-          <Label 
+          <Label
             theme={theme}
             type={LabelTypes.Small}
             title={`${language.card.animalProperty}: ${data.animal}`}
@@ -74,11 +72,12 @@ export const Card = (
         </View>
         <View style={{flexBasis: 32}}>
           <ImageButton
-            style={styles.buttonOverflow} 
+            style={styles.buttonOverflow}
             imageStyle={styles.overflowIcon}
-            source={theme === ThemeTypes.Dark ?
-              require("../../../../assets/png/dark/overflow-button-icon.png") :
-              require("../../../../assets/png/light/overflow-button-icon.png")
+            source={
+              theme === ThemeTypes.Dark
+                ? require("../../../../assets/png/dark/overflow-button-icon.png")
+                : require("../../../../assets/png/light/overflow-button-icon.png")
             }
             onPress={async () => {
               const measures = await measureComponent(ref);
@@ -86,11 +85,12 @@ export const Card = (
             }}
           />
           <ImageButton
-            style={styles.buttonShare} 
+            style={styles.buttonShare}
             imageStyle={styles.shareIcon}
-            source={theme === ThemeTypes.Dark ?
-              require("../../../../assets/png/dark/share-icon.png") :
-              require("../../../../assets/png/light/share-icon.png")
+            source={
+              theme === ThemeTypes.Dark
+                ? require("../../../../assets/png/dark/share-icon.png")
+                : require("../../../../assets/png/light/share-icon.png")
             }
             onPress={async () => {
               const measures = await measureComponent(ref);

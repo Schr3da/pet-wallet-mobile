@@ -19,7 +19,7 @@ export enum InputIds {
   name = "name",
   race = "race",
   dateOfBirth = "dateOfBirth",
-};
+}
 
 export type InputValues = string | number | null | undefined;
 
@@ -30,13 +30,13 @@ interface IOnInputFieldChange {
   value: InputValues;
 }
 
-export const onInputFieldChange= (
+export const onInputFieldChange = (
   id: string,
-  value: InputValues 
+  value: InputValues,
 ): IOnInputFieldChange => ({
   type: ON_INPUT_FIELD_CHANGE,
   id,
-  value
+  value,
 });
 
 export const ON_CANCEL_NEW_PET = "ON_CANCEL_NEW_PET";
@@ -58,57 +58,51 @@ export const onCancelNewPet = (
 export const ON_PROFILE_IMAGE_NEW_PET = "ON_PROFILE_IMAGE_NEW_PET";
 interface IOnProfileImageNewPet {
   type: typeof ON_PROFILE_IMAGE_NEW_PET;
-  data: IImageData; 
+  data: IImageData;
 }
 
-export const onProfileImage = (
-  data: IImageData
-) => (dispatch: any) => {
+export const onProfileImage = (data: IImageData) => (dispatch: any) => {
   dispatch({
     type: ON_PROFILE_IMAGE_NEW_PET,
-    data, 
+    data,
   } as IOnProfileImageNewPet);
 };
 
 export const ON_SCAN_NEW_PET_PASS = "ON_SCAN_NEW_PET_PASS";
 interface IOnScanNewPetPass {
   type: typeof ON_SCAN_NEW_PET_PASS;
-  data: IImageData; 
+  data: IImageData;
 }
 
-export const onScan = (
-  data: IImageData
-) => (dispatch: any) => {
+export const onScan = (data: IImageData) => (dispatch: any) => {
   dispatch({
     type: ON_SCAN_NEW_PET_PASS,
-    data, 
+    data,
   } as IOnScanNewPetPass);
 };
 
-export const ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT = "ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT";
+export const ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT =
+  "ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT";
 interface IOnRemoveNewPetPass {
   type: typeof ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT;
-  id: string; 
+  id: string;
 }
 
-export const onRemoveScan = (
-  id: string 
-): IOnRemoveNewPetPass => ({
+export const onRemoveScan = (id: string): IOnRemoveNewPetPass => ({
   type: ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT,
-  id, 
+  id,
 });
 
-export const ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT = "ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT";
-interface IOnPreviewNewPetPassScan{
+export const ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT =
+  "ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT";
+interface IOnPreviewNewPetPassScan {
   type: typeof ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT;
-  id: string; 
+  id: string;
 }
 
-export const onPreviewScan = (
-  id: string 
-): IOnPreviewNewPetPassScan => ({
+export const onPreviewScan = (id: string): IOnPreviewNewPetPassScan => ({
   type: ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT,
-  id, 
+  id,
 });
 
 export const ON_SAVE_NEW_PET = "ON_SAVE_NEW_PET";
@@ -120,7 +114,7 @@ interface IOnSaveNewPet {
 
 export const onSaveNewPet = () => (
   dispatch: any,
-  getState: () => ICombinedReducerState
+  getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
   const newPet = state.newPet;
@@ -135,16 +129,15 @@ export const onSaveNewPet = () => (
       dateOfBirth: newPet.inputs[InputIds.dateOfBirth] || "",
       age: newPet.inputs[InputIds.age] || "",
       profileImage: base64ImageString(newPet.profile),
-    }
+    },
   } as IOnSaveNewPet);
 };
 
-export type Actions = 
-  | IOnInputFieldChange 
+export type Actions =
+  | IOnInputFieldChange
   | IOnCancelNewPet
   | IOnScanNewPetPass
   | IOnProfileImageNewPet
   | IOnRemoveNewPetPass
   | IOnPreviewNewPetPassScan
-  | IOnSaveNewPet
-;
+  | IOnSaveNewPet;

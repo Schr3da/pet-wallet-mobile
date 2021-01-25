@@ -13,7 +13,7 @@ export interface ITheme {
   color10: string;
   color11: string;
   color12: string;
-};
+}
 
 const LightTheme: ITheme = {
   color1: "#ffffff",
@@ -43,34 +43,28 @@ const DarkTheme: ITheme = {
   color10: "#ffffff",
   color11: "#333333",
   color12: "#afafaf",
-}
+};
 
 export enum ThemeTypes {
   Dark = "dark",
-  Light = "light"
+  Light = "light",
 }
 
-export const getColors = (
-  theme: ThemeTypes
-): ITheme => 
+export const getColors = (theme: ThemeTypes): ITheme =>
   ThemeTypes.Dark === theme ? DarkTheme : LightTheme;
 
 type useThemeCallback<
-  T extends StyleSheet.NamedStyles<T> |
-  StyleSheet.NamedStyles<any>
-> = (colors: ITheme) => T
+  T extends StyleSheet.NamedStyles<T> | StyleSheet.NamedStyles<any>
+> = (colors: ITheme) => T;
 
-export const createStyle = <T>(
-  theme: ThemeTypes,
-  cb: useThemeCallback<T>
-) => {
+export const createStyle = <T>(theme: ThemeTypes, cb: useThemeCallback<T>) => {
   let colors = getColors(theme);
   let styles = cb(colors);
   return StyleSheet.create(styles);
-}
+};
 
-export const createStyleWithoutTheme =
-  <T>(styles: T) => StyleSheet.create(styles);
+export const createStyleWithoutTheme = <T>(styles: T) =>
+  StyleSheet.create(styles);
 
 export const getDeviceTheme = () => {
   const scheme = Appearance.getColorScheme();
@@ -79,6 +73,7 @@ export const getDeviceTheme = () => {
     return ThemeTypes.Light;
   }
 
-  return (scheme || "").toLowerCase() === ThemeTypes.Dark ? 
-    ThemeTypes.Dark : ThemeTypes.Light;
+  return (scheme || "").toLowerCase() === ThemeTypes.Dark
+    ? ThemeTypes.Dark
+    : ThemeTypes.Light;
 };

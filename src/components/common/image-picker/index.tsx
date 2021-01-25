@@ -18,7 +18,7 @@ enum ImagePickerTypes {
 export enum ScanErrorTypes {
   unavailable = "camera_unavailable",
   permission = "permission",
-  others = "others"
+  others = "others",
 }
 
 const handlePress = (
@@ -26,60 +26,59 @@ const handlePress = (
   setState: (type: ImagePickerTypes) => void,
   maxWidth: number,
   maxHeight: number,
-) => new Promise<IImageData | null> ((resolve) => {
-  setState(type);
+) =>
+  new Promise<IImageData | null>((resolve) => {
+    setState(type);
 
-  const options = {
-    includeBase64: true,
-    mediaType: "photo",
-    maxWidth,
-    maxHeight,
-  };
+    const options = {
+      includeBase64: true,
+      mediaType: "photo",
+      maxWidth,
+      maxHeight,
+    };
 
-  if (type === ImagePickerTypes.camera) {
-    return launchCamera(options, async (data: any) =>
-      hasError(data) === true ? resolve(null) :
-      resolve({
-        id: Date.now().toString(),
-        uri: data.uri,
-        imageBase64: data.base64,
-        fileSize: data.fileSize,
-        width: data.width,
-        height: data.height,
-        fileType: data.type,
-        didCancel: data.didCancel,
-      })
-    );
-  }
+    if (type === ImagePickerTypes.camera) {
+      return launchCamera(options, async (data: any) =>
+        hasError(data) === true
+          ? resolve(null)
+          : resolve({
+              id: Date.now().toString(),
+              uri: data.uri,
+              imageBase64: data.base64,
+              fileSize: data.fileSize,
+              width: data.width,
+              height: data.height,
+              fileType: data.type,
+              didCancel: data.didCancel,
+            }),
+      );
+    }
 
-  if (type === ImagePickerTypes.picker) {
-    return launchImageLibrary(options, async (data: any) => { 
-      hasError(data) === true ? resolve(null) : 
-      resolve({
-        id: Date.now().toString(),
-        uri: data.uri,
-        imageBase64: data.base64,
-        fileSize: data.fileSize,
-        width: data.width,
-        height: data.height,
-        fileType: data.type,
-        didCancel: data.didCancel,
-      })
-    });
-  }
-});
+    if (type === ImagePickerTypes.picker) {
+      return launchImageLibrary(options, async (data: any) => {
+        hasError(data) === true
+          ? resolve(null)
+          : resolve({
+              id: Date.now().toString(),
+              uri: data.uri,
+              imageBase64: data.base64,
+              fileSize: data.fileSize,
+              width: data.width,
+              height: data.height,
+              fileType: data.type,
+              didCancel: data.didCancel,
+            });
+      });
+    }
+  });
 
-const hasError = (
-  code: string
-): boolean => 
+const hasError = (code: string): boolean =>
   ScanErrorTypes.permission === code ||
   ScanErrorTypes.unavailable === code ||
   ScanErrorTypes.others === code;
 
-const isSelected = (
-  type: ImagePickerTypes,
-  condition: ImagePickerTypes
-) => type === condition; 
+const isSelected = (type: ImagePickerTypes, condition: ImagePickerTypes) =>
+  type === condition;
 
 interface IProps {
   theme: ThemeTypes;
@@ -90,10 +89,8 @@ interface IProps {
   onError: () => void;
 }
 
-export const ImagePicker = (
-  props: IProps
-): JSX.Element => {
-  const [currentType, setType]= React.useState(ImagePickerTypes.camera)
+export const ImagePicker = (props: IProps): JSX.Element => {
+  const [currentType, setType] = React.useState(ImagePickerTypes.camera);
 
   const {maxWidth, maxHeight, theme, onData, onError} = props;
   const style = props.style || {};
@@ -106,25 +103,27 @@ export const ImagePicker = (
   return (
     <View style={{...styles.container, ...style}}>
       <ImageButton
-        source={theme === ThemeTypes.Light ? 
-        (
-          isCameraSelected ?
-          require("../../../../assets/png/light/camera-button-selected-icon.png") :
-          require("../../../../assets/png/light/camera-button-icon.png") 
-        ) : 
-        (
-          isCameraSelected ?
-          require("../../../../assets/png/dark/camera-button-selected-icon.png") :
-          require("../../../../assets/png/dark/camera-button-icon.png") 
-        )
-      }
+        source={
+          theme === ThemeTypes.Light
+            ? isCameraSelected
+              ? require("../../../../assets/png/light/camera-button-selected-icon.png")
+              : require("../../../../assets/png/light/camera-button-icon.png")
+            : isCameraSelected
+            ? require("../../../../assets/png/dark/camera-button-selected-icon.png")
+            : require("../../../../assets/png/dark/camera-button-icon.png")
+        }
         style={styles.image(isCameraSelected)}
         onPress={async () => {
-          const data = await handlePress(ImagePickerTypes.camera, setType, maxWidth, maxHeight);
+          const data = await handlePress(
+            ImagePickerTypes.camera,
+            setType,
+            maxWidth,
+            maxHeight,
+          );
           if (data == null) {
             return onError();
           }
-          
+
           if (data.didCancel === true) {
             return;
           }
@@ -133,21 +132,23 @@ export const ImagePicker = (
         }}
       />
       <ImageButton
-        source={theme === ThemeTypes.Light ? 
-          (
-            isPickerSelected ? 
-            require("../../../../assets/png/light/image-gallery-button-selected-icon.png") :
-            require("../../../../assets/png/light/image-gallery-button-icon.png")
-          ) :
-          (
-            isPickerSelected ? 
-            require("../../../../assets/png/dark/image-gallery-button-selected-icon.png") :
-            require("../../../../assets/png/dark/image-gallery-button-icon.png")
-          )
+        source={
+          theme === ThemeTypes.Light
+            ? isPickerSelected
+              ? require("../../../../assets/png/light/image-gallery-button-selected-icon.png")
+              : require("../../../../assets/png/light/image-gallery-button-icon.png")
+            : isPickerSelected
+            ? require("../../../../assets/png/dark/image-gallery-button-selected-icon.png")
+            : require("../../../../assets/png/dark/image-gallery-button-icon.png")
         }
         style={styles.image(isPickerSelected)}
         onPress={async () => {
-          const data = await handlePress(ImagePickerTypes.picker, setType, maxWidth, maxHeight);
+          const data = await handlePress(
+            ImagePickerTypes.picker,
+            setType,
+            maxWidth,
+            maxHeight,
+          );
           if (data == null) {
             return onError();
           }
@@ -161,4 +162,4 @@ export const ImagePicker = (
       />
     </View>
   );
-}
+};

@@ -2,12 +2,10 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  theme: ITheme
-) => ({ 
+export const applyStyles = (theme: ITheme) => ({
   container: {
     width: "100%",
-  }, 
+  },
   meta: {
     alignItems: "center",
     justifyContent: "center",
@@ -18,7 +16,7 @@ export const applyStyles = (
     marginBottom: "5%",
   },
   title: {
-    marginBottom: "5%", 
+    marginBottom: "5%",
     fontWeight: "bold",
     fontSize: 26,
     color: theme.color10,
@@ -29,5 +27,5 @@ export const applyStyles = (
     textAlign: "center",
     fontSize: 16,
     color: theme.color10,
-  } as ViewStyle
+  } as ViewStyle,
 });

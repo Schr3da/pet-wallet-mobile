@@ -1,8 +1,6 @@
 import type {ViewStyle} from "react-native";
 
-export const applyStyles = (
-  color: string
-) => ({ 
+export const applyStyles = (color: string) => ({
   container: {
     display: "flex",
     alignItems: "center",
@@ -11,5 +9,5 @@ export const applyStyles = (
     fontWeight: "bold",
     fontSize: 12,
     color,
-  } as ViewStyle
+  } as ViewStyle,
 });

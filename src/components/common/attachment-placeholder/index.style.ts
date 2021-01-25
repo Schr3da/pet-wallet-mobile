@@ -2,9 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (
-  theme: ITheme  
-) => ({
+export const applyStyles = (theme: ITheme) => ({
   container: {
     flex: 1,
     borderRadius: 1000,
@@ -27,5 +25,5 @@ export const applyStyles = (
     flexBasis: 18,
     width: 18,
     height: 18,
-  }
+  },
 });

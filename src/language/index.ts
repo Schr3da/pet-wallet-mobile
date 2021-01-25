@@ -40,8 +40,8 @@ export interface IWelcome {
 
 export interface ISettings {
   [SubViewComponents.none]: {
-    language: string; 
-    theme: string; 
+    language: string;
+    theme: string;
     accountDeletion: {
       description: string;
       button: string;
@@ -49,20 +49,20 @@ export interface ISettings {
     agbs: {
       description: string;
       button: string;
-    }
-  }
+    };
+  };
 }
 
 export interface INewPet {
   [SubViewComponents.newPetInformation]: {
-    primaryButton: string; 
+    primaryButton: string;
     secondaryButton: string;
-  },
+  };
   [SubViewComponents.newPetScan]: {
-    primaryButton: string; 
+    primaryButton: string;
     secondaryButton: string;
     attachmentLabel: string;
-  }
+  };
 }
 
 export interface ICard {
@@ -73,9 +73,9 @@ export interface ICard {
 export interface IError {
   title: string;
   text: string;
-};
+}
 
-export type IErrors = {[k in ErrorTypes]: IError};  
+export type IErrors = {[k in ErrorTypes]: IError};
 
 export interface ILanguage {
   header: IHeader;
@@ -86,11 +86,9 @@ export interface ILanguage {
   [ViewComponents.newPet]: INewPet;
 }
 
-export const getTranslation = (
-  language: LanguageTypes,
-): ILanguage => {
+export const getTranslation = (language: LanguageTypes): ILanguage => {
   switch (language) {
-    case LanguageTypes.en: 
+    case LanguageTypes.en:
       return EN;
     case LanguageTypes.de:
       return DE;
@@ -100,22 +98,28 @@ export const getTranslation = (
 };
 
 const getSystemLanguageIOS = (): LanguageTypes => {
-  const systemLanguage = NativeModules.SettingsManager.settings.AppleLocale 
-    || NativeModules.SettingsManager.settings.AppleLanguages[0]; 
-   
-  return (systemLanguage || "").toLowerCase().indexOf(LanguageTypes.de) != -1 ? 
-      LanguageTypes.de : LanguageTypes.en;
+  const systemLanguage =
+    NativeModules.SettingsManager.settings.AppleLocale ||
+    NativeModules.SettingsManager.settings.AppleLanguages[0];
+
+  return (systemLanguage || "").toLowerCase().indexOf(LanguageTypes.de) != -1
+    ? LanguageTypes.de
+    : LanguageTypes.en;
 };
 
 const getSystemLanguageAndroid = (): LanguageTypes => {
-  if (NativeModules.I18nManager == null || NativeModules.I18nManager.localeIdentifier == null) {
+  if (
+    NativeModules.I18nManager == null ||
+    NativeModules.I18nManager.localeIdentifier == null
+  ) {
     return LanguageTypes.en;
   }
-  
+
   const systemLanguage = NativeModules.I18nManager.localeIdentifier;
-  
-  return (systemLanguage || "").toLowerCase().indexOf(LanguageTypes.de) != -1 ? 
-      LanguageTypes.de : LanguageTypes.en;
+
+  return (systemLanguage || "").toLowerCase().indexOf(LanguageTypes.de) != -1
+    ? LanguageTypes.de
+    : LanguageTypes.en;
 };
 
 export const getDeviceLanguage = () => {
@@ -123,9 +127,9 @@ export const getDeviceLanguage = () => {
   switch (platform.toLowerCase()) {
     case "ios":
       return getSystemLanguageIOS();
-    case "android": 
+    case "android":
       return getSystemLanguageAndroid();
     default:
       return LanguageTypes.en;
-  };
+  }
 };

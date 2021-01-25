@@ -21,10 +21,8 @@ interface IProps {
   language: LanguageTypes;
   hasLoadedDatabase: boolean;
 }
-  
-const stateToProps = (
-  state: ICombinedReducerState
-): IProps => ({
+
+const stateToProps = (state: ICombinedReducerState): IProps => ({
   isAnimating: state.splash.isAnimating,
   language: state.layout.language,
   theme: state.layout.theme,
@@ -39,7 +37,7 @@ const startAnimation = (
 ) => {
   dispatch(Splash.onSplashAnimationStart());
   setTimeout(() => completeAnimation(dispatch, hasPets, language), 2000);
-}
+};
 
 const completeAnimation = (
   dispatch: any,
@@ -47,9 +45,7 @@ const completeAnimation = (
   language: LanguageTypes,
 ) => dispatch(Navigation.onShowHomeComponent(language, hasPets));
 
-const didMount = (
-  dispatch: any,
-) => dispatch(initStateFromDatabase()); 
+const didMount = (dispatch: any) => dispatch(initStateFromDatabase());
 
 const initAnimation = (
   dispatch: any,
@@ -57,28 +53,31 @@ const initAnimation = (
   language: LanguageTypes,
 ) => startAnimation(dispatch, hasPets, language);
 
-export const Component = (): JSX.Element =>  {
-  const dispatch = useDispatch()
-  
-  const {hasPets, hasLoadedDatabase, language, theme}= useSelector(stateToProps); 
-  
-  React.useEffect(() => { 
-    hasLoadedDatabase == false ?
-      didMount(dispatch) :      
-      initAnimation(dispatch, hasPets, language);
+export const Component = (): JSX.Element => {
+  const dispatch = useDispatch();
+
+  const {hasPets, hasLoadedDatabase, language, theme} = useSelector(
+    stateToProps,
+  );
+
+  React.useEffect(() => {
+    hasLoadedDatabase == false
+      ? didMount(dispatch)
+      : initAnimation(dispatch, hasPets, language);
   }, [hasLoadedDatabase]);
 
-  const styles = createStyle(theme, applyStyles); 
+  const styles = createStyle(theme, applyStyles);
 
   return (
     <View style={styles.container}>
-      {hasLoadedDatabase === false ? 
-        <Loader theme={theme}/> : 
-        <Image 
+      {hasLoadedDatabase === false ? (
+        <Loader theme={theme} />
+      ) : (
+        <Image
           source={require("../../../assets/png/welcome-header-icon.png")}
-          style={styles.appIcon}  
+          style={styles.appIcon}
         />
-    }
+      )}
     </View>
   );
 };

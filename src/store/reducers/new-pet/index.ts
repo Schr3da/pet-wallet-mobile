@@ -15,12 +15,10 @@ const initialState = (): INewPetState => ({
 const handleInputChange = (
   state: INewPetState,
   id: string,
-  value: NewPet.InputValues 
+  value: NewPet.InputValues,
 ) => ({
   ...state,
-  inputs: {...state.inputs,
-    [id]: value
-  }
+  inputs: {...state.inputs, [id]: value},
 });
 
 const handleProfileImage = (
@@ -29,44 +27,34 @@ const handleProfileImage = (
 ): INewPetState => ({
   ...state,
   profile: data,
-})
+});
 
 const handleNewScan = (
   state: INewPetState,
   data: NewPet.IImageData,
 ): INewPetState => ({
   ...state,
-  inputs: {...state.inputs, 
-    [data.id]: null 
-  },
+  inputs: {...state.inputs, [data.id]: null},
   scans: [...state.scans, data],
 });
 
-const handleRemoveScan = (
-  state: INewPetState,
-  id: string
-) => ({
+const handleRemoveScan = (state: INewPetState, id: string) => ({
   ...state,
-  inputs: {...state.inputs,
-    [id]: null
-  },
+  inputs: {...state.inputs, [id]: null},
   scans: state.scans.filter((s) => s.id !== id),
 });
 
 type Actions = NewPet.Actions | Database.Actions;
 
-const reducer = (
-  state: INewPetState = initialState(),
-  action: Actions 
-) => {
+const reducer = (state: INewPetState = initialState(), action: Actions) => {
   switch (action.type) {
     case Database.ON_CLEAR_IN_MEMORY_DATA:
-      return initialState(); 
+      return initialState();
     case NewPet.ON_CANCEL_NEW_PET:
       return initialState();
-    case NewPet.ON_INPUT_FIELD_CHANGE: 
+    case NewPet.ON_INPUT_FIELD_CHANGE:
       return handleInputChange(state, action.id, action.value);
-    case NewPet.ON_PROFILE_IMAGE_NEW_PET: 
+    case NewPet.ON_PROFILE_IMAGE_NEW_PET:
       return handleProfileImage(state, action.data);
     case NewPet.ON_SCAN_NEW_PET_PASS:
       return handleNewScan(state, action.data);
@@ -76,7 +64,7 @@ const reducer = (
       return initialState();
     default:
       return state;
-  };
-}
+  }
+};
 
 export const newPet = reducer;

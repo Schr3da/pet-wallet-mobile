@@ -3,7 +3,7 @@ import type {IPetDto} from "../../../dto/pets";
 import {NewPet, Pets} from "../../actions";
 
 export interface IPetsState {
-  selectedId: string | null; 
+  selectedId: string | null;
   data: IPetDto[];
 }
 
@@ -12,28 +12,19 @@ const initialState = (): IPetsState => ({
   data: [],
 });
 
-const saveNewPet = (
-  state: IPetsState,
-  data: IPetDto,
-): IPetsState => ({
+const saveNewPet = (state: IPetsState, data: IPetDto): IPetsState => ({
   ...state,
   data: [...state.data, data],
 });
 
-const setSelectedId = (
-  state: IPetsState,
-  id: string | null,
-): IPetsState => ({
+const setSelectedId = (state: IPetsState, id: string | null): IPetsState => ({
   ...state,
   selectedId: id,
 });
 
 type Actions = NewPet.Actions | Pets.Actions;
 
-const reducer = (
-  state: IPetsState = initialState(),
-  action: Actions, 
-) => {
+const reducer = (state: IPetsState = initialState(), action: Actions) => {
   switch (action.type) {
     case NewPet.ON_SAVE_NEW_PET:
       return saveNewPet(state, action.data);
@@ -42,6 +33,6 @@ const reducer = (
     default:
       return state;
   }
-}
+};
 
 export const pets = reducer;

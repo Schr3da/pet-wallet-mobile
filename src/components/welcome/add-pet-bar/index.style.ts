@@ -2,7 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (theme: ITheme) => ({ 
+export const applyStyles = (theme: ITheme) => ({
   container: {
     position: "absolute",
     bottom: 0,
@@ -26,5 +26,5 @@ export const applyStyles = (theme: ITheme) => ({
     borderRadius: 100,
     color: theme.color1,
     backgroundColor: theme.color6,
-  }
+  },
 });

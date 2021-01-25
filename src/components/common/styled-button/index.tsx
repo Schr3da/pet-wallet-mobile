@@ -14,24 +14,18 @@ export interface IProps {
   onPress: () => void;
 }
 
-export const StyledButton = (
-  props: IProps
-) => {
+export const StyledButton = (props: IProps) => {
   const {children, color, style, title, onPress} = props;
-  
+
   const styles = createStyleWithoutTheme(applyStyles(color));
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
         <View style={style}>
-          {title ? 
-            <Text style={styles.text}>
-              {title}
-            </Text> : (children || [])
-          } 
+          {title ? <Text style={styles.text}>{title}</Text> : children || []}
         </View>
       </TouchableOpacity>
     </View>
   );
-}
+};

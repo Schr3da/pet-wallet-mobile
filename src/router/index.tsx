@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar, View} from "react-native";
 import {useSelector} from "react-redux";
 
 import {
@@ -10,7 +10,7 @@ import {
   Splash,
   TermsAndConditions,
   Welcome,
-  PetDetails
+  PetDetails,
 } from "../components";
 
 import {ICombinedReducerState} from "../store/reducers";
@@ -25,15 +25,13 @@ interface IProps {
   isApplePlatform: boolean;
 }
 
-const stateToProps = (
-  state: ICombinedReducerState
-): IProps => ({
+const stateToProps = (state: ICombinedReducerState): IProps => ({
   mainViewComponent: state.navigation.mainViewComponent,
   theme: state.layout.theme,
   isApplePlatform: state.layout.isApplePlatform,
 });
 
-export const Route = (): JSX.Element =>  {
+export const Route = (): JSX.Element => {
   const {isApplePlatform, mainViewComponent, theme} = useSelector(stateToProps);
 
   const styles = createStyle(theme, applyStyles(isApplePlatform));
@@ -42,41 +40,39 @@ export const Route = (): JSX.Element =>  {
   let childComponent: React.ReactElement;
 
   switch (mainViewComponent) {
-    case ViewComponents.splash: 
-      childComponent = <Splash.Component/>;
+    case ViewComponents.splash:
+      childComponent = <Splash.Component />;
       break;
     case ViewComponents.welcome:
-      childComponent = <Welcome.Component/>;
+      childComponent = <Welcome.Component />;
       break;
     case ViewComponents.newPet:
-      childComponent = <NewPet.Component/>;
+      childComponent = <NewPet.Component />;
       break;
     case ViewComponents.petDetails:
-      childComponent = <PetDetails.Component/>;
+      childComponent = <PetDetails.Component />;
       break;
     case ViewComponents.help:
-      childComponent = <Help.Component/>;
+      childComponent = <Help.Component />;
       break;
     case ViewComponents.settings:
-      childComponent = <Settings.Component/>;
+      childComponent = <Settings.Component />;
       break;
     case ViewComponents.termsAndConditions:
-      childComponent = <TermsAndConditions.Component/>;
+      childComponent = <TermsAndConditions.Component />;
       break;
     default:
       childComponent = <View />;
-  };
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <StatusBar 
+      <StatusBar
         translucent
         backgroundColor={colors.color1}
         barStyle={theme === ThemeTypes.Dark ? "light-content" : "dark-content"}
-      />  
-      <View style={styles.container}>
-        {childComponent}
-      </View>
+      />
+      <View style={styles.container}>{childComponent}</View>
     </SafeAreaView>
   );
 };

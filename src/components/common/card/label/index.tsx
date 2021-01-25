@@ -18,19 +18,17 @@ interface ILabelProps {
   style: ViewStyle;
 }
 
-export const Label = (
-  props: ILabelProps
-) => {
+export const Label = (props: ILabelProps) => {
   const {style, theme, title, type} = props;
 
   const styles = createStyle(theme, applyStyles);
-  const textStyles = type === LabelTypes.Small ? styles.smallText : styles.largeText;
+  const textStyles =
+    type === LabelTypes.Small ? styles.smallText : styles.largeText;
 
   return (
     <View style={{...styles.container, ...(style || {})}}>
-      <View style={styles.background}/>
+      <View style={styles.background} />
       <Text style={textStyles}>{title}</Text>
     </View>
   );
-}
-
+};
