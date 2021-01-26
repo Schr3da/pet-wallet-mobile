@@ -121,6 +121,10 @@ const newPet: INewPet = {
 };
 
 const errors: IErrors = {
+  default: {
+    title: "Fehler",
+    text: "Ein Fehler ist aufgetreten",
+  },
   [ErrorTypes.inputField]: {
     title: "Zurgiff verweigert",
     text:

@@ -119,6 +119,10 @@ const newPet: INewPet = {
 };
 
 const errors: IErrors = {
+  default: {
+    title: "Error",
+    text: "An error has occurred",
+  },
   [ErrorTypes.inputField]: {
     title: "Missing information",
     text: "Please ensure all required inputs fields are filled out.",

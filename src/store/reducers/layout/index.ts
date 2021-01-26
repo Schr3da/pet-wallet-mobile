@@ -71,7 +71,7 @@ const applyLanguageAndTheme = (
   state: ILayoutState,
   language: LanguageTypes,
   theme: ThemeTypes,
-) => {
+): ILayoutState => {
   let next = changeTheme(state, theme);
   return changeLanguage(next, language);
 };
@@ -89,6 +89,11 @@ const handleError = (
   errorType,
   hasError: errorType != null,
 });
+
+const navigationChange = (state: ILayoutState) => {
+  const nextState = handleError(state, null);
+  return changeFocus(nextState, null);
+};
 
 type Actions =
   | Database.Actions
@@ -109,11 +114,11 @@ const reducer = (state = initialState(), action: Actions) => {
     case Layout.ON_SET_ERROR_TYPE:
       return handleError(state, action.errorType);
     case Navigation.ON_GO_BACK_NAVIGATION:
-      return changeFocus(state, null);
+      return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:
-      return changeFocus(state, null);
+      return navigationChange(state);
     case Navigation.ON_CHANGE_SUBVIEW_COMPONENT:
-      return changeFocus(state, null);
+      return navigationChange(state);
     case Database.ON_INIT_DATA_FROM_DATABASE:
       const {language, theme} = action.settings;
       return applyLanguageAndTheme(state, language, theme);

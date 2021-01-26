@@ -10,6 +10,7 @@ import {AttachmentPlaceholder} from "./attachment-placeholder";
 import {CardsContainer} from "./cards-container";
 import {Card} from "./card";
 import {Navigation} from "./navigation";
+import {Error} from "./error";
 
 export {
   AttachmentPlaceholder,
@@ -23,4 +24,5 @@ export {
   RoundedButtons,
   StyledButton,
   Navigation,
+  Error,
 };

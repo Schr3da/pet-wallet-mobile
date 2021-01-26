@@ -75,7 +75,7 @@ export interface IError {
   text: string;
 }
 
-export type IErrors = {[k in ErrorTypes]: IError};
+export type IErrors = {[k in ErrorTypes]: IError} & {default: IError};
 
 export interface ILanguage {
   header: IHeader;
