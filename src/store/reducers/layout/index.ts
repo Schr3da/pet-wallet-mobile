@@ -1,11 +1,11 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
-import {ErrorTypes} from "../../actions/layout";
+import {ErrorTypes, NotificationTypes} from "../../actions/layout";
 
 export interface ILayoutState {
+  notificationType: NotificationTypes | null;
   errorType: ErrorTypes | null;
-  hasError: boolean;
   isApplePlatform: boolean;
   focus: string | null;
   language: LanguageTypes;
@@ -21,10 +21,10 @@ const initialState = (): ILayoutState => {
   const isApplePlatform = Layout.isiOS();
 
   return {
+    notificationType: null, 
     errorType: null,
-    hasError: false,
-    isApplePlatform,
     focus: null,
+    isApplePlatform,
     language: getDeviceLanguage(),
     theme: getDeviceTheme(),
     displayMode: mode,
@@ -81,19 +81,26 @@ const changeFocus = (state: ILayoutState, id: string | null) => ({
   focus: id,
 });
 
+const navigationChange = (state: ILayoutState) => {
+  const nextState = handleError(state, null);
+  return changeFocus(nextState, null);
+};
+
 const handleError = (
   state: ILayoutState,
   errorType: ErrorTypes | null,
 ): ILayoutState => ({
   ...state,
   errorType,
-  hasError: errorType != null,
 });
 
-const navigationChange = (state: ILayoutState) => {
-  const nextState = handleError(state, null);
-  return changeFocus(nextState, null);
-};
+const handleNotification = (
+  state: ILayoutState,
+  notificationType: NotificationTypes | null,
+): ILayoutState => ({
+  ...state,
+  notificationType,
+});
 
 type Actions =
   | Database.Actions
@@ -113,6 +120,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return changeFocus(state, action.id);
     case Layout.ON_SET_ERROR_TYPE:
       return handleError(state, action.errorType);
+    case Layout.ON_SET_NOTIFCATION_TYPE:
+      return handleNotification(state, action.notificationType);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

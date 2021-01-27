@@ -21,6 +21,7 @@ import {
   onChangeDisplayMode,
   getDisplayMode,
   ErrorTypes,
+  NotificationTypes,
 } from "../../../store/actions/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -28,6 +29,7 @@ import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
 import {Navigation} from "../navigation";
 import {Header} from "../header";
 import {Error} from "../error";
+import {Notification} from "../notification";
 
 import {applyStyles} from "./index.style";
 
@@ -45,8 +47,8 @@ interface IStateProps {
   screenWidth: number;
   screenHeight: number;
   isApplePlatform: boolean;
-  hasError: boolean;
   errorType: ErrorTypes | null;
+  notificationType: NotificationTypes | null;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -63,8 +65,8 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   screenWidth: state.layout.screenWidth,
   screenHeight: state.layout.screenHeight,
   isApplePlatform: state.layout.isApplePlatform,
-  hasError: state.layout.hasError,
   errorType: state.layout.errorType,
+  notificationType: state.layout.notificationType,
 });
 
 export interface ILayoutChildProps {
@@ -79,6 +81,7 @@ export interface ILayoutChildProps {
   screenWidth: number;
   screenHeight: number;
   hasError: boolean;
+  hasNotification: boolean;
 }
 
 interface IProps {
@@ -98,8 +101,12 @@ const getChildProps = (props: IStateProps): ILayoutChildProps => {
     screenWidth,
     screenHeight,
     isApplePlatform,
-    hasError,
+    errorType,
+    notificationType
   } = props;
+
+  const hasError = errorType != null; 
+  const hasNotification = notificationType != null; 
   const languageType = props.language;
   const language = getTranslation(languageType);
 
@@ -115,6 +122,7 @@ const getChildProps = (props: IStateProps): ILayoutChildProps => {
     screenWidth,
     screenHeight,
     hasError,
+    hasNotification
   };
 };
 
@@ -158,10 +166,12 @@ export const Layout = (props: IProps): JSX.Element => {
     description,
     language,
     isApplePlatform,
-    hasError,
   } = stateProps;
 
   const childProps = getChildProps(stateProps);
+
+  const hasError = childProps.hasError;
+  const hasNotification = childProps.hasNotification;
   const styles = createStyle(theme, applyStyles);
 
   return (
@@ -201,6 +211,8 @@ export const Layout = (props: IProps): JSX.Element => {
         focus == null &&
         footerRenderer &&
         footerRenderer(childProps)}
+
+      {hasError === false && hasNotification && <Notification {...childProps} />}
       {hasError && <Error {...childProps} />}
     </KeyboardAvoidingView>
   );

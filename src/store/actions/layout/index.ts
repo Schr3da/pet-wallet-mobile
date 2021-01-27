@@ -9,6 +9,11 @@ export enum ErrorTypes {
   photoLibrary = "photoLibraryError",
 }
 
+export enum NotificationTypes {
+  termsAndConditions = "termsAndConditions",
+  savedData = "savedData"
+}
+
 export enum DisplayModes {
   portrait = "portrait",
   landscape = "landscape",
@@ -73,7 +78,7 @@ export const onChangeLanguage = (next: LanguageTypes): IOnChangeLanguage => ({
   next,
 });
 
-export const ON_SET_ERROR_TYPE = "ON_SHOW_ERROR";
+export const ON_SET_ERROR_TYPE = "ON_SET_ERROR_TYPE";
 interface IOnSetErrorType {
   type: typeof ON_SET_ERROR_TYPE;
   errorType: ErrorTypes | null;
@@ -87,6 +92,21 @@ export const onSetErrorCode = (
 });
 
 export const clearErrors = () => onSetErrorCode(null);
+
+export const ON_SET_NOTIFCATION_TYPE = "ON_SET_NOTIFCATION_TYPE";
+interface IOnSetNotificationType{
+  type: typeof ON_SET_NOTIFCATION_TYPE;
+  notificationType: NotificationTypes | null;
+}
+
+export const onSetNotificationType = (
+  notificationType: NotificationTypes | null,
+): IOnSetNotificationType => ({
+  type: ON_SET_NOTIFCATION_TYPE,
+  notificationType,
+});
+
+export const clearNotificatin = () => onSetNotificationType(null);
 
 export const ON_FOCUS = "ON_FOCUS";
 export interface IOnFocus {
@@ -104,4 +124,6 @@ export type Actions =
   | IOnChangeLanguage
   | IOnChangeDisplayMode
   | IOnFocus
-  | IOnSetErrorType;
+  | IOnSetErrorType
+  | IOnSetNotificationType
+;

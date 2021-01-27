@@ -5,13 +5,14 @@ import type {
   INewPet,
   ICard,
   IErrors,
+  INotifications,
 } from "../index";
 
 import {
   SubViewComponents,
   ViewComponents,
 } from "../../store/actions/navigation";
-import {ErrorTypes} from "../../store/actions/layout";
+import {ErrorTypes, NotificationTypes} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -142,10 +143,22 @@ const errors: IErrors = {
   },
 };
 
+const notifications: INotifications = {
+  [NotificationTypes.termsAndConditions]: {
+    title: "Änderung der Nutzerbestimmungen",
+    text: "Die aktuellen Nutzerbestimmung können gerne jederzeit eingesehen und aktzeptiert werden."
+  },
+  [NotificationTypes.savedData]: {
+    title: "Daten gespeichert",
+    text: "Die Daten wurden erfolgreich gespeichert."
+  }
+};
+
 export const DE = {
   header,
   card,
   errors,
+  notifications,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

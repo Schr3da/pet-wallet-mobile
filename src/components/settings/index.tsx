@@ -16,7 +16,7 @@ import {
 } from "../../store/actions/navigation";
 import {onRequestDataDeletion} from "../../store/actions/database";
 import {createStyle, ThemeTypes, getColors} from "../../theme";
-import {Layout, Notification} from "../common";
+import {Layout, ContentButton} from "../common";
 
 import {applyStyles} from "./index.style";
 
@@ -51,7 +51,7 @@ export const Component = () => {
 
         return (
           <View style={styles.notificationWrapper}>
-            <Notification
+            <ContentButton
               description={props.language.settings.none.agbs.description}
               buttonText={props.language.settings.none.agbs.button}
               theme={props.theme}
@@ -60,7 +60,7 @@ export const Component = () => {
                 handleShowTermsAndConditions(dispatch, languageType)
               }
             />
-            <Notification
+            <ContentButton
               description={
                 props.language.settings.none.accountDeletion.description
               }

@@ -11,18 +11,20 @@ import {CardsContainer} from "./cards-container";
 import {Card} from "./card";
 import {Navigation} from "./navigation";
 import {Error} from "./error";
+import {ContentButton} from "./content-button";
 
 export {
   AttachmentPlaceholder,
   Card,
   CardsContainer,
+  ContentButton,
   Header,
   ImagePicker,
   InputField,
   Layout,
-  Notification,
   RoundedButtons,
   StyledButton,
   Navigation,
+  Notification,
   Error,
 };

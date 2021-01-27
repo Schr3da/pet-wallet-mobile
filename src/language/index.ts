@@ -1,6 +1,6 @@
 import {Platform, NativeModules} from "react-native";
 
-import {ErrorTypes} from "../store/actions/layout";
+import {ErrorTypes, NotificationTypes} from "../store/actions/layout";
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 import {DE} from "./de";
 import {EN} from "./en";
@@ -75,12 +75,20 @@ export interface IError {
   text: string;
 }
 
+export interface INotification {
+  title: string;
+  text: string;
+}
+
+export type INotifications = {[k in NotificationTypes]: INotification};
+
 export type IErrors = {[k in ErrorTypes]: IError} & {default: IError};
 
 export interface ILanguage {
   header: IHeader;
   card: ICard;
   errors: IErrors;
+  notifications: INotifications;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;

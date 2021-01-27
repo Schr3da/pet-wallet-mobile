@@ -1,36 +1,71 @@
 import * as React from "react";
 
-import {Text, View} from "react-native";
+import {View, Text} from "react-native";
+import {connect} from "react-redux";
 
-import {createStyle, getColors, ThemeTypes} from "../../../theme";
-import {StyledButton} from "../styled-button";
+import type {ICombinedReducerState} from "../../../store/reducers";
+
+import {NotificationTypes, onSetNotificationType} from "../../../store/actions/layout";
+import {createStyle} from "../../../theme";
+import {ILayoutChildProps} from "../layout";
 
 import {applyStyles} from "./index.style";
 
-export interface IProps {
-  description: string;
-  buttonText: string;
-  theme: ThemeTypes;
-  color: string;
-  style?: any;
-  onPress: () => void;
+interface IProps extends ILayoutChildProps {
+  type: NotificationTypes;
+  onAutoDismiss: () => void;
 }
 
-export const Notification = (props: IProps): JSX.Element => {
-  const {buttonText, color, description, style, theme, onPress} = props;
+const shouldAutoDismiss = (type: NotificationTypes): boolean => 
+  type === NotificationTypes.savedData;
 
-  const styles = createStyle(theme, applyStyles(color));
-  const colors = getColors(theme);
 
-  return (
-    <View style={{...styles.container, ...(style || {})}}>
-      <Text style={styles.text}>{description}</Text>
-      <StyledButton
-        color={colors.color9}
-        style={styles.button}
-        title={buttonText}
-        onPress={() => onPress()}
-      />
-    </View>
-  );
-};
+export class Container extends React.Component<IProps, unknown> {
+  private timer: any = null;
+
+  constructor(props: IProps, context: any) {
+    super(props, context);
+  }
+
+  public componentDidMount() {
+    if (shouldAutoDismiss(this.props.type) === false) {
+      return;
+    }
+
+    this.timer = setTimeout(() => {
+      this.props.onAutoDismiss();
+    }, 5000);
+  }
+
+  public componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  public render(): JSX.Element {
+    const {language, type, theme, displayMode} = this.props;
+    const {title, text} = language.notifications[type];
+
+    const styles = createStyle(theme, applyStyles(displayMode));
+
+    return (
+      <View style={{...styles.container}}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.text}>{text}</Text>
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = (
+  state: ICombinedReducerState,
+  ownProps: ILayoutChildProps,
+) => ({
+  ...ownProps,
+  type: state.layout.notificationType!,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onAutoDismiss: () => dispatch(onSetNotificationType(null)),
+});
+
+export const Notification = connect(mapStateToProps, mapDispatchToProps)(Container);
