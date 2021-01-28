@@ -19,6 +19,7 @@ import {
 import {handleCancelNewPet, handleError, handleInputChange} from "../hooks";
 
 import {applyStyles} from "./index.style";
+import {ErrorTypes} from "../../../store/actions/layout";
 
 interface IStateProps {
   attachments: IImageData[];
@@ -62,13 +63,7 @@ export const ChildView = (props: ILayoutChildProps) => {
         theme={theme}
         maxWidth={280}
         maxHeight={280}
-        onError={() =>
-          handleError(
-            dispatch,
-            language.newPet.newPetScan.scanErrorTitle,
-            language.newPet.newPetScan.scanErrorMessage,
-          )
-        }
+        onError={(errorType) => handleError(dispatch, errorType)}
         onData={(data) => handleScanImage(dispatch, data)}
       />
       <View style={styles.attachmentsWrapper}>
@@ -108,13 +103,13 @@ export const Footer = (props: ILayoutChildProps) => {
       <RoundedButtons.PrimaryButton
         theme={theme}
         title={language.newPet.newPetScan.primaryButton}
-        style={{marginTop: 20}}
+        style={{marginTop: 10}}
         onPress={() => dispatch(onSaveNewPet())}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
         title={language.newPet.newPetScan.secondaryButton}
-        style={{marginTop: 10}}
+        style={{marginTop: 4}}
         onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
       />
     </React.Fragment>

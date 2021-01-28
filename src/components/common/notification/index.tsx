@@ -5,7 +5,10 @@ import {connect} from "react-redux";
 
 import type {ICombinedReducerState} from "../../../store/reducers";
 
-import {NotificationTypes, onSetNotificationType} from "../../../store/actions/layout";
+import {
+  NotificationTypes,
+  onSetNotificationType,
+} from "../../../store/actions/layout";
 import {createStyle} from "../../../theme";
 import {ILayoutChildProps} from "../layout";
 
@@ -16,9 +19,8 @@ interface IProps extends ILayoutChildProps {
   onAutoDismiss: () => void;
 }
 
-const shouldAutoDismiss = (type: NotificationTypes): boolean => 
+const shouldAutoDismiss = (type: NotificationTypes): boolean =>
   type === NotificationTypes.savedData;
-
 
 export class Container extends React.Component<IProps, unknown> {
   private timer: any = null;
@@ -68,4 +70,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   onAutoDismiss: () => dispatch(onSetNotificationType(null)),
 });
 
-export const Notification = connect(mapStateToProps, mapDispatchToProps)(Container);
+export const Notification = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Container);

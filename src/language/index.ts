@@ -1,6 +1,10 @@
 import {Platform, NativeModules} from "react-native";
 
-import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../store/actions/layout";
+import {
+  ErrorTypes,
+  NotificationTypes,
+  DialogContentTypes,
+} from "../store/actions/layout";
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 import {DE} from "./de";
 import {EN} from "./en";
@@ -98,9 +102,7 @@ export interface ILanguage {
   [ViewComponents.newPet]: INewPet;
 }
 
-export const getTranslation = (
-  language: LanguageTypes
-): ILanguage => {
+export const getTranslation = (language: LanguageTypes): ILanguage => {
   switch (language) {
     case LanguageTypes.en:
       return EN;

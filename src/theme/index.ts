@@ -29,7 +29,7 @@ const LightTheme: ITheme = {
   color10: "#000000",
   color11: "#efefef",
   color12: "#afafaf",
-  color13: "rgba(255, 255, 255, 0.95)",
+  color13: "rgba(255, 255, 255, 0.9)",
 };
 
 const DarkTheme: ITheme = {
@@ -45,7 +45,7 @@ const DarkTheme: ITheme = {
   color10: "#ffffff",
   color11: "#333333",
   color12: "#afafaf",
-  color13: "rgba(0, 0, 0, 0.95)",
+  color13: "rgba(0, 0, 0, 0.9)",
 };
 
 export enum ThemeTypes {

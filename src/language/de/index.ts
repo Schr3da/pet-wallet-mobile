@@ -14,7 +14,11 @@ import {
   SubViewComponents,
   ViewComponents,
 } from "../../store/actions/navigation";
-import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../../store/actions/layout";
+import {
+  ErrorTypes,
+  NotificationTypes,
+  DialogContentTypes,
+} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -75,7 +79,7 @@ const header: IHeader = {
 const welcome: IWelcome = {
   [SubViewComponents.welcomeNoPets]: {
     addPetBar: {
-      description: "Füge ein Haustier zu deiner persönlichen Pet Wallet hinzu.",
+      description: "Füge jetzt ein Haustier zur Wallet hinzu.",
       button: "Hinzufügen",
     },
     help: {
@@ -148,20 +152,22 @@ const errors: IErrors = {
 const notifications: INotifications = {
   [NotificationTypes.termsAndConditions]: {
     title: "Änderung der Nutzerbestimmungen",
-    text: "Die aktuellen Nutzerbestimmung können gerne jederzeit eingesehen und aktzeptiert werden."
+    text:
+      "Die aktuellen Nutzerbestimmung können gerne jederzeit eingesehen und aktzeptiert werden.",
   },
   [NotificationTypes.savedData]: {
     title: "Daten gespeichert",
-    text: "Die Daten wurden erfolgreich gespeichert."
-  }
+    text: "Die Daten wurden erfolgreich gespeichert.",
+  },
 };
 
 const dialogs: IDialogs = {
   [DialogContentTypes.deleteData]: {
     title: "Daten löschen",
-    text: "Achtung die gespeicherten Daten werden durch die Zustimmung entfernt und können nicht wiederhergestellt werden.",
+    text:
+      "Achtung die gespeicherten Daten werden durch die Zustimmung entfernt und können nicht wiederhergestellt werden.",
   },
-}
+};
 
 const common: ICommon = {
   continue: "Weiter",

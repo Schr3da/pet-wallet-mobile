@@ -15,7 +15,7 @@ export enum ErrorTypes {
 
 export enum NotificationTypes {
   termsAndConditions = "termsAndConditions",
-  savedData = "savedData"
+  savedData = "savedData",
 }
 
 export enum DisplayModes {
@@ -98,7 +98,7 @@ export const onSetErrorCode = (
 export const clearErrors = () => onSetErrorCode(null);
 
 export const ON_SET_NOTIFCATION_TYPE = "ON_SET_NOTIFCATION_TYPE";
-interface IOnSetNotificationType{
+interface IOnSetNotificationType {
   type: typeof ON_SET_NOTIFCATION_TYPE;
   notificationType: NotificationTypes | null;
 }
@@ -130,7 +130,7 @@ export interface IOnSetDialogContentType {
 }
 
 export const onSetDialogContentType = (
-  contentType: DialogContentTypes
+  contentType: DialogContentTypes,
 ): IOnSetDialogContentType => ({
   type: ON_SET_DIALOG_CONTENT_TYPE,
   contentType,
@@ -138,7 +138,7 @@ export const onSetDialogContentType = (
 
 export const onDismissDialog = () => ({
   type: ON_SET_DIALOG_CONTENT_TYPE,
-  contentType: null
+  contentType: null,
 });
 
 export type Actions =
@@ -148,5 +148,4 @@ export type Actions =
   | IOnFocus
   | IOnSetErrorType
   | IOnSetNotificationType
-  | IOnSetDialogContentType
-;
+  | IOnSetDialogContentType;

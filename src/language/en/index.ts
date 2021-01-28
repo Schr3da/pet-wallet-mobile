@@ -14,7 +14,11 @@ import {
   SubViewComponents,
   ViewComponents,
 } from "../../store/actions/navigation";
-import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../../store/actions/layout";
+import {
+  ErrorTypes,
+  NotificationTypes,
+  DialogContentTypes,
+} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -74,7 +78,7 @@ const header: IHeader = {
 const welcome: IWelcome = {
   [SubViewComponents.welcomeNoPets]: {
     addPetBar: {
-      description: "You can add additional pets to your personal wallet.",
+      description: "Start adding a new pet to your wallet.",
       button: "Add",
     },
     help: {
@@ -145,20 +149,22 @@ const errors: IErrors = {
 const notifications: INotifications = {
   [NotificationTypes.termsAndConditions]: {
     title: "Terms and conditions",
-    text: "We have updated our terms and condtions. They can be reviewed and accepted at any time."
+    text:
+      "We have updated our terms and condtions. They can be reviewed and accepted at any time.",
   },
   [NotificationTypes.savedData]: {
     title: "Data saved",
-    text: "The data has been saved successfully."
-  }
-}
+    text: "The data has been saved successfully.",
+  },
+};
 
 const dialogs: IDialogs = {
   [DialogContentTypes.deleteData]: {
     title: "Data deletion",
-    text: "Attention this is an unreversable action which will remove all saved data associated with your pet wallet.",
+    text:
+      "Attention this is an unreversable action which will remove all saved data associated with your pet wallet.",
   },
-}
+};
 
 const common: ICommon = {
   continue: "Continue",

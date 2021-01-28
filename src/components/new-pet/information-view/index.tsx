@@ -118,7 +118,7 @@ export const Footer = (props: ILayoutChildProps) => {
       <RoundedButtons.PrimaryButton
         theme={theme}
         title={language.newPet.newPetInformation.primaryButton}
-        style={{marginTop: 20}}
+        style={{marginTop: 10}}
         onPress={() =>
           handleChangeSubView(
             dispatch,
@@ -130,7 +130,7 @@ export const Footer = (props: ILayoutChildProps) => {
       <RoundedButtons.SecondaryButton
         theme={theme}
         title={language.newPet.newPetInformation.secondaryButton}
-        style={{marginTop: 10}}
+        style={{marginTop: 4}}
         onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
       />
     </React.Fragment>

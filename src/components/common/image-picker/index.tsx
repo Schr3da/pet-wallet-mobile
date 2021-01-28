@@ -9,6 +9,7 @@ import {createStyle, ThemeTypes} from "../../../theme";
 import {ImageButton} from "../image-button";
 
 import {applyStyles} from "./index.style";
+import {ErrorTypes} from "../../../store/actions/layout";
 
 enum ImagePickerTypes {
   camera,
@@ -86,7 +87,7 @@ interface IProps {
   maxWidth: number;
   maxHeight: number;
   onData: (data: IImageData) => void;
-  onError: () => void;
+  onError: (type: ErrorTypes) => void;
 }
 
 export const ImagePicker = (props: IProps): JSX.Element => {
@@ -121,7 +122,7 @@ export const ImagePicker = (props: IProps): JSX.Element => {
             maxHeight,
           );
           if (data == null) {
-            return onError();
+            return onError(ErrorTypes.camera);
           }
 
           if (data.didCancel === true) {
@@ -150,7 +151,7 @@ export const ImagePicker = (props: IProps): JSX.Element => {
             maxHeight,
           );
           if (data == null) {
-            return onError();
+            return onError(ErrorTypes.photoLibrary);
           }
 
           if (data.didCancel === true) {

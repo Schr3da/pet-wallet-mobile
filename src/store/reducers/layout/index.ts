@@ -1,7 +1,11 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
-import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../../actions/layout";
+import {
+  ErrorTypes,
+  NotificationTypes,
+  DialogContentTypes,
+} from "../../actions/layout";
 
 export interface ILayoutState {
   notificationType: NotificationTypes | null;
@@ -22,7 +26,7 @@ const initialState = (): ILayoutState => {
   const isApplePlatform = Layout.isiOS();
 
   return {
-    notificationType: null, 
+    notificationType: null,
     errorType: null,
     focus: null,
     isApplePlatform,
@@ -106,7 +110,7 @@ const handleNotification = (
 
 const handleDialogContentTypeChange = (
   state: ILayoutState,
-  dialogContentType: DialogContentTypes | null
+  dialogContentType: DialogContentTypes | null,
 ): ILayoutState => {
   const nextState = changeFocus(state, null);
   return {

@@ -2,16 +2,14 @@ import type {ViewStyle} from "react-native";
 
 import {ITheme} from "../../../theme";
 
-export const applyStyle = (
-  theme: ITheme,
-) => ({
+export const applyStyle = (theme: ITheme) => ({
   container: {
     position: "absolute",
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-    padding: 20,
+    padding: 10,
     backgroundColor: theme.color13,
     justifyContent: "center",
     alignItems: "center",
@@ -21,14 +19,9 @@ export const applyStyle = (
     maxWidth: 380,
     padding: 20,
     backgroundColor: theme.color1,
-    borderRadius: 10,
-    shadowColor: theme.color11,
-    shadowRadius: 10,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: theme.color11,
   } as ViewStyle,
   textWrapper: {
     marginBottom: 10,

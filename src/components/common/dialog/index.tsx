@@ -19,11 +19,9 @@ interface IProps {
   onPress: () => void;
 }
 
-const handleCancel = (dispatch: any) =>
-  dispatch(onDismissDialog());
+const handleCancel = (dispatch: any) => dispatch(onDismissDialog());
 
 export const Dialog = (props: IProps) => {
-
   const dispatch = useDispatch();
 
   const {language, theme, title, text, onPress} = props;
@@ -52,4 +50,4 @@ export const Dialog = (props: IProps) => {
       </View>
     </View>
   );
-}
+};

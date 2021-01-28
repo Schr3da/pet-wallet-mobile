@@ -24,7 +24,9 @@ export const ContentButton = (props: IProps): JSX.Element => {
 
   return (
     <View style={{...styles.container, ...(style || {})}}>
-      <Text style={styles.text}>{description}</Text>
+      <View style={styles.textWrapper}>
+        <Text style={styles.text}>{description}</Text>
+      </View>
       <StyledButton
         color={colors.color9}
         style={styles.button}

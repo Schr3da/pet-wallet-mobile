@@ -69,7 +69,7 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   isApplePlatform: state.layout.isApplePlatform,
   errorType: state.layout.errorType,
   notificationType: state.layout.notificationType,
-  dialogContentType: state.layout.dialogContentType, 
+  dialogContentType: state.layout.dialogContentType,
 });
 
 export interface ILayoutChildProps {
@@ -111,8 +111,8 @@ const getChildProps = (props: IStateProps): ILayoutChildProps => {
     dialogContentType,
   } = props;
 
-  const hasError = errorType != null; 
-  const hasNotification = notificationType != null; 
+  const hasError = errorType != null;
+  const hasNotification = notificationType != null;
   const languageType = props.language;
   const language = getTranslation(languageType);
 
@@ -163,7 +163,13 @@ export const Layout = (props: IProps): JSX.Element => {
       );
   }, []);
 
-  const {hasHeader, imageSource, childRenderer, footerRenderer, dialogRenderer} = props;
+  const {
+    hasHeader,
+    imageSource,
+    childRenderer,
+    footerRenderer,
+    dialogRenderer,
+  } = props;
 
   const {
     displayMode,
@@ -182,7 +188,6 @@ export const Layout = (props: IProps): JSX.Element => {
   const hasNotification = childProps.hasNotification;
   const hasDialog = childProps.dialogContentType != null;
   const styles = createStyle(theme, applyStyles);
-
 
   return (
     <KeyboardAvoidingView
@@ -222,7 +227,9 @@ export const Layout = (props: IProps): JSX.Element => {
         footerRenderer &&
         footerRenderer(childProps)}
 
-      {hasError === false && hasNotification && <Notification {...childProps} />}
+      {hasError === false && hasNotification && (
+        <Notification {...childProps} />
+      )}
       {hasError && <Error {...childProps} />}
       {hasDialog && dialogRenderer && dialogRenderer(childProps)}
     </KeyboardAvoidingView>

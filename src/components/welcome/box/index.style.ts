@@ -6,7 +6,7 @@ export const applyStyles = (theme: ITheme) => ({
   container: {
     width: "80%",
     height: "40%",
-    borderRadius: 12,
+    borderRadius: 20,
     minWidth: 300,
     minHeight: 320,
     maxHeight: 340,

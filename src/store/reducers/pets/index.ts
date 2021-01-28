@@ -22,11 +22,7 @@ const setSelectedId = (state: IPetsState, id: string | null): IPetsState => ({
   selectedId: id,
 });
 
-type Actions = 
-  | NewPet.Actions 
-  | Pets.Actions 
-  | Database.Actions
-;
+type Actions = NewPet.Actions | Pets.Actions | Database.Actions;
 
 const reducer = (state: IPetsState = initialState(), action: Actions) => {
   switch (action.type) {

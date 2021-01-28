@@ -144,7 +144,7 @@ export const Component = () => {
       }}
       dialogRenderer={(props) => {
         const {language, theme, dialogContentType} = props;
-        return (dialogContentType == null ? null : 
+        return dialogContentType == null ? null : (
           <Dialog
             language={language}
             theme={theme}

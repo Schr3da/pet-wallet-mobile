@@ -124,14 +124,13 @@ const setHasPets = (
 ): INavigationState => ({
   ...state,
   hasPets,
-})
+});
 
-type Actions = 
-  | Layout.Actions 
-  | Navigation.Actions 
+type Actions =
+  | Layout.Actions
+  | Navigation.Actions
   | NewPet.Actions
-  | Database.Actions
-;
+  | Database.Actions;
 
 export const reducer = (
   state: INavigationState = initialState(),
@@ -158,7 +157,7 @@ export const reducer = (
     case NewPet.ON_SAVE_NEW_PET:
       return showHome(state, action.language, true);
     case Database.ON_REQUEST_DATA_DELETION:
-      return setHasPets(state, false); 
+      return setHasPets(state, false);
     default:
       return state;
   }
