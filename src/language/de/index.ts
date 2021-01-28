@@ -6,13 +6,15 @@ import type {
   ICard,
   IErrors,
   INotifications,
+  IDialogs,
+  ICommon,
 } from "../index";
 
 import {
   SubViewComponents,
   ViewComponents,
 } from "../../store/actions/navigation";
-import {ErrorTypes, NotificationTypes} from "../../store/actions/layout";
+import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -154,10 +156,24 @@ const notifications: INotifications = {
   }
 };
 
+const dialogs: IDialogs = {
+  [DialogContentTypes.deleteData]: {
+    title: "Daten löschen",
+    text: "Achtung die gespeicherten Daten werden durch die Zustimmung entfernt und können nicht wiederhergestellt werden.",
+  },
+}
+
+const common: ICommon = {
+  continue: "Weiter",
+  cancel: "Abbrechen",
+};
+
 export const DE = {
-  header,
   card,
+  common,
+  dialogs,
   errors,
+  header,
   notifications,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,

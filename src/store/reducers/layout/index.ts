@@ -1,7 +1,7 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation} from "../../actions";
-import {ErrorTypes, NotificationTypes} from "../../actions/layout";
+import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../../actions/layout";
 
 export interface ILayoutState {
   notificationType: NotificationTypes | null;
@@ -13,6 +13,7 @@ export interface ILayoutState {
   displayMode: Layout.DisplayModes;
   screenWidth: number;
   screenHeight: number;
+  dialogContentType: DialogContentTypes | null;
 }
 
 const initialState = (): ILayoutState => {
@@ -30,6 +31,7 @@ const initialState = (): ILayoutState => {
     displayMode: mode,
     screenWidth: screen.width,
     screenHeight: screen.height,
+    dialogContentType: null,
   };
 };
 
@@ -102,6 +104,17 @@ const handleNotification = (
   notificationType,
 });
 
+const handleDialogContentTypeChange = (
+  state: ILayoutState,
+  dialogContentType: DialogContentTypes | null
+): ILayoutState => {
+  const nextState = changeFocus(state, null);
+  return {
+    ...nextState,
+    dialogContentType,
+  };
+};
+
 type Actions =
   | Database.Actions
   | Layout.Actions
@@ -122,6 +135,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return handleError(state, action.errorType);
     case Layout.ON_SET_NOTIFCATION_TYPE:
       return handleNotification(state, action.notificationType);
+    case Layout.ON_SET_DIALOG_CONTENT_TYPE:
+      return handleDialogContentTypeChange(state, action.contentType);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:
@@ -131,6 +146,8 @@ const reducer = (state = initialState(), action: Actions) => {
     case Database.ON_INIT_DATA_FROM_DATABASE:
       const {language, theme} = action.settings;
       return applyLanguageAndTheme(state, language, theme);
+    case Database.ON_REQUEST_DATA_DELETION:
+      return handleDialogContentTypeChange(state, null);
     default:
       return state;
   }

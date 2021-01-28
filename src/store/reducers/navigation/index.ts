@@ -1,6 +1,6 @@
 import {getTranslation, LanguageTypes} from "../../../language";
 import {SubViewComponents, ViewComponents} from "../../actions/navigation";
-import {Layout, Navigation, NewPet} from "../../actions";
+import {Layout, Navigation, NewPet, Database} from "../../actions";
 
 export interface INavigationState {
   title: string;
@@ -102,7 +102,7 @@ const goBack = (
   );
 };
 
-export const showHome = (
+const showHome = (
   state: INavigationState,
   language: LanguageTypes,
   hasPets: boolean,
@@ -118,7 +118,20 @@ export const showHome = (
   );
 };
 
-type Actions = Layout.Actions | Navigation.Actions | NewPet.Actions;
+const setHasPets = (
+  state: INavigationState,
+  hasPets: boolean,
+): INavigationState => ({
+  ...state,
+  hasPets,
+})
+
+type Actions = 
+  | Layout.Actions 
+  | Navigation.Actions 
+  | NewPet.Actions
+  | Database.Actions
+;
 
 export const reducer = (
   state: INavigationState = initialState(),
@@ -144,7 +157,8 @@ export const reducer = (
       return showHome(state, action.language, action.hasPets);
     case NewPet.ON_SAVE_NEW_PET:
       return showHome(state, action.language, true);
-
+    case Database.ON_REQUEST_DATA_DELETION:
+      return setHasPets(state, false); 
     default:
       return state;
   }

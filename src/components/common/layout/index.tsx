@@ -22,6 +22,7 @@ import {
   getDisplayMode,
   ErrorTypes,
   NotificationTypes,
+  DialogContentTypes,
 } from "../../../store/actions/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -49,6 +50,7 @@ interface IStateProps {
   isApplePlatform: boolean;
   errorType: ErrorTypes | null;
   notificationType: NotificationTypes | null;
+  dialogContentType: DialogContentTypes | null;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -67,6 +69,7 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   isApplePlatform: state.layout.isApplePlatform,
   errorType: state.layout.errorType,
   notificationType: state.layout.notificationType,
+  dialogContentType: state.layout.dialogContentType, 
 });
 
 export interface ILayoutChildProps {
@@ -82,12 +85,14 @@ export interface ILayoutChildProps {
   screenHeight: number;
   hasError: boolean;
   hasNotification: boolean;
+  dialogContentType: DialogContentTypes | null;
 }
 
 interface IProps {
   imageSource: ImageSourcePropType;
   childRenderer: (props: ILayoutChildProps) => React.ReactFragment | null;
   footerRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
+  dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
 }
 
@@ -102,7 +107,8 @@ const getChildProps = (props: IStateProps): ILayoutChildProps => {
     screenHeight,
     isApplePlatform,
     errorType,
-    notificationType
+    notificationType,
+    dialogContentType,
   } = props;
 
   const hasError = errorType != null; 
@@ -122,7 +128,8 @@ const getChildProps = (props: IStateProps): ILayoutChildProps => {
     screenWidth,
     screenHeight,
     hasError,
-    hasNotification
+    hasNotification,
+    dialogContentType,
   };
 };
 
@@ -156,7 +163,8 @@ export const Layout = (props: IProps): JSX.Element => {
       );
   }, []);
 
-  const {hasHeader, imageSource, childRenderer, footerRenderer} = props;
+  const {hasHeader, imageSource, childRenderer, footerRenderer, dialogRenderer} = props;
+
   const {
     displayMode,
     focus,
@@ -172,7 +180,9 @@ export const Layout = (props: IProps): JSX.Element => {
 
   const hasError = childProps.hasError;
   const hasNotification = childProps.hasNotification;
+  const hasDialog = childProps.dialogContentType != null;
   const styles = createStyle(theme, applyStyles);
+
 
   return (
     <KeyboardAvoidingView
@@ -214,6 +224,7 @@ export const Layout = (props: IProps): JSX.Element => {
 
       {hasError === false && hasNotification && <Notification {...childProps} />}
       {hasError && <Error {...childProps} />}
+      {hasDialog && dialogRenderer && dialogRenderer(childProps)}
     </KeyboardAvoidingView>
   );
 };

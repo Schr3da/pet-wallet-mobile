@@ -40,7 +40,7 @@ export const onClearInMemoryData = () => ({
   type: ON_CLEAR_IN_MEMORY_DATA,
 });
 
-export const onRequestDataDeletion = () => async (dispatch: any) => {
+export const onRequestDataDeletion = () => async (dispatch: any) => { 
   dispatch({
     type: ON_REQUEST_DATA_DELETION,
   } as IOnRequesDataDeletion);

@@ -1,6 +1,6 @@
 import {Platform, NativeModules} from "react-native";
 
-import {ErrorTypes, NotificationTypes} from "../store/actions/layout";
+import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../store/actions/layout";
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 import {DE} from "./de";
 import {EN} from "./en";
@@ -8,6 +8,11 @@ import {EN} from "./en";
 export enum LanguageTypes {
   en = "en",
   de = "de",
+}
+
+export interface ICommon {
+  continue: string;
+  cancel: string;
 }
 
 export interface IHeader {
@@ -70,31 +75,32 @@ export interface ICard {
   animalProperty: string;
 }
 
-export interface IError {
+export interface IMessage {
   title: string;
   text: string;
 }
 
-export interface INotification {
-  title: string;
-  text: string;
-}
+export type INotifications = {[k in NotificationTypes]: IMessage};
 
-export type INotifications = {[k in NotificationTypes]: INotification};
+export type IErrors = {[k in ErrorTypes]: IMessage} & {default: IMessage};
 
-export type IErrors = {[k in ErrorTypes]: IError} & {default: IError};
+export type IDialogs = {[k in DialogContentTypes]: IMessage};
 
 export interface ILanguage {
   header: IHeader;
   card: ICard;
+  common: ICommon;
   errors: IErrors;
+  dialogs: IDialogs;
   notifications: INotifications;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;
 }
 
-export const getTranslation = (language: LanguageTypes): ILanguage => {
+export const getTranslation = (
+  language: LanguageTypes
+): ILanguage => {
   switch (language) {
     case LanguageTypes.en:
       return EN;

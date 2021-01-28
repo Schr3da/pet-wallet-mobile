@@ -3,6 +3,10 @@ import {Dimensions, Platform} from "react-native";
 import {ThemeTypes} from "../../../theme";
 import {LanguageTypes} from "../../../language";
 
+export enum DialogContentTypes {
+  deleteData = "deleteData",
+}
+
 export enum ErrorTypes {
   inputField = "inputFieldError",
   camera = "cameraError",
@@ -119,6 +123,24 @@ export const onFocus = (id: string | null): IOnFocus => ({
   id,
 });
 
+export const ON_SET_DIALOG_CONTENT_TYPE = "ON_SET_DIALOG_CONTENT";
+export interface IOnSetDialogContentType {
+  type: typeof ON_SET_DIALOG_CONTENT_TYPE;
+  contentType: DialogContentTypes | null;
+}
+
+export const onSetDialogContentType = (
+  contentType: DialogContentTypes
+): IOnSetDialogContentType => ({
+  type: ON_SET_DIALOG_CONTENT_TYPE,
+  contentType,
+});
+
+export const onDismissDialog = () => ({
+  type: ON_SET_DIALOG_CONTENT_TYPE,
+  contentType: null
+});
+
 export type Actions =
   | IOnChangeCurrentTheme
   | IOnChangeLanguage
@@ -126,4 +148,5 @@ export type Actions =
   | IOnFocus
   | IOnSetErrorType
   | IOnSetNotificationType
+  | IOnSetDialogContentType
 ;

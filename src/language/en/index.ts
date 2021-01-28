@@ -6,13 +6,15 @@ import type {
   ICard,
   IErrors,
   INotifications,
+  IDialogs,
+  ICommon,
 } from "../index";
 
 import {
   SubViewComponents,
   ViewComponents,
 } from "../../store/actions/navigation";
-import {ErrorTypes, NotificationTypes} from "../../store/actions/layout";
+import {ErrorTypes, NotificationTypes, DialogContentTypes} from "../../store/actions/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -141,20 +143,34 @@ const errors: IErrors = {
 };
 
 const notifications: INotifications = {
-  [NotificationTypes.TermsAndConditions]: {
+  [NotificationTypes.termsAndConditions]: {
     title: "Terms and conditions",
     text: "We have updated our terms and condtions. They can be reviewed and accepted at any time."
   },
-  [NotificationTypes.SavedChanges]: {
+  [NotificationTypes.savedData]: {
     title: "Data saved",
     text: "The data has been saved successfully."
   }
 }
 
+const dialogs: IDialogs = {
+  [DialogContentTypes.deleteData]: {
+    title: "Data deletion",
+    text: "Attention this is an unreversable action which will remove all saved data associated with your pet wallet.",
+  },
+}
+
+const common: ICommon = {
+  continue: "Continue",
+  cancel: "Cancel",
+};
+
 export const EN = {
-  header,
   card,
+  common,
+  dialogs,
   errors,
+  header,
   notifications,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,

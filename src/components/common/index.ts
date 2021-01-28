@@ -12,12 +12,14 @@ import {Card} from "./card";
 import {Navigation} from "./navigation";
 import {Error} from "./error";
 import {ContentButton} from "./content-button";
+import {Dialog} from "./dialog";
 
 export {
   AttachmentPlaceholder,
   Card,
   CardsContainer,
   ContentButton,
+  Dialog,
   Header,
   ImagePicker,
   InputField,

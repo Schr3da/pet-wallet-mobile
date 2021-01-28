@@ -8,15 +8,18 @@ import {getTranslation, LanguageTypes} from "../../language";
 import {
   onChangeCurrentTheme,
   onChangeLanguage,
+  onSetDialogContentType,
+  DialogContentTypes,
 } from "../../store/actions/layout";
 import {
   onChangeViewComponent,
   ViewComponents,
   SubViewComponents,
 } from "../../store/actions/navigation";
+
 import {onRequestDataDeletion} from "../../store/actions/database";
 import {createStyle, ThemeTypes, getColors} from "../../theme";
-import {Layout, ContentButton} from "../common";
+import {Layout, ContentButton, Dialog} from "../common";
 
 import {applyStyles} from "./index.style";
 
@@ -36,6 +39,9 @@ const handleShowTermsAndConditions = (dispatch: any, language: LanguageTypes) =>
   );
 
 const handleRequestDataDeletion = (dispatch: any) =>
+  dispatch(onSetDialogContentType(DialogContentTypes.deleteData));
+
+const confirmDataDeletion = (dispatch: any) =>
   dispatch(onRequestDataDeletion());
 
 export const Component = () => {
@@ -44,35 +50,6 @@ export const Component = () => {
   return (
     <Layout
       imageSource={require("../../../assets/png/settings-header-icon.png")}
-      footerRenderer={(props) => {
-        const {theme, languageType} = props;
-        const styles = createStyle(theme, applyStyles);
-        const colors = getColors(theme);
-
-        return (
-          <View style={styles.notificationWrapper}>
-            <ContentButton
-              description={props.language.settings.none.agbs.description}
-              buttonText={props.language.settings.none.agbs.button}
-              theme={props.theme}
-              color={colors.color5}
-              onPress={() =>
-                handleShowTermsAndConditions(dispatch, languageType)
-              }
-            />
-            <ContentButton
-              description={
-                props.language.settings.none.accountDeletion.description
-              }
-              buttonText={props.language.settings.none.accountDeletion.button}
-              theme={props.theme}
-              color={colors.color4}
-              style={{marginTop: 14}}
-              onPress={() => handleRequestDataDeletion(dispatch)}
-            />
-          </View>
-        );
-      }}
       childRenderer={(props) => {
         const {theme, languageType} = props;
 
@@ -134,6 +111,47 @@ export const Component = () => {
               />
             </View>
           </View>
+        );
+      }}
+      footerRenderer={(props) => {
+        const {theme, languageType} = props;
+        const styles = createStyle(theme, applyStyles);
+        const colors = getColors(theme);
+
+        return (
+          <View style={styles.notificationWrapper}>
+            <ContentButton
+              description={props.language.settings.none.agbs.description}
+              buttonText={props.language.settings.none.agbs.button}
+              theme={props.theme}
+              color={colors.color5}
+              onPress={() =>
+                handleShowTermsAndConditions(dispatch, languageType)
+              }
+            />
+            <ContentButton
+              description={
+                props.language.settings.none.accountDeletion.description
+              }
+              buttonText={props.language.settings.none.accountDeletion.button}
+              theme={props.theme}
+              color={colors.color4}
+              style={{marginTop: 14}}
+              onPress={() => handleRequestDataDeletion(dispatch)}
+            />
+          </View>
+        );
+      }}
+      dialogRenderer={(props) => {
+        const {language, theme, dialogContentType} = props;
+        return (dialogContentType == null ? null : 
+          <Dialog
+            language={language}
+            theme={theme}
+            title={language.dialogs[dialogContentType].title}
+            text={language.dialogs[dialogContentType].text}
+            onPress={() => confirmDataDeletion(dispatch)}
+          />
         );
       }}
     />
