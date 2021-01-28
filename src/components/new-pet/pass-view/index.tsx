@@ -19,7 +19,6 @@ import {
 import {handleCancelNewPet, handleError, handleInputChange} from "../hooks";
 
 import {applyStyles} from "./index.style";
-import {ErrorTypes} from "../../../store/actions/layout";
 
 interface IStateProps {
   attachments: IImageData[];

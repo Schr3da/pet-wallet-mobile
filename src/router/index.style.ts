@@ -7,7 +7,7 @@ export const applyStyles = (isApplePlatform: boolean) => (theme: ITheme) => ({
   },
   container: {
     flex: 1,
-    marginTop: isApplePlatform ? 0 : 20,
+    marginTop: isApplePlatform ? 0 : 65,
     marginBottom: isApplePlatform ? 0 : 10,
     marginLeft: 20,
     marginRight: 20,

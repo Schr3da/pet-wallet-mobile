@@ -1,13 +1,11 @@
-import {ViewStyle} from "react-native";
+import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (_: ITheme) => ({
   navigation: {
     width: "100%",
-    marginTop: 12,
-    marginBottom: 12,
-    height: 20,
+    height: 32,
     display: "flex",
     flexDirection: "row",
   } as ViewStyle,
@@ -20,9 +18,17 @@ export const applyStyles = (_: ITheme) => ({
     alignItems: "flex-end",
   } as ViewStyle,
   backButton: {
-    width: 20,
-  },
+    width: 48,
+    alignItems: "flex-start",
+    justifyContent: "center",
+  } as ViewStyle,
   settingsButton: {
+    width: 48,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  } as ViewStyle,
+  imageIcon: {
     width: 20,
+    height: 20,
   },
 });

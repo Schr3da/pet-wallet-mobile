@@ -48,6 +48,7 @@ export const Navigation = (props: IProps) => {
         {hasBackButton === false ? null : (
           <ImageButton
             style={styles.backButton}
+            imageStyle={styles.imageIcon}
             source={
               theme === ThemeTypes.Dark
                 ? require("../../../../assets/png/dark/back-icon.png")
@@ -60,7 +61,8 @@ export const Navigation = (props: IProps) => {
       <View style={styles.rowRight}>
         {hasSettingsButton === false ? null : (
           <ImageButton
-            style={styles.backButton}
+            style={styles.settingsButton}
+            imageStyle={styles.imageIcon}
             source={
               theme === ThemeTypes.Dark
                 ? require("../../../../assets/png/dark/settings-icon.png")
