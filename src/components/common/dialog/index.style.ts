@@ -48,24 +48,16 @@ export const applyStyle = (
     color: theme.color8,
   } as ViewStyle,
   actionWrapper: {
-    height: 40,
     marginTop: 10,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   } as ViewStyle,
   buttonWrapper: {
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
     borderRadius: 1000,
-  } as ViewStyle,
-  cancelButton: {
-    fontSize: 15,        
-    color: theme.color4,
-  } as ViewStyle,
-  confirmButton: {
-    fontSize: 15,        
-    color: theme.color3,
   } as ViewStyle,
 });

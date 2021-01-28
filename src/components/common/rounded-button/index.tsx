@@ -31,7 +31,7 @@ const RoundedButton = (props: IProps) => {
 
 export interface IButtonProps {
   theme: ThemeTypes;
-  style: any;
+  style?: any;
   title: string;
   onPress: () => void;
 }
@@ -46,7 +46,7 @@ export const PrimaryButton = (props: IButtonProps) => {
       background={colors.color6}
       color={colors.color3}
       title={title}
-      style={style}
+      style={style || {}}
       onPress={onPress}
     />
   );
@@ -62,7 +62,7 @@ export const SecondaryButton = (props: IButtonProps) => {
       background={colors.color1}
       color={colors.color4}
       title={title}
-      style={style}
+      style={style || {}}
       onPress={onPress}
     />
   );
