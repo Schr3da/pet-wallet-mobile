@@ -15,6 +15,7 @@ export enum LanguageTypes {
 }
 
 export interface ICommon {
+  noAttachments: string;
   continue: string;
   cancel: string;
 }

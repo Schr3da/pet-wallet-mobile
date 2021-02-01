@@ -19,7 +19,7 @@ import {
   handleChangeSubView,
   handleCancelNewPet,
   handleError,
-  requestCancelNewPet,
+  requestCancel,
 } from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
 import {DialogContentTypes, ErrorTypes} from "../../../store/actions/layout";
@@ -132,7 +132,7 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newPetInformation.secondaryButton}
         style={{marginTop: 4}}
-        onPress={() => requestCancelNewPet(dispatch)}
+        onPress={() => requestCancel(dispatch)}
       />
     </React.Fragment>
   );
@@ -142,13 +142,14 @@ export const Dialogs = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
   const {language, languageType, hasPets, theme, dialogContentType} = props;
+  const {title, text} = language.dialogs.deleteAttachment;
 
   switch (dialogContentType) {
     case DialogContentTypes.cancelNewPet:
       return (
         <Dialog
-          title={language.dialogs.deleteAttachment.title}
-          text={language.dialogs.deleteAttachment.text}
+          title={title}
+          text={text}
           theme={theme}
           language={language}
           onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}

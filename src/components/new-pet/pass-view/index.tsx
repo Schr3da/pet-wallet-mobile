@@ -11,6 +11,7 @@ import {
   RoundedButtons,
   AttachmentPlaceholder,
   Dialog,
+  InputField,
 } from "../../common";
 import {ICombinedReducerState} from "../../../store/reducers";
 
@@ -27,7 +28,7 @@ import {
   handleCancelNewPet,
   handleError,
   handleInputChange,
-  requestCancelNewPet,
+  requestCancel,
 } from "../hooks";
 
 import {applyStyles} from "./index.style";
@@ -93,27 +94,38 @@ export const ChildView = (props: ILayoutChildProps) => {
         onData={(data) => handleScanImage(dispatch, data)}
       />
       <View style={styles.attachmentsWrapper}>
-        {attachments.map((a, index) => {
-          let title = inputs[a.id];
+        {(attachments || []).length === 0 ? (
+          <InputField
+            id="empty"
+            style={{opacity: 0.4}}
+            theme={theme}
+            value={language.common.noAttachments}
+            disabled={true}
+            onChange={() => undefined}
+          />
+        ) : (
+          attachments.map((a, index) => {
+            let title = inputs[a.id];
 
-          if (title === null) {
-            title =
-              language.newPet.newPetScan.attachmentLabel + " " + (index + 1);
-          }
+            if (title === null) {
+              title =
+                language.newPet.newPetScan.attachmentLabel + " " + (index + 1);
+            }
 
-          return (
-            <AttachmentPlaceholder
-              id={a.id}
-              key={a.id}
-              theme={theme}
-              title={title}
-              style={styles.attachment}
-              onChange={(id, text) => handleInputChange(id, text, dispatch)}
-              onRemove={(id) => requestRemoveAttachment(dispatch, id)}
-              onPreview={(id) => handlePreview(dispatch, id)}
-            />
-          );
-        })}
+            return (
+              <AttachmentPlaceholder
+                id={a.id}
+                key={a.id}
+                theme={theme}
+                title={title}
+                style={styles.attachment}
+                onChange={(id, text) => handleInputChange(id, text, dispatch)}
+                onRemove={(id) => requestRemoveAttachment(dispatch, id)}
+                onPreview={(id) => handlePreview(dispatch, id)}
+              />
+            );
+          })
+        )}
       </View>
     </React.Fragment>
   );
@@ -122,7 +134,7 @@ export const ChildView = (props: ILayoutChildProps) => {
 export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
-  const {theme, language, languageType, hasPets} = props;
+  const {theme, language} = props;
 
   return (
     <React.Fragment>
@@ -136,7 +148,7 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newPetScan.secondaryButton}
         style={{marginTop: 4}}
-        onPress={() => requestCancelNewPet(dispatch)}
+        onPress={() => requestCancel(dispatch)}
       />
     </React.Fragment>
   );
@@ -151,8 +163,8 @@ export const Dialogs = (props: ILayoutChildProps) => {
     case DialogContentTypes.cancelNewPet:
       return (
         <Dialog
-          title={language.dialogs.deleteAttachment.title}
-          text={language.dialogs.deleteAttachment.text}
+          title={language.dialogs.cancelNewPet.title}
+          text={language.dialogs.cancelNewPet.text}
           theme={theme}
           language={language}
           onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
@@ -161,8 +173,8 @@ export const Dialogs = (props: ILayoutChildProps) => {
     case DialogContentTypes.deleteAttachment:
       return (
         <Dialog
-          title={language.dialogs.cancelNewPet.title}
-          text={language.dialogs.cancelNewPet.text}
+          title={language.dialogs.deleteAttachment.title}
+          text={language.dialogs.deleteAttachment.text}
           theme={theme}
           language={language}
           onPress={() =>

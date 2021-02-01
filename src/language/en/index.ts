@@ -188,6 +188,7 @@ const dialogs: IDialogs = {
 };
 
 const common: ICommon = {
+  noAttachments: "No attachments",
   continue: "Continue",
   cancel: "Cancel",
 };

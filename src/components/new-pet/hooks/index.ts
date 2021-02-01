@@ -34,7 +34,7 @@ export const handleChangeComponentView = (
   language: LanguageTypes,
 ) => dispatch(onChangeSubViewComponent(subview, language));
 
-export const requestCancelNewPet = (dispatch: any) =>
+export const requestCancel = (dispatch: any) =>
   dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
 
 export const handleCancelNewPet = (

@@ -13,8 +13,18 @@ import {
 } from "../../../store/actions/new-pet";
 
 import {ICombinedReducerState} from "../../../store/reducers";
-import {DialogContentTypes} from "../../../store/actions/layout";
-import {handleCancelNewPet, requestCancelNewPet} from "../hooks";
+import {
+  DialogContentTypes,
+  onDismissDialog,
+} from "../../../store/actions/layout";
+import {requestCancel} from "../hooks";
+import {onGoBackNavigation} from "../../../store/actions/navigation";
+import {LanguageTypes} from "../../../language";
+
+const handleCancel = (dispatch: any, language: LanguageTypes) => {
+  dispatch(onDismissDialog());
+  dispatch(onGoBackNavigation(language));
+};
 
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};
@@ -53,7 +63,7 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newAttachment.secondaryButton}
         style={{marginTop: 4}}
-        onPress={() => requestCancelNewPet(dispatch)}
+        onPress={() => requestCancel(dispatch)}
       />
     </React.Fragment>
   );
@@ -62,7 +72,7 @@ export const Footer = (props: ILayoutChildProps) => {
 export const Dialogs = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
-  const {language, languageType, hasPets, theme, dialogContentType} = props;
+  const {language, languageType, theme, dialogContentType} = props;
   const {title, text} = language.dialogs.cancelAttachmentChanges;
 
   switch (dialogContentType) {
@@ -73,7 +83,7 @@ export const Dialogs = (props: ILayoutChildProps) => {
           text={text}
           theme={theme}
           language={language}
-          onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+          onPress={() => handleCancel(dispatch, languageType)}
         />
       );
     default:

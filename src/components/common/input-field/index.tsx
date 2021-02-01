@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {TextInput, View} from "react-native";
+import {TextInput, View, Text} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
@@ -26,31 +26,36 @@ interface IProps {
   theme: ThemeTypes;
   value: InputValues;
   placeholder?: string;
+  disabled?: boolean;
   onChange: (id: string, value: InputValues) => void;
 }
 
 export const InputField = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {id, placeholder, style, theme, value, onChange} = props;
+  const {id, disabled, placeholder, style, theme, value, onChange} = props;
 
   const styles = createStyle(theme, applyStyles);
   const colors = getColors(theme);
 
   return (
     <View style={{...styles.container, ...style}}>
-      <TextInput
-        clearButtonMode={"while-editing"}
-        style={styles.input}
-        autoCorrect={false}
-        placeholder={placeholder}
-        onChangeText={(text) => onChange(id, text)}
-        onFocus={() => handleFocus(dispatch, id)}
-        onEndEditing={() => handleFocusDelayed(dispatch, null)}
-        placeholderTextColor={colors.color12}
-        returnKeyType="done"
-        value={value as any}
-      />
+      {disabled === true ? (
+        <Text style={styles.input}>{value}</Text>
+      ) : (
+        <TextInput
+          clearButtonMode={"while-editing"}
+          style={styles.input}
+          autoCorrect={false}
+          placeholder={placeholder}
+          onChangeText={(text) => onChange(id, text)}
+          onFocus={() => handleFocus(dispatch, id)}
+          onEndEditing={() => handleFocusDelayed(dispatch, null)}
+          placeholderTextColor={colors.color12}
+          returnKeyType="done"
+          value={value as any}
+        />
+      )}
     </View>
   );
 };
