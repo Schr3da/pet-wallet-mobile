@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {ImagePicker, InputField, RoundedButtons} from "../../common";
+import {Dialog, ImagePicker, InputField, RoundedButtons} from "../../common";
 import {
   InputIds,
   InputValues,
@@ -19,9 +19,10 @@ import {
   handleChangeSubView,
   handleCancelNewPet,
   handleError,
+  requestCancelNewPet,
 } from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
-import {ErrorTypes} from "../../../store/actions/layout";
+import {DialogContentTypes, ErrorTypes} from "../../../store/actions/layout";
 import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
@@ -131,8 +132,29 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newPetInformation.secondaryButton}
         style={{marginTop: 4}}
-        onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+        onPress={() => requestCancelNewPet(dispatch)}
       />
     </React.Fragment>
   );
+};
+
+export const Dialogs = (props: ILayoutChildProps) => {
+  const dispatch = useDispatch();
+
+  const {language, languageType, hasPets, theme, dialogContentType} = props;
+
+  switch (dialogContentType) {
+    case DialogContentTypes.cancelNewPet:
+      return (
+        <Dialog
+          title={language.dialogs.deleteAttachment.title}
+          text={language.dialogs.deleteAttachment.text}
+          theme={theme}
+          language={language}
+          onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+        />
+      );
+    default:
+      return null;
+  }
 };

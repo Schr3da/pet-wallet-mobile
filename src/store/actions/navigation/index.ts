@@ -18,6 +18,7 @@ export enum SubViewComponents {
   welcomeWithPets = "welcomeWithPets",
   newPetInformation = "newPetInformation",
   newPetScan = "newPetScan",
+  newAttachment = "newAttachment",
 }
 
 export const ON_CHANGE_VIEW_COMPONENT = "ON_CHANGE_VIEW_COMPONENT";

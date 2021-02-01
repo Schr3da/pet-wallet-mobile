@@ -6,8 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {ImagePicker, RoundedButtons, AttachmentPlaceholder} from "../../common";
+import {
+  ImagePicker,
+  RoundedButtons,
+  AttachmentPlaceholder,
+  Dialog,
+} from "../../common";
 import {ICombinedReducerState} from "../../../store/reducers";
+
 import {
   onScan,
   IImageData,
@@ -16,9 +22,20 @@ import {
   onPreviewScan,
   onSaveNewPet,
 } from "../../../store/actions/new-pet";
-import {handleCancelNewPet, handleError, handleInputChange} from "../hooks";
+
+import {
+  handleCancelNewPet,
+  handleError,
+  handleInputChange,
+  requestCancelNewPet,
+} from "../hooks";
 
 import {applyStyles} from "./index.style";
+import {
+  DialogContentTypes,
+  onSetDialogContentType,
+  onDismissDialog,
+} from "../../../store/actions/layout";
 
 interface IStateProps {
   attachments: IImageData[];
@@ -33,7 +50,17 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
 const handleScanImage = (dispatch: any, data: IImageData) =>
   dispatch(onScan(data));
 
-const handleRemove = (dispatch: any, id: string) => dispatch(onRemoveScan(id));
+let attachmentIdToRemove: string | null = null;
+const requestRemoveAttachment = (dispatch: any, id: string) => {
+  attachmentIdToRemove = id;
+  dispatch(onSetDialogContentType(DialogContentTypes.deleteAttachment));
+};
+
+const handleRemoveAttachment = (dispatch: any, id: string) => {
+  attachmentIdToRemove = null;
+  dispatch(onDismissDialog());
+  dispatch(onRemoveScan(id));
+};
 
 const handlePreview = (dispatch: any, id: string) =>
   dispatch(onPreviewScan(id));
@@ -82,7 +109,7 @@ export const ChildView = (props: ILayoutChildProps) => {
               title={title}
               style={styles.attachment}
               onChange={(id, text) => handleInputChange(id, text, dispatch)}
-              onRemove={(id) => handleRemove(dispatch, id)}
+              onRemove={(id) => requestRemoveAttachment(dispatch, id)}
               onPreview={(id) => handlePreview(dispatch, id)}
             />
           );
@@ -109,8 +136,41 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newPetScan.secondaryButton}
         style={{marginTop: 4}}
-        onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+        onPress={() => requestCancelNewPet(dispatch)}
       />
     </React.Fragment>
   );
+};
+
+export const Dialogs = (props: ILayoutChildProps) => {
+  const dispatch = useDispatch();
+
+  const {language, languageType, hasPets, theme, dialogContentType} = props;
+
+  switch (dialogContentType) {
+    case DialogContentTypes.cancelNewPet:
+      return (
+        <Dialog
+          title={language.dialogs.deleteAttachment.title}
+          text={language.dialogs.deleteAttachment.text}
+          theme={theme}
+          language={language}
+          onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+        />
+      );
+    case DialogContentTypes.deleteAttachment:
+      return (
+        <Dialog
+          title={language.dialogs.cancelNewPet.title}
+          text={language.dialogs.cancelNewPet.text}
+          theme={theme}
+          language={language}
+          onPress={() =>
+            handleRemoveAttachment(dispatch, attachmentIdToRemove!)
+          }
+        />
+      );
+    default:
+      return null;
+  }
 };

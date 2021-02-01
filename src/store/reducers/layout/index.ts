@@ -1,6 +1,6 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
-import {Layout, Splash, Database, Navigation} from "../../actions";
+import {Layout, Splash, Database, Navigation, NewPet} from "../../actions";
 import {
   ErrorTypes,
   NotificationTypes,
@@ -123,6 +123,7 @@ type Actions =
   | Database.Actions
   | Layout.Actions
   | Navigation.Actions
+  | NewPet.Actions
   | Splash.Actions;
 
 const reducer = (state = initialState(), action: Actions) => {

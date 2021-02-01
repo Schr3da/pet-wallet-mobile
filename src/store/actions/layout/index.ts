@@ -5,6 +5,9 @@ import {LanguageTypes} from "../../../language";
 
 export enum DialogContentTypes {
   deleteData = "deleteData",
+  deleteAttachment = "deleteAttachment",
+  cancelAttachmentChanges = "cancelAttachmentChanges",
+  cancelNewPet = "cancelNewPet",
 }
 
 export enum ErrorTypes {

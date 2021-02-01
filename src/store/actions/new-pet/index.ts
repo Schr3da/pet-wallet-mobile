@@ -2,6 +2,7 @@ import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 import {IPetDto} from "../../../dto/pets";
 import {base64ImageString} from "../../../components/common/utils";
+import {onChangeSubViewComponent, SubViewComponents} from "../navigation";
 
 export interface IImageData {
   id: string;
@@ -100,10 +101,24 @@ interface IOnPreviewNewPetPassScan {
   id: string;
 }
 
-export const onPreviewScan = (id: string): IOnPreviewNewPetPassScan => ({
+const onSetPreviewId = (id: string): IOnPreviewNewPetPassScan => ({
   type: ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT,
   id,
 });
+
+export const onPreviewScan = (id: string) => (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+  dispatch(onSetPreviewId(id));
+  dispatch(
+    onChangeSubViewComponent(
+      SubViewComponents.newAttachment,
+      state.layout.language,
+    ),
+  );
+};
 
 export const ON_SAVE_NEW_PET = "ON_SAVE_NEW_PET";
 interface IOnSaveNewPet {

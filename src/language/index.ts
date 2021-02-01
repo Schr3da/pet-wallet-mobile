@@ -72,6 +72,10 @@ export interface INewPet {
     secondaryButton: string;
     attachmentLabel: string;
   };
+  [SubViewComponents.newAttachment]: {
+    primaryButton: string;
+    secondaryButton: string;
+  };
 }
 
 export interface ICard {

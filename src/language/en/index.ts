@@ -48,6 +48,11 @@ const header: IHeader = {
       description:
         "Take photos of your pets pass and we convert it in a digital form",
     },
+    [SubViewComponents.newAttachment]: {
+      title: "Attachment Details",
+      description:
+        "Please find the scan result of the provided image. It is possible to correct defects below.",
+    },
   },
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
@@ -123,6 +128,10 @@ const newPet: INewPet = {
     secondaryButton: "Cancel",
     attachmentLabel: "Attachment",
   },
+  [SubViewComponents.newAttachment]: {
+    primaryButton: "Übernehmen",
+    secondaryButton: "Abbrechen",
+  },
 };
 
 const errors: IErrors = {
@@ -163,6 +172,18 @@ const dialogs: IDialogs = {
     title: "Data deletion",
     text:
       "Attention this is an unreversable action which will remove all saved data associated with your pet wallet.",
+  },
+  [DialogContentTypes.deleteAttachment]: {
+    title: "Delete Attachment",
+    text: "Please continue to delete the information.",
+  },
+  [DialogContentTypes.cancelNewPet]: {
+    title: "Cancel new pet",
+    text: "Press continue to cancel the new pet entry.",
+  },
+  [DialogContentTypes.cancelAttachmentChanges]: {
+    title: "Discard changes",
+    text: "Press continue to discard the modifications.",
   },
 };
 

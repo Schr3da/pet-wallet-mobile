@@ -7,7 +7,13 @@ import {
   onChangeSubViewComponent,
   SubViewComponents,
 } from "../../../store/actions/navigation";
-import {onSetErrorCode, ErrorTypes} from "../../../store/actions/layout";
+import {
+  onSetErrorCode,
+  ErrorTypes,
+  onSetDialogContentType,
+  DialogContentTypes,
+  onDismissDialog,
+} from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
 
 export const handleInputChange = (
@@ -28,11 +34,17 @@ export const handleChangeComponentView = (
   language: LanguageTypes,
 ) => dispatch(onChangeSubViewComponent(subview, language));
 
+export const requestCancelNewPet = (dispatch: any) =>
+  dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
+
 export const handleCancelNewPet = (
   dispatch: any,
   language: LanguageTypes,
   hasPets: boolean,
-) => dispatch(onCancelNewPet(language, hasPets));
+) => {
+  dispatch(onDismissDialog());
+  dispatch(onCancelNewPet(language, hasPets));
+};
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));

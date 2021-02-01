@@ -48,6 +48,11 @@ const header: IHeader = {
       description:
         "Photographiere den Impfass deines Haustieres und wir digitalisieren ihn sofort.",
     },
+    [SubViewComponents.newAttachment]: {
+      title: "Anhang Details",
+      description:
+        "Hier kann das ausgewertete Ergebnis des Scans eingesehen und wenn nötig angepasst werden.",
+    },
   },
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
@@ -125,6 +130,10 @@ const newPet: INewPet = {
     secondaryButton: "Abbrechen",
     attachmentLabel: "Anhang",
   },
+  [SubViewComponents.newAttachment]: {
+    primaryButton: "Speichern",
+    secondaryButton: "Abbrechen",
+  },
 };
 
 const errors: IErrors = {
@@ -166,6 +175,18 @@ const dialogs: IDialogs = {
     title: "Daten löschen",
     text:
       "Achtung die gespeicherten Daten werden durch die Zustimmung entfernt und können nicht wiederhergestellt werden.",
+  },
+  [DialogContentTypes.deleteAttachment]: {
+    title: "Eintrag löschen",
+    text: "Um den Eintrag zu löschen bitte mit Weiter bestätigen.",
+  },
+  [DialogContentTypes.cancelNewPet]: {
+    title: "Tiereintrag verwerfen",
+    text: "Möchtest du den neu erstellten Eintrag verwerfen?",
+  },
+  [DialogContentTypes.cancelAttachmentChanges]: {
+    title: "Änderungen verwerfen",
+    text: "Möchtest du die Änderungen verwerfen?",
   },
 };
 
