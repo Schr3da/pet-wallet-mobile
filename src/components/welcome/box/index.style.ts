@@ -1,4 +1,4 @@
-import type {ViewStyle} from "react-native";
+import type {ImageStyle, ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
@@ -22,5 +22,11 @@ export const applyStyles = (theme: ITheme) => ({
     marginLeft: "5%",
     marginRight: "5%",
     marginBottom: 60,
-  },
+  } as ImageStyle,
+  addPetBar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  } as ViewStyle,
 });

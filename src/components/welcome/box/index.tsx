@@ -10,6 +10,7 @@ import {applyStyles} from "./index.style";
 
 export const Box = (props: ILayoutChildProps): JSX.Element => {
   const {theme} = props;
+
   const styles = createStyle(theme, applyStyles);
 
   return (
@@ -22,7 +23,7 @@ export const Box = (props: ILayoutChildProps): JSX.Element => {
             : require("../../../../assets/png/dark/animals-illustration.png")
         }
       />
-      <AddPetBar {...props} />
+      <AddPetBar {...props} style={styles.addPetBar} />
     </View>
   );
 };

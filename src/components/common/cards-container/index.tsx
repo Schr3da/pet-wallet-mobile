@@ -1,6 +1,11 @@
 import * as React from "react";
 
-import {View, ScrollView} from "react-native";
+import {
+  View,
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
 import {connect} from "react-redux";
 
 import type {ILayoutChildProps} from "../layout";
@@ -18,23 +23,47 @@ interface IProps extends ILayoutChildProps {
   onSharePress: CardEventCallback;
 }
 
-class Container extends React.Component<IProps, {}> {
+interface IState {}
+
+class Container extends React.Component<IProps, IState> {
   constructor(props: IProps, context: any) {
     super(props, context);
+
+    this.state = {};
   }
+
+  private handleScrollStart = (
+    event: NativeSyntheticEvent<NativeScrollEvent>,
+  ) => {
+    event.preventDefault();
+  };
+
+  private handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    event.preventDefault();
+  };
+
+  private handleScrollEnd = (
+    event: NativeSyntheticEvent<NativeScrollEvent>,
+  ) => {
+    event.preventDefault();
+  };
 
   public render() {
     const {data, language, theme, onCardPress, onSharePress} = this.props;
 
-    const styles = createStyle(theme, applyStyles);
+    const styles = createStyle(theme, applyStyles(data.length));
 
     return (
       <View style={styles.container}>
         <ScrollView
           style={styles.list}
-          bounces={true}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}>
+          bounces={false}
+          showsHorizontalScrollIndicator={true}
+          showsVerticalScrollIndicator={true}
+          scrollEventThrottle={40}
+          onScroll={this.handleScroll}
+          onScrollBeginDrag={this.handleScrollStart}
+          onScrollEndDrag={this.handleScrollEnd}>
           {data.map((animal, index) => {
             return (
               <Card
@@ -42,6 +71,7 @@ class Container extends React.Component<IProps, {}> {
                 data={animal}
                 language={language}
                 theme={theme}
+                style={styles.card}
                 onPress={onCardPress}
                 onShare={onSharePress}
               />

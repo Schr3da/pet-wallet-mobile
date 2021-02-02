@@ -4,8 +4,6 @@ import type {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({
   container: {
-    position: "absolute",
-    bottom: 0,
     width: "100%",
     padding: 12,
     backgroundColor: theme.color3,

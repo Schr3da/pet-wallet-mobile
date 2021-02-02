@@ -15,6 +15,7 @@ import {
 } from "../../../store/actions/navigation";
 
 import {applyStyles} from "./index.style";
+import {DisplayModes} from "../../../store/actions/layout";
 
 const handleBackPressed = (dispatch: any, language: LanguageTypes) =>
   dispatch(onGoBackNavigation(language));
@@ -33,14 +34,21 @@ interface IProps {
   hasSettingsButton: boolean;
   language: LanguageTypes;
   theme: ThemeTypes;
+  displayMode: DisplayModes;
 }
 
 export const Navigation = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {hasBackButton, hasSettingsButton, language, theme} = props;
+  const {
+    displayMode,
+    hasBackButton,
+    hasSettingsButton,
+    language,
+    theme,
+  } = props;
 
-  const styles = createStyle(theme, applyStyles);
+  const styles = createStyle(theme, applyStyles(displayMode));
 
   return (
     <View style={styles.navigation}>

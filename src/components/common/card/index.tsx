@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {View, Image} from "react-native";
+import {View, Image, ViewStyle} from "react-native";
 
 import {ILanguage} from "../../../language";
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -20,6 +20,7 @@ interface IProps {
   data: IPetDto;
   theme: ThemeTypes;
   language: ILanguage;
+  style?: ViewStyle;
   onPress: CardEventCallback;
   onShare: CardEventCallback;
 }
@@ -36,7 +37,7 @@ export const Card = (props: IProps) => {
   const styles = createStyle(theme, applyStyles(hasProfile));
 
   return (
-    <View ref={ref} style={styles.container}>
+    <View ref={ref} style={{...styles.container, ...(props.style || {})}}>
       <Image
         style={styles.backgroundImage}
         source={

@@ -1,13 +1,15 @@
 import type {ViewStyle} from "react-native";
+import {DisplayModes} from "../../../store/actions/layout";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (_: ITheme) => ({
+export const applyStyles = (mode: DisplayModes) => (_: ITheme) => ({
   navigation: {
     width: "100%",
     height: 32,
     display: "flex",
     flexDirection: "row",
+    marginTop: mode === DisplayModes.landscape ? 20 : 0,
   } as ViewStyle,
   rowLeft: {
     flex: 1,

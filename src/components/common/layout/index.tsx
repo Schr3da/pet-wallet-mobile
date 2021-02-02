@@ -187,6 +187,7 @@ export const Layout = (props: IProps): JSX.Element => {
   const hasError = childProps.hasError;
   const hasNotification = childProps.hasNotification;
   const hasDialog = childProps.dialogContentType != null;
+
   const styles = createStyle(theme, applyStyles);
 
   return (
@@ -195,6 +196,7 @@ export const Layout = (props: IProps): JSX.Element => {
       style={styles.container}
       keyboardVerticalOffset={isApplePlatform ? 50 : 20}>
       <Navigation
+        displayMode={displayMode}
         theme={theme}
         language={language}
         hasBackButton={hasBackButton(path)}

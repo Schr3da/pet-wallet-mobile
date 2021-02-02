@@ -33,6 +33,7 @@ export const applyStyles = (theme: ITheme) => ({
     opacity: 1,
   },
   notificationWrapper: {
+    maxWidth: 380,
     marginTop: 40,
   } as ViewStyle,
 });

@@ -1,6 +1,9 @@
 import * as React from "react";
 
-import {createStyleWithoutTheme} from "../../theme";
+import {View} from "react-native";
+import {useDispatch} from "react-redux";
+
+import {createStyle, createStyleWithoutTheme} from "../../theme";
 import {Layout, CardsContainer} from "../common";
 import {AddPetBar} from "./add-pet-bar";
 import {Box} from "./box";
@@ -8,7 +11,6 @@ import {HelpBar} from "./help-bar";
 
 import {applyStyles} from "./index.style";
 import {onShowPetDetails} from "../../store/actions/pets";
-import {useDispatch} from "react-redux";
 
 const handleCardPress = (dispatch: any, id: string) =>
   dispatch(onShowPetDetails(id));
@@ -16,13 +18,14 @@ const handleCardPress = (dispatch: any, id: string) =>
 export const Component = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const styles = createStyleWithoutTheme(applyStyles());
-
   return (
     <Layout
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
       childRenderer={(props) => {
-        const {hasPets} = props;
+        const {hasPets, theme} = props;
+
+        const styles = createStyle(theme, applyStyles);
+
         return (
           <React.Fragment>
             {hasPets === false ? (
@@ -40,15 +43,18 @@ export const Component = (): JSX.Element => {
         );
       }}
       footerRenderer={(props) => {
-        const {hasPets} = props;
+        const {hasPets, theme} = props;
+
+        const styles = createStyle(theme, applyStyles);
+
         return (
-          <React.Fragment>
+          <View style={styles.footer}>
             {hasPets === false ? (
               <HelpBar {...props} />
             ) : (
-              <AddPetBar {...props} style={styles} />
+              <AddPetBar {...props} style={styles.addPetBar} />
             )}
-          </React.Fragment>
+          </View>
         );
       }}
     />
