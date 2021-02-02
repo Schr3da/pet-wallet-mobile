@@ -1,11 +1,6 @@
 import * as React from "react";
 
-import {
-  View,
-  ScrollView,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-} from "react-native";
+import {View, Animated} from "react-native";
 import {connect} from "react-redux";
 
 import type {ILayoutChildProps} from "../layout";
@@ -28,25 +23,44 @@ interface IState {}
 class Container extends React.Component<IProps, IState> {
   constructor(props: IProps, context: any) {
     super(props, context);
-
     this.state = {};
   }
 
-  private handleScrollStart = (
-    event: NativeSyntheticEvent<NativeScrollEvent>,
-  ) => {
-    event.preventDefault();
-  };
+  private animation = new Animated.Value(0);
 
-  private handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    event.preventDefault();
-  };
+  private translateTransform(index: number) {
+    return {
+      transform: [
+        {
+          scale: this.animation.interpolate({
+            inputRange: [(index - 1) * 120, 120 * index, (index + 1) * 120],
+            outputRange: [0.8, 1, 0.8],
+            extrapolate: "clamp",
+          }),
+        },
+        {
+          translateY: this.animation.interpolate({
+            inputRange: [(index - 1) * 120, 120 * index, (index + 1) * 120],
+            outputRange: [60, 0, 60],
+            extrapolate: "clamp",
+          }),
+        },
+      ],
+    };
+  }
 
-  private handleScrollEnd = (
-    event: NativeSyntheticEvent<NativeScrollEvent>,
-  ) => {
-    event.preventDefault();
-  };
+  private handleScroll = Animated.event(
+    [
+      {
+        nativeEvent: {
+          contentOffset: {
+            y: this.animation,
+          },
+        },
+      },
+    ],
+    {useNativeDriver: true},
+  );
 
   public render() {
     const {data, language, theme, onCardPress, onSharePress} = this.props;
@@ -55,29 +69,28 @@ class Container extends React.Component<IProps, IState> {
 
     return (
       <View style={styles.container}>
-        <ScrollView
+        <Animated.ScrollView
           style={styles.list}
           bounces={false}
-          showsHorizontalScrollIndicator={true}
-          showsVerticalScrollIndicator={true}
-          scrollEventThrottle={40}
-          onScroll={this.handleScroll}
-          onScrollBeginDrag={this.handleScrollStart}
-          onScrollEndDrag={this.handleScrollEnd}>
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+          pagingEnabled
+          onScroll={this.handleScroll}>
           {data.map((animal, index) => {
             return (
-              <Card
-                key={index}
-                data={animal}
-                language={language}
-                theme={theme}
-                style={styles.card}
-                onPress={onCardPress}
-                onShare={onSharePress}
-              />
+              <Animated.View key={index} style={this.translateTransform(index)}>
+                <Card
+                  data={animal}
+                  language={language}
+                  theme={theme}
+                  onPress={onCardPress}
+                  onShare={onSharePress}
+                />
+              </Animated.View>
             );
           })}
-        </ScrollView>
+        </Animated.ScrollView>
       </View>
     );
   }

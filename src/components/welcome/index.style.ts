@@ -7,6 +7,7 @@ export const applyStyles = (theme: ITheme) => ({
     maxWidth: 380,
   },
   footer: {
+    maxWidth: 380,
     position: "relative",
     backgroundColor: theme.color1,
   } as ViewStyle,
