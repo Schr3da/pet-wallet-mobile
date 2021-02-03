@@ -1,28 +1,52 @@
 import * as React from "react";
 
-import {View} from "react-native";
-import {useDispatch} from "react-redux";
+import {Animated, View} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
 
-import {createStyle, createStyleWithoutTheme} from "../../theme";
-import {Layout, CardsContainer} from "../common";
+import {onShowPetDetails} from "../../store/actions/pets";
+import {ICombinedReducerState} from "../../store/reducers";
+import {createStyle} from "../../theme";
+import {Layout, Card} from "../common";
 import {AddPetBar} from "./add-pet-bar";
 import {Box} from "./box";
 import {HelpBar} from "./help-bar";
 
-import {applyStyles} from "./index.style";
-import {onShowPetDetails} from "../../store/actions/pets";
+import {applyStyles, animatedCardStyle} from "./index.style";
+
+const stateToProps = (state: ICombinedReducerState): any => ({
+  pets: state.pets.data,
+});
 
 const handleCardPress = (dispatch: any, id: string) =>
   dispatch(onShowPetDetails(id));
 
+const animation = new Animated.Value(0);
+
+const handleScroll = Animated.event(
+  [
+    {
+      nativeEvent: {
+        contentOffset: {
+          y: animation,
+        },
+      },
+    },
+  ],
+  {useNativeDriver: true},
+);
+
 export const Component = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const stateProps = useSelector(stateToProps);
+  const {pets} = stateProps;
 
   return (
     <Layout
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
+      onScroll={handleScroll}
       childRenderer={(props) => {
-        const {hasPets, theme} = props;
+        const {hasPets, language, theme} = props;
 
         const styles = createStyle(theme, applyStyles);
 
@@ -31,13 +55,24 @@ export const Component = (): JSX.Element => {
             {hasPets === false ? (
               <Box {...props} />
             ) : (
-              <CardsContainer
-                {...props}
-                onCardPress={(id, measures) => handleCardPress(dispatch, id)}
-                onSharePress={(id, measures) =>
-                  console.log("share press", id, measures)
-                }
-              />
+              pets.map((animal: any, index: number) => {
+                const animitedStyles = animatedCardStyle(
+                  index,
+                  pets.length,
+                  animation,
+                );
+                return (
+                  <Animated.View key={index} style={animitedStyles}>
+                    <Card
+                      data={animal}
+                      language={language}
+                      theme={theme}
+                      onPress={(id) => handleCardPress(dispatch, id)}
+                      onShare={() => undefined}
+                    />
+                  </Animated.View>
+                );
+              })
             )}
           </React.Fragment>
         );

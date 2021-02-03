@@ -5,7 +5,7 @@ import type {ITheme} from "../../../theme";
 export const applyStyles = (theme: ITheme) => ({
   container: {
     width: "100%",
-  },
+  } as ViewStyle,
   meta: {
     alignItems: "center",
     justifyContent: "center",

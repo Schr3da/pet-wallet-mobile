@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import {
+  Animated,
   Dimensions,
   ImageSourcePropType,
   KeyboardAvoidingView,
-  ScrollView,
   View,
 } from "react-native";
 
@@ -94,6 +94,7 @@ interface IProps {
   footerRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
+  onScroll?: any;
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -166,6 +167,7 @@ export const Layout = (props: IProps): JSX.Element => {
   const {
     hasHeader,
     imageSource,
+    onScroll,
     childRenderer,
     footerRenderer,
     dialogRenderer,
@@ -202,12 +204,13 @@ export const Layout = (props: IProps): JSX.Element => {
         hasBackButton={hasBackButton(path)}
         hasSettingsButton={hasSettingsButton(path)}
       />
-      <ScrollView
+      <Animated.ScrollView
         bounces={true}
         style={styles.layoutWrapper}
         nestedScrollEnabled={true}
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        onScroll={onScroll}>
         <View style={styles.contentViewWrapper}>
           {hasHeader === false ? null : (
             <Header
@@ -223,7 +226,7 @@ export const Layout = (props: IProps): JSX.Element => {
             footerRenderer &&
             footerRenderer(childProps)}
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
       {displayMode === DisplayModes.portrait &&
         focus == null &&
         footerRenderer &&

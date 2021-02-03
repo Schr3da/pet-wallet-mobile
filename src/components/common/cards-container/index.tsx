@@ -21,20 +21,22 @@ interface IProps extends ILayoutChildProps {
 interface IState {}
 
 class Container extends React.Component<IProps, IState> {
-
   constructor(props: IProps, context: any) {
     super(props, context);
   }
 
   private animation = new Animated.Value(0);
 
-  private handleScroll = Animated.event([{
-    nativeEvent: {
-      contentOffset: {
-        y: this.animation,
+  private handleScroll = Animated.event(
+    [
+      {
+        nativeEvent: {
+          contentOffset: {
+            y: this.animation,
+          },
+        },
       },
-    },
-    }],
+    ],
     {useNativeDriver: true},
   );
 
@@ -51,10 +53,13 @@ class Container extends React.Component<IProps, IState> {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
-          onScroll={this.handleScroll}
-        >
+          onScroll={this.handleScroll}>
           {data.map((animal, index) => {
-            const animitedStyles = animatedCardStyle(index, data.length, this.animation);
+            const animitedStyles = animatedCardStyle(
+              index,
+              data.length,
+              this.animation,
+            );
 
             return (
               <Animated.View key={index} style={animitedStyles}>
