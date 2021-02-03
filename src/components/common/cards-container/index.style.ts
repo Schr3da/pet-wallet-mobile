@@ -1,15 +1,18 @@
+import {Animated} from "react-native";
+
 import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (dataLength: number) => (_: ITheme) => {
-  const height = 120;
-  const cardOffset = 40;
+const cardHeight = 130;
 
+const containerHeight =  cardHeight * 2 + cardHeight * 0.5;
+
+export const applyStyles = (dataLength: number) => (_: ITheme) => {
   return {
     container: {
       width: "100%",
-      height: 120,
+      height: dataLength <= 2 ? cardHeight * dataLength : containerHeight, 
       maxWidth: 380,
       marginTop: 18,
       marginBottom: 20,
@@ -20,3 +23,41 @@ export const applyStyles = (dataLength: number) => (_: ITheme) => {
     } as ViewStyle,
   };
 };
+
+export const animatedCardStyle = (
+  index: number,
+  length: number,
+  animation: Animated.Value
+) => {
+
+  const isLast = length > 1 && length - 1 === index;
+
+  const translateY = {
+    translateY: Animated.add(animation, animation.interpolate({
+      inputRange: [0, 0.00001 + index * cardHeight],
+      outputRange: [0, -index * cardHeight],
+      extrapolate: "clamp",
+    })),
+  };
+
+  const position = Animated.subtract(index * cardHeight, animation);
+
+  const scale = {
+    scale: position.interpolate({
+      inputRange: [-cardHeight, 0, containerHeight, containerHeight],
+      outputRange: [0.8, 1, 1, 0.8],
+      extrapolate: "clamp"
+    }) 
+  };
+
+  const opacity = position.interpolate({
+    inputRange: [-cardHeight, 0, containerHeight, containerHeight],
+    outputRange: [0.5, 1, 1, 0.5],
+  });
+
+  return {
+    opacity,
+    marginBottom: isLast ? cardHeight * 1.5 : 10,
+    transform: [translateY, scale],
+  };
+}

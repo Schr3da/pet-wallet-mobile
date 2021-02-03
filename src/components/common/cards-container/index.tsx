@@ -10,7 +10,7 @@ import {createStyle} from "../../../theme";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {Card, CardEventCallback} from "../card";
 
-import {applyStyles} from "./index.style";
+import {applyStyles, animatedCardStyle} from "./index.style";
 
 interface IProps extends ILayoutChildProps {
   data: IPetDto[];
@@ -21,44 +21,20 @@ interface IProps extends ILayoutChildProps {
 interface IState {}
 
 class Container extends React.Component<IProps, IState> {
+
   constructor(props: IProps, context: any) {
     super(props, context);
-    this.state = {};
   }
 
   private animation = new Animated.Value(0);
 
-  private translateTransform(index: number) {
-    return {
-      transform: [
-        {
-          scale: this.animation.interpolate({
-            inputRange: [(index - 1) * 120, 120 * index, (index + 1) * 120],
-            outputRange: [0.8, 1, 0.8],
-            extrapolate: "clamp",
-          }),
-        },
-        {
-          translateY: this.animation.interpolate({
-            inputRange: [(index - 1) * 120, 120 * index, (index + 1) * 120],
-            outputRange: [60, 0, 60],
-            extrapolate: "clamp",
-          }),
-        },
-      ],
-    };
-  }
-
-  private handleScroll = Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: {
-            y: this.animation,
-          },
-        },
+  private handleScroll = Animated.event([{
+    nativeEvent: {
+      contentOffset: {
+        y: this.animation,
       },
-    ],
+    },
+    }],
     {useNativeDriver: true},
   );
 
@@ -75,11 +51,13 @@ class Container extends React.Component<IProps, IState> {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
-          pagingEnabled
-          onScroll={this.handleScroll}>
+          onScroll={this.handleScroll}
+        >
           {data.map((animal, index) => {
+            const animitedStyles = animatedCardStyle(index, data.length, this.animation);
+
             return (
-              <Animated.View key={index} style={this.translateTransform(index)}>
+              <Animated.View key={index} style={animitedStyles}>
                 <Card
                   data={animal}
                   language={language}
