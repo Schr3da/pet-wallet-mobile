@@ -1,3 +1,5 @@
+import Animated from "react-native-reanimated";
+
 import type {ViewStyle} from "react-native";
 
 import {DisplayModes} from "../../../store/actions/layout";
@@ -36,3 +38,17 @@ export const applyStyles = (mode: DisplayModes) => (theme: ITheme) => ({
     borderRadius: 100,
   },
 });
+
+export const containerAnimation = (
+  value: Animated.Value<number>,
+): Animated.AnimateProps<any, any> => {
+  const translateY = value.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-10, 0], 
+  });
+
+  return {
+    opacity: value, 
+    transform : [{ translateY }]
+  };
+}; 

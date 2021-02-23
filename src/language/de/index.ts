@@ -156,6 +156,11 @@ const errors: IErrors = {
     text:
       "Auf das Photo kann nicht zugegriffen werden. Bitte überprüfe die Berechtigungen der App in den Einstellungen.",
   },
+  [ErrorTypes.deviceIsOffline]: {
+    title: "Keine Internetverbindung",
+    text: 
+      "Das Gerät ist derzeit nicht mit dem Internet Verbunden. Die App kann nur eingeschränkt verwendet werden."
+  }
 };
 
 const notifications: INotifications = {

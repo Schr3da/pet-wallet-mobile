@@ -13,6 +13,7 @@ import {Navigation} from "./navigation";
 import {Error} from "./error";
 import {ContentButton} from "./content-button";
 import {Dialog} from "./dialog";
+import {GradientBackground} from "./gradient-background";
 
 export {
   AttachmentPlaceholder,
@@ -20,6 +21,7 @@ export {
   CardsContainer,
   ContentButton,
   Dialog,
+  GradientBackground,
   Header,
   ImagePicker,
   InputField,

@@ -17,6 +17,7 @@ export interface ILayoutState {
   displayMode: Layout.DisplayModes;
   screenWidth: number;
   screenHeight: number;
+  isOnline: boolean;
   dialogContentType: DialogContentTypes | null;
 }
 
@@ -36,6 +37,7 @@ const initialState = (): ILayoutState => {
     screenWidth: screen.width,
     screenHeight: screen.height,
     dialogContentType: null,
+    isOnline: false,
   };
 };
 
@@ -119,6 +121,19 @@ const handleDialogContentTypeChange = (
   };
 };
 
+const handleDeviceStatus = (
+  state: ILayoutState,
+  isOnline: boolean,
+): ILayoutState => {
+  const error = isOnline ? null : ErrorTypes.deviceIsOffline;
+  const nextState = handleError(state, error); 
+  
+  return { 
+    ...nextState,
+    isOnline,
+  };
+};
+
 type Actions =
   | Database.Actions
   | Layout.Actions
@@ -142,6 +157,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return handleNotification(state, action.notificationType);
     case Layout.ON_SET_DIALOG_CONTENT_TYPE:
       return handleDialogContentTypeChange(state, action.contentType);
+    case Layout.ON_IS_DEVICE_ONLINE:
+      return handleDeviceStatus(state, action.isOnline); 
     case Navigation.ON_GO_BACK_NAVIGATION:
       return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

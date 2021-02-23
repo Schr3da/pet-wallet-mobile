@@ -204,29 +204,31 @@ export const Layout = (props: IProps): JSX.Element => {
         hasBackButton={hasBackButton(path)}
         hasSettingsButton={hasSettingsButton(path)}
       />
-      <Animated.ScrollView
-        bounces={true}
-        style={styles.layoutWrapper}
-        nestedScrollEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        onScroll={onScroll}>
-        <View style={styles.contentViewWrapper}>
-          {hasHeader === false ? null : (
-            <Header
-              {...childProps}
-              title={title}
-              description={description}
-              path={path}
-              source={imageSource}
-            />
-          )}
-          {childRenderer(childProps)}
-          {displayMode === DisplayModes.landscape &&
-            footerRenderer &&
-            footerRenderer(childProps)}
-        </View>
-      </Animated.ScrollView>
+      <View style={styles.layoutWrapper}>
+        <Animated.ScrollView
+          bounces={false}
+          style={styles.layoutWrapper}
+          nestedScrollEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          onScroll={onScroll}>
+          <View style={styles.contentViewWrapper}>
+            {hasHeader === false ? null : (
+              <Header
+                {...childProps}
+                title={title}
+                description={description}
+                path={path}
+                source={imageSource}
+              />
+            )}
+            {childRenderer(childProps)}
+            {displayMode === DisplayModes.landscape &&
+              footerRenderer &&
+              footerRenderer(childProps)}
+          </View>
+        </Animated.ScrollView>
+      </View>
       {displayMode === DisplayModes.portrait &&
         focus == null &&
         footerRenderer &&

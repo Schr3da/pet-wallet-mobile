@@ -153,6 +153,11 @@ const errors: IErrors = {
     text:
       "Photos can not be accessed. Please check your app permissions and enable photo access.",
   },
+  [ErrorTypes.deviceIsOffline]: {
+    title: "No network connection",
+    text: 
+      "The Device is currently not connected to the internet. As a result the app is working limited."
+  }
 };
 
 const notifications: INotifications = {

@@ -11,7 +11,7 @@ import {AddPetBar} from "./add-pet-bar";
 import {Box} from "./box";
 import {HelpBar} from "./help-bar";
 
-import {applyStyles, animatedCardStyle} from "./index.style";
+import {animatedCardStyle, applyStyles} from "./index.style";
 
 const stateToProps = (state: ICombinedReducerState): any => ({
   pets: state.pets.data,
@@ -47,9 +47,7 @@ export const Component = (): JSX.Element => {
       onScroll={handleScroll}
       childRenderer={(props) => {
         const {hasPets, language, theme} = props;
-
-        const styles = createStyle(theme, applyStyles);
-
+        
         return (
           <React.Fragment>
             {hasPets === false ? (

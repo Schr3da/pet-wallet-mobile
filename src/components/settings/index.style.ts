@@ -34,6 +34,6 @@ export const applyStyles = (theme: ITheme) => ({
   },
   notificationWrapper: {
     maxWidth: 380,
-    marginTop: 40,
+    marginTop: 10,
   } as ViewStyle,
 });

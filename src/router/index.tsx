@@ -18,23 +18,26 @@ import {ViewComponents} from "../store/actions/navigation";
 import {createStyle, ThemeTypes, getColors} from "../theme";
 
 import {applyStyles} from "./index.style";
+import {DisplayModes} from "../store/actions/layout";
 
 interface IProps {
   mainViewComponent: ViewComponents;
   theme: ThemeTypes;
   isApplePlatform: boolean;
+  displayMode: DisplayModes;
 }
 
 const stateToProps = (state: ICombinedReducerState): IProps => ({
   mainViewComponent: state.navigation.mainViewComponent,
   theme: state.layout.theme,
   isApplePlatform: state.layout.isApplePlatform,
+  displayMode: state.layout.displayMode,
 });
 
 export const Route = (): JSX.Element => {
-  const {isApplePlatform, mainViewComponent, theme} = useSelector(stateToProps);
+  const {displayMode, isApplePlatform, mainViewComponent, theme} = useSelector(stateToProps);
 
-  const styles = createStyle(theme, applyStyles(isApplePlatform));
+  const styles = createStyle(theme, applyStyles(isApplePlatform, displayMode));
   const colors = getColors(theme);
 
   let childComponent: React.ReactElement;

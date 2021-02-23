@@ -1,3 +1,4 @@
+import { LanguageTypes } from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 
 import {initDatabase} from "../../reducers/database/db";
@@ -29,6 +30,7 @@ export const onLoadedDataFromDatabase = (): IOnLoadedDataFromDatabase => ({
 export const ON_REQUEST_DATA_DELETION = "ON_REQUEST_DATA_DELETION";
 interface IOnRequesDataDeletion {
   type: typeof ON_REQUEST_DATA_DELETION;
+  language: LanguageTypes;
 }
 
 export const ON_CLEAR_IN_MEMORY_DATA = "ON_CLEAR_IN_MEMORY_DATA";
@@ -40,9 +42,14 @@ export const onClearInMemoryData = () => ({
   type: ON_CLEAR_IN_MEMORY_DATA,
 });
 
-export const onRequestDataDeletion = () => async (dispatch: any) => {
+export const onRequestDataDeletion = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
   dispatch({
     type: ON_REQUEST_DATA_DELETION,
+    language: state.layout.language,
   } as IOnRequesDataDeletion);
 };
 

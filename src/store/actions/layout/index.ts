@@ -1,4 +1,5 @@
 import {Dimensions, Platform} from "react-native";
+import * as NetInfo from "@react-native-community/netinfo";
 
 import {ThemeTypes} from "../../../theme";
 import {LanguageTypes} from "../../../language";
@@ -14,6 +15,7 @@ export enum ErrorTypes {
   inputField = "inputFieldError",
   camera = "cameraError",
   photoLibrary = "photoLibraryError",
+  deviceIsOffline = "deviceIsOffline",
 }
 
 export enum NotificationTypes {
@@ -41,6 +43,28 @@ export const isiOS = (): boolean => {
   const identifier = (Platform.OS || "").toLowerCase();
   return identifier === "ios";
 };
+
+export const isOnline = async (): Promise<boolean> => {
+  const info = await NetInfo.fetch();
+
+  if (info == null) {
+    return false;
+  }
+ 
+  const {type} = info;
+  return type === "cellular" || type === "wifi"; 
+}
+
+export const ON_IS_DEVICE_ONLINE = "ON_IS_DEVICE_ONLINE";
+interface IOnIsDeviceOnline {
+  type: typeof ON_IS_DEVICE_ONLINE;
+  isOnline: boolean;
+}
+
+export const setDeviceOnline = (isOnline: boolean) => ({
+    type: ON_IS_DEVICE_ONLINE,
+    isOnline,
+});
 
 export const ON_CHANGE_DISPLAY_MODE = "ON_CHANGE_DISPLAY_MODE";
 interface IOnChangeDisplayMode {
@@ -145,10 +169,12 @@ export const onDismissDialog = () => ({
 });
 
 export type Actions =
+  | IOnIsDeviceOnline
   | IOnChangeCurrentTheme
   | IOnChangeLanguage
   | IOnChangeDisplayMode
   | IOnFocus
   | IOnSetErrorType
   | IOnSetNotificationType
-  | IOnSetDialogContentType;
+  | IOnSetDialogContentType
+;

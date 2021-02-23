@@ -2,17 +2,18 @@ import * as React from "react";
 
 import {View, Text} from "react-native";
 import {connect} from "react-redux";
+import Animated, { Easing } from "react-native-reanimated";
 
 import type {ICombinedReducerState} from "../../../store/reducers";
+import {createStyle} from "../../../theme";
+import {ILayoutChildProps} from "../layout";
 
 import {
   NotificationTypes,
   onSetNotificationType,
 } from "../../../store/actions/layout";
-import {createStyle} from "../../../theme";
-import {ILayoutChildProps} from "../layout";
 
-import {applyStyles} from "./index.style";
+import {applyStyles, containerAnimation} from "./index.style";
 
 interface IProps extends ILayoutChildProps {
   type: NotificationTypes;
@@ -25,6 +26,10 @@ const shouldAutoDismiss = (type: NotificationTypes): boolean =>
 export class Container extends React.Component<IProps, unknown> {
   private timer: any = null;
 
+  private animation: Animated.BackwardCompatibleWrapper | null = null;
+
+  private animatedValue = new Animated.Value(0);
+
   constructor(props: IProps, context: any) {
     super(props, context);
   }
@@ -34,9 +39,13 @@ export class Container extends React.Component<IProps, unknown> {
       return;
     }
 
-    this.timer = setTimeout(() => {
-      this.props.onAutoDismiss();
-    }, 5000);
+    this.startAnimation(1, () => {
+      this.timer = setTimeout(() => {
+        this.startAnimation(0, () => {
+          this.props.onAutoDismiss();
+        })
+      }, 5000);
+    });
   }
 
   public componentWillUnmount() {
@@ -48,14 +57,39 @@ export class Container extends React.Component<IProps, unknown> {
     const {title, text} = language.notifications[type];
 
     const styles = createStyle(theme, applyStyles(displayMode));
+    const animation = containerAnimation(this.animatedValue);
 
     return (
-      <View style={{...styles.container}}>
+      <Animated.View style={{...styles.container, ...animation}}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.text}>{text}</Text>
-      </View>
+      </Animated.View>
     );
   }
+
+  private startAnimation = (
+    toValue: number,
+    onComplete: () => void
+  ) => {
+    this.stopAnimation();
+    this.animation = Animated.timing(this.animatedValue, {
+      toValue,
+      duration: 500,
+      easing: Easing.linear,
+    });
+    this.animation.start(() => {
+      this.animation = null;
+      onComplete();
+    });
+  }
+
+  private stopAnimation = () => {
+    if (this.animation == null) {
+      return;
+    }
+    this.animation.stop();
+  }
+
 }
 
 const mapStateToProps = (
