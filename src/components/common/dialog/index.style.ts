@@ -1,4 +1,5 @@
 import type {ViewStyle} from "react-native";
+import Animated from "react-native-reanimated";
 
 import {ITheme} from "../../../theme";
 
@@ -53,4 +54,10 @@ export const applyStyle = (theme: ITheme) => ({
     paddingRight: 30,
     borderRadius: 1000,
   } as ViewStyle,
+});
+
+export const containerAnimation = (
+  value: Animated.Value<number>,
+): Animated.AnimateProps<any, any>  => ({
+  opacity: value,
 });

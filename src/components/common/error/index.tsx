@@ -3,7 +3,7 @@ import * as React from "react";
 import {Text} from "react-native";
 import {connect} from "react-redux";
 
-import Animated, { Easing } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 import type {ICombinedReducerState} from "../../../store/reducers";
 
@@ -11,6 +11,7 @@ import {ErrorTypes, onSetErrorCode} from "../../../store/actions/layout";
 import {createStyle} from "../../../theme";
 import {ILayoutChildProps} from "../layout";
 
+import {createNotificationAnimation} from "../utils";
 import {applyStyles, containerAnimation} from "./index.style";
 
 interface IProps extends ILayoutChildProps {
@@ -64,11 +65,7 @@ export class Container extends React.Component<IProps, unknown> {
     onComplete: () => void
   ) => {
     this.stopAnimation();
-    this.animation = Animated.timing(this.animatedValue, {
-      toValue,
-      duration: 500,
-      easing: Easing.linear,
-    });
+    this.animation = createNotificationAnimation(this.animatedValue, toValue);
     this.animation.start(() => {
       this.animation = null;
       onComplete();
