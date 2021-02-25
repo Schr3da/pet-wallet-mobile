@@ -35,7 +35,9 @@ const stateToProps = (state: ICombinedReducerState): IProps => ({
 });
 
 export const Route = (): JSX.Element => {
-  const {displayMode, isApplePlatform, mainViewComponent, theme} = useSelector(stateToProps);
+  const {displayMode, isApplePlatform, mainViewComponent, theme} = useSelector(
+    stateToProps,
+  );
 
   const styles = createStyle(theme, applyStyles(isApplePlatform, displayMode));
   const colors = getColors(theme);

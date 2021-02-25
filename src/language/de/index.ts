@@ -158,9 +158,9 @@ const errors: IErrors = {
   },
   [ErrorTypes.deviceIsOffline]: {
     title: "Keine Internetverbindung",
-    text: 
-      "Das Gerät ist derzeit nicht mit dem Internet Verbunden. Die App kann nur eingeschränkt verwendet werden."
-  }
+    text:
+      "Das Gerät ist derzeit nicht mit dem Internet Verbunden. Die App kann nur eingeschränkt verwendet werden.",
+  },
 };
 
 const notifications: INotifications = {

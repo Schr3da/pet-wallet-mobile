@@ -50,10 +50,10 @@ export const isOnline = async (): Promise<boolean> => {
   if (info == null) {
     return false;
   }
- 
+
   const {type} = info;
-  return type === "cellular" || type === "wifi"; 
-}
+  return type === "cellular" || type === "wifi";
+};
 
 export const ON_IS_DEVICE_ONLINE = "ON_IS_DEVICE_ONLINE";
 interface IOnIsDeviceOnline {
@@ -62,8 +62,8 @@ interface IOnIsDeviceOnline {
 }
 
 export const setDeviceOnline = (isOnline: boolean) => ({
-    type: ON_IS_DEVICE_ONLINE,
-    isOnline,
+  type: ON_IS_DEVICE_ONLINE,
+  isOnline,
 });
 
 export const ON_CHANGE_DISPLAY_MODE = "ON_CHANGE_DISPLAY_MODE";
@@ -96,6 +96,17 @@ export const onChangeCurrentTheme = (
 ): IOnChangeCurrentTheme => ({
   type: ON_CHANGE_CURRENT_THEME,
   next,
+});
+
+export const ON_SET_LOADING = "ON_SET_LOADING";
+interface IOnSetLoading {
+  type: typeof ON_SET_LOADING;
+  isLoading: boolean;
+}
+
+export const setLoading = (isLoading: boolean): IOnSetLoading => ({
+  type: ON_SET_LOADING,
+  isLoading,
 });
 
 export const ON_CHANGE_LANGUAGE = "ON_CHANGE_LANGUAGE";
@@ -177,4 +188,4 @@ export type Actions =
   | IOnSetErrorType
   | IOnSetNotificationType
   | IOnSetDialogContentType
-;
+  | IOnSetLoading;

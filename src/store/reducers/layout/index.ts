@@ -6,6 +6,9 @@ import {
   NotificationTypes,
   DialogContentTypes,
 } from "../../actions/layout";
+import {ISettingsEntity} from "../database/db/settings";
+import {IUserEntity} from "../database/db/user";
+import {User} from "../../../communication";
 
 export interface ILayoutState {
   notificationType: NotificationTypes | null;
@@ -18,6 +21,7 @@ export interface ILayoutState {
   screenWidth: number;
   screenHeight: number;
   isOnline: boolean;
+  isLoading: boolean;
   dialogContentType: DialogContentTypes | null;
 }
 
@@ -38,6 +42,7 @@ const initialState = (): ILayoutState => {
     screenHeight: screen.height,
     dialogContentType: null,
     isOnline: false,
+    isLoading: false,
   };
 };
 
@@ -94,6 +99,11 @@ const navigationChange = (state: ILayoutState) => {
   return changeFocus(nextState, null);
 };
 
+const setLoading = (state: ILayoutState, isLoading: boolean): ILayoutState => ({
+  ...state,
+  isLoading,
+});
+
 const handleError = (
   state: ILayoutState,
   errorType: ErrorTypes | null,
@@ -126,9 +136,9 @@ const handleDeviceStatus = (
   isOnline: boolean,
 ): ILayoutState => {
   const error = isOnline ? null : ErrorTypes.deviceIsOffline;
-  const nextState = handleError(state, error); 
-  
-  return { 
+  const nextState = handleError(state, error);
+
+  return {
     ...nextState,
     isOnline,
   };
@@ -158,7 +168,9 @@ const reducer = (state = initialState(), action: Actions) => {
     case Layout.ON_SET_DIALOG_CONTENT_TYPE:
       return handleDialogContentTypeChange(state, action.contentType);
     case Layout.ON_IS_DEVICE_ONLINE:
-      return handleDeviceStatus(state, action.isOnline); 
+      return handleDeviceStatus(state, action.isOnline);
+    case Layout.ON_SET_LOADING:
+      return setLoading(state, action.isLoading);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

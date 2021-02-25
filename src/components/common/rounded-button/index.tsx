@@ -15,7 +15,7 @@ const handlePress = (
     return;
   }
   action();
-}
+};
 
 export interface IProps {
   style: any;

@@ -18,8 +18,6 @@ export const executeQuery = (
 export const createTable = async (name: string, params: string) =>
   executeQuery(`CREATE TABLE IF NOT EXISTS ${name} (${params})`, []);
 
-export const dropDatabase = async () => executeQuery("DROP DATABASE app");
-
 export const insert = async (table: string, fields: string[], values: any) => {
   const placeholder = fields.reduce(
     (result, _, index) => result + (index === 0 ? "?" : ", ?"),
@@ -47,17 +45,31 @@ export const select = async <T>(
 
 let instance: SQLite.SQLiteDatabase;
 
+const databaseParams = (): SQLite.DatabaseParams => ({
+  name: "pet-wallet-6",
+  location: "default",
+});
+
 export const init = (): Promise<boolean> => {
   return new Promise(async (resolve) => {
-    const params: SQLite.DatabaseParams = {
-      name: "app",
-      location: "default",
-    };
-
     instance = SQLite.openDatabase(
-      params,
+      databaseParams(),
       () => resolve(true),
       () => resolve(false),
+    );
+  });
+};
+
+export const deleteDatabase = (): Promise<void> => {
+  return new Promise(async (resolve) => {
+    if (instance != null) {
+      instance.close();
+    }
+
+    SQLite.deleteDatabase(
+      databaseParams(),
+      () => resolve(),
+      () => resolve(),
     );
   });
 };

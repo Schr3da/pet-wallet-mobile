@@ -21,10 +21,11 @@ export const GradientBackground = (props: IProps) => {
       <Image
         style={styles.image}
         source={
-          theme === ThemeTypes.Dark ? 
-          require("../../../../assets/png/dark/gradient.png") :
-          require("../../../../assets/png/light/gradient.png")}
+          theme === ThemeTypes.Dark
+            ? require("../../../../assets/png/dark/gradient.png")
+            : require("../../../../assets/png/light/gradient.png")
+        }
       />
     </View>
   );
-}
+};

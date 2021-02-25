@@ -155,9 +155,9 @@ const errors: IErrors = {
   },
   [ErrorTypes.deviceIsOffline]: {
     title: "No network connection",
-    text: 
-      "The Device is currently not connected to the internet. As a result the app is working limited."
-  }
+    text:
+      "The Device is currently not connected to the internet. As a result the app is working limited.",
+  },
 };
 
 const notifications: INotifications = {

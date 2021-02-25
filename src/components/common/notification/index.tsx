@@ -44,7 +44,7 @@ export class Container extends React.Component<IProps, unknown> {
       this.timer = setTimeout(() => {
         this.startAnimation(0, () => {
           this.props.onAutoDismiss();
-        })
+        });
       }, 5000);
     });
   }
@@ -68,25 +68,21 @@ export class Container extends React.Component<IProps, unknown> {
     );
   }
 
-  private startAnimation = (
-    toValue: number,
-    onComplete: () => void
-  ) => {
+  private startAnimation = (toValue: number, onComplete: () => void) => {
     this.stopAnimation();
     this.animation = createNotificationAnimation(this.animatedValue, toValue);
     this.animation.start(() => {
       this.animation = null;
       onComplete();
     });
-  }
+  };
 
   private stopAnimation = () => {
     if (this.animation == null) {
       return;
     }
     this.animation.stop();
-  }
-
+  };
 }
 
 const mapStateToProps = (

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, {Easing} from "react-native-reanimated";
 
 import {Text, View} from "react-native";
 import {useDispatch} from "react-redux";
@@ -27,17 +27,18 @@ const animate = async (
   currentValue: Animated.Value<number>,
   toValue: number,
   setIsAnimating: React.Dispatch<React.SetStateAction<boolean>>,
-): Promise<void> => new Promise((resolve) => { 
-  setIsAnimating(true); 
-  Animated.timing(currentValue, {
-    toValue,
-    duration: 200,
-    easing: Easing.linear,
-  }).start(() => {
-    setIsAnimating(false)
-    resolve();
+): Promise<void> =>
+  new Promise((resolve) => {
+    setIsAnimating(true);
+    Animated.timing(currentValue, {
+      toValue,
+      duration: 200,
+      easing: Easing.linear,
+    }).start(() => {
+      setIsAnimating(false);
+      resolve();
+    });
   });
-});
 
 export const Dialog = (props: IProps) => {
   const dispatch = useDispatch();

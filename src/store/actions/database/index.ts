@@ -1,4 +1,4 @@
-import { LanguageTypes } from "../../../language";
+import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 
 import {initDatabase} from "../../reducers/database/db";
@@ -6,16 +6,23 @@ import {
   getSettings,
   ISettingsEntity,
 } from "../../reducers/database/db/settings";
+import {getUser, IUserEntity} from "../../reducers/database/db/user";
+import {isOnline, setDeviceOnline} from "../layout";
 
 export const ON_INIT_DATA_FROM_DATABASE = "ON_INIT_DATA_FROM_DATABASE";
 interface IOnInitDataFromDatabase {
   type: typeof ON_INIT_DATA_FROM_DATABASE;
   settings: ISettingsEntity;
+  user: IUserEntity | null;
 }
 
-export const onInitDataFromDatabase = (settings: ISettingsEntity) => ({
+export const onInitDataFromDatabase = (
+  settings: ISettingsEntity,
+  user: IUserEntity | null,
+): IOnInitDataFromDatabase => ({
   type: ON_INIT_DATA_FROM_DATABASE,
   settings,
+  user,
 });
 
 export const ON_LOADED_DATA_FROM_DATABASE = "ON_LOADED_DATA_FROM_DATABASE";
@@ -57,8 +64,11 @@ export const initStateFromDatabase = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
-  let state = getState();
-  let successful = await initDatabase(state.layout);
+  const isDeviceOnline = await isOnline();
+  dispatch(setDeviceOnline(isDeviceOnline));
+
+  const state = getState();
+  const successful = await initDatabase(state.layout);
 
   if (successful === false) {
     throw new Error("Unable to initialise database");
@@ -69,7 +79,8 @@ export const initStateFromDatabase = () => async (
     throw new Error("Unable to get settings from database");
   }
 
-  dispatch(onInitDataFromDatabase(settings));
+  const user = await getUser();
+  dispatch(onInitDataFromDatabase(settings, user));
 };
 
 export type Actions =

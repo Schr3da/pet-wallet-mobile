@@ -1,5 +1,5 @@
 import {ImageSourcePropType, Platform} from "react-native";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, {Easing} from "react-native-reanimated";
 
 import {IImageData} from "../../../store/actions/new-pet";
 
@@ -45,8 +45,9 @@ export const base64ImageToUri = (image: IImageData): ImageSourcePropType => ({
 export const createNotificationAnimation = (
   current: Animated.Value<number>,
   toValue: number,
-) => Animated.timing(current, {
-  toValue,
-  duration: 500,
-  easing: Easing.linear,
-});
+) =>
+  Animated.timing(current, {
+    toValue,
+    duration: 500,
+    easing: Easing.linear,
+  });

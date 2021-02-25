@@ -47,7 +47,7 @@ export const Component = (): JSX.Element => {
       onScroll={handleScroll}
       childRenderer={(props) => {
         const {hasPets, language, theme} = props;
-        
+
         return (
           <React.Fragment>
             {hasPets === false ? (

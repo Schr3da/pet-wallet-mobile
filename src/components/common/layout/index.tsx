@@ -33,6 +33,7 @@ import {Error} from "../error";
 import {Notification} from "../notification";
 
 import {applyStyles} from "./index.style";
+import {Loader} from "../loader";
 
 interface IStateProps {
   title: string;
@@ -51,6 +52,7 @@ interface IStateProps {
   errorType: ErrorTypes | null;
   notificationType: NotificationTypes | null;
   dialogContentType: DialogContentTypes | null;
+  isLoading: boolean;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -70,6 +72,7 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   errorType: state.layout.errorType,
   notificationType: state.layout.notificationType,
   dialogContentType: state.layout.dialogContentType,
+  isLoading: state.layout.isLoading,
 });
 
 export interface ILayoutChildProps {
@@ -182,6 +185,7 @@ export const Layout = (props: IProps): JSX.Element => {
     description,
     language,
     isApplePlatform,
+    isLoading,
   } = stateProps;
 
   const childProps = getChildProps(stateProps);
@@ -237,6 +241,7 @@ export const Layout = (props: IProps): JSX.Element => {
       {hasError === false && hasNotification && (
         <Notification {...childProps} />
       )}
+      {isLoading && <Loader theme={theme} />}
       {hasError && <Error {...childProps} />}
       {hasDialog && dialogRenderer && dialogRenderer(childProps)}
     </KeyboardAvoidingView>

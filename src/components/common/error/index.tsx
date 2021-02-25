@@ -20,9 +20,8 @@ interface IProps extends ILayoutChildProps {
 }
 
 export class Container extends React.Component<IProps, unknown> {
-  
   private timer: any = null;
-  
+
   private animation: Animated.BackwardCompatibleWrapper | null = null;
 
   private animatedValue = new Animated.Value(0);
@@ -36,7 +35,7 @@ export class Container extends React.Component<IProps, unknown> {
       this.timer = setTimeout(() => {
         this.startAnimation(0, () => {
           this.props.onAutoDismiss();
-        })
+        });
       }, 5000);
     });
   }
@@ -51,7 +50,7 @@ export class Container extends React.Component<IProps, unknown> {
 
     const styles = createStyle(theme, applyStyles(displayMode));
     const animation = containerAnimation(this.animatedValue);
-    
+
     return (
       <Animated.View style={{...styles.container, ...animation}}>
         <Text style={styles.title}>{this.getTitle()}</Text>
@@ -60,24 +59,21 @@ export class Container extends React.Component<IProps, unknown> {
     );
   }
 
-  private startAnimation = (
-    toValue: number,
-    onComplete: () => void
-  ) => {
+  private startAnimation = (toValue: number, onComplete: () => void) => {
     this.stopAnimation();
     this.animation = createNotificationAnimation(this.animatedValue, toValue);
     this.animation.start(() => {
       this.animation = null;
       onComplete();
     });
-  }
+  };
 
   private stopAnimation = () => {
     if (this.animation == null) {
       return;
     }
     this.animation.stop();
-  }
+  };
 
   private getTitle = () => {
     const {language, errorType} = this.props;

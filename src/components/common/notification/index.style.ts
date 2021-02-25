@@ -42,14 +42,13 @@ export const applyStyles = (mode: DisplayModes) => (theme: ITheme) => ({
 export const containerAnimation = (
   value: Animated.Value<number>,
 ): Animated.AnimateProps<any, any> => {
-
   const translateY = value.interpolate({
     inputRange: [0, 1],
-    outputRange: [-10, 0], 
+    outputRange: [-10, 0],
   });
 
   return {
-    opacity: value, 
-    transform : [{ translateY }]
+    opacity: value,
+    transform: [{translateY}],
   };
-}; 
+};

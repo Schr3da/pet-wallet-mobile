@@ -58,6 +58,6 @@ export const applyStyle = (theme: ITheme) => ({
 
 export const containerAnimation = (
   value: Animated.Value<number>,
-): Animated.AnimateProps<any, any>  => ({
+): Animated.AnimateProps<any, any> => ({
   opacity: value,
 });

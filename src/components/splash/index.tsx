@@ -13,7 +13,6 @@ import {LanguageTypes} from "../../language";
 import {applyStyles} from "./index.style";
 
 import {initStateFromDatabase} from "../../store/actions/database";
-import { isOnline } from "../../store/actions/layout";
 
 interface IProps {
   isAnimating: boolean;
