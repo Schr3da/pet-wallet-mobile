@@ -1,4 +1,4 @@
-import type {ViewStyle} from "react-native";
+import type {ImageStyle, ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
@@ -14,8 +14,26 @@ export const applyStyles = (theme: ITheme) => ({
     justifyContent: "center",
     backgroundColor: theme.color1,
   } as ViewStyle,
-  appIcon: {
-    width: 72,
-    height: 72,
-  },
+  loader: {
+    width: 62,
+    height: 44,
+    backgroundColor: theme.color2, 
+    borderRadius: 8,
+    overflow: "hidden",
+  } as ViewStyle,
+  page: (color: string, topValue: number) => ({
+    position: "absolute",
+    top: topValue,
+    left: 1,
+    right: 1,
+    height: 40,
+    backgroundColor: color, 
+    borderRadius: 8,
+  } as ViewStyle),
+  footer: {
+    position: "absolute",
+    width: "100%",
+    height: 18,
+    bottom: 0,
+  } as ImageStyle,
 });

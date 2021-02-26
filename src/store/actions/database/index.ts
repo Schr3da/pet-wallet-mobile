@@ -80,6 +80,7 @@ export const initStateFromDatabase = () => async (
   }
 
   const user = await getUser();
+
   dispatch(onInitDataFromDatabase(settings, user));
 };
 

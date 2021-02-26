@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Image, View} from "react-native";
+import {View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ICombinedReducerState} from "../../store/reducers";
@@ -70,14 +70,7 @@ export const Component = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      {hasLoadedDatabase === false ? (
-        <Loader theme={theme} />
-      ) : (
-        <Image
-          source={require("../../../assets/png/welcome-header-icon.png")}
-          style={styles.appIcon}
-        />
-      )}
+        <Loader theme={theme} isAnimating={true}/>
     </View>
   );
 };
