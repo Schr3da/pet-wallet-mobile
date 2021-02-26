@@ -21,14 +21,27 @@ class Page extends React.Component<IPageProps, any> {
   
   private animation: Animated.BackwardCompatibleWrapper | null;
 
+  private willUnmount: boolean;
+
   constructor(props: IPageProps, context: any) {
     super(props, context);
-    this.animation = null 
+
+    this.willUnmount = false;
+    this.animation = null;
     this.animationValue = new Animated.Value(props.start);
   }
 
   public componentDidMount() {
     this.animate();
+  }
+
+  public componentWillUnmount() {
+    this.willUnmount = true;
+    if (this.animation == null) {
+      return; 
+    }
+    this.animation.stop();
+    this.animation = null;
   }
 
   public render() {
@@ -65,6 +78,10 @@ class Page extends React.Component<IPageProps, any> {
   }  
 
   private async animate() {
+    if (this.willUnmount === true) {
+      return;
+    }
+
     if (this.props.isAnimating === false) {
       return;
     }
