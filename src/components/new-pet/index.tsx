@@ -14,13 +14,13 @@ import {onInputFieldChange} from "../../store/actions/new-pet";
 const handleDateSelected = (
   dispatch: any,
   id: string | null,
-  date: Date
+  value: string 
 ) => {
   dispatch(onFocus(null, null)); 
   if (id == null) {
     return;
   }
-  dispatch(onInputFieldChange(id, date.toString()));
+  dispatch(onInputFieldChange(id, value));
 }
 
 export const Component = () => {

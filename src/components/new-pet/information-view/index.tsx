@@ -26,6 +26,7 @@ import {DialogContentTypes, ErrorTypes, InputTypes} from "../../../store/actions
 import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
+import { LanguageTypes } from "../../../language";
 
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};
@@ -46,7 +47,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   const stateProps = useSelector(stateToProps);
   const {profile} = stateProps;
 
-  const {theme} = props;
+  const {theme, language} = props;
   const styles = createStyle(theme, applyStyles);
 
   return (
@@ -74,7 +75,7 @@ export const ChildView = (props: ILayoutChildProps) => {
       <InputField
         id={InputIds.name}
         style={styles.inputField}
-        placeholder="Name"
+        placeholder={language.newPet.newPetInformation.name}
         theme={theme}
         value={stateProps.inputs[InputIds.name]}
         onChange={(id, value) => handleInputChange(id, value, dispatch)}
@@ -82,7 +83,7 @@ export const ChildView = (props: ILayoutChildProps) => {
       <InputField
         id={InputIds.race}
         style={styles.inputField}
-        placeholder="Race"
+        placeholder={language.newPet.newPetInformation.animalType}
         theme={theme}
         value={stateProps.inputs[InputIds.race]}
         onChange={(id, value) => handleInputChange(id, value, dispatch)}
@@ -92,14 +93,15 @@ export const ChildView = (props: ILayoutChildProps) => {
           id={InputIds.dateOfBirth}
           style={styles.dateOfBirth}
           theme={theme}
-          placeholder="Date of birth"
+          placeholder={language.newPet.newPetInformation.dateOfBirth}
           value={stateProps.inputs[InputIds.dateOfBirth]}
         />
         <InputField
           id={InputIds.age}
           style={styles.age}
-          placeholder="Age"
+          placeholder={language.newPet.newPetInformation.age}
           theme={theme}
+          type="numeric"
           value={stateProps.inputs[InputIds.age]}
           onChange={(id, value) => handleInputChange(id, value, dispatch)}
         />

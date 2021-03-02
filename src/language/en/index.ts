@@ -120,6 +120,10 @@ const card: ICard = {
 
 const newPet: INewPet = {
   [SubViewComponents.newPetInformation]: {
+    name: "Name",
+    animalType: "Animal type",
+    dateOfBirth: "Date of birth",
+    age: "Age",
     primaryButton: "Continue",
     secondaryButton: "Cancel",
   },

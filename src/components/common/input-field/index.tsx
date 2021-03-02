@@ -9,6 +9,15 @@ import {InputTypes, onFocus} from "../../../store/actions/layout";
 import {applyStyles} from "./index.style";
 import {useDispatch} from "react-redux";
 
+export type KeyboardTypes = 
+  | "default" 
+  | "email-address" 
+  | "numeric" 
+  | "phone-pad" 
+  | "number-pad" 
+  | "decimal-pad" 
+;
+
 let timeout: any = null;
 
 const handleFocus = (
@@ -31,13 +40,14 @@ interface IProps {
   value: InputValues;
   placeholder?: string;
   disabled?: boolean;
+  type?: KeyboardTypes; 
   onChange: (id: string, value: InputValues) => void;
 }
 
 export const InputField = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {id, disabled, placeholder, style, theme, value, onChange} = props;
+  const {id, disabled, placeholder, style, type, theme, value, onChange} = props;
 
   const styles = createStyle(theme, applyStyles);
   const colors = getColors(theme);
@@ -57,6 +67,7 @@ export const InputField = (props: IProps) => {
           onEndEditing={() => handleFocusDelayed(dispatch, null)}
           placeholderTextColor={colors.color12}
           returnKeyType="done"
+          keyboardType={type || "default"}
           value={value as any}
         />
       )}

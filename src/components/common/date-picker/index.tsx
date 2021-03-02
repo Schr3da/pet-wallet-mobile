@@ -21,7 +21,7 @@ export interface IProps {
     mode: DatePickerModes;
     theme: ThemeTypes;
     locale: LanguageTypes; 
-    onComplete: (id: string | null, date: Date) => void;
+    onComplete: (id: string | null, date: string) => void;
 }
 
 export const DatePickerComponent = (props: IProps) => {
@@ -46,7 +46,10 @@ export const DatePickerComponent = (props: IProps) => {
                 theme={theme}
                 title={language.common.pick}
                 style={styles.button}
-                onPress={() => onComplete(id, date)}
+                onPress={() => {
+                    const formattedDate = date.toLocaleDateString(locale); 
+                    onComplete(id, formattedDate);
+                }}
             />
         </View>
     );

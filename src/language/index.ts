@@ -66,6 +66,10 @@ export interface ISettings {
 
 export interface INewPet {
   [SubViewComponents.newPetInformation]: {
+    name: string;
+    animalType: string;
+    dateOfBirth: string;
+    age: string;
     primaryButton: string;
     secondaryButton: string;
   };

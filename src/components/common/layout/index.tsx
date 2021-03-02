@@ -103,7 +103,7 @@ interface IProps {
   dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
   onScroll?: any;
-  onDateSelected?: (id: string | null, date: Date) => void; 
+  onDateSelected?: (id: string | null, date: string) => void; 
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
