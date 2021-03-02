@@ -199,6 +199,7 @@ const common: ICommon = {
   noAttachments: "Keine Anhänge",
   continue: "Weiter",
   cancel: "Abbrechen",
+  pick: "Auswählen",
 };
 
 export const DE = {

@@ -4,19 +4,23 @@ import {TextInput, View, Text} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
-import {onFocus} from "../../../store/actions/layout";
+import {InputTypes, onFocus} from "../../../store/actions/layout";
 
 import {applyStyles} from "./index.style";
 import {useDispatch} from "react-redux";
 
 let timeout: any = null;
 
-const handleFocus = (dispatch: any, id: string | null) => {
+const handleFocus = (
+  dispatch: any, id: string | null,
+) => {
   clearTimeout(timeout);
-  dispatch(onFocus(id));
+  dispatch(onFocus(id, InputTypes.text));
 };
 
-const handleFocusDelayed = (dispatch: any, id: string | null) => {
+const handleFocusDelayed = (
+  dispatch: any, id: string | null,
+) => {
   timeout = setTimeout(() => handleFocus(dispatch, id), 100);
 };
 

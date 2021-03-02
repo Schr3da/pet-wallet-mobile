@@ -14,6 +14,8 @@ import {Error} from "./error";
 import {ContentButton} from "./content-button";
 import {Dialog} from "./dialog";
 import {GradientBackground} from "./gradient-background";
+import {DateField} from "./date-field";
+import {DatePickerComponent} from "./date-picker";
 
 export {
   AttachmentPlaceholder,
@@ -31,4 +33,6 @@ export {
   Navigation,
   Notification,
   Error,
+  DateField,
+  DatePickerComponent
 };

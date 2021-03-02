@@ -23,6 +23,7 @@ import {
   ErrorTypes,
   NotificationTypes,
   DialogContentTypes,
+  DatePickerModes,
 } from "../../../store/actions/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -32,8 +33,10 @@ import {Header} from "../header";
 import {Error} from "../error";
 import {Notification} from "../notification";
 
-import {applyStyles} from "./index.style";
 import {Loader} from "../loader";
+import {DatePickerComponent} from "../date-picker";
+
+import {applyStyles} from "./index.style";
 
 interface IStateProps {
   title: string;
@@ -53,6 +56,7 @@ interface IStateProps {
   notificationType: NotificationTypes | null;
   dialogContentType: DialogContentTypes | null;
   isLoading: boolean;
+  isDatePickerVisible: boolean;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -73,6 +77,7 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   notificationType: state.layout.notificationType,
   dialogContentType: state.layout.dialogContentType,
   isLoading: state.layout.isLoading,
+  isDatePickerVisible: state.layout.isDatePickerVisible,
 });
 
 export interface ILayoutChildProps {
@@ -98,6 +103,7 @@ interface IProps {
   dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
   onScroll?: any;
+  onDateSelected?: (id: string | null, date: Date) => void; 
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -171,6 +177,7 @@ export const Layout = (props: IProps): JSX.Element => {
     hasHeader,
     imageSource,
     onScroll,
+    onDateSelected,
     childRenderer,
     footerRenderer,
     dialogRenderer,
@@ -186,6 +193,7 @@ export const Layout = (props: IProps): JSX.Element => {
     language,
     isApplePlatform,
     isLoading,
+    isDatePickerVisible,
   } = stateProps;
 
   const childProps = getChildProps(stateProps);
@@ -237,11 +245,17 @@ export const Layout = (props: IProps): JSX.Element => {
         focus == null &&
         footerRenderer &&
         footerRenderer(childProps)}
-
+      {isDatePickerVisible && <DatePickerComponent
+        id={focus}
+        mode={DatePickerModes.date}
+        theme={theme}
+        locale={language}
+        onComplete={(id, date) => onDateSelected && onDateSelected(id, date)}
+      />}
       {hasError === false && hasNotification && (
         <Notification {...childProps} />
       )}
-      {isLoading && <Loader theme={theme} />}
+      {isLoading && <Loader theme={theme} isAnimating={true}/>}
       {hasError && <Error {...childProps} />}
       {hasDialog && dialogRenderer && dialogRenderer(childProps)}
     </KeyboardAvoidingView>

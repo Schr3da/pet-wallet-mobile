@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {Dialog, ImagePicker, InputField, RoundedButtons} from "../../common";
+import {DateField, DatePickerComponent, Dialog, ImagePicker, InputField, RoundedButtons} from "../../common";
 import {
   InputIds,
   InputValues,
@@ -22,7 +22,7 @@ import {
   requestCancel,
 } from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
-import {DialogContentTypes, ErrorTypes} from "../../../store/actions/layout";
+import {DialogContentTypes, ErrorTypes, InputTypes} from "../../../store/actions/layout";
 import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
@@ -88,13 +88,12 @@ export const ChildView = (props: ILayoutChildProps) => {
         onChange={(id, value) => handleInputChange(id, value, dispatch)}
       />
       <View style={styles.row}>
-        <InputField
+        <DateField
           id={InputIds.dateOfBirth}
           style={styles.dateOfBirth}
-          placeholder="Date of birth"
           theme={theme}
+          placeholder="Date of birth"
           value={stateProps.inputs[InputIds.dateOfBirth]}
-          onChange={(id, value) => handleInputChange(id, value, dispatch)}
         />
         <InputField
           id={InputIds.age}
@@ -112,7 +111,7 @@ export const ChildView = (props: ILayoutChildProps) => {
 export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
-  const {hasPets, language, languageType, theme} = props;
+  const {language, languageType, theme} = props;
 
   return (
     <React.Fragment>

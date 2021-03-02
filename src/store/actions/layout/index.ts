@@ -28,6 +28,17 @@ export enum DisplayModes {
   landscape = "landscape",
 }
 
+export enum DatePickerModes {
+  datetime = "datetime",
+  date = "date",
+  time = "time",
+}
+
+export enum InputTypes {
+  text,
+  date,
+}
+
 export const getScreenSize = () => {
   const window = Dimensions.get("window");
   return {
@@ -154,11 +165,16 @@ export const ON_FOCUS = "ON_FOCUS";
 export interface IOnFocus {
   type: typeof ON_FOCUS;
   id: string | null;
+  inputType: InputTypes | null | undefined;
 }
 
-export const onFocus = (id: string | null): IOnFocus => ({
+export const onFocus = (
+  id: string | null,
+  inputType: InputTypes | null | undefined
+  ): IOnFocus => ({
   type: ON_FOCUS,
   id,
+  inputType
 });
 
 export const ON_SET_DIALOG_CONTENT_TYPE = "ON_SET_DIALOG_CONTENT";
@@ -179,6 +195,22 @@ export const onDismissDialog = () => ({
   contentType: null,
 });
 
+export const ON_SET_DATE_PICKER_VISIBILITY = "ON_SET_DATE_PCIKER_VISIBILITY";
+export interface IOnSetDatePickerVisibility {
+  type: typeof ON_SET_DATE_PICKER_VISIBILITY;
+  isVisible: boolean;
+  mode: DatePickerModes; 
+}
+
+export const onSetDatePickerVisibility = (
+  isVisible: boolean,
+  mode: DatePickerModes,
+): IOnSetDatePickerVisibility => ({
+  type: ON_SET_DATE_PICKER_VISIBILITY,
+  isVisible,
+  mode,
+});
+
 export type Actions =
   | IOnIsDeviceOnline
   | IOnChangeCurrentTheme
@@ -188,4 +220,6 @@ export type Actions =
   | IOnSetErrorType
   | IOnSetNotificationType
   | IOnSetDialogContentType
-  | IOnSetLoading;
+  | IOnSetLoading
+  | IOnSetDatePickerVisibility  
+;

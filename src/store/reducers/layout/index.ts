@@ -1,14 +1,13 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation, NewPet} from "../../actions";
+
 import {
   ErrorTypes,
   NotificationTypes,
   DialogContentTypes,
+  InputTypes,
 } from "../../actions/layout";
-import {ISettingsEntity} from "../database/db/settings";
-import {IUserEntity} from "../database/db/user";
-import {User} from "../../../communication";
 
 export interface ILayoutState {
   notificationType: NotificationTypes | null;
@@ -23,6 +22,8 @@ export interface ILayoutState {
   isOnline: boolean;
   isLoading: boolean;
   dialogContentType: DialogContentTypes | null;
+  isDatePickerVisible: boolean;
+  datePickerMode: Layout.DatePickerModes;
 }
 
 const initialState = (): ILayoutState => {
@@ -43,6 +44,8 @@ const initialState = (): ILayoutState => {
     dialogContentType: null,
     isOnline: false,
     isLoading: false,
+    isDatePickerVisible: false,
+    datePickerMode: Layout.DatePickerModes.datetime,
   };
 };
 
@@ -89,14 +92,39 @@ const applyLanguageAndTheme = (
   return changeLanguage(next, language);
 };
 
-const changeFocus = (state: ILayoutState, id: string | null) => ({
+const changeFocus = (
+  state: ILayoutState,
+  id: string | null,
+  inputType: InputTypes | null | undefined
+) => {
+  const datePickerVisibile = id != null && inputType === InputTypes.date;
+
+  const nextState = setDatePickerVisible(
+    state, 
+    datePickerVisibile,
+    Layout.DatePickerModes.date
+  );
+
+  return {
+    ...nextState,
+    focus: id
+  };
+};
+
+const setDatePickerVisible = (
+  state: ILayoutState,
+  isVisible: boolean,
+  mode: Layout.DatePickerModes,
+): ILayoutState => ({
   ...state,
-  focus: id,
+  datePickerMode: mode,
+  isDatePickerVisible: isVisible, 
 });
 
 const navigationChange = (state: ILayoutState) => {
-  const nextState = handleError(state, null);
-  return changeFocus(nextState, null);
+  let nextState = handleError(state, null);
+  nextState = setDatePickerVisible(nextState, false, Layout.DatePickerModes.date);
+  return changeFocus(nextState, null, null);
 };
 
 const setLoading = (state: ILayoutState, isLoading: boolean): ILayoutState => ({
@@ -124,7 +152,8 @@ const handleDialogContentTypeChange = (
   state: ILayoutState,
   dialogContentType: DialogContentTypes | null,
 ): ILayoutState => {
-  const nextState = changeFocus(state, null);
+  let nextState = changeFocus(state, null, null);
+  nextState = setDatePickerVisible(nextState, false, Layout.DatePickerModes.date);
   return {
     ...nextState,
     dialogContentType,
@@ -142,7 +171,7 @@ const handleDeviceStatus = (
     ...nextState,
     isOnline,
   };
-};
+}; 
 
 type Actions =
   | Database.Actions
@@ -160,7 +189,7 @@ const reducer = (state = initialState(), action: Actions) => {
     case Layout.ON_CHANGE_CURRENT_THEME:
       return changeTheme(state, action.next);
     case Layout.ON_FOCUS:
-      return changeFocus(state, action.id);
+      return changeFocus(state, action.id, action.inputType);
     case Layout.ON_SET_ERROR_TYPE:
       return handleError(state, action.errorType);
     case Layout.ON_SET_NOTIFCATION_TYPE:
@@ -171,6 +200,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return handleDeviceStatus(state, action.isOnline);
     case Layout.ON_SET_LOADING:
       return setLoading(state, action.isLoading);
+    case Layout.ON_SET_DATE_PICKER_VISIBILITY:
+      return setDatePickerVisible(state, action.isVisible, action.mode);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

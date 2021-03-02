@@ -196,6 +196,7 @@ const common: ICommon = {
   noAttachments: "No attachments",
   continue: "Continue",
   cancel: "Cancel",
+  pick: "Select",
 };
 
 export const EN = {

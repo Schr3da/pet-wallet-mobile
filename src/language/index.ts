@@ -18,6 +18,7 @@ export interface ICommon {
   noAttachments: string;
   continue: string;
   cancel: string;
+  pick: string;
 }
 
 export interface IHeader {
