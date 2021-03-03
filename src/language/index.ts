@@ -5,6 +5,8 @@ import {
   NotificationTypes,
   DialogContentTypes,
 } from "../store/actions/layout";
+
+import {PetTypes} from "../dto/pets";
 import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 import {DE} from "./de";
 import {EN} from "./en";
@@ -19,6 +21,7 @@ export interface ICommon {
   continue: string;
   cancel: string;
   pick: string;
+  pleaseSelect: string;
 }
 
 export interface IHeader {
@@ -100,12 +103,15 @@ export type IErrors = {[k in ErrorTypes]: IMessage} & {default: IMessage};
 
 export type IDialogs = {[k in DialogContentTypes]: IMessage};
 
+export type AnimalTypes = {[k in PetTypes]: string};
+
 export interface ILanguage {
   header: IHeader;
   card: ICard;
   common: ICommon;
   errors: IErrors;
   dialogs: IDialogs;
+  animalTypes: AnimalTypes; 
   notifications: INotifications;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;

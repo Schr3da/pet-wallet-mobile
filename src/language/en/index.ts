@@ -14,6 +14,9 @@ import {
   SubViewComponents,
   ViewComponents,
 } from "../../store/actions/navigation";
+
+import {PetTypes} from "../../dto/pets";
+
 import {
   ErrorTypes,
   NotificationTypes,
@@ -196,11 +199,36 @@ const dialogs: IDialogs = {
   },
 };
 
+const animalTypes = {
+  [PetTypes.alpaca]: "Alpaca",
+  [PetTypes.bird]: "Bird",
+  [PetTypes.burro]: "Burro",
+  [PetTypes.cat]: "Cat",
+  [PetTypes.chinchilla]: "Chinchilla",
+  [PetTypes.cow]: "Cow",
+  [PetTypes.dog]: "Dog",
+  [PetTypes.ferret]: "Ferret",
+  [PetTypes.fish]: "Fish",
+  [PetTypes.goat]: "Goat",
+  [PetTypes.hamster]: "Hamster",
+  [PetTypes.hedgehog]: "Hedgehog",
+  [PetTypes.horse]: "Horse",
+  [PetTypes.llama]: "Llama",
+  [PetTypes.mice]: "Mice",
+  [PetTypes.other]: "Other",
+  [PetTypes.pig]: "Pig",
+  [PetTypes.rat]: "Rat",
+  [PetTypes.snake]: "Snake",
+  [PetTypes.squirrel]: "Squirrel",
+  [PetTypes.turtle]: "Turtle",
+};
+
 const common: ICommon = {
   noAttachments: "No attachments",
   continue: "Continue",
   cancel: "Cancel",
   pick: "Select",
+  pleaseSelect: "Please select",
 };
 
 export const EN = {
@@ -210,6 +238,7 @@ export const EN = {
   errors,
   header,
   notifications,
+  animalTypes,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

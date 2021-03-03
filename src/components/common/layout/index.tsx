@@ -24,6 +24,7 @@ import {
   NotificationTypes,
   DialogContentTypes,
   DatePickerModes,
+  InputTypes,
 } from "../../../store/actions/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -32,6 +33,7 @@ import {Navigation} from "../navigation";
 import {Header} from "../header";
 import {Error} from "../error";
 import {Notification} from "../notification";
+import {IPickerData, PickerComponent} from "../picker";
 
 import {Loader} from "../loader";
 import {DatePickerComponent} from "../date-picker";
@@ -56,7 +58,8 @@ interface IStateProps {
   notificationType: NotificationTypes | null;
   dialogContentType: DialogContentTypes | null;
   isLoading: boolean;
-  isDatePickerVisible: boolean;
+  isPickerVisible: boolean;
+  inputType: InputTypes | null | undefined;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -77,7 +80,8 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   notificationType: state.layout.notificationType,
   dialogContentType: state.layout.dialogContentType,
   isLoading: state.layout.isLoading,
-  isDatePickerVisible: state.layout.isDatePickerVisible,
+  isPickerVisible: state.layout.isPickerVisible,
+  inputType: state.layout.inputType,
 });
 
 export interface ILayoutChildProps {
@@ -103,7 +107,8 @@ interface IProps {
   dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
   onScroll?: any;
-  onDateSelected?: (id: string | null, date: string) => void; 
+  getPickerData?: (id: string | null, language: LanguageTypes) => IPickerData[];
+  onPickerChanged?: (id: string | null, value: string | null) => void; 
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -177,7 +182,8 @@ export const Layout = (props: IProps): JSX.Element => {
     hasHeader,
     imageSource,
     onScroll,
-    onDateSelected,
+    onPickerChanged,
+    getPickerData,
     childRenderer,
     footerRenderer,
     dialogRenderer,
@@ -193,7 +199,8 @@ export const Layout = (props: IProps): JSX.Element => {
     language,
     isApplePlatform,
     isLoading,
-    isDatePickerVisible,
+    isPickerVisible,
+    inputType,
   } = stateProps;
 
   const childProps = getChildProps(stateProps);
@@ -245,12 +252,19 @@ export const Layout = (props: IProps): JSX.Element => {
         focus == null &&
         footerRenderer &&
         footerRenderer(childProps)}
-      {isDatePickerVisible && <DatePickerComponent
+      {isPickerVisible && inputType === InputTypes.date && <DatePickerComponent
         id={focus}
         mode={DatePickerModes.date}
         theme={theme}
         locale={language}
-        onComplete={(id, date) => onDateSelected && onDateSelected(id, date)}
+        onComplete={(id, date) => onPickerChanged && onPickerChanged (id, date)}
+      />}
+      {isPickerVisible && inputType === InputTypes.picker && <PickerComponent
+        id={focus}
+        data={(getPickerData && getPickerData(focus, language)) || []}
+        theme={theme}
+        locale={language}
+        onComplete={(id, date) => onPickerChanged && onPickerChanged (id, date)}
       />}
       {hasError === false && hasNotification && (
         <Notification {...childProps} />

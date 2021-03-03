@@ -8,7 +8,7 @@ import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {getTranslation, LanguageTypes} from "../../../language";
 import { PrimaryButton } from "../rounded-button";
 
-import {applyStyles} from "./index.styles";
+import {applyStyles} from "./index.style";
 
 export enum DatePickerModes {
     datetime = "datetime",

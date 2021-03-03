@@ -18,7 +18,7 @@ export interface IImageData {
 export enum InputIds {
   age = "age",
   name = "name",
-  race = "race",
+  animalType = "race",
   dateOfBirth = "dateOfBirth",
 }
 
@@ -139,7 +139,7 @@ export const onSaveNewPet = () => (
     language: state.layout.language,
     data: {
       id: Date.now().toString(),
-      animal: newPet.inputs[InputIds.race],
+      animal: newPet.inputs[InputIds.animalType],
       name: newPet.inputs[InputIds.name] || "",
       dateOfBirth: newPet.inputs[InputIds.dateOfBirth] || "",
       age: newPet.inputs[InputIds.age] || "",

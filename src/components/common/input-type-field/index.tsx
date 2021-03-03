@@ -10,9 +10,11 @@ import {applyStyles} from "./index.style";
 import {useDispatch} from "react-redux";
 
 const handleFocus = (
-  dispatch: any, id: string | null,
+  dispatch: any,
+  id: string | null,
+  inputType: InputTypes,
 ) => {
-  dispatch(onFocus(id, InputTypes.date));
+  dispatch(onFocus(id, inputType));
 };
 
 interface IProps {
@@ -20,13 +22,14 @@ interface IProps {
   style: any;
   theme: ThemeTypes;
   value: InputValues;
+  inputType: InputTypes;
   placeholder?: string;
 }
 
-export const DateField = (props: IProps) => {
+export const InputTypeField = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {id, placeholder, style, theme, value} = props;
+  const {id, inputType, placeholder, style, theme, value} = props;
 
   const hasValue = value != null;
 
@@ -34,7 +37,7 @@ export const DateField = (props: IProps) => {
 
   return (
     <View style={{...styles.container, ...style}}>
-        <TouchableOpacity onPress={() => handleFocus(dispatch, id)} activeOpacity={1}>
+        <TouchableOpacity onPress={() => handleFocus(dispatch, id, inputType)} activeOpacity={1}>
             <Text style={styles.input} numberOfLines={1}>{value || placeholder}</Text>
         </TouchableOpacity>
     </View>

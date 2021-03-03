@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {DateField, DatePickerComponent, Dialog, ImagePicker, InputField, RoundedButtons} from "../../common";
+import {InputTypeField, Dialog, ImagePicker, InputField, RoundedButtons} from "../../common";
 import {
   InputIds,
   InputValues,
@@ -26,7 +26,6 @@ import {DialogContentTypes, ErrorTypes, InputTypes} from "../../../store/actions
 import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
-import { LanguageTypes } from "../../../language";
 
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};
@@ -80,19 +79,20 @@ export const ChildView = (props: ILayoutChildProps) => {
         value={stateProps.inputs[InputIds.name]}
         onChange={(id, value) => handleInputChange(id, value, dispatch)}
       />
-      <InputField
-        id={InputIds.race}
+      <InputTypeField
+        id={InputIds.animalType}
         style={styles.inputField}
-        placeholder={language.newPet.newPetInformation.animalType}
         theme={theme}
-        value={stateProps.inputs[InputIds.race]}
-        onChange={(id, value) => handleInputChange(id, value, dispatch)}
+        inputType={InputTypes.picker}
+        placeholder={language.newPet.newPetInformation.animalType}
+        value={stateProps.inputs[InputIds.animalType]}
       />
       <View style={styles.row}>
-        <DateField
+        <InputTypeField
           id={InputIds.dateOfBirth}
           style={styles.dateOfBirth}
           theme={theme}
+          inputType={InputTypes.date}
           placeholder={language.newPet.newPetInformation.dateOfBirth}
           value={stateProps.inputs[InputIds.dateOfBirth]}
         />

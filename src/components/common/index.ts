@@ -14,7 +14,7 @@ import {Error} from "./error";
 import {ContentButton} from "./content-button";
 import {Dialog} from "./dialog";
 import {GradientBackground} from "./gradient-background";
-import {DateField} from "./date-field";
+import {InputTypeField} from "./input-type-field";
 import {DatePickerComponent} from "./date-picker";
 
 export {
@@ -33,6 +33,6 @@ export {
   Navigation,
   Notification,
   Error,
-  DateField,
+  InputTypeField,
   DatePickerComponent
 };

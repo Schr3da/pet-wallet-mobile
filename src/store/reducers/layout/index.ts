@@ -22,7 +22,8 @@ export interface ILayoutState {
   isOnline: boolean;
   isLoading: boolean;
   dialogContentType: DialogContentTypes | null;
-  isDatePickerVisible: boolean;
+  isPickerVisible: boolean;
+  inputType: InputTypes | null | undefined;
   datePickerMode: Layout.DatePickerModes;
 }
 
@@ -44,7 +45,8 @@ const initialState = (): ILayoutState => {
     dialogContentType: null,
     isOnline: false,
     isLoading: false,
-    isDatePickerVisible: false,
+    isPickerVisible: false,
+    inputType: null,
     datePickerMode: Layout.DatePickerModes.datetime,
   };
 };
@@ -96,14 +98,13 @@ const changeFocus = (
   state: ILayoutState,
   id: string | null,
   inputType: InputTypes | null | undefined
-) => {
-  const datePickerVisibile = id != null && inputType === InputTypes.date;
+): ILayoutState => {
 
-  const nextState = setDatePickerVisible(
-    state, 
-    datePickerVisibile,
-    Layout.DatePickerModes.date
-  );
+  const isPickerVisible = 
+    (id != null) && 
+    (inputType === InputTypes.date || inputType === InputTypes.picker);
+
+  const nextState = setPickerVisible(state, isPickerVisible, inputType);
 
   return {
     ...nextState,
@@ -111,19 +112,20 @@ const changeFocus = (
   };
 };
 
-const setDatePickerVisible = (
+const setPickerVisible = (
   state: ILayoutState,
-  isVisible: boolean,
-  mode: Layout.DatePickerModes,
+  isPickerVisible: boolean,
+  inputType: InputTypes | null | undefined,
 ): ILayoutState => ({
   ...state,
-  datePickerMode: mode,
-  isDatePickerVisible: isVisible, 
+  inputType, 
+  isPickerVisible, 
 });
+
 
 const navigationChange = (state: ILayoutState) => {
   let nextState = handleError(state, null);
-  nextState = setDatePickerVisible(nextState, false, Layout.DatePickerModes.date);
+  nextState = setPickerVisible(nextState, false, null);
   return changeFocus(nextState, null, null);
 };
 
@@ -153,7 +155,7 @@ const handleDialogContentTypeChange = (
   dialogContentType: DialogContentTypes | null,
 ): ILayoutState => {
   let nextState = changeFocus(state, null, null);
-  nextState = setDatePickerVisible(nextState, false, Layout.DatePickerModes.date);
+  nextState = setPickerVisible(nextState, false, null);
   return {
     ...nextState,
     dialogContentType,
@@ -200,8 +202,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return handleDeviceStatus(state, action.isOnline);
     case Layout.ON_SET_LOADING:
       return setLoading(state, action.isLoading);
-    case Layout.ON_SET_DATE_PICKER_VISIBILITY:
-      return setDatePickerVisible(state, action.isVisible, action.mode);
+    case Layout.ON_SET_PICKER_VISIBILITY:
+      return setPickerVisible(state, action.isVisible, action.inputType);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return navigationChange(state);
     case Navigation.ON_CHANGE_VIEW_COMPONENT:

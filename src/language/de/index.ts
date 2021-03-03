@@ -19,6 +19,7 @@ import {
   NotificationTypes,
   DialogContentTypes,
 } from "../../store/actions/layout";
+import { PetTypes } from "../../dto/pets";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -199,11 +200,36 @@ const dialogs: IDialogs = {
   },
 };
 
+const animalTypes = {
+  [PetTypes.alpaca]: "Alpaka",
+  [PetTypes.bird]: "Vogel",
+  [PetTypes.burro]: "Esel",
+  [PetTypes.cat]: "Katze",
+  [PetTypes.chinchilla]: "Chinchilla",
+  [PetTypes.cow]: "Kuh",
+  [PetTypes.dog]: "Hund",
+  [PetTypes.ferret]: "Fettchen",
+  [PetTypes.fish]: "Fisch",
+  [PetTypes.goat]: "Ziege",
+  [PetTypes.hamster]: "Hamster",
+  [PetTypes.hedgehog]: "Igel",
+  [PetTypes.horse]: "Pferd",
+  [PetTypes.llama]: "Llama",
+  [PetTypes.mice]: "Maus",
+  [PetTypes.other]: "Nicht gelistet",
+  [PetTypes.pig]: "Schwein",
+  [PetTypes.rat]: "Ratte",
+  [PetTypes.snake]: "Schlange",
+  [PetTypes.squirrel]: "Squirrel",
+  [PetTypes.turtle]: "Schildkröte",
+};
+
 const common: ICommon = {
   noAttachments: "Keine Anhänge",
   continue: "Weiter",
   cancel: "Abbrechen",
   pick: "Auswählen",
+  pleaseSelect: "Bitte auswählen",
 };
 
 export const DE = {
@@ -213,6 +239,7 @@ export const DE = {
   errors,
   header,
   notifications,
+  animalTypes,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

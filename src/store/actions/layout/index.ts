@@ -37,6 +37,7 @@ export enum DatePickerModes {
 export enum InputTypes {
   text,
   date,
+  picker,
 }
 
 export const getScreenSize = () => {
@@ -195,20 +196,20 @@ export const onDismissDialog = () => ({
   contentType: null,
 });
 
-export const ON_SET_DATE_PICKER_VISIBILITY = "ON_SET_DATE_PCIKER_VISIBILITY";
-export interface IOnSetDatePickerVisibility {
-  type: typeof ON_SET_DATE_PICKER_VISIBILITY;
+export const ON_SET_PICKER_VISIBILITY = "ON_SET_PICKER_VISIBILITY";
+export interface IOnSetPickerVisibility {
+  type: typeof ON_SET_PICKER_VISIBILITY;
   isVisible: boolean;
-  mode: DatePickerModes; 
+  inputType: InputTypes; 
 }
 
-export const onSetDatePickerVisibility = (
+export const onSetPickerVisibility = (
   isVisible: boolean,
-  mode: DatePickerModes,
-): IOnSetDatePickerVisibility => ({
-  type: ON_SET_DATE_PICKER_VISIBILITY,
+  inputType: InputTypes,
+): IOnSetPickerVisibility => ({
+  type: ON_SET_PICKER_VISIBILITY,
   isVisible,
-  mode,
+  inputType,
 });
 
 export type Actions =
@@ -221,5 +222,5 @@ export type Actions =
   | IOnSetNotificationType
   | IOnSetDialogContentType
   | IOnSetLoading
-  | IOnSetDatePickerVisibility  
+  | IOnSetPickerVisibility  
 ;
