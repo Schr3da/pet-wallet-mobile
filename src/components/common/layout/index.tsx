@@ -269,6 +269,7 @@ export const Layout = (props: IProps): JSX.Element => {
           data={(getPickerData && getPickerData(focus, language)) || []}
           theme={theme}
           locale={language}
+          isApplePlatform={isApplePlatform}
           onComplete={(id, date) =>
             onPickerChanged && onPickerChanged(id, date)
           }

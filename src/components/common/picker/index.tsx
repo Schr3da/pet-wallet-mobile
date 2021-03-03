@@ -4,7 +4,7 @@ import {Picker} from "@react-native-picker/picker";
 
 import {View} from "react-native";
 
-import {createStyle, ThemeTypes} from "../../../theme";
+import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {getTranslation, LanguageTypes} from "../../../language";
 import {PrimaryButton} from "../rounded-button";
 
@@ -20,16 +20,19 @@ export interface IProps {
   theme: ThemeTypes;
   locale: LanguageTypes;
   data: IPickerData[];
+  isApplePlatform: boolean;
   onComplete: (id: string | null, value: string | null) => void;
 }
 
 export const PickerComponent = (props: IProps) => {
   const [value, setValue] = React.useState(null);
 
-  const {data, id, theme, locale, onComplete} = props;
+  const {data, isApplePlatform, id, theme, locale, onComplete} = props;
 
-  const styles = createStyle(theme, applyStyles);
+  const styles = createStyle(theme, applyStyles(isApplePlatform));
   const language = getTranslation(locale);
+  const colors = getColors(theme);
+  const textColor = isApplePlatform ? colors.color10 : colors.color12;
 
   const pleaseSelect = [
     {
@@ -44,9 +47,15 @@ export const PickerComponent = (props: IProps) => {
         style={styles.picker}
         itemStyle={styles.itemStyle}
         selectedValue={value}
-        onValueChange={setValue}>
+        dropdownIconColor={textColor}
+        onValueChange={setValue}
+      >
         {[...pleaseSelect, ...(data || [])].map((d, i) => (
-          <Picker.Item key={i} label={d.label} value={d.value} />
+          <Picker.Item key={i} 
+            color={textColor}
+            label={d.label}
+            value={d.value} 
+          />
         ))}
       </Picker>
       <PrimaryButton

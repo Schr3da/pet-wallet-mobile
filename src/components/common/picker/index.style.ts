@@ -1,7 +1,7 @@
-import type {ViewStyle} from "react-native";
+import type {TextStyle, ViewStyle} from "react-native";
 import {ITheme} from "../../../theme";
 
-export const applyStyles = (theme: ITheme) => ({
+export const applyStyles = (isApplePlatform: boolean) => (theme: ITheme) => ({
   container: {
     position: "absolute",
     left: 0,
@@ -10,14 +10,18 @@ export const applyStyles = (theme: ITheme) => ({
     backgroundColor: theme.color1,
     justifyContent: "center",
     alignItems: "center",
+    ...isApplePlatform ? {} : {
+      height: 100,
+      borderTopWidth: 1,
+      borderColor: theme.color11,
+    }
   } as ViewStyle,
   picker: {
     width: "100%",
-    backgroundColor: theme.color1,
-  },
+  } as ViewStyle,
   itemStyle: {
-    color: theme.color10,
-  } as any,
+    backgroundColor: theme.color1,
+  } as TextStyle,
   button: {
     marginTop: 10,
   } as ViewStyle,

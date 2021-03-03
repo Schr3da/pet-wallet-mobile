@@ -41,6 +41,8 @@ export const DatePickerComponent = (props: IProps) => {
         textColor={colors.color10}
         locale={locale as any}
         onDateChange={setDate}
+        maximumDate={new Date()}
+        fadeToColor={colors.color1}
       />
       <PrimaryButton
         theme={theme}
