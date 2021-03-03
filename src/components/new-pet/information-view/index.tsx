@@ -6,7 +6,13 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {InputTypeField, Dialog, ImagePicker, InputField, RoundedButtons} from "../../common";
+import {
+  InputTypeField,
+  Dialog,
+  ImagePicker,
+  InputField,
+  RoundedButtons,
+} from "../../common";
 import {
   InputIds,
   InputValues,
@@ -22,7 +28,11 @@ import {
   requestCancel,
 } from "../hooks";
 import {SubViewComponents} from "../../../store/actions/navigation";
-import {DialogContentTypes, ErrorTypes, InputTypes} from "../../../store/actions/layout";
+import {
+  DialogContentTypes,
+  ErrorTypes,
+  InputTypes,
+} from "../../../store/actions/layout";
 import {base64ImageToUri} from "../../common/utils";
 
 import {applyStyles} from "./index.style";

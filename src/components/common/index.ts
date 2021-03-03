@@ -34,5 +34,5 @@ export {
   Notification,
   Error,
   InputTypeField,
-  DatePickerComponent
+  DatePickerComponent,
 };

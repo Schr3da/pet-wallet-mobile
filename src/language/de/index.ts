@@ -19,7 +19,7 @@ import {
   NotificationTypes,
   DialogContentTypes,
 } from "../../store/actions/layout";
-import { PetTypes } from "../../dto/pets";
+import {PetTypes} from "../../dto/pets";
 
 const header: IHeader = {
   [ViewComponents.splash]: {

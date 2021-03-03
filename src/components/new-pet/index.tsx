@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 import * as InformationViews from "./information-view";
 import * as PassViews from "./pass-view";
@@ -10,41 +10,42 @@ import {Layout} from "../common";
 import {SubViewComponents} from "../../store/actions/navigation";
 import {onFocus} from "../../store/actions/layout";
 import {onInputFieldChange} from "../../store/actions/new-pet";
-import { PetTypes } from "../../dto/pets";
-import { getTranslation, LanguageTypes } from "../../language";
-import { IPickerData } from "../common/picker";
+import {PetTypes} from "../../dto/pets";
+import {getTranslation, LanguageTypes} from "../../language";
+import {IPickerData} from "../common/picker";
 
 const handlePickerValueSelected = (
   dispatch: any,
-  id: string | null,
-  value: string | null 
+  id: string | null,
+  value: string | null,
 ) => {
-  dispatch(onFocus(null, null)); 
+  dispatch(onFocus(null, null));
   if (id == null) {
     return;
   }
   dispatch(onInputFieldChange(id, value));
-}
+};
 
 const getPetTypes = (
   _: string | null,
-  language: LanguageTypes
+  language: LanguageTypes,
 ): IPickerData[] => {
-  const translation = getTranslation(language); 
+  const translation = getTranslation(language);
   return Object.values(PetTypes).map((v) => ({
     label: translation.animalTypes[v],
     value: translation.animalTypes[v],
   }));
-}
+};
 
 export const Component = () => {
-
   const dispatch = useDispatch();
 
   return (
     <Layout
       imageSource={require("../../../assets/png/add-pet-header-icon.png")}
-      onPickerChanged={(id, value) => handlePickerValueSelected(dispatch, id, value)}
+      onPickerChanged={(id, value) =>
+        handlePickerValueSelected(dispatch, id, value)
+      }
       getPickerData={getPetTypes}
       childRenderer={(props) => {
         switch (props.subViewComponent) {

@@ -9,27 +9,22 @@ import {InputTypes, onFocus} from "../../../store/actions/layout";
 import {applyStyles} from "./index.style";
 import {useDispatch} from "react-redux";
 
-export type KeyboardTypes = 
-  | "default" 
-  | "email-address" 
-  | "numeric" 
-  | "phone-pad" 
-  | "number-pad" 
-  | "decimal-pad" 
-;
+export type KeyboardTypes =
+  | "default"
+  | "email-address"
+  | "numeric"
+  | "phone-pad"
+  | "number-pad"
+  | "decimal-pad";
 
 let timeout: any = null;
 
-const handleFocus = (
-  dispatch: any, id: string | null,
-) => {
+const handleFocus = (dispatch: any, id: string | null) => {
   clearTimeout(timeout);
   dispatch(onFocus(id, InputTypes.text));
 };
 
-const handleFocusDelayed = (
-  dispatch: any, id: string | null,
-) => {
+const handleFocusDelayed = (dispatch: any, id: string | null) => {
   timeout = setTimeout(() => handleFocus(dispatch, id), 100);
 };
 
@@ -40,14 +35,23 @@ interface IProps {
   value: InputValues;
   placeholder?: string;
   disabled?: boolean;
-  type?: KeyboardTypes; 
+  type?: KeyboardTypes;
   onChange: (id: string, value: InputValues) => void;
 }
 
 export const InputField = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {id, disabled, placeholder, style, type, theme, value, onChange} = props;
+  const {
+    id,
+    disabled,
+    placeholder,
+    style,
+    type,
+    theme,
+    value,
+    onChange,
+  } = props;
 
   const styles = createStyle(theme, applyStyles);
   const colors = getColors(theme);

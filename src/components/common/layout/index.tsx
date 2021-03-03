@@ -108,7 +108,7 @@ interface IProps {
   hasHeader?: boolean;
   onScroll?: any;
   getPickerData?: (id: string | null, language: LanguageTypes) => IPickerData[];
-  onPickerChanged?: (id: string | null, value: string | null) => void; 
+  onPickerChanged?: (id: string | null, value: string | null) => void;
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -252,24 +252,32 @@ export const Layout = (props: IProps): JSX.Element => {
         focus == null &&
         footerRenderer &&
         footerRenderer(childProps)}
-      {isPickerVisible && inputType === InputTypes.date && <DatePickerComponent
-        id={focus}
-        mode={DatePickerModes.date}
-        theme={theme}
-        locale={language}
-        onComplete={(id, date) => onPickerChanged && onPickerChanged (id, date)}
-      />}
-      {isPickerVisible && inputType === InputTypes.picker && <PickerComponent
-        id={focus}
-        data={(getPickerData && getPickerData(focus, language)) || []}
-        theme={theme}
-        locale={language}
-        onComplete={(id, date) => onPickerChanged && onPickerChanged (id, date)}
-      />}
+      {isPickerVisible && inputType === InputTypes.date && (
+        <DatePickerComponent
+          id={focus}
+          mode={DatePickerModes.date}
+          theme={theme}
+          locale={language}
+          onComplete={(id, date) =>
+            onPickerChanged && onPickerChanged(id, date)
+          }
+        />
+      )}
+      {isPickerVisible && inputType === InputTypes.picker && (
+        <PickerComponent
+          id={focus}
+          data={(getPickerData && getPickerData(focus, language)) || []}
+          theme={theme}
+          locale={language}
+          onComplete={(id, date) =>
+            onPickerChanged && onPickerChanged(id, date)
+          }
+        />
+      )}
       {hasError === false && hasNotification && (
         <Notification {...childProps} />
       )}
-      {isLoading && <Loader theme={theme} isAnimating={true}/>}
+      {isLoading && <Loader theme={theme} isAnimating={true} />}
       {hasError && <Error {...childProps} />}
       {hasDialog && dialogRenderer && dialogRenderer(childProps)}
     </KeyboardAvoidingView>

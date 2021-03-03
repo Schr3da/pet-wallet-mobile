@@ -37,9 +37,13 @@ export const InputTypeField = (props: IProps) => {
 
   return (
     <View style={{...styles.container, ...style}}>
-        <TouchableOpacity onPress={() => handleFocus(dispatch, id, inputType)} activeOpacity={1}>
-            <Text style={styles.input} numberOfLines={1}>{value || placeholder}</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => handleFocus(dispatch, id, inputType)}
+        activeOpacity={1}>
+        <Text style={styles.input} numberOfLines={1}>
+          {value || placeholder}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

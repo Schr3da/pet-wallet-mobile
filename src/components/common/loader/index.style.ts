@@ -18,19 +18,20 @@ export const applyStyles = (theme: ITheme) => ({
   loader: {
     width: 62,
     height: 44,
-    backgroundColor: theme.color2, 
+    backgroundColor: theme.color2,
     borderRadius: 10,
     overflow: "hidden",
   } as ViewStyle,
-  page: (color: string, topValue: number) => ({
-    position: "absolute",
-    top: topValue,
-    left: 1,
-    right: 1,
-    height: 40,
-    backgroundColor: color, 
-    borderRadius: 10,
-  } as ViewStyle),
+  page: (color: string, topValue: number) =>
+    ({
+      position: "absolute",
+      top: topValue,
+      left: 1,
+      right: 1,
+      height: 40,
+      backgroundColor: color,
+      borderRadius: 10,
+    } as ViewStyle),
   footer: {
     position: "absolute",
     width: "100%",
@@ -49,10 +50,12 @@ export const applyPageStyles = (
     left: 1,
     right: 1,
     height: 40,
-    backgroundColor: color, 
+    backgroundColor: color,
     borderRadius: 10,
-    transform: [{
-      translateY: value
-    }]
+    transform: [
+      {
+        translateY: value,
+      },
+    ],
   };
 };

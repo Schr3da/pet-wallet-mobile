@@ -171,11 +171,11 @@ export interface IOnFocus {
 
 export const onFocus = (
   id: string | null,
-  inputType: InputTypes | null | undefined
-  ): IOnFocus => ({
+  inputType: InputTypes | null | undefined,
+): IOnFocus => ({
   type: ON_FOCUS,
   id,
-  inputType
+  inputType,
 });
 
 export const ON_SET_DIALOG_CONTENT_TYPE = "ON_SET_DIALOG_CONTENT";
@@ -200,7 +200,7 @@ export const ON_SET_PICKER_VISIBILITY = "ON_SET_PICKER_VISIBILITY";
 export interface IOnSetPickerVisibility {
   type: typeof ON_SET_PICKER_VISIBILITY;
   isVisible: boolean;
-  inputType: InputTypes; 
+  inputType: InputTypes;
 }
 
 export const onSetPickerVisibility = (
@@ -222,5 +222,4 @@ export type Actions =
   | IOnSetNotificationType
   | IOnSetDialogContentType
   | IOnSetLoading
-  | IOnSetPickerVisibility  
-;
+  | IOnSetPickerVisibility;

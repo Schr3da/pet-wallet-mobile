@@ -97,18 +97,17 @@ const applyLanguageAndTheme = (
 const changeFocus = (
   state: ILayoutState,
   id: string | null,
-  inputType: InputTypes | null | undefined
+  inputType: InputTypes | null | undefined,
 ): ILayoutState => {
-
-  const isPickerVisible = 
-    (id != null) && 
+  const isPickerVisible =
+    id != null &&
     (inputType === InputTypes.date || inputType === InputTypes.picker);
 
   const nextState = setPickerVisible(state, isPickerVisible, inputType);
 
   return {
     ...nextState,
-    focus: id
+    focus: id,
   };
 };
 
@@ -118,10 +117,9 @@ const setPickerVisible = (
   inputType: InputTypes | null | undefined,
 ): ILayoutState => ({
   ...state,
-  inputType, 
-  isPickerVisible, 
+  inputType,
+  isPickerVisible,
 });
-
 
 const navigationChange = (state: ILayoutState) => {
   let nextState = handleError(state, null);
@@ -173,7 +171,7 @@ const handleDeviceStatus = (
     ...nextState,
     isOnline,
   };
-}; 
+};
 
 type Actions =
   | Database.Actions

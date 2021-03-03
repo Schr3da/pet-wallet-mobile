@@ -111,7 +111,7 @@ export interface ILanguage {
   common: ICommon;
   errors: IErrors;
   dialogs: IDialogs;
-  animalTypes: AnimalTypes; 
+  animalTypes: AnimalTypes;
   notifications: INotifications;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {Image, View} from "react-native";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, {Easing} from "react-native-reanimated";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 
@@ -16,9 +16,8 @@ interface IPageProps {
 }
 
 class Page extends React.Component<IPageProps, any> {
-
   private animationValue: Animated.Value<number>;
-  
+
   private animation: Animated.BackwardCompatibleWrapper | null;
 
   private willUnmount: boolean;
@@ -38,7 +37,7 @@ class Page extends React.Component<IPageProps, any> {
   public componentWillUnmount() {
     this.willUnmount = true;
     if (this.animation == null) {
-      return; 
+      return;
     }
     this.animation.stop();
     this.animation = null;
@@ -48,9 +47,7 @@ class Page extends React.Component<IPageProps, any> {
     const {color} = this.props;
     const animatedStyle = applyPageStyles(color, this.animationValue);
 
-    return (
-      <Animated.View style={animatedStyle}/>
-    );
+    return <Animated.View style={animatedStyle} />;
   }
 
   private animateToStart() {
@@ -58,7 +55,7 @@ class Page extends React.Component<IPageProps, any> {
       const {start} = this.props;
       this.animation = this.toTarget(start);
       this.animation.start(resolve);
-    })
+    });
   }
 
   private animateToEnd() {
@@ -75,7 +72,7 @@ class Page extends React.Component<IPageProps, any> {
       duration: this.props.time,
       easing: Easing.cubic,
     });
-  }  
+  }
 
   private async animate() {
     if (this.willUnmount === true) {
@@ -86,7 +83,7 @@ class Page extends React.Component<IPageProps, any> {
       return;
     }
 
-    await this.animateToEnd(); 
+    await this.animateToEnd();
     await this.animateToStart();
     this.animate();
   }
@@ -107,25 +104,25 @@ export const Loader = (props: IProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.loader}>
-        <Page 
-          color={colors.color4} 
+        <Page
+          color={colors.color4}
           isAnimating={isAnimating}
           time={1000}
-          start={1} 
+          start={1}
           end={endValue}
         />
-        <Page 
-          color={colors.color5} 
+        <Page
+          color={colors.color5}
           isAnimating={isAnimating}
           time={850}
-          start={4} 
+          start={4}
           end={endValue}
         />
-        <Page 
-          color={colors.color14} 
+        <Page
+          color={colors.color14}
           isAnimating={isAnimating}
           time={700}
-          start={9} 
+          start={9}
           end={endValue}
         />
         <Image
