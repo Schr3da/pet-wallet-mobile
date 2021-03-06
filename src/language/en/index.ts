@@ -133,7 +133,7 @@ const newPet: INewPet = {
   [SubViewComponents.newPetScan]: {
     primaryButton: "Finish",
     secondaryButton: "Cancel",
-    attachmentLabel: "Attachment",
+    attachmentLabel: "Pet pass page",
   },
   [SubViewComponents.newAttachment]: {
     primaryButton: "Übernehmen",
@@ -224,7 +224,7 @@ const animalTypes = {
 };
 
 const common: ICommon = {
-  noAttachments: "No attachments",
+  noAttachments: "No data",
   continue: "Continue",
   cancel: "Cancel",
   pick: "Select",

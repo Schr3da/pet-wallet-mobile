@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Text} from "react-native";
+import {Text, ViewStyle} from "react-native";
 
 import {StyledButton} from "../styled-button";
 
@@ -8,33 +8,36 @@ import {applyStyles} from "./index.style";
 import {createStyleWithoutTheme, ThemeTypes, getColors} from "../../../theme";
 
 const handlePress = (
+  isDisabled: boolean | undefined,
   didPress: boolean | undefined,
   action: () => void,
 ) => () => {
-  if (didPress) {
+  if (isDisabled || didPress) {
     return;
   }
   action();
 };
 
 export interface IProps {
-  style: any;
+  style: ViewStyle;
   background: string;
   color: string;
   title: string;
   didPress?: boolean;
+  isDisabled?: boolean;
   onPress: () => void;
 }
 
 const RoundedButton = (props: IProps) => {
-  const {background, color, didPress, style, title, onPress} = props;
-  const styles = createStyleWithoutTheme(applyStyles(background, color));
+  const {background, color, didPress, isDisabled, style, title, onPress} = props;
+  const styles = createStyleWithoutTheme(applyStyles(background, color, isDisabled));
 
   return (
     <StyledButton
       color={background}
       style={{...styles.container, ...style}}
-      onPress={handlePress(didPress, onPress)}>
+      onPress={handlePress(isDisabled, didPress, onPress)}
+    >
       <Text style={styles.title}>{title}</Text>
     </StyledButton>
   );
@@ -42,14 +45,15 @@ const RoundedButton = (props: IProps) => {
 
 export interface IButtonProps {
   theme: ThemeTypes;
-  style?: any;
   title: string;
+  style?: ViewStyle;
+  isDisabled?: boolean;
   didPress?: boolean;
   onPress: () => void;
 }
 
 export const PrimaryButton = (props: IButtonProps) => {
-  const {didPress, style, theme, title, onPress} = props;
+  const {didPress, isDisabled, style, theme, title, onPress} = props;
 
   const colors = getColors(theme);
 
@@ -59,13 +63,14 @@ export const PrimaryButton = (props: IButtonProps) => {
       color={colors.color3}
       title={title}
       style={style || {}}
-      onPress={handlePress(didPress, onPress)}
+      isDisabled={isDisabled}
+      onPress={handlePress(isDisabled, didPress, onPress)}
     />
   );
 };
 
 export const SecondaryButton = (props: IButtonProps) => {
-  const {didPress, style, theme, title, onPress} = props;
+  const {didPress, isDisabled, style, theme, title, onPress} = props;
 
   const colors = getColors(theme);
 
@@ -75,7 +80,8 @@ export const SecondaryButton = (props: IButtonProps) => {
       color={colors.color4}
       title={title}
       style={style || {}}
-      onPress={handlePress(didPress, onPress)}
+      isDisabled={isDisabled}
+      onPress={handlePress(isDisabled, didPress, onPress)}
     />
   );
 };

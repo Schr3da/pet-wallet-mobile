@@ -33,7 +33,7 @@ import {
   ErrorTypes,
   InputTypes,
 } from "../../../store/actions/layout";
-import {base64ImageToUri} from "../../common/utils";
+import {base64ImageToUri, collectionIsEmpty, inputValueEmpty} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
 
@@ -120,8 +120,22 @@ export const ChildView = (props: ILayoutChildProps) => {
   );
 };
 
+
+const footerStateToProps = (state: ICombinedReducerState) => {
+  const {name, race, dateOfBirth} = state.newPet.inputs;
+
+  const canContinue = 
+    inputValueEmpty(name) === false &&
+    inputValueEmpty(race) === false &&
+    inputValueEmpty(dateOfBirth) === false;
+  
+  return {canContinue}
+};
+
 export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
+
+  const {canContinue} = useSelector(footerStateToProps);
 
   const {language, languageType, theme} = props;
 
@@ -131,6 +145,7 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newPetInformation.primaryButton}
         style={{marginTop: 10}}
+        isDisabled={canContinue === false}
         onPress={() =>
           handleChangeSubView(
             dispatch,

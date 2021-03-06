@@ -134,6 +134,13 @@ export const onSaveNewPet = () => (
   const state = getState();
   const newPet = state.newPet;
 
+
+
+
+
+
+
+
   dispatch({
     type: ON_SAVE_NEW_PET,
     language: state.layout.language,

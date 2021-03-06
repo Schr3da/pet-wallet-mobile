@@ -24,6 +24,14 @@ export interface IProps {
   onComplete: (id: string | null, date: string) => void;
 }
 
+const getMaximumDate = (): Date => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  return new Date(year + 4, month, day);
+}
+
 export const DatePickerComponent = (props: IProps) => {
   const [date, setDate] = React.useState(new Date());
 
@@ -41,7 +49,7 @@ export const DatePickerComponent = (props: IProps) => {
         textColor={colors.color10}
         locale={locale as any}
         onDateChange={setDate}
-        maximumDate={new Date()}
+        maximumDate={getMaximumDate()}
         fadeToColor={colors.color1}
       />
       <PrimaryButton
