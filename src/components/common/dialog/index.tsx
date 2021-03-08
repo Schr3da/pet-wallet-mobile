@@ -7,7 +7,7 @@ import {useDispatch} from "react-redux";
 
 import * as RoundedButtons from "../rounded-button";
 
-import {onDismissDialog} from "../../../store/actions/layout";
+import {onDismissDialog, setLoading} from "../../../store/actions/layout";
 import {ThemeTypes, createStyle} from "../../../theme";
 import {ILanguage} from "../../../language";
 
@@ -23,7 +23,7 @@ interface IProps {
 
 const handleCancel = (dispatch: any) => dispatch(onDismissDialog());
 
-const animate = async (
+const animate = (
   currentValue: Animated.Value<number>,
   toValue: number,
   setIsAnimating: React.Dispatch<React.SetStateAction<boolean>>,
@@ -77,6 +77,7 @@ export const Dialog = (props: IProps) => {
             title={language.common.continue}
             didPress={isAnimating}
             onPress={async () => {
+              dispatch(setLoading(true));
               await animate(opacityValue, 0, setIsAnimating);
               onPress();
             }}

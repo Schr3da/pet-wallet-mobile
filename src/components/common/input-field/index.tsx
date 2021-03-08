@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {TextInput, View, Text} from "react-native";
+import {TextInput, View, Text, ViewStyle} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
@@ -30,7 +30,7 @@ const handleFocusDelayed = (dispatch: any, id: string | null) => {
 
 interface IProps {
   id: string;
-  style: any;
+  style: ViewStyle;
   theme: ThemeTypes;
   value: InputValues;
   placeholder?: string;
@@ -66,13 +66,13 @@ export const InputField = (props: IProps) => {
           style={styles.input}
           autoCorrect={false}
           placeholder={placeholder}
-          onChangeText={(text) => onChange(id, text)}
+          onChangeText={(text: string) => onChange(id, text)}
           onFocus={() => handleFocus(dispatch, id)}
           onEndEditing={() => handleFocusDelayed(dispatch, null)}
           placeholderTextColor={colors.color12}
           returnKeyType="done"
           keyboardType={type || "default"}
-          value={value as any}
+          value={value as (string | undefined)}
         />
       )}
     </View>

@@ -1,24 +1,28 @@
 import SQLite from "react-native-sqlite-storage";
 
-export const executeQuery = (
+export const executeQuery = <T>(
   command: string,
-  params = [],
+  params: T[] = [],
 ): Promise<SQLite.ResultSet | null> =>
-  new Promise(async (resolve) =>
-    instance.transaction((transaction) =>
+  new Promise((resolve) =>
+    instance.transaction((transaction: SQLite.Transaction) =>
       transaction.executeSql(
         command,
         params,
-        (_, results) => resolve(results),
+        (_: SQLite.Transaction, results: SQLite.ResultSet) => resolve(results),
         () => resolve(null),
       ),
     ),
   );
 
-export const createTable = async (name: string, params: string) =>
+export const createTable = (name: string, params: string) =>
   executeQuery(`CREATE TABLE IF NOT EXISTS ${name} (${params})`, []);
 
-export const insert = async (table: string, fields: string[], values: any) => {
+export const insert = <T>(
+  table: string,
+  fields: string[],
+  values: T[] 
+) => {
   const placeholder = fields.reduce(
     (result, _, index) => result + (index === 0 ? "?" : ", ?"),
     "",
@@ -46,12 +50,12 @@ export const select = async <T>(
 let instance: SQLite.SQLiteDatabase;
 
 const databaseParams = (): SQLite.DatabaseParams => ({
-  name: "pet-wallet-6",
+  name: "pet-wallet-8",
   location: "default",
 });
 
 export const init = (): Promise<boolean> => {
-  return new Promise(async (resolve) => {
+  return new Promise((resolve) => {
     instance = SQLite.openDatabase(
       databaseParams(),
       () => resolve(true),
@@ -61,7 +65,7 @@ export const init = (): Promise<boolean> => {
 };
 
 export const deleteDatabase = (): Promise<void> => {
-  return new Promise(async (resolve) => {
+  return new Promise((resolve) => {
     if (instance != null) {
       instance.close();
     }

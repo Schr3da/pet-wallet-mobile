@@ -38,6 +38,7 @@ export enum InputTypes {
   text,
   date,
   picker,
+  camera,
 }
 
 export const getScreenSize = () => {
@@ -191,10 +192,15 @@ export const onSetDialogContentType = (
   contentType,
 });
 
-export const onDismissDialog = () => ({
-  type: ON_SET_DIALOG_CONTENT_TYPE,
-  contentType: null,
-});
+export const onDismissDialog = () => (
+  dispatch: any
+) => { 
+  dispatch({
+    type: ON_SET_DIALOG_CONTENT_TYPE,
+    contentType: null,
+  });
+  dispatch(setLoading(false));
+};
 
 export const ON_SET_PICKER_VISIBILITY = "ON_SET_PICKER_VISIBILITY";
 export interface IOnSetPickerVisibility {

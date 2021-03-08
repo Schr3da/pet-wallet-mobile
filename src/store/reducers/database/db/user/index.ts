@@ -7,7 +7,7 @@ export interface IUserEntity {
 }
 
 export const initUserTable = async (isOnline: boolean) => {
-  let user = await getUser();
+  const user = await getUser();
 
   if (user != null && (user.uuid || "").length !== 0) {
     return user;

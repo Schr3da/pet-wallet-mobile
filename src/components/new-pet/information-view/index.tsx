@@ -79,7 +79,7 @@ export const ChildView = (props: ILayoutChildProps) => {
         maxWidth={512}
         maxHeight={512}
         onError={() => handleError(dispatch, ErrorTypes.photoLibrary)}
-        onData={(data) => handleProfileImage(dispatch, data)}
+        onData={(data: IImageData) => handleProfileImage(dispatch, data)}
       />
       <InputField
         id={InputIds.name}
@@ -87,7 +87,7 @@ export const ChildView = (props: ILayoutChildProps) => {
         placeholder={language.newPet.newPetInformation.name}
         theme={theme}
         value={stateProps.inputs[InputIds.name]}
-        onChange={(id, value) => handleInputChange(id, value, dispatch)}
+        onChange={(id: string, value: InputValues) => handleInputChange(id, value, dispatch)}
       />
       <InputTypeField
         id={InputIds.animalType}
@@ -113,7 +113,7 @@ export const ChildView = (props: ILayoutChildProps) => {
           theme={theme}
           type="numeric"
           value={stateProps.inputs[InputIds.age]}
-          onChange={(id, value) => handleInputChange(id, value, dispatch)}
+          onChange={(id: string, value: InputValues) => handleInputChange(id, value, dispatch)}
         />
       </View>
     </React.Fragment>

@@ -258,7 +258,7 @@ export const Layout = (props: IProps): JSX.Element => {
           mode={DatePickerModes.date}
           theme={theme}
           locale={language}
-          onComplete={(id, date) =>
+          onComplete={(id: string | null, date: string) =>
             onPickerChanged && onPickerChanged(id, date)
           }
         />
@@ -270,8 +270,8 @@ export const Layout = (props: IProps): JSX.Element => {
           theme={theme}
           locale={language}
           isApplePlatform={isApplePlatform}
-          onComplete={(id, date) =>
-            onPickerChanged && onPickerChanged(id, date)
+          onComplete={(id: string | null, value: string | null) =>
+            onPickerChanged && onPickerChanged(id, value)
           }
         />
       )}

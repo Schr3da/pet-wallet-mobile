@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import {Text, TouchableOpacity, View} from "react-native";
+import {Text, TouchableOpacity, View, ViewStyle} from "react-native";
 
 import {createStyleWithoutTheme} from "../../../theme";
 
 import {applyStyles} from "./index.style";
 
 export interface IProps {
-  style: any;
+  style: ViewStyle;
   color: string;
   children?: any;
   title?: string;

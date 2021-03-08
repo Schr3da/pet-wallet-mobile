@@ -90,7 +90,7 @@ const applyLanguageAndTheme = (
   language: LanguageTypes,
   theme: ThemeTypes,
 ): ILayoutState => {
-  let next = changeTheme(state, theme);
+  const next = changeTheme(state, theme);
   return changeLanguage(next, language);
 };
 

@@ -18,10 +18,9 @@ interface IProps extends ILayoutChildProps {
   onSharePress: CardEventCallback;
 }
 
-interface IState {}
-
-class Container extends React.Component<IProps, IState> {
-  constructor(props: IProps, context: any) {
+class Container extends React.Component<IProps, unknown> {
+  
+  constructor(props: IProps, context: unknown) {
     super(props, context);
   }
 
@@ -54,7 +53,7 @@ class Container extends React.Component<IProps, IState> {
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
           onScroll={this.handleScroll}>
-          {data.map((animal, index) => {
+          {data.map((animal: IPetDto, index: number) => {
             const animitedStyles = animatedCardStyle(
               index,
               data.length,
@@ -87,7 +86,7 @@ const mapStateToProps = (
   ...ownProps,
 });
 
-const mapDispatchToProps = (_: any) => ({});
+const mapDispatchToProps = () => ({});
 
 export const CardsContainer = connect(
   mapStateToProps,

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Text, TouchableOpacity, View} from "react-native";
+import {Text, TouchableOpacity, View, ViewStyle} from "react-native";
 
 import {createStyle, ThemeTypes} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
@@ -19,7 +19,7 @@ const handleFocus = (
 
 interface IProps {
   id: string;
-  style: any;
+  style: ViewStyle;
   theme: ThemeTypes;
   value: InputValues;
   inputType: InputTypes;

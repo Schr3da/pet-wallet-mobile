@@ -12,7 +12,7 @@ export const register = async () => {
     >(url, {nickname});
 
     return response;
-  } catch (error: any) {
+  } catch (error) {
     return Promise.resolve(null);
   }
 };

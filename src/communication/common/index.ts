@@ -31,11 +31,23 @@ const request = <S, T>(
 ): Promise<T> =>
   fetch(baseUrl + endpoint, {
     method,
+    mode: "cors",
     headers: getHeader(token),
     body: JSON.stringify(params),
   })
-    .then((response) => response.json())
-    .catch(() => Promise.reject());
+  .then((response) => response.ok === false || response.status !== 200 ? Promise.reject() : response.text())
+  .then((body: string | undefined) => {
+      if (body == null) {
+        return Promise.reject();
+      }
+
+      try {
+          return JSON.parse(body);
+      } catch (e) {
+          return Promise.reject();
+      }
+  })
+  .catch(() => Promise.reject());
 
 export const getRequest = <S, T>(url: string, params: S, token?: string) =>
   request<S, T>(RequestMethods.get, url, params, token);

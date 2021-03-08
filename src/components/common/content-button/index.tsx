@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Text, View} from "react-native";
+import {Text, View, ViewStyle} from "react-native";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {StyledButton} from "../styled-button";
@@ -12,7 +12,7 @@ export interface IProps {
   buttonText: string;
   theme: ThemeTypes;
   color: string;
-  style?: any;
+  style?: ViewStyle;
   onPress: () => void;
 }
 

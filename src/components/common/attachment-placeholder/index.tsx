@@ -4,7 +4,7 @@ import {View, ViewStyle, TextInput} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {onFocus} from "../../../store/actions/layout";
+import {onFocus, InputTypes} from "../../../store/actions/layout";
 import {InputValues} from "../../../store/actions/new-pet";
 import {ImageButton} from "../image-button";
 
@@ -14,7 +14,7 @@ let timeout: any = null;
 
 const handleFocus = (dispatch: any, id: string | null) => {
   clearTimeout(timeout);
-  dispatch(onFocus(id));
+  dispatch(onFocus(id, InputTypes.text));
 };
 
 const handleFocusDelayed = (dispatch: any, id: string | null) => {
@@ -41,12 +41,12 @@ export const AttachmentPlaceholder = (props: IProps) => {
     <View style={{...styles.container, ...style}}>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => onChange(id, text)}
+        onChangeText={(text: string) => onChange(id, text)}
         onFocus={() => handleFocus(dispatch, id)}
         onEndEditing={() => handleFocusDelayed(dispatch, null)}
         returnKeyType="done"
         autoCorrect={false}
-        value={title as any}
+        value={title as string || undefined}
       />
       <ImageButton
         style={styles.button}

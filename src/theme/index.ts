@@ -64,8 +64,8 @@ type useThemeCallback<
 > = (colors: ITheme) => T;
 
 export const createStyle = <T>(theme: ThemeTypes, cb: useThemeCallback<T>) => {
-  let colors = getColors(theme);
-  let styles = cb(colors);
+  const colors = getColors(theme);
+  const styles = cb(colors);
   return StyleSheet.create(styles);
 };
 

@@ -65,7 +65,7 @@ export const Component = (): JSX.Element => {
                       data={animal}
                       language={language}
                       theme={theme}
-                      onPress={(id) => handleCardPress(dispatch, id)}
+                      onPress={(id: string) => handleCardPress(dispatch, id)}
                       onShare={() => undefined}
                     />
                   </Animated.View>

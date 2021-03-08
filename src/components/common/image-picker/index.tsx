@@ -39,7 +39,7 @@ const handlePress = (
     };
 
     if (type === ImagePickerTypes.camera) {
-      return launchCamera(options, async (data: any) =>
+      return launchCamera(options, (data: any) =>
         hasError(data) === true
           ? resolve(null)
           : resolve({
@@ -56,7 +56,7 @@ const handlePress = (
     }
 
     if (type === ImagePickerTypes.picker) {
-      return launchImageLibrary(options, async (data: any) => {
+      return launchImageLibrary(options, (data: any) => {
         hasError(data) === true
           ? resolve(null)
           : resolve({

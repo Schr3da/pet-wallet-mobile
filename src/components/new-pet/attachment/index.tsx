@@ -37,12 +37,6 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
 });
 
 export const ChildView = (props: ILayoutChildProps) => {
-  const dispatch = useDispatch();
-
-  const stateProps = useSelector(stateToProps);
-
-  const {theme} = props;
-
   return <React.Fragment></React.Fragment>;
 };
 

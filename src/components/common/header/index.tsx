@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {Image, ImageSourcePropType, Text, View} from "react-native";
 
-import {createStyle} from "../../../theme";
+import {createStyle, ThemeTypes} from "../../../theme";
 import {ILayoutChildProps} from "../layout";
 
 import {applyStyles} from "./index.style";
@@ -11,6 +11,7 @@ export interface IProps extends ILayoutChildProps {
   title: string;
   description: string;
   path: string[];
+  theme: ThemeTypes; 
   source: ImageSourcePropType;
 }
 

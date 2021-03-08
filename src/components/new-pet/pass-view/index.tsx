@@ -36,6 +36,7 @@ import {
   DialogContentTypes,
   onSetDialogContentType,
   onDismissDialog,
+  ErrorTypes,
 } from "../../../store/actions/layout";
 
 interface IStateProps {
@@ -90,8 +91,8 @@ export const ChildView = (props: ILayoutChildProps) => {
         theme={theme}
         maxWidth={280}
         maxHeight={280}
-        onError={(errorType) => handleError(dispatch, errorType)}
-        onData={(data) => handleScanImage(dispatch, data)}
+        onError={(errorType: ErrorTypes) => handleError(dispatch, errorType)}
+        onData={(data: IImageData) => handleScanImage(dispatch, data)}
       />
       <View style={styles.attachmentsWrapper}>
         {(attachments || []).length === 0 ? (
@@ -104,7 +105,7 @@ export const ChildView = (props: ILayoutChildProps) => {
             onChange={() => undefined}
           />
         ) : (
-          attachments.map((a, index) => {
+          attachments.map((a: IImageData, index: number) => {
             let title = inputs[a.id];
 
             if (title === null) {
@@ -119,9 +120,9 @@ export const ChildView = (props: ILayoutChildProps) => {
                 theme={theme}
                 title={title}
                 style={styles.attachment}
-                onChange={(id, text) => handleInputChange(id, text, dispatch)}
-                onRemove={(id) => requestRemoveAttachment(dispatch, id)}
-                onPreview={(id) => handlePreview(dispatch, id)}
+                onChange={(id: string, text: string) => handleInputChange(id, text, dispatch)}
+                onRemove={(id: string) => requestRemoveAttachment(dispatch, id)}
+                onPreview={(id: string) => handlePreview(dispatch, id)}
               />
             );
           })

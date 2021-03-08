@@ -7,7 +7,7 @@ import {
   ISettingsEntity,
 } from "../../reducers/database/db/settings";
 import {getUser, IUserEntity} from "../../reducers/database/db/user";
-import {isOnline, setDeviceOnline} from "../layout";
+import {isOnline, setDeviceOnline, setLoading} from "../layout";
 
 export const ON_INIT_DATA_FROM_DATABASE = "ON_INIT_DATA_FROM_DATABASE";
 interface IOnInitDataFromDatabase {
@@ -54,10 +54,13 @@ export const onRequestDataDeletion = () => async (
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
+
   dispatch({
     type: ON_REQUEST_DATA_DELETION,
     language: state.layout.language,
   } as IOnRequesDataDeletion);
+
+  dispatch(setLoading(false));
 };
 
 export const initStateFromDatabase = () => async (

@@ -15,14 +15,14 @@ interface IPageProps {
   end: number;
 }
 
-class Page extends React.Component<IPageProps, any> {
+class Page extends React.Component<IPageProps, unknown> {
   private animationValue: Animated.Value<number>;
 
   private animation: Animated.BackwardCompatibleWrapper | null;
 
   private willUnmount: boolean;
 
-  constructor(props: IPageProps, context: any) {
+  constructor(props: IPageProps, context: unknown) {
     super(props, context);
 
     this.willUnmount = false;

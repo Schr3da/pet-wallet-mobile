@@ -1,8 +1,11 @@
+import * as Communication from "../../../communication";
+
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 import {IPetDto} from "../../../dto/pets";
 import {base64ImageString} from "../../../components/common/utils";
 import {onChangeSubViewComponent, SubViewComponents} from "../navigation";
+import {setLoading} from "../layout";
 
 export interface IImageData {
   id: string;
@@ -127,32 +130,35 @@ interface IOnSaveNewPet {
   data: IPetDto;
 }
 
-export const onSaveNewPet = () => (
+export const onSaveNewPet = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
-  const newPet = state.newPet;
+  const token = state.database.token;
+  const {inputs, profile}= state.newPet;
 
+  dispatch(setLoading(true));
 
-
-
-
-
-
+  await Communication.Pets.saveNewPet({
+    ...inputs,
+    profileImage: base64ImageString(profile),
+  } as any, token);
 
   dispatch({
     type: ON_SAVE_NEW_PET,
     language: state.layout.language,
     data: {
       id: Date.now().toString(),
-      animal: newPet.inputs[InputIds.animalType],
-      name: newPet.inputs[InputIds.name] || "",
-      dateOfBirth: newPet.inputs[InputIds.dateOfBirth] || "",
-      age: newPet.inputs[InputIds.age] || "",
-      profileImage: base64ImageString(newPet.profile),
+      animal: inputs[InputIds.animalType],
+      name: inputs[InputIds.name] || "",
+      dateOfBirth: inputs[InputIds.dateOfBirth] || "",
+      age: inputs[InputIds.age] || "",
+      profileImage: base64ImageString(profile),
     },
   } as IOnSaveNewPet);
+
+  dispatch(setLoading(false));
 };
 
 export type Actions =

@@ -26,7 +26,7 @@ export class Container extends React.Component<IProps, unknown> {
 
   private animatedValue = new Animated.Value(0);
 
-  constructor(props: IProps, context: any) {
+  constructor(props: IProps, context: unknown) {
     super(props, context);
   }
 
@@ -84,7 +84,7 @@ export class Container extends React.Component<IProps, unknown> {
       return defaultTitle;
     }
 
-    let error = language.errors[errorType];
+    const error = language.errors[errorType];
     if (error == null || error.title == null) {
       return defaultTitle;
     }
@@ -101,7 +101,7 @@ export class Container extends React.Component<IProps, unknown> {
       return defaultDescription;
     }
 
-    let error = language.errors[errorType];
+    const error = language.errors[errorType];
     if (error == null || error.text == null) {
       return defaultDescription;
     }
