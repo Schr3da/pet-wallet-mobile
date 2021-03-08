@@ -30,7 +30,7 @@ const getMaximumDate = (): Date => {
   const month = date.getMonth();
   const day = date.getDate();
   return new Date(year + 4, month, day);
-}
+};
 
 export const DatePickerComponent = (props: IProps) => {
   const [date, setDate] = React.useState(new Date());

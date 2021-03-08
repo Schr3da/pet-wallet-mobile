@@ -18,11 +18,7 @@ export const executeQuery = <T>(
 export const createTable = (name: string, params: string) =>
   executeQuery(`CREATE TABLE IF NOT EXISTS ${name} (${params})`, []);
 
-export const insert = <T>(
-  table: string,
-  fields: string[],
-  values: T[] 
-) => {
+export const insert = <T>(table: string, fields: string[], values: T[]) => {
   const placeholder = fields.reduce(
     (result, _, index) => result + (index === 0 ? "?" : ", ?"),
     "",

@@ -10,11 +10,13 @@ export const applyStyles = (isApplePlatform: boolean) => (theme: ITheme) => ({
     backgroundColor: theme.color1,
     justifyContent: "center",
     alignItems: "center",
-    ...isApplePlatform ? {} : {
-      height: 100,
-      borderTopWidth: 1,
-      borderColor: theme.color11,
-    }
+    ...(isApplePlatform
+      ? {}
+      : {
+          height: 100,
+          borderTopWidth: 1,
+          borderColor: theme.color11,
+        }),
   } as ViewStyle,
   picker: {
     width: "100%",

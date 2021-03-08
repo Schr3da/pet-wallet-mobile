@@ -192,9 +192,7 @@ export const onSetDialogContentType = (
   contentType,
 });
 
-export const onDismissDialog = () => (
-  dispatch: any
-) => { 
+export const onDismissDialog = () => (dispatch: any) => {
   dispatch({
     type: ON_SET_DIALOG_CONTENT_TYPE,
     contentType: null,

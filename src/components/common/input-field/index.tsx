@@ -72,7 +72,7 @@ export const InputField = (props: IProps) => {
           placeholderTextColor={colors.color12}
           returnKeyType="done"
           keyboardType={type || "default"}
-          value={value as (string | undefined)}
+          value={value as string | undefined}
         />
       )}
     </View>

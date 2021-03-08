@@ -46,7 +46,7 @@ export const AttachmentPlaceholder = (props: IProps) => {
         onEndEditing={() => handleFocusDelayed(dispatch, null)}
         returnKeyType="done"
         autoCorrect={false}
-        value={title as string || undefined}
+        value={(title as string) || undefined}
       />
       <ImageButton
         style={styles.button}

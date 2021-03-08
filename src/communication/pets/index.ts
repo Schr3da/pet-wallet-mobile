@@ -20,7 +20,11 @@ export const saveNewPet = async (
   };
 
   try {
-    const response = await postRequest<BackendPetDto, BackendPetDto>(url, mappedData, token);
+    const response = await postRequest<BackendPetDto, BackendPetDto>(
+      url,
+      mappedData,
+      token,
+    );
     console.log("successful");
     return response;
   } catch (error) {

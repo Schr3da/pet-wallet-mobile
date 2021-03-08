@@ -33,7 +33,11 @@ import {
   ErrorTypes,
   InputTypes,
 } from "../../../store/actions/layout";
-import {base64ImageToUri, collectionIsEmpty, inputValueEmpty} from "../../common/utils";
+import {
+  base64ImageToUri,
+  collectionIsEmpty,
+  inputValueEmpty,
+} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
 
@@ -87,7 +91,9 @@ export const ChildView = (props: ILayoutChildProps) => {
         placeholder={language.newPet.newPetInformation.name}
         theme={theme}
         value={stateProps.inputs[InputIds.name]}
-        onChange={(id: string, value: InputValues) => handleInputChange(id, value, dispatch)}
+        onChange={(id: string, value: InputValues) =>
+          handleInputChange(id, value, dispatch)
+        }
       />
       <InputTypeField
         id={InputIds.animalType}
@@ -113,23 +119,24 @@ export const ChildView = (props: ILayoutChildProps) => {
           theme={theme}
           type="numeric"
           value={stateProps.inputs[InputIds.age]}
-          onChange={(id: string, value: InputValues) => handleInputChange(id, value, dispatch)}
+          onChange={(id: string, value: InputValues) =>
+            handleInputChange(id, value, dispatch)
+          }
         />
       </View>
     </React.Fragment>
   );
 };
 
-
 const footerStateToProps = (state: ICombinedReducerState) => {
   const {name, race, dateOfBirth} = state.newPet.inputs;
 
-  const canContinue = 
+  const canContinue =
     inputValueEmpty(name) === false &&
     inputValueEmpty(race) === false &&
     inputValueEmpty(dateOfBirth) === false;
-  
-  return {canContinue}
+
+  return {canContinue};
 };
 
 export const Footer = (props: ILayoutChildProps) => {

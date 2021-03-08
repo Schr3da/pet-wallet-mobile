@@ -19,7 +19,6 @@ interface IProps extends ILayoutChildProps {
 }
 
 class Container extends React.Component<IProps, unknown> {
-  
   constructor(props: IProps, context: unknown) {
     super(props, context);
   }

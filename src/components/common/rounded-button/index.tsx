@@ -29,15 +29,24 @@ export interface IProps {
 }
 
 const RoundedButton = (props: IProps) => {
-  const {background, color, didPress, isDisabled, style, title, onPress} = props;
-  const styles = createStyleWithoutTheme(applyStyles(background, color, isDisabled));
+  const {
+    background,
+    color,
+    didPress,
+    isDisabled,
+    style,
+    title,
+    onPress,
+  } = props;
+  const styles = createStyleWithoutTheme(
+    applyStyles(background, color, isDisabled),
+  );
 
   return (
     <StyledButton
       color={background}
       style={{...styles.container, ...style}}
-      onPress={handlePress(isDisabled, didPress, onPress)}
-    >
+      onPress={handlePress(isDisabled, didPress, onPress)}>
       <Text style={styles.title}>{title}</Text>
     </StyledButton>
   );

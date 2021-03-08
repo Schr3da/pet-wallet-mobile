@@ -42,14 +42,14 @@ export const base64ImageToUri = (image: IImageData): ImageSourcePropType => ({
   uri: base64ImageString(image) as any,
 });
 
-export const collectionIsEmpty = <T>(
-  collection: T | T[]
-) => {
+export const collectionIsEmpty = <T>(collection: T | T[]) => {
   const condition = (v: T) => v == null || String(v).trim().length === 0;
 
-  return Array.isArray(collection) ? 
-    (collection || []).length === 0 || collection.some(condition) :
-    collection == null || Object.keys(collection).length === 0 || Object.values(collection).some(condition);
+  return Array.isArray(collection)
+    ? (collection || []).length === 0 || collection.some(condition)
+    : collection == null ||
+        Object.keys(collection).length === 0 ||
+        Object.values(collection).some(condition);
 };
 
 export const inputValueEmpty = <T>(value: T) => {
@@ -58,9 +58,12 @@ export const inputValueEmpty = <T>(value: T) => {
   }
 
   const stringified = String(value).trim();
-  return stringified === "undefined" || stringified === "null" || stringified.length === 0;
+  return (
+    stringified === "undefined" ||
+    stringified === "null" ||
+    stringified.length === 0
+  );
 };
-
 
 export const createNotificationAnimation = (
   current: Animated.Value<number>,

@@ -48,13 +48,13 @@ export const PickerComponent = (props: IProps) => {
         itemStyle={styles.itemStyle}
         selectedValue={value}
         dropdownIconColor={textColor}
-        onValueChange={setValue}
-      >
+        onValueChange={setValue}>
         {[...pleaseSelect, ...(data || [])].map((d, i) => (
-          <Picker.Item key={i} 
+          <Picker.Item
+            key={i}
             color={textColor}
             label={d.label}
-            value={d.value} 
+            value={d.value}
           />
         ))}
       </Picker>

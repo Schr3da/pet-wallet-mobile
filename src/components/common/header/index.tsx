@@ -11,7 +11,7 @@ export interface IProps extends ILayoutChildProps {
   title: string;
   description: string;
   path: string[];
-  theme: ThemeTypes; 
+  theme: ThemeTypes;
   source: ImageSourcePropType;
 }
 

@@ -35,19 +35,23 @@ const request = <S, T>(
     headers: getHeader(token),
     body: JSON.stringify(params),
   })
-  .then((response) => response.ok === false || response.status !== 200 ? Promise.reject() : response.text())
-  .then((body: string | undefined) => {
+    .then((response) =>
+      response.ok === false || response.status !== 200
+        ? Promise.reject()
+        : response.text(),
+    )
+    .then((body: string | undefined) => {
       if (body == null) {
         return Promise.reject();
       }
 
       try {
-          return JSON.parse(body);
+        return JSON.parse(body);
       } catch (e) {
-          return Promise.reject();
+        return Promise.reject();
       }
-  })
-  .catch(() => Promise.reject());
+    })
+    .catch(() => Promise.reject());
 
 export const getRequest = <S, T>(url: string, params: S, token?: string) =>
   request<S, T>(RequestMethods.get, url, params, token);

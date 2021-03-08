@@ -120,7 +120,9 @@ export const ChildView = (props: ILayoutChildProps) => {
                 theme={theme}
                 title={title}
                 style={styles.attachment}
-                onChange={(id: string, text: string) => handleInputChange(id, text, dispatch)}
+                onChange={(id: string, text: string) =>
+                  handleInputChange(id, text, dispatch)
+                }
                 onRemove={(id: string) => requestRemoveAttachment(dispatch, id)}
                 onPreview={(id: string) => handlePreview(dispatch, id)}
               />

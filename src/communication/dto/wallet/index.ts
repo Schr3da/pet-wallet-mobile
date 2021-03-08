@@ -3,7 +3,7 @@ import {UUID} from "../uuid";
 export interface IPetWalletEntry {
   id: UUID;
   petId: UUID;
-  title: string; 
+  title: string;
   category: string | null;
   description: string | null;
   date: Date;

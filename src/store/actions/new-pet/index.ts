@@ -136,14 +136,17 @@ export const onSaveNewPet = () => async (
 ) => {
   const state = getState();
   const token = state.database.token;
-  const {inputs, profile}= state.newPet;
+  const {inputs, profile} = state.newPet;
 
   dispatch(setLoading(true));
 
-  await Communication.Pets.saveNewPet({
-    ...inputs,
-    profileImage: base64ImageString(profile),
-  } as any, token);
+  await Communication.Pets.saveNewPet(
+    {
+      ...inputs,
+      profileImage: base64ImageString(profile),
+    } as any,
+    token,
+  );
 
   dispatch({
     type: ON_SAVE_NEW_PET,
