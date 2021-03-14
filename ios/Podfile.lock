@@ -242,6 +242,8 @@ PODS:
     - React-Core
   - react-native-sqlite-storage (5.0.0):
     - React
+  - react-native-webview (11.2.4):
+    - React-Core
   - React-RCTActionSheet (0.63.4):
     - React-Core/RCTActionSheetHeaders (= 0.63.4)
   - React-RCTAnimation (0.63.4):
@@ -357,6 +359,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -428,6 +431,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-sqlite-storage:
     :path: "../node_modules/react-native-sqlite-storage"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -492,6 +497,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: f2df0ccab4331c9b7ccda573ada7e54a6487f45f
   react-native-netinfo: 34f4d7a42f49157f3b45c14217d256bce7dc9682
   react-native-sqlite-storage: ce71689c5a73b79390a1ab213555ae80979a5dc7
+  react-native-webview: 44b95e165b664abd71fb7a2daa3d4051e25702a6
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
   React-RCTBlob: a97d378b527740cc667e03ebfa183a75231ab0f0

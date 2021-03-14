@@ -67,6 +67,11 @@ export interface ISettings {
   };
 }
 
+interface ITermsAndConditions {
+  generalPart1: string;
+  generalPart2: string;
+}
+
 export interface INewPet {
   [SubViewComponents.newPetInformation]: {
     name: string;
@@ -116,6 +121,7 @@ export interface ILanguage {
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;
+  [ViewComponents.termsAndConditions]: ITermsAndConditions;
 }
 
 export const getTranslation = (language: LanguageTypes): ILanguage => {

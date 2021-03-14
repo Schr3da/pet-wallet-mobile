@@ -28,7 +28,6 @@ export const saveNewPet = async (
     console.log("successful");
     return response;
   } catch (error) {
-    console.log("error");
     return Promise.resolve(null);
   }
 };

@@ -1,7 +1,5 @@
 import type {ViewStyle} from "react-native";
 
-import {ITheme} from "../../../theme";
-
 export const applyStyles = (
   background: string,
   color: string,
@@ -15,7 +13,7 @@ export const applyStyles = (
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    opacity: isDisabled === false ? 1 : 0.6,
+    opacity: isDisabled === false ? 1 : 0.4,
   },
   title: {
     textAlign: "center",

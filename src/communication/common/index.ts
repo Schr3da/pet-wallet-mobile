@@ -9,7 +9,6 @@ enum RequestMethods {
 
 const getHeader = (token?: string) => {
   const headers = {
-    Accept: "application/json",
     "Content-Type": "application/json",
   };
 
@@ -35,11 +34,12 @@ const request = <S, T>(
     headers: getHeader(token),
     body: JSON.stringify(params),
   })
-    .then((response) =>
-      response.ok === false || response.status !== 200
+    .then((response) => {
+      console.log(response);
+      return response.ok === false || response.status !== 200
         ? Promise.reject()
-        : response.text(),
-    )
+        : response.text();
+    })
     .then((body: string | undefined) => {
       if (body == null) {
         return Promise.reject();
@@ -48,10 +48,14 @@ const request = <S, T>(
       try {
         return JSON.parse(body);
       } catch (e) {
+        console.log("json parse error: ", e);
         return Promise.reject();
       }
     })
-    .catch(() => Promise.reject());
+    .catch((e) => {
+      console.log("connection error: ", e);
+      return Promise.reject()
+    });
 
 export const getRequest = <S, T>(url: string, params: S, token?: string) =>
   request<S, T>(RequestMethods.get, url, params, token);

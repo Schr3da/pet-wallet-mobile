@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import {Text, View} from "react-native";
+import {WebView} from "react-native-webview";
+import {View, Text} from "react-native";
 
 import {createStyle} from "../../theme";
 import {Layout} from "../common";
@@ -12,12 +13,17 @@ export const Component = () => {
     <Layout
       imageSource={require("../../../assets/png/help-header-icon.png")}
       childRenderer={(props) => {
-        const {theme} = props;
+        const {theme, language} = props;
         const styles = createStyle(theme, applyStyles);
         return (
           <React.Fragment>
             <View style={styles.container}>
-              <Text>Hilfe View</Text>
+              <Text style={styles.paragraph}>
+                {language.termsAndConditions.generalPart1}
+              </Text>
+              <Text style={styles.paragraph}>
+                {language.termsAndConditions.generalPart2}
+              </Text>
             </View>
           </React.Fragment>
         );
