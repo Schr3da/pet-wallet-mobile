@@ -8,6 +8,7 @@ import type {
   INotifications,
   IDialogs,
   ICommon,
+  ISharePetDetails,
 } from "../index";
 
 import {
@@ -170,6 +171,11 @@ const errors: IErrors = {
     text:
       "The Device is currently not connected to the internet. As a result the app is working limited.",
   },
+  [ErrorTypes.sharePet]: {
+    title: "Content sharing not possible",
+    text: 
+      "An error has occured. Currently the share function does not work properly. Please try again.",
+  }
 };
 
 const notifications: INotifications = {
@@ -202,6 +208,10 @@ const dialogs: IDialogs = {
     title: "Discard changes",
     text: "Press continue to discard the modifications.",
   },
+};
+
+export const sharePetDetails: ISharePetDetails = {
+  message: "Pet Wallet want to share data: ",
 };
 
 const animalTypes = {
@@ -242,6 +252,7 @@ export const EN = {
   dialogs,
   errors,
   header,
+  sharePetDetails,
   notifications,
   animalTypes,
   [ViewComponents.welcome]: welcome,

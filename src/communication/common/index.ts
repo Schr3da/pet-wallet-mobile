@@ -1,4 +1,4 @@
-const baseUrl = "https://wallet.pet-care.rocks";
+export const baseUrl = "https://wallet.pet-care.rocks";
 
 enum RequestMethods {
   get = "GET",

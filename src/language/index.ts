@@ -102,6 +102,10 @@ export interface IMessage {
   text: string;
 }
 
+export interface ISharePetDetails {
+  message: string;
+}
+
 export type INotifications = {[k in NotificationTypes]: IMessage};
 
 export type IErrors = {[k in ErrorTypes]: IMessage} & {default: IMessage};
@@ -117,6 +121,7 @@ export interface ILanguage {
   errors: IErrors;
   dialogs: IDialogs;
   animalTypes: AnimalTypes;
+  sharePetDetails: ISharePetDetails;
   notifications: INotifications;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;

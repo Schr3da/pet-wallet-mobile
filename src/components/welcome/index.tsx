@@ -3,7 +3,7 @@ import * as React from "react";
 import {Animated, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
-import {onShowPetDetails} from "../../store/actions/pets";
+import {onShowPetDetails, onSharePet} from "../../store/actions/pets";
 import {ICombinedReducerState} from "../../store/reducers";
 import {createStyle} from "../../theme";
 import {Layout, Card} from "../common";
@@ -19,6 +19,9 @@ const stateToProps = (state: ICombinedReducerState): any => ({
 
 const handleCardPress = (dispatch: any, id: string) =>
   dispatch(onShowPetDetails(id));
+
+const handleShare = async (dispatch: any, id: string) => 
+  dispatch(onSharePet(id));
 
 const animation = new Animated.Value(0);
 
@@ -66,7 +69,7 @@ export const Component = (): JSX.Element => {
                       language={language}
                       theme={theme}
                       onPress={(id: string) => handleCardPress(dispatch, id)}
-                      onShare={() => undefined}
+                      onShare={async (id: string) => await handleShare(dispatch, id)}
                     />
                   </Animated.View>
                 );

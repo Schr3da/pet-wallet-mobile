@@ -8,6 +8,7 @@ import type {
   INotifications,
   IDialogs,
   ICommon,
+  ISharePetDetails,
 } from "../index";
 
 import {
@@ -171,6 +172,11 @@ const errors: IErrors = {
     text:
       "Das Gerät ist derzeit nicht mit dem Internet Verbunden. Die App kann nur eingeschränkt verwendet werden.",
   },
+  [ErrorTypes.sharePet]: {
+    title: "Teilen nicht möglich",
+    text: 
+      "Es ist ein unerwarteter Fehler aufgetreten. Die Funktion kann derzeit nur eingeschränkt verwendet werden.",
+  }
 };
 
 const notifications: INotifications = {
@@ -203,6 +209,11 @@ const dialogs: IDialogs = {
     title: "Änderungen verwerfen",
     text: "Möchtest du die Änderungen verwerfen?",
   },
+};
+
+
+export const sharePetDetails: ISharePetDetails = {
+  message: "Pet Wallet möchte gern Tierdaten teilen: ",
 };
 
 const animalTypes = {
@@ -243,6 +254,7 @@ export const DE = {
   dialogs,
   errors,
   header,
+  sharePetDetails,
   notifications,
   animalTypes,
   [ViewComponents.welcome]: welcome,
