@@ -39,6 +39,7 @@ import {Loader} from "../loader";
 import {DatePickerComponent} from "../date-picker";
 
 import {applyStyles} from "./index.style";
+import {InputValues} from "../../../store/actions/new-pet";
 
 interface IStateProps {
   title: string;
@@ -108,7 +109,7 @@ interface IProps {
   hasHeader?: boolean;
   onScroll?: any;
   getPickerData?: (id: string | null, language: LanguageTypes) => IPickerData[];
-  onPickerChanged?: (id: string | null, value: string | null) => void;
+  onPickerChanged?: (id: string | null, value: InputValues) => void;
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -258,7 +259,7 @@ export const Layout = (props: IProps): JSX.Element => {
           mode={DatePickerModes.date}
           theme={theme}
           locale={language}
-          onComplete={(id: string | null, date: string) =>
+          onComplete={(id: string | null, date: Date) =>
             onPickerChanged && onPickerChanged(id, date)
           }
         />

@@ -8,6 +8,7 @@ import {InputTypes, onFocus} from "../../../store/actions/layout";
 
 import {applyStyles} from "./index.style";
 import {useDispatch} from "react-redux";
+import {LanguageTypes} from "../../../language";
 
 const handleFocus = (
   dispatch: any,
@@ -17,6 +18,24 @@ const handleFocus = (
   dispatch(onFocus(id, inputType));
 };
 
+const isDateGuard = (value: any): value is Date =>
+  value instanceof Date;
+
+const valueFormatter = (
+  value: InputValues,
+  language?: LanguageTypes
+): string | number | null => {
+  if (value == null) {
+    return null;
+  }
+
+  if (isDateGuard(value)) {
+    return value.toLocaleDateString(language);
+  }
+
+  return value;
+}
+
 interface IProps {
   id: string;
   style: ViewStyle;
@@ -24,12 +43,13 @@ interface IProps {
   value: InputValues;
   inputType: InputTypes;
   placeholder?: string;
+  language?: LanguageTypes;
 }
 
 export const InputTypeField = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {id, inputType, placeholder, style, theme, value} = props;
+  const {language, id, inputType, placeholder, style, theme, value} = props;
 
   const hasValue = value != null;
 
@@ -41,7 +61,7 @@ export const InputTypeField = (props: IProps) => {
         onPress={() => handleFocus(dispatch, id, inputType)}
         activeOpacity={1}>
         <Text style={styles.input} numberOfLines={1}>
-          {value || placeholder}
+          {valueFormatter(value, language) || placeholder}
         </Text>
       </TouchableOpacity>
     </View>

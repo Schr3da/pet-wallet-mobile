@@ -29,7 +29,7 @@ export enum PetTypes {
 export interface IPetDto {
   id: string | null;
   name: string;
-  dateOfBirth: string | null;
+  dateOfBirth: Date | null;
   age: string | null;
   profileImage: string | undefined;
   profileUri: string | undefined;
@@ -41,7 +41,7 @@ export const mapStateToPet = (
 ): IPetDto => ({
   id: data.id,
   name: String(data.inputs.name),
-  dateOfBirth: String(data.inputs.dateOfBirth),
+  dateOfBirth: (data.inputs.dateOfBirth as Date) || null,
   age: String(data.inputs.age),
   profileImage: base64ImageString(data.profile) || undefined,
   profileUri: data.profile?.uri || undefined,

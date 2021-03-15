@@ -58,7 +58,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   const stateProps = useSelector(stateToProps);
   const {profile} = stateProps;
 
-  const {theme, language} = props;
+  const {theme, language, languageType} = props;
   const styles = createStyle(theme, applyStyles);
 
   return (
@@ -106,6 +106,7 @@ export const ChildView = (props: ILayoutChildProps) => {
           id={InputIds.dateOfBirth}
           style={styles.dateOfBirth}
           theme={theme}
+          language={languageType}
           inputType={InputTypes.date}
           placeholder={language.newPet.newPetInformation.dateOfBirth}
           value={stateProps.inputs[InputIds.dateOfBirth]}

@@ -21,7 +21,7 @@ export interface IProps {
   mode: DatePickerModes;
   theme: ThemeTypes;
   locale: LanguageTypes;
-  onComplete: (id: string | null, date: string) => void;
+  onComplete: (id: string | null, date: Date) => void;
 }
 
 const getMaximumDate = (): Date => {
@@ -56,10 +56,7 @@ export const DatePickerComponent = (props: IProps) => {
         theme={theme}
         title={language.common.pick}
         style={styles.button}
-        onPress={() => {
-          const formattedDate = date.toLocaleDateString(locale);
-          onComplete(id, formattedDate);
-        }}
+        onPress={() => onComplete(id, date)}
       />
     </View>
   );

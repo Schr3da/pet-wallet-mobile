@@ -24,7 +24,7 @@ export enum InputIds {
   dateOfBirth = "dateOfBirth",
 }
 
-export type InputValues = string | number | null | undefined;
+export type InputValues = string | number | null | undefined | Date;
 
 export const ON_INPUT_FIELD_CHANGE = "ON_INPUT_FIELD_CHANGE";
 interface IOnInputFieldChange {
@@ -60,7 +60,6 @@ export const onCancelNewPet = (
   const {id} = state.newPet;
 
   if (id != null) {
-    console.log("askdjlkajsdljasljdlkajsd");
     await Communication.Pets.removePet(state.newPet.id!, state.database.token!);
   }
 
@@ -179,7 +178,12 @@ export const onCreateNewPet = () => async (
 
   const pet = mapStateToPet(state.newPet);
 
-  const response = await Communication.Pets.createNewPet(pet, token!);
+  let response = null;
+  if (pet.id == null) {
+    response = await Communication.Pets.createNewPet(pet, token!);
+  } else {
+    response = await Communication.Pets.updateNewPet(pet, token!);
+  }
   
   if (response == null) {
     dispatch(setLoading(false));
@@ -193,7 +197,7 @@ export const onCreateNewPet = () => async (
       id: response.id, 
       animal: response.type, 
       name: response.name, 
-      dateOfBirth: response.dateOfBirth, 
+      dateOfBirth: response.dateOfBirth == null ? null : new Date(response.dateOfBirth), 
       age: state.newPet.inputs.age, 
       profileImage: response.avatarImage,
     },

@@ -42,13 +42,39 @@ export const createNewPet = async (
 
   const mappedData: PetDtos.ICreatePetRequestDto = {
     name,
-    dateOfBirth: stringToDate(dateOfBirth),
+    dateOfBirth,
     type: animal,
     avatarImage: profileImage || null,
   };
 
   try {
     const response = await postRequest<PetDtos.ICreatePetRequestDto, PetDtos.ICreatePetResponseDto>(
+      url,
+      mappedData,
+      token,
+    );
+    return Promise.resolve(response);
+  } catch (error) {
+    return Promise.resolve(null);
+  }
+};
+
+export const updateNewPet = async (
+  {id, name, animal, dateOfBirth, profileImage}: IPetDto,
+  token: string,
+) => {
+  const url = "/api/petpass/pet/update";
+
+  const mappedData: PetDtos.IUpdatePetRequestDto = {
+    id: id!,
+    name,
+    dateOfBirth,
+    type: animal,
+    avatarImage: profileImage || null,
+  };
+
+  try {
+    const response = await postRequest<PetDtos.IUpdatePetRequestDto, PetDtos.IUpdatePetResponseDto>(
       url,
       mappedData,
       token,
