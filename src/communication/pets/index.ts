@@ -3,6 +3,19 @@ import type {PetDtos} from "../dto";
 import {postRequest, stringToDate} from "../common";
 import {IPetDto} from "../../dto/pets";
 
+export const removePet = async (
+  id: string,
+  token: string,
+) => {
+  const url = "/api/petpass/pet/delete";
+  try {
+    await postRequest<PetDtos.IRemovePetRequestDto, any>(url, {id}, token);
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.resolve(null);
+  }
+}
+
 export const scanPassPage = async (
   base64Image: string,
   token: string,
@@ -21,7 +34,7 @@ export const scanPassPage = async (
   }
 };
 
-export const saveNewPet = async (
+export const createNewPet = async (
   {name, animal, dateOfBirth, profileImage}: IPetDto,
   token: string,
 ) => {

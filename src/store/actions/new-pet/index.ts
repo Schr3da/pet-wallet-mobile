@@ -56,7 +56,13 @@ export const onCancelNewPet = (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
+  const state = getState();
+  const {id} = state.newPet;
 
+  if (id != null) {
+    console.log("askdjlkajsdljasljdlkajsd");
+    await Communication.Pets.removePet(state.newPet.id!, state.database.token!);
+  }
 
   dispatch(onDismissDialog());
 
@@ -173,11 +179,11 @@ export const onCreateNewPet = () => async (
 
   const pet = mapStateToPet(state.newPet);
 
-  const response = await Communication.Pets.saveNewPet(pet, token!);
+  const response = await Communication.Pets.createNewPet(pet, token!);
   
   if (response == null) {
     dispatch(setLoading(false));
-    return dispatch(onSetErrorCode(ErrorTypes.deviceIsOffline));
+    return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
   }
 
   dispatch({

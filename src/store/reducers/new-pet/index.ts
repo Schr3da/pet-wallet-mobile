@@ -1,4 +1,5 @@
 import {Database, NewPet} from "../../actions";
+import {IPetDto} from "../../../dto/pets";
 
 export interface INewPetState {
   id: string | null;
@@ -29,6 +30,23 @@ const handleProfileImage = (
 ): INewPetState => ({
   ...state,
   profile: data,
+});
+
+const handleCreateNewPet = (
+  state: INewPetState,
+  data: IPetDto,
+): INewPetState => ({
+  ...state,
+  inputs: {
+    [NewPet.InputIds.name]: data.name,
+    [NewPet.InputIds.age]: data.age,
+    [NewPet.InputIds.animalType]: data.animal,
+    [NewPet.InputIds.dateOfBirth]: data.dateOfBirth,
+  },
+  profile: state.profile == null || data.profileImage == null ? null : {
+    ...state.profile,
+    imageBase64: data.profileImage,    
+  }
 });
 
 const handleNewScan = (
@@ -62,6 +80,8 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleNewScan(state, action.data);
     case NewPet.ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT:
       return handleRemoveScan(state, action.id);
+    case NewPet.ON_CREATE_NEW_PET:
+      return handleCreateNewPet(state, action.data);
     case NewPet.ON_COMPLETE_NEW_PET:
       return initialState();
     default:

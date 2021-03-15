@@ -1,3 +1,7 @@
+export interface IRemovePetRequestDto {
+  id: string;
+}
+
 export interface ICreatePetRequestDto {
   name: string;
   type: string;

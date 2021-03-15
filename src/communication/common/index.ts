@@ -35,7 +35,10 @@ const request = <S, T>(
     body: JSON.stringify(params),
   })
     .then((response) => {
-      console.log(response);
+      if (__DEV__ === true) {
+        console.log(response);
+      }
+
       return response.ok === false || response.status !== 200
         ? Promise.reject()
         : response.text();
