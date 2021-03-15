@@ -1,7 +1,6 @@
 import {
   InputValues,
   onInputFieldChange,
-  onCancelNewPet,
 } from "../../../store/actions/new-pet";
 import {
   onChangeSubViewComponent,
@@ -12,8 +11,6 @@ import {
   ErrorTypes,
   onSetDialogContentType,
   DialogContentTypes,
-  onDismissDialog,
-  setLoading,
 } from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
 
@@ -37,15 +34,6 @@ export const handleChangeComponentView = (
 
 export const requestCancel = (dispatch: any) =>
   dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
-
-export const handleCancelNewPet = (
-  dispatch: any,
-  language: LanguageTypes,
-  hasPets: boolean,
-) => {
-  dispatch(onDismissDialog());
-  dispatch(onCancelNewPet(language, hasPets));
-};
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));

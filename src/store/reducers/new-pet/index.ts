@@ -1,12 +1,14 @@
 import {Database, NewPet} from "../../actions";
 
 export interface INewPetState {
+  id: string | null;
   inputs: {[key in NewPet.InputIds]: NewPet.InputValues};
   profile: NewPet.IImageData | null;
   scans: NewPet.IImageData[];
 }
 
 const initialState = (): INewPetState => ({
+  id: null,
   inputs: {} as {[key in NewPet.InputIds]: NewPet.InputValues},
   profile: null,
   scans: [],
@@ -60,7 +62,7 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleNewScan(state, action.data);
     case NewPet.ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT:
       return handleRemoveScan(state, action.id);
-    case NewPet.ON_SAVE_NEW_PET:
+    case NewPet.ON_COMPLETE_NEW_PET:
       return initialState();
     default:
       return state;

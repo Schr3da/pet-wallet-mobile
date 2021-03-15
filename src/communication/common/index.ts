@@ -68,3 +68,15 @@ export const updateRequest = <S, T>(url: string, params: S, token?: string) =>
 
 export const deleteRequest = <S, T>(url: string, params: S, token?: string) =>
   request<S, T>(RequestMethods.delete, url, params, token);
+
+export const stringToDate = (
+  value: string | null, 
+): Date | null => {
+  
+  if (value == null) {
+    return null;
+  }
+
+  console.log(value);
+  return new Date(); 
+}

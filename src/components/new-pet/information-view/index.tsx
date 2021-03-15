@@ -18,16 +18,15 @@ import {
   InputValues,
   IImageData,
   onProfileImage,
+  onCreateNewPet,
+  onCancelNewPet,
 } from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {
   handleInputChange,
-  handleChangeSubView,
-  handleCancelNewPet,
   handleError,
   requestCancel,
 } from "../hooks";
-import {SubViewComponents} from "../../../store/actions/navigation";
 import {
   DialogContentTypes,
   ErrorTypes,
@@ -35,7 +34,6 @@ import {
 } from "../../../store/actions/layout";
 import {
   base64ImageToUri,
-  collectionIsEmpty,
   inputValueEmpty,
 } from "../../common/utils";
 
@@ -129,11 +127,11 @@ export const ChildView = (props: ILayoutChildProps) => {
 };
 
 const footerStateToProps = (state: ICombinedReducerState) => {
-  const {name, race, dateOfBirth} = state.newPet.inputs;
+  const {name, animal, dateOfBirth} = state.newPet.inputs;
 
   const canContinue =
     inputValueEmpty(name) === false &&
-    inputValueEmpty(race) === false &&
+    inputValueEmpty(animal) === false &&
     inputValueEmpty(dateOfBirth) === false;
 
   return {canContinue};
@@ -144,7 +142,7 @@ export const Footer = (props: ILayoutChildProps) => {
 
   const {canContinue} = useSelector(footerStateToProps);
 
-  const {language, languageType, theme} = props;
+  const {language, theme} = props;
 
   return (
     <React.Fragment>
@@ -153,13 +151,7 @@ export const Footer = (props: ILayoutChildProps) => {
         title={language.newPet.newPetInformation.primaryButton}
         style={{marginTop: 10}}
         isDisabled={canContinue === false}
-        onPress={() =>
-          handleChangeSubView(
-            dispatch,
-            SubViewComponents.newPetScan,
-            languageType,
-          )
-        }
+        onPress={() => dispatch(onCreateNewPet())}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
@@ -185,7 +177,7 @@ export const Dialogs = (props: ILayoutChildProps) => {
           text={text}
           theme={theme}
           language={language}
-          onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+          onPress={() => dispatch(onCancelNewPet(languageType, hasPets))}
         />
       );
     default:

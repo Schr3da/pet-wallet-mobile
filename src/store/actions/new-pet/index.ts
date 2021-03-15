@@ -2,10 +2,9 @@ import * as Communication from "../../../communication";
 
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
-import {IPetDto} from "../../../dto/pets";
-import {base64ImageString} from "../../../components/common/utils";
+import {IPetDto, mapStateToPet} from "../../../dto/pets";
 import {onChangeSubViewComponent, SubViewComponents} from "../navigation";
-import {setLoading} from "../layout";
+import {setLoading, onSetErrorCode, ErrorTypes, onDismissDialog} from "../layout";
 
 export interface IImageData {
   id: string;
@@ -21,7 +20,7 @@ export interface IImageData {
 export enum InputIds {
   age = "age",
   name = "name",
-  animalType = "race",
+  animalType = "animal",
   dateOfBirth = "dateOfBirth",
 }
 
@@ -53,11 +52,20 @@ interface IOnCancelNewPet {
 export const onCancelNewPet = (
   language: LanguageTypes,
   hasPets: boolean,
-): IOnCancelNewPet => ({
-  type: ON_CANCEL_NEW_PET,
-  language,
-  hasPets,
-});
+) => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+
+
+  dispatch(onDismissDialog());
+
+  dispatch({
+    type: ON_CANCEL_NEW_PET,
+    language,
+    hasPets,
+  });
+};
 
 export const ON_PROFILE_IMAGE_NEW_PET = "ON_PROFILE_IMAGE_NEW_PET";
 interface IOnProfileImageNewPet {
@@ -65,7 +73,10 @@ interface IOnProfileImageNewPet {
   data: IImageData;
 }
 
-export const onProfileImage = (data: IImageData) => (dispatch: any) => {
+export const onProfileImage = (data: IImageData) => (
+  dispatch: any,
+  _getState: () => ICombinedReducerState,
+) => {
   dispatch({
     type: ON_PROFILE_IMAGE_NEW_PET,
     data,
@@ -78,7 +89,10 @@ interface IOnScanNewPetPass {
   data: IImageData;
 }
 
-export const onScan = (data: IImageData) => (dispatch: any) => {
+export const onScan = (data: IImageData) => (
+  dispatch: any,
+  _getState: () => ICombinedReducerState,
+) => {
   dispatch({
     type: ON_SCAN_NEW_PET_PASS,
     data,
@@ -123,44 +137,66 @@ export const onPreviewScan = (id: string) => (
   );
 };
 
-export const ON_SAVE_NEW_PET = "ON_SAVE_NEW_PET";
-interface IOnSaveNewPet {
-  type: typeof ON_SAVE_NEW_PET;
+export const ON_COMPLETE_NEW_PET = "ON_COMPLETE_NEW_PET";
+interface IOnCompleteNewPet {
+  type: typeof ON_COMPLETE_NEW_PET;
+  language: LanguageTypes;
+}
+
+export const onCompleteNewPet = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+): Promise<void> => {
+  const state = getState();
+
+  dispatch({
+    type: ON_COMPLETE_NEW_PET,
+    language: state.layout.language, 
+  }) as IOnCompleteNewPet;
+};
+
+export const ON_CREATE_NEW_PET = "ON_CREATE_NEW_PET";
+interface IOnCreateNewPet {
+  type: typeof ON_CREATE_NEW_PET;
   language: LanguageTypes;
   data: IPetDto;
 }
 
-export const onSaveNewPet = () => async (
+export const onCreateNewPet = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
   const token = state.database.token;
-  const {inputs, profile} = state.newPet;
 
   dispatch(setLoading(true));
 
-  await Communication.Pets.saveNewPet(
-    {
-      ...inputs,
-      profileImage: base64ImageString(profile),
-    } as any,
-    token,
-  );
+  const pet = mapStateToPet(state.newPet);
+
+  const response = await Communication.Pets.saveNewPet(pet, token!);
+  
+  if (response == null) {
+    dispatch(setLoading(false));
+    return dispatch(onSetErrorCode(ErrorTypes.deviceIsOffline));
+  }
 
   dispatch({
-    type: ON_SAVE_NEW_PET,
+    type: ON_CREATE_NEW_PET,
     language: state.layout.language,
     data: {
-      id: Date.now().toString(),
-      animal: inputs[InputIds.animalType],
-      name: inputs[InputIds.name] || "",
-      dateOfBirth: inputs[InputIds.dateOfBirth] || "",
-      age: inputs[InputIds.age] || "",
-      profileImage: base64ImageString(profile),
+      id: response.id, 
+      animal: response.type, 
+      name: response.name, 
+      dateOfBirth: response.dateOfBirth, 
+      age: state.newPet.inputs.age, 
+      profileImage: response.avatarImage,
     },
-  } as IOnSaveNewPet);
+  } as IOnCreateNewPet);
 
+  dispatch(onChangeSubViewComponent(
+    SubViewComponents.newPetScan, state.layout.language
+  ));
+  
   dispatch(setLoading(false));
 };
 
@@ -171,4 +207,6 @@ export type Actions =
   | IOnProfileImageNewPet
   | IOnRemoveNewPetPass
   | IOnPreviewNewPetPassScan
-  | IOnSaveNewPet;
+  | IOnCreateNewPet
+  | IOnCompleteNewPet
+;

@@ -21,11 +21,11 @@ import {
   onRemoveScan,
   InputValues,
   onPreviewScan,
-  onSaveNewPet,
+  onCompleteNewPet,
+  onCancelNewPet,
 } from "../../../store/actions/new-pet";
 
 import {
-  handleCancelNewPet,
   handleError,
   handleInputChange,
   requestCancel,
@@ -145,7 +145,7 @@ export const Footer = (props: ILayoutChildProps) => {
         theme={theme}
         title={language.newPet.newPetScan.primaryButton}
         style={{marginTop: 10}}
-        onPress={() => dispatch(onSaveNewPet())}
+        onPress={() => dispatch(onCompleteNewPet())}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
@@ -170,7 +170,7 @@ export const Dialogs = (props: ILayoutChildProps) => {
           text={language.dialogs.cancelNewPet.text}
           theme={theme}
           language={language}
-          onPress={() => handleCancelNewPet(dispatch, languageType, hasPets)}
+          onPress={() => dispatch(onCancelNewPet(languageType, hasPets))}
         />
       );
     case DialogContentTypes.deleteAttachment:

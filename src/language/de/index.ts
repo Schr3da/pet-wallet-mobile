@@ -176,6 +176,10 @@ const errors: IErrors = {
     title: "Teilen nicht möglich",
     text: 
       "Es ist ein unerwarteter Fehler aufgetreten. Die Funktion kann derzeit nur eingeschränkt verwendet werden.",
+  },
+  [ErrorTypes.internetConnectionRequired]: {
+    title: "Internetverbindung erforderlich",
+    text: "Um fortzufahren wird eine Internetverbindung benötigt.",
   }
 };
 

@@ -163,7 +163,7 @@ export const reducer = (
       return goBack(state, action.language);
     case NewPet.ON_CANCEL_NEW_PET:
       return showHome(state, action.language, action.hasPets);
-    case NewPet.ON_SAVE_NEW_PET:
+    case NewPet.ON_COMPLETE_NEW_PET:
       return showHome(state, action.language, true);
     case Database.ON_REQUEST_DATA_DELETION:
       return handleDataDeletion(state, action.language);

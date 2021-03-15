@@ -1,32 +1,46 @@
-import type * as CommunicationDtos from "../dto";
+import type {PetDtos} from "../dto";
 
-import {postRequest} from "../common";
+import {postRequest, stringToDate} from "../common";
 import {IPetDto} from "../../dto/pets";
 
-type BackendPetDto = CommunicationDtos.PetDtos.IPetDto;
-
-export const saveNewPet = async (
-  {name, animal, profileImage, dateOfBirth, age}: IPetDto,
+export const scanPassPage = async (
+  base64Image: string,
   token: string,
 ) => {
   const url = "/api/petpass/pet/create";
 
-  const mappedData: BackendPetDto = {
+  try {
+    const response = await postRequest<any, any>(
+      url, 
+      {}, 
+      token
+    );
+    return Promise.resolve(response);
+  } catch (error) {
+    return Promise.resolve(null);
+  }
+};
+
+export const saveNewPet = async (
+  {name, animal, dateOfBirth, profileImage}: IPetDto,
+  token: string,
+) => {
+  const url = "/api/petpass/pet/create";
+
+  const mappedData: PetDtos.ICreatePetRequestDto = {
     name,
-    age,
-    dateOfBirth,
+    dateOfBirth: stringToDate(dateOfBirth),
     type: animal,
     avatarImage: profileImage || null,
   };
 
   try {
-    const response = await postRequest<BackendPetDto, BackendPetDto>(
+    const response = await postRequest<PetDtos.ICreatePetRequestDto, PetDtos.ICreatePetResponseDto>(
       url,
       mappedData,
       token,
     );
-    console.log("successful");
-    return response;
+    return Promise.resolve(response);
   } catch (error) {
     return Promise.resolve(null);
   }

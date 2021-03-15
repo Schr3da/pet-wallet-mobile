@@ -1,10 +1,31 @@
-import {UUID} from "../uuid";
-
-export interface IPetDto {
-  id?: UUID;
+export interface ICreatePetRequestDto {
   name: string;
-  avatarImage: string | null;
   type: string;
-  age: string;
+  dateOfBirth: Date | null;
+  avatarImage: string | null;
+}
+
+export interface ICreatePetResponseDto {
+  id: string;
+  name: string;
+  type: string;
+  avatarImage: string | null;
+  created: Date;
+  dateOfBirth: Date | null;
+}
+
+export interface IUpdatePetRequestDto {
+  id: string;
+  name: string;
+  type: string;
+  avatarImage: string | null;
+  dateOfBirth: Date | null;
+}
+
+export interface IUpdatePetResponseDto {
+  id: string;
+  name: string;
+  type: string;
+  avatarImage: string | null;
   dateOfBirth: string | null;
 }

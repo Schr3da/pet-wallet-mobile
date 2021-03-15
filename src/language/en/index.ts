@@ -175,6 +175,10 @@ const errors: IErrors = {
     title: "Content sharing not possible",
     text: 
       "An error has occured. Currently the share function does not work properly. Please try again.",
+  },
+  [ErrorTypes.internetConnectionRequired]: {
+    title: "Network connection required",
+    text: "In order to continue a network connection is required.",
   }
 };
 

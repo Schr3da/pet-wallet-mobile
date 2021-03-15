@@ -7,10 +7,9 @@ export const register = async () => {
 
   try {
     const response = await postRequest<
-      UserDtos.IUserRequestDto,
-      UserDtos.IUserResponseDto
+      UserDtos.ICreateUserRequestDto,
+      UserDtos.ICreateUserResponseDto
     >(url, {nickname});
-
     return response;
   } catch (error) {
     return Promise.resolve(null);

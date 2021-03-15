@@ -1,12 +1,10 @@
-import {UUID} from "../uuid";
-
-export interface IUserRequestDto {
-  nickname: string;
+export interface ICreateUserRequestDto {
+    nickname: string;
 }
 
-export interface IUserResponseDto {
-  id: UUID;
-  nickname: string;
-  token: string;
-  created: Date;
+export interface ICreateUserResponseDto {
+    id: string;
+    nickname: string;
+    token: string;
+    created: Date;
 }

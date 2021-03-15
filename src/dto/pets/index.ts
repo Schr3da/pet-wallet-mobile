@@ -1,3 +1,7 @@
+import {IPetsState} from "../../store/reducers/pets";
+import {INewPetState} from "../../store/reducers/new-pet";
+import {base64ImageString} from "../../components/common/utils";
+
 export enum PetTypes {
   dog = "dog",
   cat = "cat",
@@ -23,11 +27,23 @@ export enum PetTypes {
 }
 
 export interface IPetDto {
-  id: string;
+  id: string | null;
   name: string;
-  dateOfBirth: string;
-  age: string;
+  dateOfBirth: string | null;
+  age: string | null;
   profileImage: string | undefined;
   profileUri: string | undefined;
   animal: string;
 }
+
+export const mapStateToPet = (
+  data: INewPetState
+): IPetDto => ({
+  id: data.id,
+  name: String(data.inputs.name),
+  dateOfBirth: String(data.inputs.dateOfBirth),
+  age: String(data.inputs.age),
+  profileImage: base64ImageString(data.profile) || undefined,
+  profileUri: data.profile?.uri || undefined,
+  animal: String(data.inputs.animal),
+});

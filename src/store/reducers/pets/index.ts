@@ -12,9 +12,9 @@ const initialState = (): IPetsState => ({
   data: [],
 });
 
-const saveNewPet = (state: IPetsState, data: IPetDto): IPetsState => ({
+const setPets = (state: IPetsState, data: IPetDto[]): IPetsState => ({
   ...state,
-  data: [...state.data, data],
+  data: [...data],
 });
 
 const setSelectedId = (state: IPetsState, id: string | null): IPetsState => ({
@@ -28,8 +28,8 @@ const reducer = (state: IPetsState = initialState(), action: Actions) => {
   switch (action.type) {
     case Database.ON_REQUEST_DATA_DELETION:
       return initialState();
-    case NewPet.ON_SAVE_NEW_PET:
-      return saveNewPet(state, action.data);
+    case Pets.ON_SET_PETS:
+      return setPets(state, action.data);
     case Pets.ON_SHOW_PET_DETAILS:
       return setSelectedId(state, action.id);
     default:

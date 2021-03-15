@@ -16,6 +16,7 @@ export enum ErrorTypes {
   camera = "cameraError",
   photoLibrary = "photoLibraryError",
   deviceIsOffline = "deviceIsOffline",
+  internetConnectionRequired = "internetConnectionRequired",
   sharePet = "sharePet",
 }
 
