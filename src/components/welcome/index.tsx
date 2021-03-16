@@ -20,7 +20,7 @@ const stateToProps = (state: ICombinedReducerState): any => ({
 const handleCardPress = (dispatch: any, id: string) =>
   dispatch(onShowPetDetails(id));
 
-const handleShare = async (dispatch: any, id: string) => 
+const handleShare = async (dispatch: any, id: string) =>
   dispatch(onSharePet(id));
 
 const animation = new Animated.Value(0);
@@ -69,7 +69,9 @@ export const Component = (): JSX.Element => {
                       language={language}
                       theme={theme}
                       onPress={(id: string) => handleCardPress(dispatch, id)}
-                      onShare={async (id: string) => await handleShare(dispatch, id)}
+                      onShare={async (id: string) =>
+                        await handleShare(dispatch, id)
+                      }
                     />
                   </Animated.View>
                 );

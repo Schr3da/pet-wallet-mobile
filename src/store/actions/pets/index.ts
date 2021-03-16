@@ -22,16 +22,16 @@ export const onSharePet = (id: string) => async (
     const translation = getTranslation(state.layout.language);
 
     dispatch(setLoading(true));
-    const shareUrl = await Communication.Share.createShareUrl(id); 
+    const shareUrl = await Communication.Share.createShareUrl(id);
     dispatch(setLoading(false));
-  
+
     await Share.share({
-      message: translation.sharePetDetails.message + shareUrl, 
+      message: translation.sharePetDetails.message + shareUrl,
     });
   } catch (error) {
     dispatch(setLoading(false));
     dispatch(onSetErrorCode(ErrorTypes.sharePet));
-  } 
+  }
 };
 
 export const ON_SHOW_PET_DETAILS = "ON_SHOW_PET_DETAILS";
@@ -67,9 +67,7 @@ export interface IOnSetPets {
   data: IPetDto[];
 }
 
-export const setPets = (
-  data: IPetDto[]
-): IOnSetPets => ({
+export const setPets = (data: IPetDto[]): IOnSetPets => ({
   type: ON_SET_PETS,
   data,
 });
@@ -83,19 +81,14 @@ export const onFetchPets = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
-  
   const state = getState();
   const token = state.database.token;
-  
+
   const response = await Communication.Pets.fetchPets(token!);
-  
-  const pets = mapFetchPetsResponseToPetDtos(response);  
 
-  dispatch(setPets(pets)); 
-}
+  const pets = mapFetchPetsResponseToPetDtos(response);
 
-export type Actions = 
-  | IOnSetPets
-  | IOnShowPetDetails
-  | IOnFetchPets
-;
+  dispatch(setPets(pets));
+};
+
+export type Actions = IOnSetPets | IOnShowPetDetails | IOnFetchPets;

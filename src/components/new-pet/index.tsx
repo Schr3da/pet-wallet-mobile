@@ -23,7 +23,7 @@ const handlePickerValueSelected = (
   if (id == null) {
     return;
   }
-  
+
   dispatch(onInputFieldChange(id, value));
 };
 

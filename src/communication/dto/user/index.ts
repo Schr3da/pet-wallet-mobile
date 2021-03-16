@@ -1,10 +1,10 @@
 export interface ICreateUserRequestDto {
-    nickname: string;
+  nickname: string;
 }
 
 export interface ICreateUserResponseDto {
-    id: string;
-    nickname: string;
-    token: string;
-    created: Date;
+  id: string;
+  nickname: string;
+  token: string;
+  created: Date;
 }

@@ -43,10 +43,13 @@ const handleCreateNewPet = (
     [NewPet.InputIds.animalType]: data.animal,
     [NewPet.InputIds.dateOfBirth]: data.dateOfBirth,
   },
-  profile: state.profile == null || data.profileImage == null ? null : {
-    ...state.profile,
-    imageBase64: data.profileImage,    
-  }
+  profile:
+    state.profile == null || data.profileImage == null
+      ? null
+      : {
+          ...state.profile,
+          imageBase64: data.profileImage,
+        },
 });
 
 const handleNewScan = (

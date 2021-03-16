@@ -4,7 +4,12 @@ import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 import {IPetDto, mapStateToPet} from "../../../dto/pets";
 import {onChangeSubViewComponent, SubViewComponents} from "../navigation";
-import {setLoading, onSetErrorCode, ErrorTypes, onDismissDialog} from "../layout";
+import {
+  setLoading,
+  onSetErrorCode,
+  ErrorTypes,
+  onDismissDialog,
+} from "../layout";
 import {onFetchPets} from "../pets";
 
 export interface IImageData {
@@ -53,10 +58,7 @@ interface IOnCancelNewPet {
 export const onCancelNewPet = (
   language: LanguageTypes,
   hasPets: boolean,
-) => async (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-) => {
+) => async (dispatch: any, getState: () => ICombinedReducerState) => {
   const state = getState();
   const {id} = state.newPet;
 
@@ -159,7 +161,7 @@ export const onCompleteNewPet = () => async (
 
   dispatch({
     type: ON_COMPLETE_NEW_PET,
-    language: state.layout.language, 
+    language: state.layout.language,
   }) as IOnCompleteNewPet;
 };
 
@@ -187,7 +189,7 @@ export const onCreateNewPet = () => async (
   } else {
     response = await Communication.Pets.updateNewPet(pet, token!);
   }
-  
+
   if (response == null) {
     dispatch(setLoading(false));
     return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
@@ -197,19 +199,23 @@ export const onCreateNewPet = () => async (
     type: ON_CREATE_NEW_PET,
     language: state.layout.language,
     data: {
-      id: response.id, 
-      animal: response.type, 
-      name: response.name, 
-      dateOfBirth: response.dateOfBirth == null ? null : new Date(response.dateOfBirth), 
-      age: state.newPet.inputs.age, 
+      id: response.id,
+      animal: response.type,
+      name: response.name,
+      dateOfBirth:
+        response.dateOfBirth == null ? null : new Date(response.dateOfBirth),
+      age: state.newPet.inputs.age,
       profileImage: response.avatarImage,
     },
   } as IOnCreateNewPet);
 
-  dispatch(onChangeSubViewComponent(
-    SubViewComponents.newPetScan, state.layout.language
-  ));
-  
+  dispatch(
+    onChangeSubViewComponent(
+      SubViewComponents.newPetScan,
+      state.layout.language,
+    ),
+  );
+
   dispatch(setLoading(false));
 };
 
@@ -221,5 +227,4 @@ export type Actions =
   | IOnRemoveNewPetPass
   | IOnPreviewNewPetPassScan
   | IOnCreateNewPet
-  | IOnCompleteNewPet
-;
+  | IOnCompleteNewPet;

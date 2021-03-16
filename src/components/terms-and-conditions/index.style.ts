@@ -10,6 +10,6 @@ export const applyStyles = (theme: ITheme) => ({
   } as ViewStyle,
   paragraph: {
     margin: 10,
-    color: theme.color8, 
-  }
+    color: theme.color8,
+  },
 });

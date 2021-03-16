@@ -18,12 +18,11 @@ const handleFocus = (
   dispatch(onFocus(id, inputType));
 };
 
-const isDateGuard = (value: any): value is Date =>
-  value instanceof Date;
+const isDateGuard = (value: any): value is Date => value instanceof Date;
 
 const valueFormatter = (
   value: InputValues,
-  language?: LanguageTypes
+  language?: LanguageTypes,
 ): string | number | null => {
   if (value == null) {
     return null;
@@ -34,7 +33,7 @@ const valueFormatter = (
   }
 
   return value;
-}
+};
 
 interface IProps {
   id: string;

@@ -57,7 +57,7 @@ const request = <S, T>(
     })
     .catch((e) => {
       console.log("connection error: ", e);
-      return Promise.reject()
+      return Promise.reject();
     });
 
 export const getRequest = <S, T>(url: string, params: S, token?: string) =>

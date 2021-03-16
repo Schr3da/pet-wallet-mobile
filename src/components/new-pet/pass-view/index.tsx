@@ -25,11 +25,7 @@ import {
   onCancelNewPet,
 } from "../../../store/actions/new-pet";
 
-import {
-  handleError,
-  handleInputChange,
-  requestCancel,
-} from "../hooks";
+import {handleError, handleInputChange, requestCancel} from "../hooks";
 
 import {applyStyles} from "./index.style";
 import {

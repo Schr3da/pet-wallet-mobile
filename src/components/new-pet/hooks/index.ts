@@ -1,7 +1,4 @@
-import {
-  InputValues,
-  onInputFieldChange,
-} from "../../../store/actions/new-pet";
+import {InputValues, onInputFieldChange} from "../../../store/actions/new-pet";
 import {
   onChangeSubViewComponent,
   SubViewComponents,

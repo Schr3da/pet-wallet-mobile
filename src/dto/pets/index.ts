@@ -1,4 +1,3 @@
-
 import * as Communication from "../../communication";
 import {INewPetState} from "../../store/reducers/new-pet";
 import {base64ImageString} from "../../components/common/utils";
@@ -37,9 +36,7 @@ export interface IPetDto {
   animal: string;
 }
 
-export const mapStateToPet = (
-  data: INewPetState
-): IPetDto => ({
+export const mapStateToPet = (data: INewPetState): IPetDto => ({
   id: data.id,
   name: String(data.inputs.name),
   dateOfBirth: (data.inputs.dateOfBirth as Date) || null,
@@ -50,20 +47,19 @@ export const mapStateToPet = (
 });
 
 export const mapFetchPetsResponseToPetDtos = (
-  response: Communication.Dtos.PetDtos.IFetchPetsRequestDto | null
+  response: Communication.Dtos.PetDtos.IFetchPetsRequestDto | null,
 ): IPetDto[] => {
-
   if (response == null) {
     return [];
   }
 
-  return (response.pets|| [])
+  return (response.pets || [])
     .map(mapFindPetResponseToPetDto)
     .filter((p) => p != null) as IPetDto[];
-}
+};
 
 export const mapFindPetResponseToPetDto = (
-  data: Communication.Dtos.PetDtos.IFindPetResponseDto | null
+  data: Communication.Dtos.PetDtos.IFindPetResponseDto | null,
 ): IPetDto | null => {
   if (data == null) {
     return null;
@@ -78,4 +74,4 @@ export const mapFindPetResponseToPetDto = (
     profileUri: undefined,
     animal: data.type,
   };
-}
+};
