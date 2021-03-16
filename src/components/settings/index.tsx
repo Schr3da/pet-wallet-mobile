@@ -9,19 +9,16 @@ import {
   onChangeCurrentTheme,
   onChangeLanguage,
   onSetDialogContentType,
-  DialogContentTypes,
 } from "../../store/actions/layout";
-import {
-  onChangeViewComponent,
-  ViewComponents,
-  SubViewComponents,
-} from "../../store/actions/navigation";
+import {onChangeViewComponent} from "../../store/actions/navigation";
 
 import {onRequestDataDeletion} from "../../store/actions/database";
 import {createStyle, ThemeTypes, getColors} from "../../theme";
 import {Layout, ContentButton, Dialog} from "../common";
 
 import {applyStyles} from "./index.style";
+import {ViewComponents, SubViewComponents} from "../../enums/navigation";
+import {DialogContentTypes} from "../../enums/layout";
 
 const handleChangeLanguage = (dispatch: any, language: LanguageTypes) =>
   dispatch(onChangeLanguage(language));

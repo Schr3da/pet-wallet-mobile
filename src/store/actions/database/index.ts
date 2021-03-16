@@ -40,15 +40,6 @@ interface IOnRequesDataDeletion {
   language: LanguageTypes;
 }
 
-export const ON_CLEAR_IN_MEMORY_DATA = "ON_CLEAR_IN_MEMORY_DATA";
-interface IOnClearInMemoryData {
-  type: typeof ON_CLEAR_IN_MEMORY_DATA;
-}
-
-export const onClearInMemoryData = () => ({
-  type: ON_CLEAR_IN_MEMORY_DATA,
-});
-
 export const onRequestDataDeletion = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
@@ -90,5 +81,4 @@ export const initStateFromDatabase = () => async (
 export type Actions =
   | IOnInitDataFromDatabase
   | IOnLoadedDataFromDatabase
-  | IOnRequesDataDeletion
-  | IOnClearInMemoryData;
+  | IOnRequesDataDeletion;

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
@@ -13,13 +13,11 @@ import {
 } from "../../../store/actions/new-pet";
 
 import {ICombinedReducerState} from "../../../store/reducers";
-import {
-  DialogContentTypes,
-  onDismissDialog,
-} from "../../../store/actions/layout";
+import {onDismissDialog} from "../../../store/actions/layout";
 import {requestCancel} from "../hooks";
 import {onGoBackNavigation} from "../../../store/actions/navigation";
 import {LanguageTypes} from "../../../language";
+import {DialogContentTypes} from "../../../enums/layout";
 
 const handleCancel = (dispatch: any, language: LanguageTypes) => {
   dispatch(onDismissDialog());

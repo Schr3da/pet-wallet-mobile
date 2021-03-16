@@ -4,16 +4,13 @@ import {Text, View, ViewStyle} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {ILayoutChildProps} from "../../common/layout";
-import {
-  onChangeViewComponent,
-  SubViewComponents,
-  ViewComponents,
-} from "../../../store/actions/navigation";
+import {onChangeViewComponent} from "../../../store/actions/navigation";
 import {createStyle, getColors} from "../../../theme";
 import {LanguageTypes} from "../../../language";
 import {StyledButton} from "../../common";
 
 import {applyStyles} from "./index.style";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
 
 const addNewPet = (dispatch: any, language: LanguageTypes) => {
   dispatch(

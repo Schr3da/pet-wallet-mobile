@@ -26,14 +26,13 @@ import {
 } from "../../../store/actions/new-pet";
 
 import {handleError, handleInputChange, requestCancel} from "../hooks";
-
-import {applyStyles} from "./index.style";
 import {
-  DialogContentTypes,
   onSetDialogContentType,
   onDismissDialog,
-  ErrorTypes,
 } from "../../../store/actions/layout";
+import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
+
+import {applyStyles} from "./index.style";
 
 interface IStateProps {
   attachments: IImageData[];

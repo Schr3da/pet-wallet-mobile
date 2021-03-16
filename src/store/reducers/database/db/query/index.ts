@@ -43,10 +43,33 @@ export const select = async <T>(
   return Promise.resolve(result.rows.raw());
 };
 
+export const update = async <T>(
+  table: string,
+  fields: string[],
+  values: T[],
+): Promise<T[] | null> => {
+  const placeholder = fields.reduce(
+    (result, value, index) =>
+      result + value + "=" + (index === 0 ? "?" : ", ?"),
+    "",
+  );
+
+  const result = await executeQuery(
+    `UPDATE ${table} SET ${placeholder}`,
+    values,
+  );
+
+  if (result == null) {
+    return Promise.resolve(null);
+  }
+
+  return Promise.resolve(result.rows.raw());
+};
+
 let instance: SQLite.SQLiteDatabase;
 
 const databaseParams = (): SQLite.DatabaseParams => ({
-  name: "pet-wallet-8",
+  name: "pet-wallet-9",
   location: "default",
 });
 

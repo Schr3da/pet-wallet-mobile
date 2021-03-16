@@ -1,23 +1,23 @@
 import {getTranslation, LanguageTypes} from "../../../language";
-import {SubViewComponents, ViewComponents} from "../../actions/navigation";
-import {Layout, Navigation, NewPet, Database} from "../../actions";
+import {Layout, Navigation, NewPet, Database, Pets} from "../../actions";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
 
 export interface INavigationState {
   title: string;
   description: string;
   hasPets: boolean;
-  mainViewComponent: Navigation.ViewComponents;
-  subViewComponent: Navigation.SubViewComponents;
-  previousPath: Array<Navigation.ViewComponents | Navigation.SubViewComponents>;
-  path: Array<Navigation.ViewComponents | Navigation.SubViewComponents>;
+  mainViewComponent: ViewComponents;
+  subViewComponent: SubViewComponents;
+  previousPath: Array<ViewComponents | SubViewComponents>;
+  path: Array<ViewComponents | SubViewComponents>;
 }
 
 const initialState = (): INavigationState => ({
   title: "",
   description: "",
   hasPets: false,
-  mainViewComponent: Navigation.ViewComponents.splash,
-  subViewComponent: Navigation.SubViewComponents.none,
+  mainViewComponent: ViewComponents.splash,
+  subViewComponent: SubViewComponents.none,
   previousPath: [],
   path: [],
 });
@@ -40,8 +40,8 @@ const changeHeader = (
 
 const changeViews = (
   state: INavigationState,
-  nextMainView: Navigation.ViewComponents,
-  nextSubView: Navigation.SubViewComponents,
+  nextMainView: ViewComponents,
+  nextSubView: SubViewComponents,
   language: LanguageTypes,
   hasPets?: boolean,
 ): INavigationState =>
@@ -59,7 +59,7 @@ const changeViews = (
 
 const changeSubview = (
   state: INavigationState,
-  next: Navigation.SubViewComponents,
+  next: SubViewComponents,
   language: LanguageTypes,
 ): INavigationState =>
   changeHeader(
@@ -110,10 +110,10 @@ const showHome = (
   const nextState = {...state, hasPets};
   return changeViews(
     nextState,
-    Navigation.ViewComponents.welcome,
+    ViewComponents.welcome,
     hasPets
-      ? Navigation.SubViewComponents.welcomeWithPets
-      : Navigation.SubViewComponents.welcomeNoPets,
+      ? SubViewComponents.welcomeWithPets
+      : SubViewComponents.welcomeNoPets,
     language,
   );
 };
@@ -136,6 +136,7 @@ const handleDataDeletion = (
 };
 
 type Actions =
+  | Pets.Actions
   | Layout.Actions
   | Navigation.Actions
   | NewPet.Actions
@@ -163,8 +164,8 @@ export const reducer = (
       return goBack(state, action.language);
     case NewPet.ON_CANCEL_NEW_PET:
       return showHome(state, action.language, action.hasPets);
-    case NewPet.ON_COMPLETE_NEW_PET:
-      return showHome(state, action.language, true);
+    case Pets.ON_SET_PETS:
+      return setHasPets(state, (action.data || []).length !== 0);
     case Database.ON_REQUEST_DATA_DELETION:
       return handleDataDeletion(state, action.language);
     default:

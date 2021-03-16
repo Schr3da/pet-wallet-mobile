@@ -1,25 +1,8 @@
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
-import {onClearInMemoryData} from "../database";
-
-export enum ViewComponents {
-  splash = "splash",
-  welcome = "welcome",
-  newPet = "newPet",
-  help = "help",
-  petDetails = "petDetails",
-  settings = "settings",
-  termsAndConditions = "termsAndConditions",
-}
-
-export enum SubViewComponents {
-  none = "none",
-  welcomeNoPets = "welcomeNoPets",
-  welcomeWithPets = "welcomeWithPets",
-  newPetInformation = "newPetInformation",
-  newPetScan = "newPetScan",
-  newAttachment = "newAttachment",
-}
+import {onFetchPets} from "../pets";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+import {setLoading} from "../layout";
 
 export const ON_CHANGE_VIEW_COMPONENT = "ON_CHANGE_VIEW_COMPONENT";
 interface IOnChangeViewComponent {
@@ -76,7 +59,7 @@ export const onGoBackNavigation = (language: LanguageTypes) => (
     return;
   }
 
-  dispatch(onClearInMemoryData());
+  onShowHomeComponent()(dispatch, getState);
 };
 
 export const ON_SHOW_HOME_COMPONENT = "ON_SHOW_HOME_COMPONENT";
@@ -86,17 +69,58 @@ interface IOnShowHomeComponent {
   hasPets: boolean;
 }
 
-export const onShowHomeComponent = (
-  language: LanguageTypes,
-  hasPets: boolean,
-): IOnShowHomeComponent => ({
-  type: ON_SHOW_HOME_COMPONENT,
-  language,
-  hasPets,
-});
+export const onShowHomeComponent = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+): Promise<void> => {
+  dispatch(setLoading(true));
+
+  await onFetchPets()(dispatch, getState);
+
+  const state = getState();
+
+  dispatch({
+    type: ON_SHOW_HOME_COMPONENT,
+    language: state.layout.language,
+    hasPets: state.navigation.hasPets,
+  });
+
+  dispatch(setLoading(false));
+};
+
+export const ON_SHOW_PET_DETAILS = "ON_SHOW_PET_DETAILS";
+interface IOnShowPetDetails {
+  type: typeof ON_SHOW_PET_DETAILS;
+  id: string;
+}
+
+export const onShowPetDetails = (id: string) => (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  dispatch({
+    type: ON_SHOW_PET_DETAILS,
+    id,
+  } as IOnShowPetDetails);
+
+  const state = getState();
+  if (state.pets.selectedId == null) {
+    return;
+  }
+
+  const language = state.layout.language;
+  dispatch(
+    onChangeViewComponent(
+      ViewComponents.petDetails,
+      SubViewComponents.none,
+      language,
+    ),
+  );
+};
 
 export type Actions =
   | IOnGoBackNavigation
   | IOnChangeViewComponent
   | IOnChangeSubViewComponent
-  | IOnShowHomeComponent;
+  | IOnShowHomeComponent
+  | IOnShowPetDetails;

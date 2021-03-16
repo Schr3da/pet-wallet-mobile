@@ -1,5 +1,4 @@
-import {userInfo} from "os";
-import * as Database from "../../actions/database";
+import {Database, Layout} from "../../actions";
 import {IUserEntity} from "./db/user";
 
 export interface IDatabaseState {
@@ -29,7 +28,7 @@ const handleInitDatabase = (
   return nextState;
 };
 
-type Actions = Database.Actions;
+type Actions = Database.Actions | Layout.Actions;
 
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {

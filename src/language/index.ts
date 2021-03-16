@@ -1,15 +1,14 @@
 import {Platform, NativeModules} from "react-native";
 
-import {
-  ErrorTypes,
-  NotificationTypes,
-  DialogContentTypes,
-} from "../store/actions/layout";
-
 import {PetTypes} from "../dto/pets";
-import {SubViewComponents, ViewComponents} from "../store/actions/navigation";
 import {DE} from "./de";
 import {EN} from "./en";
+import {SubViewComponents, ViewComponents} from "../enums/navigation";
+import {
+  NotificationTypes,
+  ErrorTypes,
+  DialogContentTypes,
+} from "../enums/layout";
 
 export enum LanguageTypes {
   en = "en",

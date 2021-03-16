@@ -1,4 +1,4 @@
-import {Database, NewPet} from "../../actions";
+import {Database, NewPet, Navigation} from "../../actions";
 import {IPetDto} from "../../../dto/pets";
 
 export interface INewPetState {
@@ -67,12 +67,10 @@ const handleRemoveScan = (state: INewPetState, id: string) => ({
   scans: state.scans.filter((s) => s.id !== id),
 });
 
-type Actions = NewPet.Actions | Database.Actions;
+type Actions = NewPet.Actions | Database.Actions | Navigation.Actions;
 
 const reducer = (state: INewPetState = initialState(), action: Actions) => {
   switch (action.type) {
-    case Database.ON_CLEAR_IN_MEMORY_DATA:
-      return initialState();
     case NewPet.ON_CANCEL_NEW_PET:
       return initialState();
     case NewPet.ON_INPUT_FIELD_CHANGE:
@@ -85,7 +83,7 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleRemoveScan(state, action.id);
     case NewPet.ON_CREATE_NEW_PET:
       return handleCreateNewPet(state, action.data);
-    case NewPet.ON_COMPLETE_NEW_PET:
+    case Navigation.ON_SHOW_HOME_COMPONENT:
       return initialState();
     default:
       return state;

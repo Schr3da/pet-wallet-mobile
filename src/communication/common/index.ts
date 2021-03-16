@@ -1,3 +1,5 @@
+import {isDev} from "../../utils";
+
 export const baseUrl = "https://wallet.pet-care.rocks";
 
 enum RequestMethods {
@@ -35,7 +37,7 @@ const request = <S, T>(
     body: JSON.stringify(params),
   })
     .then((response) => {
-      if (__DEV__ === true) {
+      if (isDev()) {
         console.log(response);
       }
 

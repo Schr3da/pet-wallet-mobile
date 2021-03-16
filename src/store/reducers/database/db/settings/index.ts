@@ -1,4 +1,4 @@
-import {createTable, select, insert} from "../query";
+import {createTable, select, insert, update} from "../query";
 
 import {ThemeTypes} from "../../../../../theme";
 import {LanguageTypes} from "../../../../../language";
@@ -37,5 +37,43 @@ export const getSettings = async (): Promise<ISettingsEntity | null> => {
     return data[0] as ISettingsEntity;
   } catch (_) {
     return null;
+  }
+};
+
+export const updateSettings = async (
+  theme: ThemeTypes,
+  lanuage: LanguageTypes,
+): Promise<boolean> => {
+  try {
+    const data = await update(
+      "settings",
+      ["theme", "language"],
+      [theme, lanuage],
+    );
+    return data != null;
+  } catch (_) {
+    return false;
+  }
+};
+
+export const updateThemeSetting = async (
+  theme: ThemeTypes,
+): Promise<boolean> => {
+  try {
+    const data = await update("settings", ["theme"], [theme]);
+    return data != null;
+  } catch (_) {
+    return false;
+  }
+};
+
+export const updateLanguageSetting = async (
+  language: LanguageTypes,
+): Promise<boolean> => {
+  try {
+    const data = await update("settings", ["language"], [language]);
+    return data != null;
+  } catch (_) {
+    return false;
   }
 };

@@ -3,14 +3,10 @@ import * as Communication from "../../../communication";
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 import {IPetDto, mapStateToPet} from "../../../dto/pets";
-import {onChangeSubViewComponent, SubViewComponents} from "../navigation";
-import {
-  setLoading,
-  onSetErrorCode,
-  ErrorTypes,
-  onDismissDialog,
-} from "../layout";
-import {onFetchPets} from "../pets";
+import {onChangeSubViewComponent, onShowHomeComponent} from "../navigation";
+import {SubViewComponents} from "../../../enums/navigation";
+import {ErrorTypes} from "../../../enums/layout";
+import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
 
 export interface IImageData {
   id: string;
@@ -145,26 +141,6 @@ export const onPreviewScan = (id: string) => (
   );
 };
 
-export const ON_COMPLETE_NEW_PET = "ON_COMPLETE_NEW_PET";
-interface IOnCompleteNewPet {
-  type: typeof ON_COMPLETE_NEW_PET;
-  language: LanguageTypes;
-}
-
-export const onCompleteNewPet = () => async (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-): Promise<void> => {
-  const state = getState();
-
-  await onFetchPets()(dispatch, getState);
-
-  dispatch({
-    type: ON_COMPLETE_NEW_PET,
-    language: state.layout.language,
-  }) as IOnCompleteNewPet;
-};
-
 export const ON_CREATE_NEW_PET = "ON_CREATE_NEW_PET";
 interface IOnCreateNewPet {
   type: typeof ON_CREATE_NEW_PET;
@@ -219,6 +195,8 @@ export const onCreateNewPet = () => async (
   dispatch(setLoading(false));
 };
 
+export const onCompleteNewPet = () => onShowHomeComponent();
+
 export type Actions =
   | IOnInputFieldChange
   | IOnCancelNewPet
@@ -226,5 +204,4 @@ export type Actions =
   | IOnProfileImageNewPet
   | IOnRemoveNewPetPass
   | IOnPreviewNewPetPassScan
-  | IOnCreateNewPet
-  | IOnCompleteNewPet;
+  | IOnCreateNewPet;

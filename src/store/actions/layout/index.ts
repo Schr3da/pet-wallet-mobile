@@ -1,47 +1,22 @@
-import {Dimensions, Platform} from "react-native";
 import * as NetInfo from "@react-native-community/netinfo";
+
+import {Dimensions, Platform} from "react-native";
 
 import {ThemeTypes} from "../../../theme";
 import {LanguageTypes} from "../../../language";
+import {
+  updateLanguageSetting,
+  updateThemeSetting,
+} from "../../reducers/database/db/settings";
 
-export enum DialogContentTypes {
-  deleteData = "deleteData",
-  deleteAttachment = "deleteAttachment",
-  cancelAttachmentChanges = "cancelAttachmentChanges",
-  cancelNewPet = "cancelNewPet",
-}
-
-export enum ErrorTypes {
-  inputField = "inputFieldError",
-  camera = "cameraError",
-  photoLibrary = "photoLibraryError",
-  deviceIsOffline = "deviceIsOffline",
-  internetConnectionRequired = "internetConnectionRequired",
-  sharePet = "sharePet",
-}
-
-export enum NotificationTypes {
-  termsAndConditions = "termsAndConditions",
-  savedData = "savedData",
-}
-
-export enum DisplayModes {
-  portrait = "portrait",
-  landscape = "landscape",
-}
-
-export enum DatePickerModes {
-  datetime = "datetime",
-  date = "date",
-  time = "time",
-}
-
-export enum InputTypes {
-  text,
-  date,
-  picker,
-  camera,
-}
+import {
+  DisplayModes,
+  ErrorTypes,
+  NotificationTypes,
+  InputTypes,
+  DialogContentTypes,
+} from "../../../enums/layout";
+import {ICombinedReducerState} from "../../reducers";
 
 export const getScreenSize = () => {
   const window = Dimensions.get("window");
@@ -106,12 +81,21 @@ interface IOnChangeCurrentTheme {
   next: ThemeTypes;
 }
 
-export const onChangeCurrentTheme = (
-  next: ThemeTypes,
-): IOnChangeCurrentTheme => ({
-  type: ON_CHANGE_CURRENT_THEME,
-  next,
-});
+export const onChangeCurrentTheme = (next: ThemeTypes) => async (
+  dispatch: any,
+  _: () => ICombinedReducerState,
+) => {
+  const successful = await updateThemeSetting(next);
+
+  if (successful === false) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+  }
+
+  dispatch({
+    type: ON_CHANGE_CURRENT_THEME,
+    next,
+  });
+};
 
 export const ON_SET_LOADING = "ON_SET_LOADING";
 interface IOnSetLoading {
@@ -130,10 +114,20 @@ interface IOnChangeLanguage {
   next: LanguageTypes;
 }
 
-export const onChangeLanguage = (next: LanguageTypes): IOnChangeLanguage => ({
-  type: ON_CHANGE_LANGUAGE,
-  next,
-});
+export const onChangeLanguage = (next: LanguageTypes) => async (
+  dispatch: any,
+): Promise<void> => {
+  const successful = await updateLanguageSetting(next);
+
+  if (successful === false) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+  }
+
+  dispatch({
+    type: ON_CHANGE_LANGUAGE,
+    next,
+  });
+};
 
 export const ON_SET_ERROR_TYPE = "ON_SET_ERROR_TYPE";
 interface IOnSetErrorType {

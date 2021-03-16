@@ -1,8 +1,6 @@
-import {UUID} from "../uuid";
-
 export interface IPetWalletEntry {
-  id: UUID;
-  petId: UUID;
+  id: string;
+  petId: string;
   title: string;
   category: string | null;
   description: string | null;
@@ -10,8 +8,8 @@ export interface IPetWalletEntry {
 }
 
 export interface IPetWalletScan {
-  id: UUID;
-  petId: UUID;
+  id: string;
+  petId: string;
   imagePath: string;
   created: Date;
   processed: Date | null;

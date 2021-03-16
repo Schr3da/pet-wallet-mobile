@@ -9,7 +9,7 @@ import {createStyle, ThemeTypes} from "../../../theme";
 import {ImageButton} from "../image-button";
 
 import {applyStyles} from "./index.style";
-import {ErrorTypes} from "../../../store/actions/layout";
+import {ErrorTypes} from "../../../enums/layout";
 
 enum ImagePickerTypes {
   camera,

@@ -23,14 +23,14 @@ import {
 } from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {handleInputChange, handleError, requestCancel} from "../hooks";
-import {
-  DialogContentTypes,
-  ErrorTypes,
-  InputTypes,
-} from "../../../store/actions/layout";
 import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
+import {
+  ErrorTypes,
+  InputTypes,
+  DialogContentTypes,
+} from "../../../enums/layout";
 
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};

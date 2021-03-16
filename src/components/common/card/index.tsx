@@ -82,7 +82,7 @@ export const Card = (props: IProps) => {
             }
             onPress={async () => {
               const measures = await measureComponent(ref);
-              onPress(data.id, measures);
+              onPress(data.id!, measures);
             }}
           />
           <ImageButton
@@ -95,7 +95,7 @@ export const Card = (props: IProps) => {
             }
             onPress={async () => {
               const measures = await measureComponent(ref);
-              onShare(data.id, measures);
+              onShare(data.id!, measures);
             }}
           />
         </View>

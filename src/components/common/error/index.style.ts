@@ -1,9 +1,7 @@
 import Animated from "react-native-reanimated";
+import {DisplayModes} from "../../../enums/layout";
 
 import type {ViewStyle} from "react-native";
-
-import {DisplayModes} from "../../../store/actions/layout";
-
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (mode: DisplayModes) => (theme: ITheme) => ({

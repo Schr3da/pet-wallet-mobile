@@ -3,15 +3,10 @@ import {Share} from "react-native";
 import * as Communication from "../../../communication";
 import type {ICombinedReducerState} from "../../reducers";
 
-import {
-  onChangeViewComponent,
-  ViewComponents,
-  SubViewComponents,
-} from "../navigation";
-
-import {onSetErrorCode, ErrorTypes, setLoading} from "../layout";
+import {onSetErrorCode, setLoading} from "../layout";
 import {getTranslation} from "../../../language";
 import {IPetDto, mapFetchPetsResponseToPetDtos} from "../../../dto/pets";
+import {ErrorTypes} from "../../../enums/layout";
 
 export const onSharePet = (id: string) => async (
   dispatch: any,
@@ -32,33 +27,6 @@ export const onSharePet = (id: string) => async (
     dispatch(setLoading(false));
     dispatch(onSetErrorCode(ErrorTypes.sharePet));
   }
-};
-
-export const ON_SHOW_PET_DETAILS = "ON_SHOW_PET_DETAILS";
-interface IOnShowPetDetails {
-  type: typeof ON_SHOW_PET_DETAILS;
-  id: string;
-}
-
-export const onShowPetDetails = (id: string) => (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-) => {
-  dispatch({type: ON_SHOW_PET_DETAILS, id});
-
-  const state = getState();
-  if (state.pets.selectedId == null) {
-    return;
-  }
-
-  const language = state.layout.language;
-  dispatch(
-    onChangeViewComponent(
-      ViewComponents.petDetails,
-      SubViewComponents.none,
-      language,
-    ),
-  );
 };
 
 export const ON_SET_PETS = "ON_SET_PETS";
@@ -91,4 +59,4 @@ export const onFetchPets = () => async (
   dispatch(setPets(pets));
 };
 
-export type Actions = IOnSetPets | IOnShowPetDetails | IOnFetchPets;
+export type Actions = IOnSetPets | IOnFetchPets;

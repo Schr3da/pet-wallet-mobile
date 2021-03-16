@@ -1,6 +1,6 @@
-import type {ViewStyle, ImageStyle} from "react-native";
+import {DisplayModes} from "../../../enums/layout";
 
-import {DisplayModes} from "../../../store/actions/layout";
+import type {ViewStyle, ImageStyle} from "react-native";
 
 export const applyStyles = (mode: DisplayModes) => ({
   container: {

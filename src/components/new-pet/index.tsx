@@ -7,12 +7,12 @@ import * as PassViews from "./pass-view";
 import * as AttachmentViews from "./attachment";
 
 import {Layout} from "../common";
-import {SubViewComponents} from "../../store/actions/navigation";
 import {onFocus} from "../../store/actions/layout";
 import {onInputFieldChange, InputValues} from "../../store/actions/new-pet";
 import {PetTypes} from "../../dto/pets";
 import {getTranslation, LanguageTypes} from "../../language";
 import {IPickerData} from "../common/picker";
+import {SubViewComponents} from "../../enums/navigation";
 
 const handlePickerValueSelected = (
   dispatch: any,

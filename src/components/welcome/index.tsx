@@ -3,7 +3,8 @@ import * as React from "react";
 import {Animated, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
-import {onShowPetDetails, onSharePet} from "../../store/actions/pets";
+import {onSharePet} from "../../store/actions/pets";
+import {onShowPetDetails} from "../../store/actions/navigation";
 import {ICombinedReducerState} from "../../store/reducers";
 import {createStyle} from "../../theme";
 import {Layout, Card} from "../common";

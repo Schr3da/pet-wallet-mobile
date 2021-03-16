@@ -4,11 +4,12 @@ import {View, ViewStyle, TextInput} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {onFocus, InputTypes} from "../../../store/actions/layout";
+import {onFocus} from "../../../store/actions/layout";
 import {InputValues} from "../../../store/actions/new-pet";
 import {ImageButton} from "../image-button";
 
 import {applyStyles} from "./index.style";
+import {InputTypes} from "../../../enums/layout";
 
 let timeout: any = null;
 

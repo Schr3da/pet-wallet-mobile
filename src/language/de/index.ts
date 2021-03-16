@@ -11,16 +11,13 @@ import type {
   ISharePetDetails,
 } from "../index";
 
-import {
-  SubViewComponents,
-  ViewComponents,
-} from "../../store/actions/navigation";
+import {PetTypes} from "../../dto/pets";
+import {ViewComponents, SubViewComponents} from "../../enums/navigation";
 import {
   ErrorTypes,
   NotificationTypes,
   DialogContentTypes,
-} from "../../store/actions/layout";
-import {PetTypes} from "../../dto/pets";
+} from "../../enums/layout";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -182,6 +179,10 @@ const errors: IErrors = {
   [ErrorTypes.internetConnectionRequired]: {
     title: "Internetverbindung erforderlich",
     text: "Um fortzufahren wird eine Internetverbindung benötigt.",
+  },
+  [ErrorTypes.unexpected]: {
+    title: "Unerwarteter Fehler",
+    text: "Ein unerwarteter Fehler ist aufgetreten.",
   },
 };
 

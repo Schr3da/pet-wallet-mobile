@@ -7,12 +7,13 @@ import Animated from "react-native-reanimated";
 
 import type {ICombinedReducerState} from "../../../store/reducers";
 
-import {ErrorTypes, onSetErrorCode} from "../../../store/actions/layout";
+import {onSetErrorCode} from "../../../store/actions/layout";
 import {createStyle} from "../../../theme";
 import {ILayoutChildProps} from "../layout";
 
 import {createNotificationAnimation} from "../utils";
 import {applyStyles, containerAnimation} from "./index.style";
+import {ErrorTypes} from "../../../enums/layout";
 
 interface IProps extends ILayoutChildProps {
   errorType: ErrorTypes | null;

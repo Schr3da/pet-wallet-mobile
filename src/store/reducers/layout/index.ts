@@ -1,13 +1,14 @@
 import {ThemeTypes, getDeviceTheme} from "../../../theme";
 import {LanguageTypes, getDeviceLanguage} from "../../../language";
 import {Layout, Splash, Database, Navigation, NewPet} from "../../actions";
-
 import {
-  ErrorTypes,
   NotificationTypes,
+  ErrorTypes,
   DialogContentTypes,
   InputTypes,
-} from "../../actions/layout";
+  DisplayModes,
+  DatePickerModes,
+} from "../../../enums/layout";
 
 export interface ILayoutState {
   notificationType: NotificationTypes | null;
@@ -16,7 +17,7 @@ export interface ILayoutState {
   focus: string | null;
   language: LanguageTypes;
   theme: ThemeTypes;
-  displayMode: Layout.DisplayModes;
+  displayMode: DisplayModes;
   screenWidth: number;
   screenHeight: number;
   isOnline: boolean;
@@ -24,7 +25,7 @@ export interface ILayoutState {
   dialogContentType: DialogContentTypes | null;
   isPickerVisible: boolean;
   inputType: InputTypes | null | undefined;
-  datePickerMode: Layout.DatePickerModes;
+  datePickerMode: DatePickerModes;
 }
 
 const initialState = (): ILayoutState => {
@@ -47,13 +48,13 @@ const initialState = (): ILayoutState => {
     isLoading: false,
     isPickerVisible: false,
     inputType: null,
-    datePickerMode: Layout.DatePickerModes.datetime,
+    datePickerMode: DatePickerModes.datetime,
   };
 };
 
 const changeDisplayMode = (
   state: ILayoutState,
-  displayMode: Layout.DisplayModes,
+  displayMode: DisplayModes,
   screenWidth: number,
   screenHeight: number,
 ): ILayoutState =>

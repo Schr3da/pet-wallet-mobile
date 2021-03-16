@@ -10,12 +10,11 @@ import {ImageButton} from "../image-button";
 import {
   onGoBackNavigation,
   onChangeViewComponent,
-  ViewComponents,
-  SubViewComponents,
 } from "../../../store/actions/navigation";
 
 import {applyStyles} from "./index.style";
-import {DisplayModes} from "../../../store/actions/layout";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+import {DisplayModes} from "../../../enums/layout";
 
 const handleBackPressed = (dispatch: any, language: LanguageTypes) =>
   dispatch(onGoBackNavigation(language));

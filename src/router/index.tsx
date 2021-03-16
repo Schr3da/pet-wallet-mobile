@@ -14,11 +14,11 @@ import {
 } from "../components";
 
 import {ICombinedReducerState} from "../store/reducers";
-import {ViewComponents} from "../store/actions/navigation";
 import {createStyle, ThemeTypes, getColors} from "../theme";
 
 import {applyStyles} from "./index.style";
-import {DisplayModes} from "../store/actions/layout";
+import {ViewComponents} from "../enums/navigation";
+import {DisplayModes} from "../enums/layout";
 
 interface IProps {
   mainViewComponent: ViewComponents;

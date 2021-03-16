@@ -2,9 +2,9 @@ import * as React from "react";
 
 import {View, Image} from "react-native";
 import {ThemeTypes} from "../../../theme";
-import {DisplayModes} from "../../../store/actions/layout";
 
 import {applyStyles} from "./index.style";
+import {DisplayModes} from "../../../enums/layout";
 
 export interface IProps {
   theme: ThemeTypes;

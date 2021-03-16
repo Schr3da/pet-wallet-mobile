@@ -10,21 +10,10 @@ import {
 
 import {useDispatch, useSelector} from "react-redux";
 
-import {
-  SubViewComponents,
-  ViewComponents,
-} from "../../../store/actions/navigation";
-
 import {ICombinedReducerState} from "../../../store/reducers";
 import {
-  DisplayModes,
   onChangeDisplayMode,
   getDisplayMode,
-  ErrorTypes,
-  NotificationTypes,
-  DialogContentTypes,
-  DatePickerModes,
-  InputTypes,
 } from "../../../store/actions/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -36,10 +25,18 @@ import {Notification} from "../notification";
 import {IPickerData, PickerComponent} from "../picker";
 
 import {Loader} from "../loader";
-import {DatePickerComponent} from "../date-picker";
+import {DatePickerComponent, DatePickerModes} from "../date-picker";
 
 import {applyStyles} from "./index.style";
 import {InputValues} from "../../../store/actions/new-pet";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+import {
+  DisplayModes,
+  ErrorTypes,
+  NotificationTypes,
+  DialogContentTypes,
+  InputTypes,
+} from "../../../enums/layout";
 
 interface IStateProps {
   title: string;
