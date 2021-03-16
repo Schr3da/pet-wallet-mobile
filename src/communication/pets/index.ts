@@ -1,38 +1,7 @@
 import type {PetDtos} from "../dto";
 
-import {postRequest, stringToDate} from "../common";
+import {postRequest} from "../common";
 import {IPetDto} from "../../dto/pets";
-
-export const removePet = async (
-  id: string,
-  token: string,
-) => {
-  const url = "/api/petpass/pet/delete";
-  try {
-    await postRequest<PetDtos.IRemovePetRequestDto, any>(url, {id}, token);
-    return Promise.resolve();
-  } catch (error) {
-    return Promise.resolve(null);
-  }
-}
-
-export const scanPassPage = async (
-  base64Image: string,
-  token: string,
-) => {
-  const url = "/api/petpass/pet/create";
-
-  try {
-    const response = await postRequest<any, any>(
-      url, 
-      {}, 
-      token
-    );
-    return Promise.resolve(response);
-  } catch (error) {
-    return Promise.resolve(null);
-  }
-};
 
 export const createNewPet = async (
   {name, animal, dateOfBirth, profileImage}: IPetDto,
@@ -42,7 +11,7 @@ export const createNewPet = async (
 
   const mappedData: PetDtos.ICreatePetRequestDto = {
     name,
-    dateOfBirth,
+    dateOfBirth: dateOfBirth == null ? null : dateOfBirth.getTime(),
     type: animal,
     avatarImage: profileImage || null,
   };
@@ -68,7 +37,7 @@ export const updateNewPet = async (
   const mappedData: PetDtos.IUpdatePetRequestDto = {
     id: id!,
     name,
-    dateOfBirth,
+    dateOfBirth: dateOfBirth == null ? null : dateOfBirth.getTime(),
     type: animal,
     avatarImage: profileImage || null,
   };
@@ -78,6 +47,50 @@ export const updateNewPet = async (
       url,
       mappedData,
       token,
+    );
+    return Promise.resolve(response);
+  } catch (error) {
+    return Promise.resolve(null);
+  }
+};
+
+
+export const deletePet = async (
+  id: string,
+  token: string,
+) => {
+  const url = "/api/petpass/pet/delete";
+  try {
+    await postRequest<PetDtos.IDeletePetRequestDto, any>(url, {id}, token);
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.resolve(null);
+  }
+}
+
+export const fetchPets = async (
+  token: string
+): Promise<PetDtos.IFetchPetsRequestDto | null> => {
+  const url = "/api/petpass/pet/find";
+  try {
+    const response = await postRequest<{}, PetDtos.IFetchPetsRequestDto>(url, {}, token);
+    return Promise.resolve(response);
+  } catch (error) {
+    return Promise.resolve(null);
+  }
+}
+
+export const scanPassPage = async (
+  base64Image: string,
+  token: string,
+) => {
+  const url = "/api/petpass/pet/create";
+
+  try {
+    const response = await postRequest<any, any>(
+      url, 
+      {}, 
+      token
     );
     return Promise.resolve(response);
   } catch (error) {

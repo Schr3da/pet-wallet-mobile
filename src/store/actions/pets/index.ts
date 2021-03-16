@@ -11,6 +11,7 @@ import {
 
 import {onSetErrorCode, ErrorTypes, setLoading} from "../layout";
 import {getTranslation} from "../../../language";
+import {IPetDto, mapFetchPetsResponseToPetDtos} from "../../../dto/pets";
 
 export const onSharePet = (id: string) => async (
   dispatch: any,
@@ -60,4 +61,41 @@ export const onShowPetDetails = (id: string) => (
   );
 };
 
-export type Actions = IOnShowPetDetails;
+export const ON_SET_PETS = "ON_SET_PETS";
+export interface IOnSetPets {
+  type: typeof ON_SET_PETS;
+  data: IPetDto[];
+}
+
+export const setPets = (
+  data: IPetDto[]
+): IOnSetPets => ({
+  type: ON_SET_PETS,
+  data,
+});
+
+export const ON_FETCH_PETS = "ON_FETCH_PETS";
+interface IOnFetchPets {
+  type: typeof ON_FETCH_PETS;
+}
+
+export const onFetchPets = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  
+  const state = getState();
+  const token = state.database.token;
+  
+  const response = await Communication.Pets.fetchPets(token!);
+  
+  const pets = mapFetchPetsResponseToPetDtos(response);  
+
+  dispatch(setPets(pets)); 
+}
+
+export type Actions = 
+  | IOnSetPets
+  | IOnShowPetDetails
+  | IOnFetchPets
+;

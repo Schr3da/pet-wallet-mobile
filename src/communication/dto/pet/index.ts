@@ -1,11 +1,7 @@
-export interface IRemovePetRequestDto {
-  id: string;
-}
-
 export interface ICreatePetRequestDto {
   name: string;
   type: string;
-  dateOfBirth: Date | null;
+  dateOfBirth: number | null;
   avatarImage: string | null;
 }
 
@@ -15,7 +11,7 @@ export interface ICreatePetResponseDto {
   type: string;
   avatarImage: string | null;
   created: Date;
-  dateOfBirth: Date | null;
+  dateOfBirth: number | null;
 }
 
 export interface IUpdatePetRequestDto {
@@ -23,7 +19,7 @@ export interface IUpdatePetRequestDto {
   name: string;
   type: string;
   avatarImage: string | null;
-  dateOfBirth: Date | null;
+  dateOfBirth: number | null;
 }
 
 export interface IUpdatePetResponseDto {
@@ -32,4 +28,21 @@ export interface IUpdatePetResponseDto {
   type: string;
   avatarImage: string | null;
   dateOfBirth: string | null;
+}
+
+export interface IFetchPetsRequestDto {
+  pets: IFindPetResponseDto[];
+}
+
+export interface IFindPetResponseDto {
+  id: string;
+  name: string;
+  type: string;
+  avatarImage: string | null;
+  created: number;
+  dateOfBirth: number | null;
+}
+
+export interface IDeletePetRequestDto {
+  id: string;
 }

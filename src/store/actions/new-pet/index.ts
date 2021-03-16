@@ -5,6 +5,7 @@ import {ICombinedReducerState} from "../../reducers";
 import {IPetDto, mapStateToPet} from "../../../dto/pets";
 import {onChangeSubViewComponent, SubViewComponents} from "../navigation";
 import {setLoading, onSetErrorCode, ErrorTypes, onDismissDialog} from "../layout";
+import {onFetchPets} from "../pets";
 
 export interface IImageData {
   id: string;
@@ -60,7 +61,7 @@ export const onCancelNewPet = (
   const {id} = state.newPet;
 
   if (id != null) {
-    await Communication.Pets.removePet(state.newPet.id!, state.database.token!);
+    await Communication.Pets.deletePet(state.newPet.id!, state.database.token!);
   }
 
   dispatch(onDismissDialog());
@@ -153,6 +154,8 @@ export const onCompleteNewPet = () => async (
   getState: () => ICombinedReducerState,
 ): Promise<void> => {
   const state = getState();
+
+  await onFetchPets()(dispatch, getState);
 
   dispatch({
     type: ON_COMPLETE_NEW_PET,

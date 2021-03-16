@@ -14,7 +14,7 @@ const initialState = (): IPetsState => ({
 
 const setPets = (state: IPetsState, data: IPetDto[]): IPetsState => ({
   ...state,
-  data: [...data],
+  data: [...(data || [])],
 });
 
 const setSelectedId = (state: IPetsState, id: string | null): IPetsState => ({
