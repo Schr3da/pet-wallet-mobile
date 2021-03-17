@@ -1,7 +1,7 @@
 import {UserDtos} from "../dto";
 import {postRequest} from "../common";
 
-export const register = async () => {
+export const requestToken = async () => {
   const url = "/api/petpass/user/create";
   const nickname = "sample_name";
 
@@ -10,7 +10,7 @@ export const register = async () => {
       UserDtos.ICreateUserRequestDto,
       UserDtos.ICreateUserResponseDto
     >(url, {nickname});
-    return response;
+    return response == null ? null : response.token;
   } catch (error) {
     return Promise.resolve(null);
   }

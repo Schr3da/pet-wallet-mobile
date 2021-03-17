@@ -23,6 +23,7 @@ import {
   onPreviewScan,
   onCompleteNewPet,
   onCancelNewPet,
+  IScanResult,
 } from "../../../store/actions/new-pet";
 
 import {handleError, handleInputChange, requestCancel} from "../hooks";
@@ -35,7 +36,7 @@ import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
 import {applyStyles} from "./index.style";
 
 interface IStateProps {
-  attachments: IImageData[];
+  attachments: IScanResult[];
   inputs: {[key: string]: InputValues};
 }
 
@@ -84,8 +85,8 @@ export const ChildView = (props: ILayoutChildProps) => {
       <ImagePicker
         style={styles.picker}
         theme={theme}
-        maxWidth={280}
-        maxHeight={280}
+        maxWidth={1600}
+        maxHeight={1600}
         onError={(errorType: ErrorTypes) => handleError(dispatch, errorType)}
         onData={(data: IImageData) => handleScanImage(dispatch, data)}
       />
@@ -100,7 +101,7 @@ export const ChildView = (props: ILayoutChildProps) => {
             onChange={() => undefined}
           />
         ) : (
-          attachments.map((a: IImageData, index: number) => {
+          attachments.map((a: IScanResult, index: number) => {
             let title = inputs[a.id];
 
             if (title === null) {

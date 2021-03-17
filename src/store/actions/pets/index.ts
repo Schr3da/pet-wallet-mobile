@@ -5,7 +5,7 @@ import type {ICombinedReducerState} from "../../reducers";
 
 import {onSetErrorCode, setLoading} from "../layout";
 import {getTranslation} from "../../../language";
-import {IPetDto, mapFetchPetsResponseToPetDtos} from "../../../dto/pets";
+import {IPetDto} from "../../../dto/pets";
 import {ErrorTypes} from "../../../enums/layout";
 
 export const onSharePet = (id: string) => async (
@@ -17,7 +17,7 @@ export const onSharePet = (id: string) => async (
     const translation = getTranslation(state.layout.language);
 
     dispatch(setLoading(true));
-    const shareUrl = await Communication.Share.createShareUrl(id);
+    const shareUrl = await Communication.Share.requestShareUrl(id);
     dispatch(setLoading(false));
 
     await Share.share({
@@ -52,11 +52,9 @@ export const onFetchPets = () => async (
   const state = getState();
   const token = state.database.token;
 
-  const response = await Communication.Pets.fetchPets(token!);
+  const data = await Communication.Pets.fetchPets(token!);
 
-  const pets = mapFetchPetsResponseToPetDtos(response);
-
-  dispatch(setPets(pets));
+  dispatch(setPets(data));
 };
 
 export type Actions = IOnSetPets | IOnFetchPets;

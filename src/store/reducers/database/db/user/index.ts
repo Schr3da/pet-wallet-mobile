@@ -17,14 +17,14 @@ export const initUserTable = async (isOnline: boolean) => {
     return null;
   }
 
-  const data = await Communication.User.register();
-  if (data == null) {
+  const token = await Communication.User.requestToken();
+  if (token == null) {
     return null;
   }
 
   await createTable("user", "id INTEGER PRIMARY KEY NOT NULL, uuid Text");
 
-  await insert("user", ["id", "uuid"], [1, data.token]);
+  await insert("user", ["id", "uuid"], [1, token]);
 };
 
 export const getUser = async (): Promise<IUserEntity | null> => {

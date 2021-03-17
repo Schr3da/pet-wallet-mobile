@@ -47,10 +47,9 @@ const header: IHeader = {
       description:
         "Photographiere den Impfass deines Haustieres und wir digitalisieren ihn sofort.",
     },
-    [SubViewComponents.newAttachment]: {
-      title: "Anhang Details",
-      description:
-        "Hier kann das ausgewertete Ergebnis des Scans eingesehen und wenn nötig angepasst werden.",
+    [SubViewComponents.newPreview]: {
+      title: "Scan Details",
+      description: "Bitte überprüfe die Angaben und ändere diese falls nötig.",
     },
   },
   [ViewComponents.settings]: {
@@ -140,7 +139,7 @@ const newPet: INewPet = {
     secondaryButton: "Abbrechen",
     attachmentLabel: "Tierpass Seite",
   },
-  [SubViewComponents.newAttachment]: {
+  [SubViewComponents.newPreview]: {
     primaryButton: "Speichern",
     secondaryButton: "Abbrechen",
   },

@@ -1,23 +1,23 @@
 import * as React from "react";
 
-import {useDispatch} from "react-redux";
+import {Image, View, Text} from "react-native";
+
+import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
-import {Dialog, RoundedButtons} from "../../common";
-
-import {
-  InputIds,
-  InputValues,
-  IImageData,
-} from "../../../store/actions/new-pet";
-
+import {Dialog, RoundedButtons, InputTypeField} from "../../common";
+import {IScanResult} from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {onDismissDialog} from "../../../store/actions/layout";
 import {requestCancel} from "../hooks";
 import {onGoBackNavigation} from "../../../store/actions/navigation";
 import {LanguageTypes} from "../../../language";
-import {DialogContentTypes} from "../../../enums/layout";
+import {base64ImageToUri} from "../../common/utils";
+import {createStyle} from "../../../theme";
+import {DialogContentTypes, InputTypes} from "../../../enums/layout";
+
+import {applyStyles} from "./index.style";
 
 const handleCancel = (dispatch: any, language: LanguageTypes) => {
   dispatch(onDismissDialog());
@@ -25,17 +25,41 @@ const handleCancel = (dispatch: any, language: LanguageTypes) => {
 };
 
 interface IStateProps {
-  inputs: {[key in InputIds]: InputValues};
-  profile: IImageData | null;
+  data: IScanResult;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
-  inputs: state.newPet.inputs,
-  profile: state.newPet.profile,
+  data: state.newPet.scans.find((s) => s.isSelected)!,
 });
 
 export const ChildView = (props: ILayoutChildProps) => {
-  return <React.Fragment></React.Fragment>;
+  const stateProps = useSelector(stateToProps);
+
+  const {theme, languageType} = props;
+
+  const styles = createStyle(theme, applyStyles);
+
+  return (
+    <React.Fragment>
+      <View style={styles.imageWrapper}>
+        <Image
+          style={styles.image}
+          source={base64ImageToUri(stateProps.data.image)}
+        />
+      </View>
+      <View style={styles.entryWrapper}>
+        <InputTypeField
+          id={""}
+          style={styles.inputTypeField}
+          theme={theme}
+          language={languageType}
+          inputType={InputTypes.text}
+          placeholder={"SAMPLE"}
+          value={"SAMPLE"}
+        />
+      </View>
+    </React.Fragment>
+  );
 };
 
 export const Footer = (props: ILayoutChildProps) => {
@@ -47,13 +71,13 @@ export const Footer = (props: ILayoutChildProps) => {
     <React.Fragment>
       <RoundedButtons.PrimaryButton
         theme={theme}
-        title={language.newPet.newAttachment.primaryButton}
+        title={language.newPet.newPreview.primaryButton}
         style={{marginTop: 10}}
         onPress={() => console.log("continue pressed")}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
-        title={language.newPet.newAttachment.secondaryButton}
+        title={language.newPet.newPreview.secondaryButton}
         style={{marginTop: 4}}
         onPress={() => requestCancel(dispatch)}
       />

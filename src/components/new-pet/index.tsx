@@ -54,7 +54,7 @@ export const Component = () => {
             return <InformationViews.ChildView {...props} />;
           case SubViewComponents.newPetScan:
             return <PassViews.ChildView {...props} />;
-          case SubViewComponents.newAttachment:
+          case SubViewComponents.newPreview:
             return <AttachmentViews.ChildView {...props} />;
           default:
             return null;
@@ -66,7 +66,7 @@ export const Component = () => {
             return <InformationViews.Footer {...props} />;
           case SubViewComponents.newPetScan:
             return <PassViews.Footer {...props} />;
-          case SubViewComponents.newAttachment:
+          case SubViewComponents.newPreview:
             return <AttachmentViews.Footer {...props} />;
           default:
             return null;
@@ -78,7 +78,7 @@ export const Component = () => {
             return <InformationViews.Dialogs {...props} />;
           case SubViewComponents.newPetScan:
             return <PassViews.Dialogs {...props} />;
-          case SubViewComponents.newAttachment:
+          case SubViewComponents.newPreview:
             return <AttachmentViews.Dialogs {...props} />;
           default:
             return null;

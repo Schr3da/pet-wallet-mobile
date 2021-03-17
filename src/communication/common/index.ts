@@ -1,4 +1,4 @@
-import {isDev} from "../../utils";
+import {isDev} from "../../components/common/utils";
 
 export const baseUrl = "https://wallet.pet-care.rocks";
 
@@ -41,9 +41,11 @@ const request = <S, T>(
         console.log(response);
       }
 
-      return response.ok === false || response.status !== 200
-        ? Promise.reject()
-        : response.text();
+      if (response.ok === false || response.status !== 200) {
+        return Promise.reject();
+      }
+
+      return response.text();
     })
     .then((body: string | undefined) => {
       if (body == null) {

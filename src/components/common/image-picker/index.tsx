@@ -36,6 +36,7 @@ const handlePress = (
       mediaType: "photo",
       maxWidth,
       maxHeight,
+      quality: 0,
     };
 
     if (type === ImagePickerTypes.camera) {
@@ -83,9 +84,9 @@ const isSelected = (type: ImagePickerTypes, condition: ImagePickerTypes) =>
 
 interface IProps {
   theme: ThemeTypes;
-  style?: ViewStyle;
   maxWidth: number;
   maxHeight: number;
+  style?: ViewStyle;
   onData: (data: IImageData) => void;
   onError: (type: ErrorTypes) => void;
 }

@@ -1,5 +1,5 @@
 import * as UserDtos from "./user";
 import * as PetDtos from "./pet";
-import * as PetWalletDtos from "./wallet";
+import * as WalletDtos from "./wallet";
 
-export {UserDtos, PetDtos, PetWalletDtos};
+export {UserDtos, PetDtos, WalletDtos};

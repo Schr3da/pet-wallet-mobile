@@ -1,14 +1,8 @@
-import {ViewStyle} from "react-native";
+import type {ViewStyle} from "react-native";
 
-import {ITheme} from "../../../theme";
+import type {ITheme} from "../../../theme";
 
 export const applyStyles = (_: ITheme) => ({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-  } as ViewStyle,
   scrollContainer: {
     flex: 1,
   },

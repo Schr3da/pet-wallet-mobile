@@ -85,7 +85,7 @@ export interface INewPet {
     secondaryButton: string;
     attachmentLabel: string;
   };
-  [SubViewComponents.newAttachment]: {
+  [SubViewComponents.newPreview]: {
     primaryButton: string;
     secondaryButton: string;
   };

@@ -5,7 +5,7 @@ export interface INewPetState {
   id: string | null;
   inputs: {[key in NewPet.InputIds]: NewPet.InputValues};
   profile: NewPet.IImageData | null;
-  scans: NewPet.IImageData[];
+  scans: NewPet.IScanResult[];
 }
 
 const initialState = (): INewPetState => ({
@@ -37,12 +37,14 @@ const handleCreateNewPet = (
   data: IPetDto,
 ): INewPetState => ({
   ...state,
+  id: data.id,
   inputs: {
     [NewPet.InputIds.name]: data.name,
     [NewPet.InputIds.age]: data.age,
     [NewPet.InputIds.animalType]: data.animal,
     [NewPet.InputIds.dateOfBirth]: data.dateOfBirth,
   },
+  scans: [],
   profile:
     state.profile == null || data.profileImage == null
       ? null
@@ -52,13 +54,27 @@ const handleCreateNewPet = (
         },
 });
 
+const handleScanPreview = (state: INewPetState, id: string): INewPetState => ({
+  ...state,
+  scans: state.scans.map((scan) => {
+    scan.isSelected = scan.id === id;
+    return scan;
+  }),
+});
+
 const handleNewScan = (
   state: INewPetState,
-  data: NewPet.IImageData,
+  data: NewPet.IScanResult,
 ): INewPetState => ({
   ...state,
   inputs: {...state.inputs, [data.id]: null},
-  scans: [...state.scans, data],
+  scans: [
+    ...state.scans.map((s) => {
+      s.isSelected === false;
+      return s;
+    }),
+    {...data},
+  ],
 });
 
 const handleRemoveScan = (state: INewPetState, id: string) => ({
@@ -73,16 +89,18 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
   switch (action.type) {
     case NewPet.ON_CANCEL_NEW_PET:
       return initialState();
-    case NewPet.ON_INPUT_FIELD_CHANGE:
+    case NewPet.ON_INPUT_FIELD_CHANGE_NEW_PET:
       return handleInputChange(state, action.id, action.value);
-    case NewPet.ON_PROFILE_IMAGE_NEW_PET:
+    case NewPet.ON_SET_PROFILE_IMAGE_NEW_PET:
       return handleProfileImage(state, action.data);
-    case NewPet.ON_SCAN_NEW_PET_PASS:
+    case NewPet.ON_SCAN_NEW_PET:
       return handleNewScan(state, action.data);
-    case NewPet.ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT:
+    case NewPet.ON_REMOVE_NEW_PET_SCAN:
       return handleRemoveScan(state, action.id);
     case NewPet.ON_CREATE_NEW_PET:
       return handleCreateNewPet(state, action.data);
+    case NewPet.ON_PREVIEW_NEW_PET_SCAN:
+      return handleScanPreview(state, action.id);
     case Navigation.ON_SHOW_HOME_COMPONENT:
       return initialState();
     default:

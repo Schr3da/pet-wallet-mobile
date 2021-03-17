@@ -1,11 +1,11 @@
 import SQLite from "react-native-sqlite-storage";
 
+import {isDev} from "../../../../components/common/utils";
 import type {ILayoutState} from "../../layout";
 
 import {init, deleteDatabase} from "./query";
 import {initSettingsTable} from "./settings";
 import {initUserTable} from "./user";
-import {isDev} from "../../../../utils";
 
 const initScheme = async (state: ILayoutState) => {
   await initSettingsTable(state.theme, state.language);
@@ -14,9 +14,10 @@ const initScheme = async (state: ILayoutState) => {
 
 export const initDatabase = async (state: ILayoutState): Promise<boolean> => {
   if (isDev()) {
-    SQLite.DEBUG(true);
     await deleteDatabase();
   }
+
+  SQLite.DEBUG(isDev());
 
   const isSuccessful = await init();
 

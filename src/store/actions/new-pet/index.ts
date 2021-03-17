@@ -2,11 +2,17 @@ import * as Communication from "../../../communication";
 
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
-import {IPetDto, mapStateToPet} from "../../../dto/pets";
+import {IPetDto} from "../../../dto/pets";
+import {IScanDataDto} from "../../../dto/scan";
 import {onChangeSubViewComponent, onShowHomeComponent} from "../navigation";
 import {SubViewComponents} from "../../../enums/navigation";
 import {ErrorTypes} from "../../../enums/layout";
 import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
+import {requestScan} from "../../../communication/wallet";
+import {
+  mapNewPetStateToPetDto,
+  base64ImageString,
+} from "../../../components/common/utils";
 
 export interface IImageData {
   id: string;
@@ -19,6 +25,13 @@ export interface IImageData {
   didCancel?: boolean;
 }
 
+export interface IScanResult {
+  id: string;
+  isSelected: boolean;
+  image: IImageData;
+  data: IScanDataDto;
+}
+
 export enum InputIds {
   age = "age",
   name = "name",
@@ -28,9 +41,9 @@ export enum InputIds {
 
 export type InputValues = string | number | null | undefined | Date;
 
-export const ON_INPUT_FIELD_CHANGE = "ON_INPUT_FIELD_CHANGE";
-interface IOnInputFieldChange {
-  type: typeof ON_INPUT_FIELD_CHANGE;
+export const ON_INPUT_FIELD_CHANGE_NEW_PET = "ON_INPUT_FIELD_CHANGE_NEW_PET";
+interface IOnInputFieldChangeNewPet {
+  type: typeof ON_INPUT_FIELD_CHANGE_NEW_PET;
   id: string;
   value: InputValues;
 }
@@ -38,8 +51,8 @@ interface IOnInputFieldChange {
 export const onInputFieldChange = (
   id: string,
   value: InputValues,
-): IOnInputFieldChange => ({
-  type: ON_INPUT_FIELD_CHANGE,
+): IOnInputFieldChangeNewPet => ({
+  type: ON_INPUT_FIELD_CHANGE_NEW_PET,
   id,
   value,
 });
@@ -71,9 +84,9 @@ export const onCancelNewPet = (
   });
 };
 
-export const ON_PROFILE_IMAGE_NEW_PET = "ON_PROFILE_IMAGE_NEW_PET";
-interface IOnProfileImageNewPet {
-  type: typeof ON_PROFILE_IMAGE_NEW_PET;
+export const ON_SET_PROFILE_IMAGE_NEW_PET = "ON_PROFILE_IMAGE_NEW_PET";
+interface IOnSetProfileImageNewPet {
+  type: typeof ON_SET_PROFILE_IMAGE_NEW_PET;
   data: IImageData;
 }
 
@@ -82,48 +95,73 @@ export const onProfileImage = (data: IImageData) => (
   _getState: () => ICombinedReducerState,
 ) => {
   dispatch({
-    type: ON_PROFILE_IMAGE_NEW_PET,
+    type: ON_SET_PROFILE_IMAGE_NEW_PET,
     data,
-  } as IOnProfileImageNewPet);
+  } as IOnSetProfileImageNewPet);
 };
 
-export const ON_SCAN_NEW_PET_PASS = "ON_SCAN_NEW_PET_PASS";
-interface IOnScanNewPetPass {
-  type: typeof ON_SCAN_NEW_PET_PASS;
-  data: IImageData;
+export const ON_SCAN_NEW_PET = "ON_SCAN_NEW_PET";
+interface IOnScanNewPet {
+  type: typeof ON_SCAN_NEW_PET;
+  data: IScanResult;
 }
 
-export const onScan = (data: IImageData) => (
+export const onScan = (image: IImageData) => async (
   dispatch: any,
-  _getState: () => ICombinedReducerState,
+  getState: () => ICombinedReducerState,
 ) => {
+  const base64Image = base64ImageString(image);
+  if (base64Image == null) {
+    return;
+  }
+
+  const state = getState();
+  const token = state.database.token;
+  const id = state.newPet.id;
+
+  dispatch(setLoading(true));
+
+  const data = await requestScan(id!, base64Image, token!);
+
+  if (data == null) {
+    dispatch(setLoading(false));
+    return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
+  }
+
   dispatch({
-    type: ON_SCAN_NEW_PET_PASS,
-    data,
-  } as IOnScanNewPetPass);
+    type: ON_SCAN_NEW_PET,
+    data: {
+      isSelected: false,
+      image: {...image},
+      id: image.id,
+      data,
+    },
+  } as IOnScanNewPet);
+
+  dispatch(onPreviewScan(image.id));
+
+  dispatch(setLoading(false));
 };
 
-export const ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT =
-  "ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT";
-interface IOnRemoveNewPetPass {
-  type: typeof ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT;
+export const ON_REMOVE_NEW_PET_SCAN = "ON_REMOVE_NEW_PET_SCAN";
+interface IOnRemoveNewPetScan {
+  type: typeof ON_REMOVE_NEW_PET_SCAN;
   id: string;
 }
 
-export const onRemoveScan = (id: string): IOnRemoveNewPetPass => ({
-  type: ON_REMOVE_SCAN_NEW_PET_PASS_ATTACHMENT,
+export const onRemoveScan = (id: string): IOnRemoveNewPetScan => ({
+  type: ON_REMOVE_NEW_PET_SCAN,
   id,
 });
 
-export const ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT =
-  "ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT";
-interface IOnPreviewNewPetPassScan {
-  type: typeof ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT;
+export const ON_PREVIEW_NEW_PET_SCAN = "ON_PREVIEW_NEW_PET_SCAN";
+interface IOnPreviewNewPetScan {
+  type: typeof ON_PREVIEW_NEW_PET_SCAN;
   id: string;
 }
 
-const onSetPreviewId = (id: string): IOnPreviewNewPetPassScan => ({
-  type: ON_PREVIEW_SCAN_NEW_PET_PASS_ATTACHMENT,
+const onSetPreviewId = (id: string): IOnPreviewNewPetScan => ({
+  type: ON_PREVIEW_NEW_PET_SCAN,
   id,
 });
 
@@ -135,7 +173,7 @@ export const onPreviewScan = (id: string) => (
   dispatch(onSetPreviewId(id));
   dispatch(
     onChangeSubViewComponent(
-      SubViewComponents.newAttachment,
+      SubViewComponents.newPreview,
       state.layout.language,
     ),
   );
@@ -157,16 +195,16 @@ export const onCreateNewPet = () => async (
 
   dispatch(setLoading(true));
 
-  const pet = mapStateToPet(state.newPet);
+  const pet = mapNewPetStateToPetDto(state.newPet);
 
-  let response = null;
+  let data = null;
   if (pet.id == null) {
-    response = await Communication.Pets.createNewPet(pet, token!);
+    data = await Communication.Pets.createNewPet(pet, token!);
   } else {
-    response = await Communication.Pets.updateNewPet(pet, token!);
+    data = await Communication.Pets.updateNewPet(pet, token!);
   }
 
-  if (response == null) {
+  if (data == null) {
     dispatch(setLoading(false));
     return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
   }
@@ -174,16 +212,8 @@ export const onCreateNewPet = () => async (
   dispatch({
     type: ON_CREATE_NEW_PET,
     language: state.layout.language,
-    data: {
-      id: response.id,
-      animal: response.type,
-      name: response.name,
-      dateOfBirth:
-        response.dateOfBirth == null ? null : new Date(response.dateOfBirth),
-      age: state.newPet.inputs.age,
-      profileImage: response.avatarImage,
-    },
-  } as IOnCreateNewPet);
+    data,
+  });
 
   dispatch(
     onChangeSubViewComponent(
@@ -198,10 +228,10 @@ export const onCreateNewPet = () => async (
 export const onCompleteNewPet = () => onShowHomeComponent();
 
 export type Actions =
-  | IOnInputFieldChange
+  | IOnInputFieldChangeNewPet
   | IOnCancelNewPet
-  | IOnScanNewPetPass
-  | IOnProfileImageNewPet
-  | IOnRemoveNewPetPass
-  | IOnPreviewNewPetPassScan
+  | IOnScanNewPet
+  | IOnSetProfileImageNewPet
+  | IOnRemoveNewPetScan
+  | IOnPreviewNewPetScan
   | IOnCreateNewPet;

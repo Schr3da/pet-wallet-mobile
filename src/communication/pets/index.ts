@@ -2,11 +2,12 @@ import type {PetDtos} from "../dto";
 
 import {postRequest} from "../common";
 import {IPetDto} from "../../dto/pets";
+import {IFetchPetsRequestDto} from "../dto/pet";
 
 export const createNewPet = async (
-  {name, animal, dateOfBirth, profileImage}: IPetDto,
+  {name, animal, dateOfBirth, profileImage, age}: IPetDto,
   token: string,
-) => {
+): Promise<IPetDto | null> => {
   const url = "/api/petpass/pet/create";
 
   const mappedData: PetDtos.ICreatePetRequestDto = {
@@ -21,7 +22,21 @@ export const createNewPet = async (
       PetDtos.ICreatePetRequestDto,
       PetDtos.ICreatePetResponseDto
     >(url, mappedData, token);
-    return Promise.resolve(response);
+
+    if (response == null) {
+      return Promise.resolve(null);
+    }
+
+    return Promise.resolve({
+      id: response.id,
+      animal: response.type,
+      name: response.name,
+      dateOfBirth:
+        response.dateOfBirth == null ? null : new Date(response.dateOfBirth),
+      profileImage: response.avatarImage || undefined,
+      profileUri: undefined,
+      age,
+    });
   } catch (error) {
     return Promise.resolve(null);
   }
@@ -62,9 +77,7 @@ export const deletePet = async (id: string, token: string) => {
   }
 };
 
-export const fetchPets = async (
-  token: string,
-): Promise<PetDtos.IFetchPetsRequestDto | null> => {
+export const fetchPets = async (token: string): Promise<IPetDto[]> => {
   const url = "/api/petpass/pet/find";
   try {
     const response = await postRequest<{}, PetDtos.IFetchPetsRequestDto>(
@@ -72,19 +85,35 @@ export const fetchPets = async (
       {},
       token,
     );
-    return Promise.resolve(response);
+
+    const data = mapFetchedPets(response);
+    return Promise.resolve(data);
   } catch (error) {
-    return Promise.resolve(null);
+    return Promise.resolve([]);
   }
 };
 
-export const scanPassPage = async (base64Image: string, token: string) => {
-  const url = "/api/petpass/pet/create";
-
-  try {
-    const response = await postRequest<any, any>(url, {}, token);
-    return Promise.resolve(response);
-  } catch (error) {
-    return Promise.resolve(null);
+const mapFetchedPets = (response: IFetchPetsRequestDto | null): IPetDto[] => {
+  if (response == null) {
+    return [];
   }
+
+  return (response.pets || [])
+    .map((data) => {
+      if (data == null) {
+        return null;
+      }
+
+      return {
+        id: data.id,
+        name: data.name,
+        age: null,
+        dateOfBirth:
+          data.dateOfBirth == null ? null : new Date(data.dateOfBirth),
+        profileImage: data.avatarImage || undefined,
+        profileUri: undefined,
+        animal: data.type,
+      };
+    })
+    .filter((p) => p != null) as IPetDto[];
 };

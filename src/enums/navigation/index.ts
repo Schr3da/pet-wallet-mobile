@@ -14,5 +14,5 @@ export enum SubViewComponents {
   welcomeWithPets = "welcomeWithPets",
   newPetInformation = "newPetInformation",
   newPetScan = "newPetScan",
-  newAttachment = "newAttachment",
+  newPreview = "newPreview",
 }

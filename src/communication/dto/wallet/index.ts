@@ -1,23 +1,23 @@
-export interface IPetWalletEntry {
-  id: string;
+export interface CreateWalletScanRequestDto {
   petId: string;
-  title: string;
-  category: string | null;
-  description: string | null;
-  date: Date;
+  scan: string;
 }
 
-export interface IPetWalletScan {
+export interface CreateWalletScanResponseDto {
   id: string;
-  petId: string;
-  imagePath: string;
-  created: Date;
-  processed: Date | null;
-  ocrTokensRaw: string[];
-  processResult: IPetWalletScanProcessResult[];
+  ocrTokenRaw: string[];
+  suggestions: PetWalletScanResponseResultSuggestionDto[];
 }
 
-export interface IPetWalletScanProcessResult {
-  ocrTokenRaw: string;
-  knownTokens: string[];
+export interface PetWalletScanResponseResultSuggestionDto {
+  knownToken: string;
+  medicineId: string;
+  medicineInfos: PetWalletScanMedicineInfoDto[];
+}
+
+export interface PetWalletScanMedicineInfoDto {
+  shortInfo: string;
+  longInfo: string;
+  language: string;
+  url: string;
 }
