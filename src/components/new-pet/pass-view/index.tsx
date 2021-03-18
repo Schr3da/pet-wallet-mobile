@@ -96,7 +96,7 @@ export const ChildView = (props: ILayoutChildProps) => {
             id="empty"
             style={{opacity: 0.4}}
             theme={theme}
-            value={language.common.noAttachments}
+            value={language.common.noScansFound}
             disabled={true}
             onChange={() => undefined}
           />

@@ -9,15 +9,17 @@ export enum ErrorTypes {
   inputField = "inputFieldError",
   camera = "cameraError",
   photoLibrary = "photoLibraryError",
-  deviceIsOffline = "deviceIsOffline",
-  internetConnectionRequired = "internetConnectionRequired",
-  sharePet = "sharePet",
+  deviceIsOffline = "deviceIsOfflineError",
+  internetConnectionRequired = "internetConnectionRequiredError",
+  sharePet = "sharePetError",
   unexpected = "unexpectedError",
+  scanResultEmpty = "scanResultEmptyError",
 }
 
 export enum NotificationTypes {
   termsAndConditions = "termsAndConditions",
   savedData = "savedData",
+  newPetCreated = "newPetCreated",
 }
 
 export enum DisplayModes {

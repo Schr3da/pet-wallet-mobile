@@ -3,6 +3,8 @@ import {WalletDtos} from "../dto";
 
 import {postRequest} from "../common";
 import {LanguageTypes} from "../../language";
+import {IScanEntityDto} from "../../dto/scan";
+import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
 
 export const requestScan = async (
   id: string,
@@ -39,14 +41,38 @@ const mapScanData = (
     return null;
   }
 
+  const prefills = extractPrefills(response);
+  const suggestions = extractSuggestions(response);
+
   return {
-    prefills: extractPrefills(response),
+    prefills: {
+      [LanguageTypes.de]: filterByLanguage(LanguageTypes.de, prefills),
+      [LanguageTypes.en]: filterByLanguage(LanguageTypes.en, prefills),
+    },
+    suggestions: {
+      [LanguageTypes.de]: filterByLanguage(LanguageTypes.de, suggestions),
+      [LanguageTypes.en]: filterByLanguage(LanguageTypes.en, suggestions),
+    },
   };
 };
 
+const isDublicate = (
+  data: PetWalletScanMedicineInfoDto,
+  collection: IScanEntityDto[],
+) =>
+  (collection || []).find(
+    (r) =>
+      r.shortInfo === data.shortInfo &&
+      r.language === data.language &&
+      r.url === data.url,
+  ) != null;
+
+const filterByLanguage = (language: LanguageTypes, data: IScanEntityDto[]) =>
+  (data || []).filter((d) => d.language === language);
+
 const extractPrefills = (
   response: WalletDtos.CreateWalletScanResponseDto,
-): Dtos.Scan.IScanPrefillDto[] => {
+): Dtos.Scan.IScanEntityDto[] => {
   const raw = response.ocrTokenRaw
     .filter((r) => r != null && r.length > 2)
     .map((r) => r.toLowerCase());
@@ -56,38 +82,38 @@ const extractPrefills = (
       return result;
     }
 
-    const match = findPotentialPrefill(next, raw);
-    if (match == null) {
-      return result;
-    }
-
-    const isDublicate = result.find(
-      (r) =>
-        r.shortInfo === match.shortInfo &&
-        r.language === match.language &&
-        r.url === match.url,
-    );
-
-    if (isDublicate) {
-      return result;
-    }
-
-    return [
-      ...result,
-      {
+    const matchDE = findPotentialPrefill(next, raw, LanguageTypes.de);
+    if (matchDE != null && isDublicate(matchDE, result) === false) {
+      result.push({
         id: next.medicineId,
-        shortInfo: match.shortInfo,
-        longInfo: match.longInfo,
-        url: match.url,
-        language: match.language as LanguageTypes,
-      },
-    ];
-  }, [] as Dtos.Scan.IScanPrefillDto[]);
+        shortInfo: matchDE.shortInfo,
+        longInfo: matchDE.longInfo,
+        url: matchDE.url,
+        language: matchDE.language as LanguageTypes,
+        isSelected: true,
+      });
+    }
+
+    const matchEN = findPotentialPrefill(next, raw, LanguageTypes.en);
+    if (matchEN != null && isDublicate(matchEN, result) === false) {
+      result.push({
+        id: next.medicineId,
+        shortInfo: matchEN.shortInfo,
+        longInfo: matchEN.longInfo,
+        url: matchEN.url,
+        language: matchEN.language as LanguageTypes,
+        isSelected: true,
+      });
+    }
+
+    return result;
+  }, [] as Dtos.Scan.IScanEntityDto[]);
 };
 
 const findPotentialPrefill = (
   data: WalletDtos.PetWalletScanResponseResultSuggestionDto,
   validator: string[],
+  language: LanguageTypes,
 ): WalletDtos.PetWalletScanMedicineInfoDto | undefined => {
   if (data == null) {
     return undefined;
@@ -96,7 +122,7 @@ const findPotentialPrefill = (
   const infos = data.medicineInfos || [];
 
   return infos.find((info: WalletDtos.PetWalletScanMedicineInfoDto) => {
-    if (info == null) {
+    if (info == null || info.language !== language) {
       return false;
     }
 
@@ -128,3 +154,60 @@ const findPotentialPrefill = (
     return false;
   });
 };
+
+const extractSuggestions = (
+  response: WalletDtos.CreateWalletScanResponseDto,
+): Dtos.Scan.IScanEntityDto[] => {
+  return (response.suggestions || []).reduce((result, next) => {
+    if (next == null) {
+      return result;
+    }
+
+    const infos = getInfos(next.medicineId, next.medicineInfos);
+
+    const infosToAdd = infos.filter(
+      (info) =>
+        result.find(
+          (r) =>
+            r.shortInfo === info.shortInfo &&
+            r.language === info.language &&
+            r.url === info.url,
+        ) == null,
+    );
+
+    return [...result, ...infosToAdd];
+  }, [] as IScanEntityDto[]);
+};
+
+const getInfos = (
+  id: string,
+  infos: WalletDtos.PetWalletScanMedicineInfoDto[],
+) =>
+  (infos || []).reduce((result, next) => {
+    if (next == null) {
+      return result;
+    }
+
+    const isDublicate = result.find(
+      (r) =>
+        r.shortInfo === next.shortInfo &&
+        r.language === next.language &&
+        r.url === next.url,
+    );
+
+    if (isDublicate) {
+      return result;
+    }
+
+    return [
+      ...result,
+      {
+        id,
+        isSelected: false,
+        shortInfo: next.shortInfo,
+        longInfo: next.longInfo,
+        url: next.url,
+        language: next.language as LanguageTypes,
+      },
+    ];
+  }, [] as IScanEntityDto[]);

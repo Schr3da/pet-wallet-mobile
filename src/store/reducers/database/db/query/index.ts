@@ -69,7 +69,7 @@ export const update = async <T>(
 let instance: SQLite.SQLiteDatabase;
 
 const databaseParams = (): SQLite.DatabaseParams => ({
-  name: "pet-wallet-9",
+  name: "pet-wallet",
   location: "default",
 });
 

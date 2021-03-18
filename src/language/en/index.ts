@@ -138,8 +138,10 @@ const newPet: INewPet = {
     attachmentLabel: "Pet pass page",
   },
   [SubViewComponents.newPreview]: {
+    scanResultEmpty:
+      "No informaiton could be extracted from the scan, you might need to enter them manually.",
     scanResultInfo:
-      "Please review the result, modify and check it using the checkbox.",
+      "Please review, modify or select matched results using the checkbox.",
     primaryButton: "Übernehmen",
     secondaryButton: "Abbrechen",
   },
@@ -182,6 +184,10 @@ const errors: IErrors = {
     title: "Unexpected Error",
     text: "An unexpected error has occurred",
   },
+  [ErrorTypes.scanResultEmpty]: {
+    title: "Scan result is empty",
+    text: "Unfortunately no information could be extracted from the scan.",
+  },
 };
 
 const notifications: INotifications = {
@@ -193,6 +199,10 @@ const notifications: INotifications = {
   [NotificationTypes.savedData]: {
     title: "Data saved",
     text: "The data has been saved successfully.",
+  },
+  [NotificationTypes.newPetCreated]: {
+    title: "New pet created",
+    text: "A new pet has been successfully created.",
   },
 };
 
@@ -246,7 +256,7 @@ const animalTypes = {
 
 const common: ICommon = {
   addText: "New entry",
-  noAttachments: "No data",
+  noScansFound: "No scans added",
   continue: "Continue",
   cancel: "Cancel",
   pick: "Select",

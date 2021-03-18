@@ -20,8 +20,8 @@ interface IProps extends ILayoutChildProps {
 }
 
 const shouldAutoDismiss = (type: NotificationTypes): boolean =>
-  type === NotificationTypes.savedData;
-
+  type === NotificationTypes.savedData ||
+  type === NotificationTypes.newPetCreated;
 export class Container extends React.Component<IProps, unknown> {
   private timer: any = null;
 
@@ -43,7 +43,7 @@ export class Container extends React.Component<IProps, unknown> {
         this.startAnimation(0, () => {
           this.props.onAutoDismiss();
         });
-      }, 5000);
+      }, 4000);
     });
   }
 

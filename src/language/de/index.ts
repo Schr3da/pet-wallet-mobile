@@ -140,6 +140,8 @@ const newPet: INewPet = {
     attachmentLabel: "Tierpass Seite",
   },
   [SubViewComponents.newPreview]: {
+    scanResultEmpty:
+      "Es konnten keine Informationen extrahiert werden, eine händische Eingabe ist erforderlich.",
     scanResultInfo:
       "Bitte überprüfe die Einträge, korrigiere und bestätige diese durch markieren der Checkbox.",
     primaryButton: "Speichern",
@@ -185,6 +187,10 @@ const errors: IErrors = {
     title: "Unerwarteter Fehler",
     text: "Ein unerwarteter Fehler ist aufgetreten.",
   },
+  [ErrorTypes.scanResultEmpty]: {
+    title: "Scan Ergebnis ist leer",
+    text: "Es konnten leider keine Informationen extrahiert werden.",
+  },
 };
 
 const notifications: INotifications = {
@@ -196,6 +202,10 @@ const notifications: INotifications = {
   [NotificationTypes.savedData]: {
     title: "Daten gespeichert",
     text: "Die Daten wurden erfolgreich gespeichert.",
+  },
+  [NotificationTypes.newPetCreated]: {
+    title: "Neues Haustier angelegt",
+    text: "Ein neues Haustier wurde erfolgreich angelegt",
   },
 };
 
@@ -249,7 +259,7 @@ const animalTypes = {
 
 const common: ICommon = {
   addText: "Neuer Eintrag",
-  noAttachments: "Keine Einträge hinzugefügt",
+  noScansFound: "Keine Einträge hinzugefügt",
   continue: "Weiter",
   cancel: "Abbrechen",
   pick: "Auswählen",

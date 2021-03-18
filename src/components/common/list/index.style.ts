@@ -15,6 +15,6 @@ export const applyStyles = (theme: ITheme) => ({
     alignItems: "center",
   } as ViewStyle,
   button: {
-    marginTop: 10,
+    width: "100%",
   } as ViewStyle,
 });

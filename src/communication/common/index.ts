@@ -60,7 +60,9 @@ const request = <S, T>(
       }
     })
     .catch((e) => {
-      console.log("connection error: ", e);
+      if (isDev()) {
+        console.log("connection error: ", e, endpoint);
+      }
       return Promise.reject();
     });
 

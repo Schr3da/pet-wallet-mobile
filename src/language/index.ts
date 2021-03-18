@@ -17,7 +17,7 @@ export enum LanguageTypes {
 
 export interface ICommon {
   addText: string;
-  noAttachments: string;
+  noScansFound: string;
   continue: string;
   cancel: string;
   pick: string;
@@ -87,6 +87,7 @@ export interface INewPet {
     attachmentLabel: string;
   };
   [SubViewComponents.newPreview]: {
+    scanResultEmpty: string;
     scanResultInfo: string;
     primaryButton: string;
     secondaryButton: string;

@@ -15,6 +15,7 @@ import {RoundedButton} from "../rounded-button";
 export interface IListData {
   id: string;
   value: string;
+  isSelected: boolean;
   type: InputTypes;
 }
 
@@ -43,7 +44,7 @@ export const DataList = (props: IProps) => {
           <CheckBox
             id={d.id}
             theme={theme}
-            isSelected={false}
+            isSelected={d.isSelected}
             onSelect={onSelect}
           />
           {d.type === InputTypes.text ? (

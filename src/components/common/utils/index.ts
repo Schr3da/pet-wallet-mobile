@@ -77,7 +77,7 @@ export const createNotificationAnimation = (
     easing: Easing.linear,
   });
 
-export const isDev = (): boolean => false;
+export const isDev = (): boolean => true;
 
 export const mapNewPetStateToPetDto = (data: INewPetState): IPetDto => ({
   id: data.id,
@@ -88,3 +88,13 @@ export const mapNewPetStateToPetDto = (data: INewPetState): IPetDto => ({
   profileUri: data.profile == null ? undefined : data.profile.uri,
   animal: String(data.inputs.animal),
 });
+
+export const createUuid = () => {
+  let dt = new Date().getTime();
+  const uuid = "xxxx-xxxx-xxxx-xxxx-xxxx".replace(/[xy]/g, (character) => {
+    const r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (character == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
+};

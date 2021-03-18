@@ -157,8 +157,6 @@ export const onSetNotificationType = (
   notificationType,
 });
 
-export const clearNotificatin = () => onSetNotificationType(null);
-
 export const ON_FOCUS = "ON_FOCUS";
 export interface IOnFocus {
   type: typeof ON_FOCUS;

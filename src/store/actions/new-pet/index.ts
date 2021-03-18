@@ -9,6 +9,7 @@ import {SubViewComponents} from "../../../enums/navigation";
 import {ErrorTypes} from "../../../enums/layout";
 import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
 import {requestScan} from "../../../communication/wallet";
+
 import {
   mapNewPetStateToPetDto,
   base64ImageString,
@@ -141,6 +142,10 @@ export const onScan = (image: IImageData) => async (
   dispatch(onPreviewScan(image.id));
 
   dispatch(setLoading(false));
+
+  if (data.suggestions.de.length === 0 && data.suggestions.en.length === 0) {
+    dispatch(onSetErrorCode(ErrorTypes.scanResultEmpty));
+  }
 };
 
 export const ON_REMOVE_NEW_PET_SCAN = "ON_REMOVE_NEW_PET_SCAN";
@@ -225,6 +230,30 @@ export const onCreateNewPet = () => async (
   dispatch(setLoading(false));
 };
 
+export const ON_CREATE_NEW_SCAN_ENTITY_NEW_PET =
+  "ON_CREATE_NEW_SCAN_ENTITY_NEW_PET";
+interface IOnCreateNewScanEntity {
+  type: typeof ON_CREATE_NEW_SCAN_ENTITY_NEW_PET;
+}
+
+export const onCreateNewScanEntity = (): IOnCreateNewScanEntity => ({
+  type: ON_CREATE_NEW_SCAN_ENTITY_NEW_PET,
+});
+
+export const ON_TOGGLE_SELECTION_SCAN_ENTITY_NEW_PET =
+  "ON_TOGGLE_SELECTION_SCAN_ENTITY_NEW_PET";
+interface IOnSelectScanEntity {
+  type: typeof ON_TOGGLE_SELECTION_SCAN_ENTITY_NEW_PET;
+  id: string;
+}
+
+export const onToggleSelectionScanEntity = (
+  id: string,
+): IOnSelectScanEntity => ({
+  type: ON_TOGGLE_SELECTION_SCAN_ENTITY_NEW_PET,
+  id,
+});
+
 export const onCompleteNewPet = () => onShowHomeComponent();
 
 export type Actions =
@@ -234,4 +263,6 @@ export type Actions =
   | IOnSetProfileImageNewPet
   | IOnRemoveNewPetScan
   | IOnPreviewNewPetScan
-  | IOnCreateNewPet;
+  | IOnCreateNewPet
+  | IOnCreateNewScanEntity
+  | IOnSelectScanEntity;

@@ -1,5 +1,7 @@
 import {Database, NewPet, Navigation} from "../../actions";
 import {IPetDto} from "../../../dto/pets";
+import {LanguageTypes} from "../../../language";
+import {createUuid} from "../../../components/common/utils";
 
 export interface INewPetState {
   id: string | null;
@@ -77,6 +79,58 @@ const handleNewScan = (
   ],
 });
 
+const handleNewScanEntity = (state: INewPetState): INewPetState => {
+  const scans = [...state.scans];
+
+  const match = scans.find((s) => s.isSelected);
+  if (match == null) {
+    return state;
+  }
+
+  const emptyEntity = {
+    id: createUuid(),
+    shortInfo: "",
+    longInfo: "",
+    url: "",
+    isSelected: true,
+  };
+
+  match.data.prefills.de.push({...emptyEntity, language: LanguageTypes.de});
+  match.data.prefills.en.push({...emptyEntity, language: LanguageTypes.en});
+
+  return {
+    ...state,
+    scans,
+  };
+};
+
+const handleToggleSelection = (
+  state: INewPetState,
+  id: string,
+): INewPetState => {
+  const scans = [...state.scans];
+
+  const match = scans.find((s) => s.isSelected);
+  if (match == null) {
+    return state;
+  }
+
+  const matchDE = match.data.prefills.de.find((p) => p.id === id);
+  if (matchDE) {
+    matchDE.isSelected = !matchDE.isSelected;
+  }
+
+  const matchEN = match.data.prefills.en.find((p) => p.id === id);
+  if (matchEN) {
+    matchEN.isSelected = !matchEN.isSelected;
+  }
+
+  return {
+    ...state,
+    scans,
+  };
+};
+
 const handleRemoveScan = (state: INewPetState, id: string) => ({
   ...state,
   inputs: {...state.inputs, [id]: null},
@@ -101,6 +155,10 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleCreateNewPet(state, action.data);
     case NewPet.ON_PREVIEW_NEW_PET_SCAN:
       return handleScanPreview(state, action.id);
+    case NewPet.ON_CREATE_NEW_SCAN_ENTITY_NEW_PET:
+      return handleNewScanEntity(state);
+    case NewPet.ON_TOGGLE_SELECTION_SCAN_ENTITY_NEW_PET:
+      return handleToggleSelection(state, action.id);
     case Navigation.ON_SHOW_HOME_COMPONENT:
       return initialState();
     default:
