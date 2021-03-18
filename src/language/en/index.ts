@@ -47,7 +47,7 @@ const header: IHeader = {
       description:
         "Take photos of your pets pass and we convert it in a digital form",
     },
-    [SubViewComponents.newPreview]: {
+    [SubViewComponents.newScanResult]: {
       title: "Scan details",
       description: "",
     },
@@ -137,7 +137,7 @@ const newPet: INewPet = {
     secondaryButton: "Cancel",
     attachmentLabel: "Pet pass page",
   },
-  [SubViewComponents.newPreview]: {
+  [SubViewComponents.newScanResult]: {
     scanResultEmpty:
       "No informaiton could be extracted from the scan, you might need to enter them manually.",
     scanResultInfo:

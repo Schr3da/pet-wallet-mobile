@@ -47,7 +47,7 @@ const header: IHeader = {
       description:
         "Photographiere den Impfass deines Haustieres und wir digitalisieren ihn sofort.",
     },
-    [SubViewComponents.newPreview]: {
+    [SubViewComponents.newScanResult]: {
       title: "Scan Details",
       description: "",
     },
@@ -139,7 +139,7 @@ const newPet: INewPet = {
     secondaryButton: "Abbrechen",
     attachmentLabel: "Tierpass Seite",
   },
-  [SubViewComponents.newPreview]: {
+  [SubViewComponents.newScanResult]: {
     scanResultEmpty:
       "Es konnten keine Informationen extrahiert werden, eine händische Eingabe ist erforderlich.",
     scanResultInfo:

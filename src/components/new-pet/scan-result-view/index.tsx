@@ -74,8 +74,8 @@ export const ChildView = (props: ILayoutChildProps) => {
       </View>
       <Text style={styles.info}>
         {(data || []).length === 0
-          ? language.newPet.newPreview.scanResultEmpty
-          : language.newPet.newPreview.scanResultInfo}
+          ? language.newPet.newScanResult.scanResultEmpty
+          : language.newPet.newScanResult.scanResultInfo}
       </Text>
       <View style={styles.resultWrapper}>
         <DataList
@@ -100,13 +100,13 @@ export const Footer = (props: ILayoutChildProps) => {
     <React.Fragment>
       <RoundedButtons.PrimaryButton
         theme={theme}
-        title={language.newPet.newPreview.primaryButton}
+        title={language.newPet.newScanResult.primaryButton}
         style={{marginTop: 10}}
         onPress={() => console.log("continue pressed")}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
-        title={language.newPet.newPreview.secondaryButton}
+        title={language.newPet.newScanResult.secondaryButton}
         style={{marginTop: 4}}
         onPress={() => requestCancel(dispatch)}
       />

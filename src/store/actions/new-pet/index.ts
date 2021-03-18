@@ -178,7 +178,7 @@ export const onPreviewScan = (id: string) => (
   dispatch(onSetPreviewId(id));
   dispatch(
     onChangeSubViewComponent(
-      SubViewComponents.newPreview,
+      SubViewComponents.newScanResult,
       state.layout.language,
     ),
   );

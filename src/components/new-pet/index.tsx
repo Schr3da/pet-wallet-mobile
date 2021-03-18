@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 
 import * as InformationViews from "./information-view";
 import * as PassViews from "./pass-view";
-import * as AttachmentViews from "./attachment";
+import * as ScanResultViews from "./scan-result-view";
 
 import {Layout} from "../common";
 import {onFocus} from "../../store/actions/layout";
@@ -54,8 +54,8 @@ export const Component = () => {
             return <InformationViews.ChildView {...props} />;
           case SubViewComponents.newPetScan:
             return <PassViews.ChildView {...props} />;
-          case SubViewComponents.newPreview:
-            return <AttachmentViews.ChildView {...props} />;
+          case SubViewComponents.newScanResult:
+            return <ScanResultViews.ChildView {...props} />;
           default:
             return null;
         }
@@ -66,8 +66,8 @@ export const Component = () => {
             return <InformationViews.Footer {...props} />;
           case SubViewComponents.newPetScan:
             return <PassViews.Footer {...props} />;
-          case SubViewComponents.newPreview:
-            return <AttachmentViews.Footer {...props} />;
+          case SubViewComponents.newScanResult:
+            return <ScanResultViews.Footer {...props} />;
           default:
             return null;
         }
@@ -78,8 +78,8 @@ export const Component = () => {
             return <InformationViews.Dialogs {...props} />;
           case SubViewComponents.newPetScan:
             return <PassViews.Dialogs {...props} />;
-          case SubViewComponents.newPreview:
-            return <AttachmentViews.Dialogs {...props} />;
+          case SubViewComponents.newScanResult:
+            return <ScanResultViews.Dialogs {...props} />;
           default:
             return null;
         }

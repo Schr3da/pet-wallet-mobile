@@ -86,7 +86,7 @@ export interface INewPet {
     secondaryButton: string;
     attachmentLabel: string;
   };
-  [SubViewComponents.newPreview]: {
+  [SubViewComponents.newScanResult]: {
     scanResultEmpty: string;
     scanResultInfo: string;
     primaryButton: string;
