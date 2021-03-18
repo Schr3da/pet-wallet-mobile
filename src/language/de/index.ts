@@ -49,7 +49,7 @@ const header: IHeader = {
     },
     [SubViewComponents.newPreview]: {
       title: "Scan Details",
-      description: "Bitte überprüfe die Angaben und ändere diese falls nötig.",
+      description: "",
     },
   },
   [ViewComponents.settings]: {
@@ -140,6 +140,8 @@ const newPet: INewPet = {
     attachmentLabel: "Tierpass Seite",
   },
   [SubViewComponents.newPreview]: {
+    scanResultInfo:
+      "Bitte überprüfe die Einträge, korrigiere und bestätige diese durch markieren der Checkbox.",
     primaryButton: "Speichern",
     secondaryButton: "Abbrechen",
   },
@@ -246,6 +248,7 @@ const animalTypes = {
 };
 
 const common: ICommon = {
+  addText: "Neuer Eintrag",
   noAttachments: "Keine Einträge hinzugefügt",
   continue: "Weiter",
   cancel: "Abbrechen",

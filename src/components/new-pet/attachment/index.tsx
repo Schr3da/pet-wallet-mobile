@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
-import {Dialog, RoundedButtons, InputTypeField} from "../../common";
+import {Dialog, RoundedButtons, InputTypeField, DataList} from "../../common";
 import {IScanResult} from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {onDismissDialog} from "../../../store/actions/layout";
@@ -35,30 +35,43 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
 export const ChildView = (props: ILayoutChildProps) => {
   const stateProps = useSelector(stateToProps);
 
-  const {theme, languageType} = props;
+  const {theme, language, languageType} = props;
 
   const styles = createStyle(theme, applyStyles);
 
   return (
-    <React.Fragment>
+    <View style={styles.container}>
       <View style={styles.imageWrapper}>
         <Image
           style={styles.image}
           source={base64ImageToUri(stateProps.data.image)}
         />
       </View>
-      <View style={styles.entryWrapper}>
-        <InputTypeField
-          id={""}
-          style={styles.inputTypeField}
+      <Text style={styles.info}>
+        {language.newPet.newPreview.scanResultInfo}
+      </Text>
+      <View style={styles.resultWrapper}>
+        <DataList
           theme={theme}
           language={languageType}
-          inputType={InputTypes.text}
-          placeholder={"SAMPLE"}
-          value={"SAMPLE"}
+          data={[
+            {
+              id: "1",
+              value: "Hallo - 1",
+              type: InputTypes.text,
+            },
+            {
+              id: "2",
+              value: "Hallo - 2",
+              type: InputTypes.date,
+            },
+          ]}
+          onAdd={() => undefined}
+          onSelect={() => undefined}
+          onChange={() => undefined}
         />
       </View>
-    </React.Fragment>
+    </View>
   );
 };
 

@@ -16,12 +16,16 @@ import {Dialog} from "./dialog";
 import {GradientBackground} from "./gradient-background";
 import {InputTypeField} from "./input-type-field";
 import {DatePickerComponent} from "./date-picker";
+import {DataList} from "./list";
+import {CheckBox} from "./checkbox";
 
 export {
   AttachmentPlaceholder,
   Card,
   CardsContainer,
   ContentButton,
+  CheckBox,
+  DataList,
   Dialog,
   GradientBackground,
   Header,

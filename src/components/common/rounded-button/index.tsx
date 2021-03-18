@@ -28,7 +28,7 @@ export interface IProps {
   onPress: () => void;
 }
 
-const RoundedButton = (props: IProps) => {
+export const RoundedButton = (props: IProps) => {
   const {
     background,
     color,

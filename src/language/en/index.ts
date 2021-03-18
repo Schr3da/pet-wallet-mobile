@@ -49,7 +49,7 @@ const header: IHeader = {
     },
     [SubViewComponents.newPreview]: {
       title: "Scan details",
-      description: "Please review the scan result and edit it if required.",
+      description: "",
     },
   },
   [ViewComponents.settings]: {
@@ -138,6 +138,8 @@ const newPet: INewPet = {
     attachmentLabel: "Pet pass page",
   },
   [SubViewComponents.newPreview]: {
+    scanResultInfo:
+      "Please review the result, modify and check it using the checkbox.",
     primaryButton: "Übernehmen",
     secondaryButton: "Abbrechen",
   },
@@ -243,6 +245,7 @@ const animalTypes = {
 };
 
 const common: ICommon = {
+  addText: "New entry",
   noAttachments: "No data",
   continue: "Continue",
   cancel: "Cancel",

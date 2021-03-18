@@ -1,17 +1,18 @@
-import type {ViewStyle, ImageStyle} from "react-native";
+import type {ViewStyle, ImageStyle, TextStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({
   container: {
+    width: "100%",
+    maxWidth: 380,
     flex: 1,
   } as ViewStyle,
   imageWrapper: {
     width: "100%",
-    maxWidth: 380,
     height: 100,
     overflow: "hidden",
-    borderRadius: 100,
+    borderRadius: 25,
     borderWidth: 6,
     backgroundColor: theme.color11,
     borderColor: theme.color11,
@@ -20,13 +21,13 @@ export const applyStyles = (theme: ITheme) => ({
     width: 480,
     height: 480,
   } as ImageStyle,
-  entryWrapper: {
+  info: {
+    color: theme.color8,
+    margin: 20,
+    textAlign: "center",
+  } as TextStyle,
+  resultWrapper: {
     width: "100%",
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 10,
-    display: "flex",
     alignItems: "center",
   } as ViewStyle,
-  inputTypeField: {} as ViewStyle,
 });

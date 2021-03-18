@@ -17,5 +17,5 @@ export const applyStyles = (theme: ITheme) => ({
     paddingBottom: 10,
     fontSize: 16,
     color: theme.color8,
-  },
+  } as ViewStyle,
 });
