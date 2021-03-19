@@ -7,45 +7,57 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {Dialog, RoundedButtons, DataList} from "../../common";
-import {
-  IScanResult,
-  onCreateNewScanEntity,
-  onToggleSelectionScanEntity,
-} from "../../../store/actions/new-pet";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {onDismissDialog} from "../../../store/actions/layout";
-import {requestCancel} from "../hooks";
-import {onGoBackNavigation} from "../../../store/actions/navigation";
+import {
+  onDismissDialog,
+  onSetDialogContentType,
+} from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
 import {base64ImageToUri} from "../../common/utils";
 import {createStyle} from "../../../theme";
 import {DialogContentTypes, InputTypes} from "../../../enums/layout";
+import {IListData} from "../../common/list";
+import {IScanDataDto} from "../../../dto/scan";
+import {IImageDataDto} from "../../../dto/image";
+
+import {
+  onCreateNewScanEntity,
+  onToggleSelectionScanEntity,
+  onCancelScanResult,
+  InputValues,
+  onInputFieldChange,
+  onRemoveNewScanEntity,
+} from "../../../store/actions/scan-result";
 
 import {applyStyles} from "./index.style";
-import {IListData} from "../../common/list";
 
-const handleCancel = (dispatch: any, language: LanguageTypes) => {
+const requestCancel = (dispatch: any) =>
+  dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
+
+const handleCancel = (dispatch: any) => {
   dispatch(onDismissDialog());
-  dispatch(onGoBackNavigation(language));
+  dispatch(onCancelScanResult());
 };
 
 interface IStateProps {
-  entity: IScanResult;
+  image: IImageDataDto | null;
+  data: IScanDataDto | null;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
-  entity: state.newPet.scans.find((s) => s.isSelected)!,
+  image: state.scan.image,
+  data: state.scan.result,
 });
 
 const mapEntityToData = (
-  entity: IScanResult,
+  data: IScanDataDto | null,
   languageType: LanguageTypes,
 ): IListData[] => {
-  if (entity == null || entity.data == null || entity.data.prefills == null) {
+  if (data == null || data.prefills == null) {
     return [];
   }
 
-  return (entity.data.prefills[languageType] || []).map((p) => ({
+  return (data.prefills[languageType] || []).map((p) => ({
     id: p.id,
     value: p.shortInfo,
     type: InputTypes.text,
@@ -62,20 +74,22 @@ export const ChildView = (props: ILayoutChildProps) => {
 
   const styles = createStyle(theme, applyStyles);
 
-  const data = mapEntityToData(stateProps.entity, languageType);
+  const data = mapEntityToData(stateProps.data, languageType);
 
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        <Image
-          style={styles.image}
-          source={base64ImageToUri(stateProps.entity.image)}
-        />
+        {stateProps.image == null ? null : (
+          <Image
+            style={styles.image}
+            source={base64ImageToUri(stateProps.image)}
+          />
+        )}
       </View>
       <Text style={styles.info}>
         {(data || []).length === 0
-          ? language.newPet.newScanResult.scanResultEmpty
-          : language.newPet.newScanResult.scanResultInfo}
+          ? language.scanResult.scanResultEmpty
+          : language.scanResult.scanResultInfo}
       </Text>
       <View style={styles.resultWrapper}>
         <DataList
@@ -83,12 +97,19 @@ export const ChildView = (props: ILayoutChildProps) => {
           language={languageType}
           data={data}
           onAdd={() => dispatch(onCreateNewScanEntity())}
-          onSelect={(id) => dispatch(onToggleSelectionScanEntity(id))}
-          onChange={() => undefined}
+          onRemove={(id: string) => dispatch(onRemoveNewScanEntity(id))}
+          onSelect={(id: string) => dispatch(onToggleSelectionScanEntity(id))}
+          onChange={(id: string, value: InputValues) =>
+            dispatch(onInputFieldChange(id, value))
+          }
         />
       </View>
     </View>
   );
+};
+
+const handleSave = (_dispatch: any) => {
+  console.log("handle save");
 };
 
 export const Footer = (props: ILayoutChildProps) => {
@@ -100,13 +121,13 @@ export const Footer = (props: ILayoutChildProps) => {
     <React.Fragment>
       <RoundedButtons.PrimaryButton
         theme={theme}
-        title={language.newPet.newScanResult.primaryButton}
+        title={language.scanResult.primaryButton}
         style={{marginTop: 10}}
-        onPress={() => console.log("continue pressed")}
+        onPress={() => handleSave(dispatch)}
       />
       <RoundedButtons.SecondaryButton
         theme={theme}
-        title={language.newPet.newScanResult.secondaryButton}
+        title={language.scanResult.secondaryButton}
         style={{marginTop: 4}}
         onPress={() => requestCancel(dispatch)}
       />
@@ -117,7 +138,7 @@ export const Footer = (props: ILayoutChildProps) => {
 export const Dialogs = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
-  const {language, languageType, theme, dialogContentType} = props;
+  const {language, theme, dialogContentType} = props;
   const {title, text} = language.dialogs.cancelAttachmentChanges;
 
   switch (dialogContentType) {
@@ -128,7 +149,7 @@ export const Dialogs = (props: ILayoutChildProps) => {
           text={text}
           theme={theme}
           language={language}
-          onPress={() => handleCancel(dispatch, languageType)}
+          onPress={() => handleCancel(dispatch)}
         />
       );
     default:

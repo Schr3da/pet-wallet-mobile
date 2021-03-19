@@ -6,6 +6,13 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
+
+import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
+import {onShowScanResult} from "../../../store/actions/scan-result";
+import {ICombinedReducerState} from "../../../store/reducers";
+import {handleError, handleInputChange, requestCancel} from "../hooks";
+import {IScanResult} from "../../../dto/scan";
+
 import {
   ImagePicker,
   RoundedButtons,
@@ -13,27 +20,22 @@ import {
   Dialog,
   InputField,
 } from "../../common";
-import {ICombinedReducerState} from "../../../store/reducers";
 
 import {
-  onScan,
-  IImageData,
   onRemoveScan,
   InputValues,
-  onPreviewScan,
   onCompleteNewPet,
   onCancelNewPet,
-  IScanResult,
+  onScan,
 } from "../../../store/actions/new-pet";
 
-import {handleError, handleInputChange, requestCancel} from "../hooks";
 import {
   onSetDialogContentType,
   onDismissDialog,
 } from "../../../store/actions/layout";
-import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
 
 import {applyStyles} from "./index.style";
+import {IImageDataDto} from "../../../dto/image";
 
 interface IStateProps {
   attachments: IScanResult[];
@@ -45,7 +47,7 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   inputs: state.newPet.inputs,
 });
 
-const handleScanImage = (dispatch: any, data: IImageData) =>
+const handleScanImage = (dispatch: any, data: IImageDataDto) =>
   dispatch(onScan(data));
 
 let attachmentIdToRemove: string | null = null;
@@ -60,8 +62,9 @@ const handleRemoveAttachment = (dispatch: any, id: string) => {
   dispatch(onRemoveScan(id));
 };
 
-const handlePreview = (dispatch: any, id: string) =>
-  dispatch(onPreviewScan(id));
+const handleShowScanResult = (dispatch: any, result: IScanResult) => {
+  dispatch(onShowScanResult(result.image, result.data));
+};
 
 export const ChildView = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
@@ -88,7 +91,7 @@ export const ChildView = (props: ILayoutChildProps) => {
         maxWidth={1600}
         maxHeight={1600}
         onError={(errorType: ErrorTypes) => handleError(dispatch, errorType)}
-        onData={(data: IImageData) => handleScanImage(dispatch, data)}
+        onData={(data: IImageDataDto) => handleScanImage(dispatch, data)}
       />
       <View style={styles.attachmentsWrapper}>
         {(attachments || []).length === 0 ? (
@@ -104,7 +107,7 @@ export const ChildView = (props: ILayoutChildProps) => {
           attachments.map((a: IScanResult, index: number) => {
             let title = inputs[a.id];
 
-            if (title === null) {
+            if (title == null) {
               title =
                 language.newPet.newPetScan.attachmentLabel + " " + (index + 1);
             }
@@ -120,7 +123,7 @@ export const ChildView = (props: ILayoutChildProps) => {
                   handleInputChange(id, text, dispatch)
                 }
                 onRemove={(id: string) => requestRemoveAttachment(dispatch, id)}
-                onPreview={(id: string) => handlePreview(dispatch, id)}
+                onPreview={() => handleShowScanResult(dispatch, a)}
               />
             );
           })

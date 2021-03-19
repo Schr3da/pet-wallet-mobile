@@ -1,4 +1,5 @@
 import * as RoundedButtons from "./rounded-button";
+import * as ScanResultViews from "./scan-result-view";
 
 import {Header} from "./header";
 import {Layout} from "./layout";
@@ -33,6 +34,7 @@ export {
   InputField,
   Layout,
   RoundedButtons,
+  ScanResultViews,
   StyledButton,
   Navigation,
   Notification,

@@ -26,7 +26,6 @@ export interface IPetDto {
   id: string | null;
   name: string;
   dateOfBirth: Date | null;
-  age: string | null;
   profileImage: string | undefined;
   profileUri: string | undefined;
   animal: string;

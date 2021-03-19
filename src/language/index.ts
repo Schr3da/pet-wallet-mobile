@@ -77,7 +77,6 @@ export interface INewPet {
     name: string;
     animalType: string;
     dateOfBirth: string;
-    age: string;
     primaryButton: string;
     secondaryButton: string;
   };
@@ -86,12 +85,14 @@ export interface INewPet {
     secondaryButton: string;
     attachmentLabel: string;
   };
-  [SubViewComponents.newScanResult]: {
-    scanResultEmpty: string;
-    scanResultInfo: string;
-    primaryButton: string;
-    secondaryButton: string;
-  };
+}
+
+export interface IScanResult {
+  scanResultEmpty: string;
+  scanResultInfo: string;
+  newEntity: string;
+  primaryButton: string;
+  secondaryButton: string;
 }
 
 export interface ICard {
@@ -125,6 +126,7 @@ export interface ILanguage {
   animalTypes: AnimalTypes;
   sharePetDetails: ISharePetDetails;
   notifications: INotifications;
+  scanResult: IScanResult;
   [ViewComponents.welcome]: IWelcome;
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;

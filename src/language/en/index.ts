@@ -9,6 +9,7 @@ import type {
   IDialogs,
   ICommon,
   ISharePetDetails,
+  IScanResult,
 } from "../index";
 
 import {PetTypes} from "../../dto/pets";
@@ -128,7 +129,6 @@ const newPet: INewPet = {
     name: "Name",
     animalType: "Animal type",
     dateOfBirth: "Date of birth",
-    age: "Age",
     primaryButton: "Continue",
     secondaryButton: "Cancel",
   },
@@ -137,14 +137,16 @@ const newPet: INewPet = {
     secondaryButton: "Cancel",
     attachmentLabel: "Pet pass page",
   },
-  [SubViewComponents.newScanResult]: {
-    scanResultEmpty:
-      "No informaiton could be extracted from the scan, you might need to enter them manually.",
-    scanResultInfo:
-      "Please review, modify or select matched results using the checkbox.",
-    primaryButton: "Übernehmen",
-    secondaryButton: "Abbrechen",
-  },
+};
+
+const scanResult: IScanResult = {
+  newEntity: "Empty entry",
+  scanResultEmpty:
+    "No informaiton could be extracted from the scan, you might need to enter them manually.",
+  scanResultInfo:
+    "Please review, modify or select matched results using the checkbox.",
+  primaryButton: "Save",
+  secondaryButton: "Cancel",
 };
 
 const errors: IErrors = {
@@ -255,7 +257,7 @@ const animalTypes = {
 };
 
 const common: ICommon = {
-  addText: "New entry",
+  addText: "Add",
   noScansFound: "No scans added",
   continue: "Continue",
   cancel: "Cancel",
@@ -272,6 +274,7 @@ export const EN = {
   sharePetDetails,
   notifications,
   animalTypes,
+  scanResult,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

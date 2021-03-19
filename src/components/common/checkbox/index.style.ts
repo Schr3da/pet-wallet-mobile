@@ -1,8 +1,14 @@
-import type {ViewStyle} from "react-native";
+import type {ViewStyle, ImageStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (isSelected: boolean) => (theme: ITheme) => ({
+  touchContainer: {
+    height: 30,
+    width: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  } as ViewStyle,
   container: {
     width: 20,
     height: 20,
@@ -12,9 +18,12 @@ export const applyStyles = (isSelected: boolean) => (theme: ITheme) => ({
     borderStyle: "solid",
     borderColor: isSelected ? theme.color3 : theme.color12,
     marginRight: 8,
+    justifyContent: "center",
+    alignItems: "center",
   } as ViewStyle,
-  innerContainer: {
-    width: "100%",
-    height: "100%",
-  },
+  image: {
+    width: "80%",
+    height: "80%",
+    display: isSelected ? undefined : "none",
+  } as ImageStyle,
 });

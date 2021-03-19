@@ -9,6 +9,7 @@ import type {
   IDialogs,
   ICommon,
   ISharePetDetails,
+  IScanResult,
 } from "../index";
 
 import {PetTypes} from "../../dto/pets";
@@ -130,7 +131,6 @@ const newPet: INewPet = {
     name: "Name",
     animalType: "Tierart",
     dateOfBirth: "Geburtstag",
-    age: "Alter",
     primaryButton: "Weiter",
     secondaryButton: "Abbrechen",
   },
@@ -139,14 +139,16 @@ const newPet: INewPet = {
     secondaryButton: "Abbrechen",
     attachmentLabel: "Tierpass Seite",
   },
-  [SubViewComponents.newScanResult]: {
-    scanResultEmpty:
-      "Es konnten keine Informationen extrahiert werden, eine händische Eingabe ist erforderlich.",
-    scanResultInfo:
-      "Bitte überprüfe die Einträge, korrigiere und bestätige diese durch markieren der Checkbox.",
-    primaryButton: "Speichern",
-    secondaryButton: "Abbrechen",
-  },
+};
+
+const scanResult: IScanResult = {
+  newEntity: "Leerer Eintrag",
+  scanResultEmpty:
+    "Es konnten keine Informationen extrahiert werden, eine händische Eingabe ist erforderlich.",
+  scanResultInfo:
+    "Bitte überprüfe die Einträge, korrigiere und bestätige diese durch markieren der Checkbox.",
+  primaryButton: "Speichern",
+  secondaryButton: "Abbrechen",
 };
 
 const errors: IErrors = {
@@ -258,7 +260,7 @@ const animalTypes = {
 };
 
 const common: ICommon = {
-  addText: "Neuer Eintrag",
+  addText: "Hinzufügen",
   noScansFound: "Keine Einträge hinzugefügt",
   continue: "Weiter",
   cancel: "Abbrechen",
@@ -275,6 +277,7 @@ export const DE = {
   sharePetDetails,
   notifications,
   animalTypes,
+  scanResult,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

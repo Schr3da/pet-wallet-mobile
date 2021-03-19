@@ -6,6 +6,7 @@ import {ISplashState, splash} from "./splash";
 import {INavigationState, navigation} from "./navigation";
 import {IDatabaseState, database} from "./database";
 import {INewPetState, newPet} from "./new-pet";
+import {IScanResultState, scan} from "./scan-result";
 
 export interface ICombinedReducerState {
   database: IDatabaseState;
@@ -14,6 +15,7 @@ export interface ICombinedReducerState {
   newPet: INewPetState;
   pets: IPetsState;
   splash: ISplashState;
+  scan: IScanResultState;
 }
 
 export const reducer = combineReducers({
@@ -23,4 +25,5 @@ export const reducer = combineReducers({
   newPet,
   pets,
   splash,
+  scan,
 });

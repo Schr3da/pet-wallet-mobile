@@ -4,9 +4,8 @@ import {useDispatch} from "react-redux";
 
 import * as InformationViews from "./information-view";
 import * as PassViews from "./pass-view";
-import * as ScanResultViews from "./scan-result-view";
 
-import {Layout} from "../common";
+import {Layout, ScanResultViews} from "../common";
 import {onFocus} from "../../store/actions/layout";
 import {onInputFieldChange, InputValues} from "../../store/actions/new-pet";
 import {PetTypes} from "../../dto/pets";

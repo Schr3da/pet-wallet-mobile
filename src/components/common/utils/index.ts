@@ -1,9 +1,9 @@
 import {ImageSourcePropType} from "react-native";
 import Animated, {Easing} from "react-native-reanimated";
 
-import type {IImageData} from "../../../store/actions/new-pet";
 import type {INewPetState} from "../../../store/reducers/new-pet";
 import type {IPetDto} from "../../../dto/pets";
+import {IImageDataDto} from "../../../dto/image";
 
 export interface IMeasureResult {
   width: number;
@@ -32,7 +32,7 @@ export const measureComponent = (ref: any): Promise<IMeasureResult | null> =>
     );
   });
 
-export const base64ImageString = (image: IImageData | null) => {
+export const base64ImageString = (image: IImageDataDto | null) => {
   if (image == null || image.fileType == null || image.imageBase64 == null) {
     return null;
   }
@@ -40,7 +40,9 @@ export const base64ImageString = (image: IImageData | null) => {
   return `data:${image.fileType};base64, ${image.imageBase64}`;
 };
 
-export const base64ImageToUri = (image: IImageData): ImageSourcePropType => ({
+export const base64ImageToUri = (
+  image: IImageDataDto,
+): ImageSourcePropType => ({
   uri: base64ImageString(image) as any,
 });
 
@@ -83,7 +85,6 @@ export const mapNewPetStateToPetDto = (data: INewPetState): IPetDto => ({
   id: data.id,
   name: String(data.inputs.name),
   dateOfBirth: (data.inputs.dateOfBirth as Date) || null,
-  age: String(data.inputs.age),
   profileImage: base64ImageString(data.profile) || undefined,
   profileUri: data.profile == null ? undefined : data.profile.uri,
   animal: String(data.inputs.animal),

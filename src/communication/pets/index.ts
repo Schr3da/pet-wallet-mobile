@@ -35,7 +35,6 @@ export const createNewPet = async (
         response.dateOfBirth == null ? null : new Date(response.dateOfBirth),
       profileImage: response.avatarImage || undefined,
       profileUri: undefined,
-      age,
     });
   } catch (error) {
     return Promise.resolve(null);
@@ -107,7 +106,6 @@ const mapFetchedPets = (response: IFetchPetsRequestDto | null): IPetDto[] => {
       return {
         id: data.id,
         name: data.name,
-        age: null,
         dateOfBirth:
           data.dateOfBirth == null ? null : new Date(data.dateOfBirth),
         profileImage: data.avatarImage || undefined,

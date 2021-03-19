@@ -1,4 +1,11 @@
 import {LanguageTypes} from "../../language";
+import {IImageDataDto} from "../image";
+
+export interface IScanResult {
+  id: string;
+  image: IImageDataDto;
+  data: IScanDataDto;
+}
 
 export interface IScanEntityDto {
   id: string;

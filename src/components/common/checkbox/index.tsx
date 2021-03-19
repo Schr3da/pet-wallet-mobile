@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {View, TouchableOpacity} from "react-native";
+import {View, TouchableOpacity, Image} from "react-native";
 
 import {applyStyles} from "./index.style";
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -18,10 +18,19 @@ export const CheckBox = (props: IProps) => {
   const styles = createStyle(theme, applyStyles(isSelected));
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => onSelect(id)} activeOpacity={0.8}>
-        <View style={styles.innerContainer} />
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={() => onSelect(id)} activeOpacity={0.8}>
+      <View style={styles.touchContainer}>
+        <View style={styles.container}>
+          <Image
+            style={styles.image}
+            source={
+              theme === ThemeTypes.Dark
+                ? require("../../../../assets/png/dark/check-icon.png")
+                : require("../../../../assets/png/light/check-icon.png")
+            }
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };

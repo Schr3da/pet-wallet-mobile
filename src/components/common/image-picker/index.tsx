@@ -3,13 +3,12 @@ import * as React from "react";
 import {View, ViewStyle} from "react-native";
 import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 
-import type {IImageData} from "../../../store/actions/new-pet";
-
 import {createStyle, ThemeTypes} from "../../../theme";
 import {ImageButton} from "../image-button";
 
 import {applyStyles} from "./index.style";
 import {ErrorTypes} from "../../../enums/layout";
+import {IImageDataDto} from "../../../dto/image";
 
 enum ImagePickerTypes {
   camera,
@@ -28,7 +27,7 @@ const handlePress = (
   maxWidth: number,
   maxHeight: number,
 ) =>
-  new Promise<IImageData | null>((resolve) => {
+  new Promise<IImageDataDto | null>((resolve) => {
     setState(type);
 
     const options = {
@@ -87,7 +86,7 @@ interface IProps {
   maxWidth: number;
   maxHeight: number;
   style?: ViewStyle;
-  onData: (data: IImageData) => void;
+  onData: (data: IImageDataDto) => void;
   onError: (type: ErrorTypes) => void;
 }
 

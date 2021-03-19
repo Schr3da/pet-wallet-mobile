@@ -30,7 +30,8 @@ const valueFormatter = (
   }
 
   if (isDateGuard(value)) {
-    return value.toLocaleDateString(language);
+    var options = {year: "numeric", month: "long", day: "numeric"};
+    return value.toLocaleDateString(language, options);
   }
 
   return value;

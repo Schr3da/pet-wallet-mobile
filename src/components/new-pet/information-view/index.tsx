@@ -4,8 +4,12 @@ import {Image, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
-
 import {createStyle, ThemeTypes} from "../../../theme";
+import {ICombinedReducerState} from "../../../store/reducers";
+import {handleInputChange, handleError, requestCancel} from "../hooks";
+import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
+import {IImageDataDto} from "../../../dto/image";
+
 import {
   InputTypeField,
   Dialog,
@@ -16,25 +20,22 @@ import {
 import {
   InputIds,
   InputValues,
-  IImageData,
   onProfileImage,
   onCreateNewPet,
   onCancelNewPet,
 } from "../../../store/actions/new-pet";
-import {ICombinedReducerState} from "../../../store/reducers";
-import {handleInputChange, handleError, requestCancel} from "../hooks";
-import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
 
-import {applyStyles} from "./index.style";
 import {
   ErrorTypes,
   InputTypes,
   DialogContentTypes,
 } from "../../../enums/layout";
 
+import {applyStyles} from "./index.style";
+
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};
-  profile: IImageData | null;
+  profile: IImageDataDto | null;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -42,7 +43,7 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   profile: state.newPet.profile,
 });
 
-const handleProfileImage = (dispatch: any, data: IImageData) =>
+const handleProfileImage = (dispatch: any, data: IImageDataDto) =>
   dispatch(onProfileImage(data));
 
 export const ChildView = (props: ILayoutChildProps) => {
@@ -74,7 +75,7 @@ export const ChildView = (props: ILayoutChildProps) => {
         maxWidth={512}
         maxHeight={512}
         onError={() => handleError(dispatch, ErrorTypes.photoLibrary)}
-        onData={(data: IImageData) => handleProfileImage(dispatch, data)}
+        onData={(data: IImageDataDto) => handleProfileImage(dispatch, data)}
       />
       <InputField
         id={InputIds.name}
@@ -94,28 +95,15 @@ export const ChildView = (props: ILayoutChildProps) => {
         placeholder={language.newPet.newPetInformation.animalType}
         value={stateProps.inputs[InputIds.animalType]}
       />
-      <View style={styles.row}>
-        <InputTypeField
-          id={InputIds.dateOfBirth}
-          style={styles.dateOfBirth}
-          theme={theme}
-          language={languageType}
-          inputType={InputTypes.date}
-          placeholder={language.newPet.newPetInformation.dateOfBirth}
-          value={stateProps.inputs[InputIds.dateOfBirth]}
-        />
-        <InputField
-          id={InputIds.age}
-          style={styles.age}
-          placeholder={language.newPet.newPetInformation.age}
-          theme={theme}
-          type="numeric"
-          value={stateProps.inputs[InputIds.age]}
-          onChange={(id: string, value: InputValues) =>
-            handleInputChange(id, value, dispatch)
-          }
-        />
-      </View>
+      <InputTypeField
+        id={InputIds.dateOfBirth}
+        style={styles.inputField}
+        theme={theme}
+        language={languageType}
+        inputType={InputTypes.date}
+        placeholder={language.newPet.newPetInformation.dateOfBirth}
+        value={stateProps.inputs[InputIds.dateOfBirth]}
+      />
     </React.Fragment>
   );
 };
