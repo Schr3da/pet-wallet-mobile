@@ -1,4 +1,5 @@
 import * as React from "react";
+import {View} from "react-native";
 
 import {useDispatch} from "react-redux";
 
@@ -12,6 +13,9 @@ import {PetTypes} from "../../dto/pets";
 import {getTranslation, LanguageTypes} from "../../language";
 import {IPickerData} from "../common/picker";
 import {SubViewComponents} from "../../enums/navigation";
+import {createStyle} from "../../theme";
+
+import {applyFooterStyles} from "./index.style";
 
 const handlePickerValueSelected = (
   dispatch: any,
@@ -60,16 +64,31 @@ export const Component = () => {
         }
       }}
       footerRenderer={(props) => {
+
+        const {theme} = props;
+
+        const styles = createStyle(theme, applyFooterStyles);
+
+        let component = null;
         switch (props.subViewComponent) {
           case SubViewComponents.newPetInformation:
-            return <InformationViews.Footer {...props} />;
+            component = <InformationViews.Footer {...props} />;
+            break;
           case SubViewComponents.newPetScan:
-            return <PassViews.Footer {...props} />;
+            component = <PassViews.Footer {...props} />;
+            break;
           case SubViewComponents.newScanResult:
-            return <ScanResultViews.Footer {...props} />;
+            component = <ScanResultViews.Footer {...props} />;
+            break;
           default:
-            return null;
+            component = null;
         }
+
+        return (
+          <View style={styles.container}>
+            {component}
+          </View>
+        );
       }}
       dialogRenderer={(props) => {
         switch (props.subViewComponent) {

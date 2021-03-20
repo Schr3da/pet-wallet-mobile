@@ -140,17 +140,15 @@ export const Footer = (props: ILayoutChildProps) => {
 
   return (
     <React.Fragment>
-      <RoundedButtons.PrimaryButton
-        theme={theme}
-        title={language.newPet.newPetScan.primaryButton}
-        style={{marginTop: 10}}
-        onPress={() => dispatch(onCompleteNewPet())}
-      />
       <RoundedButtons.SecondaryButton
         theme={theme}
         title={language.newPet.newPetScan.secondaryButton}
-        style={{marginTop: 4}}
         onPress={() => requestCancel(dispatch)}
+      />
+      <RoundedButtons.PrimaryButton
+        theme={theme}
+        title={language.newPet.newPetScan.primaryButton}
+        onPress={() => dispatch(onCompleteNewPet())}
       />
     </React.Fragment>
   );

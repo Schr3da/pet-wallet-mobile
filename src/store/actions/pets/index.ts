@@ -14,11 +14,18 @@ export const onSharePet = (id: string) => async (
 ) => {
   try {
     const state = getState();
+    const token = state.database.token;
     const translation = getTranslation(state.layout.language);
 
     dispatch(setLoading(true));
-    const shareUrl = await Communication.Share.requestShareUrl(id);
+    const shareUrl = await Communication.Share.requestShareUrl(id, token!);
+    
     dispatch(setLoading(false));
+
+    if (shareUrl == null) {
+      dispatch(onSetErrorCode(ErrorTypes.sharePet));
+      return;
+    }
 
     await Share.share({
       message: translation.sharePetDetails.message + shareUrl,

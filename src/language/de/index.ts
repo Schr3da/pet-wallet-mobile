@@ -131,13 +131,13 @@ const newPet: INewPet = {
     name: "Name",
     animalType: "Tierart",
     dateOfBirth: "Geburtstag",
-    primaryButton: "Weiter",
+    primaryButton: "Speichern",
     secondaryButton: "Abbrechen",
   },
   [SubViewComponents.newPetScan]: {
-    primaryButton: "Übernehmen",
+    primaryButton: "Speichern",
     secondaryButton: "Abbrechen",
-    attachmentLabel: "Tierpass Seite",
+    attachmentLabel: "Scan Resultat",
   },
 };
 

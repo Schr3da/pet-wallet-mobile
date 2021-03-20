@@ -59,7 +59,7 @@ export const AttachmentPlaceholder = (props: IProps) => {
         onPress={() => onPreview(id)}
       />
       <ImageButton
-        style={{...styles.button, ...{marginLeft: 10}}}
+        style={{...styles.button, ...{marginLeft: 6}}}
         source={
           theme === ThemeTypes.Dark
             ? require("../../../../assets/png/remove-icon.png")

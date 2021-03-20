@@ -5,7 +5,7 @@ import {IPetDto} from "../../dto/pets";
 import {IFetchPetsRequestDto} from "../dto/pet";
 
 export const createNewPet = async (
-  {name, animal, dateOfBirth, profileImage, age}: IPetDto,
+  {name, animal, dateOfBirth, profileImage}: IPetDto,
   token: string,
 ): Promise<IPetDto | null> => {
   const url = "/api/petpass/pet/create";
@@ -115,3 +115,6 @@ const mapFetchedPets = (response: IFetchPetsRequestDto | null): IPetDto[] => {
     })
     .filter((p) => p != null) as IPetDto[];
 };
+
+
+

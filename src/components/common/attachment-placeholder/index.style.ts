@@ -22,8 +22,8 @@ export const applyStyles = (theme: ITheme) => ({
     flex: 1,
   },
   button: {
-    flexBasis: 18,
-    width: 18,
-    height: 18,
+    flexBasis: 20,
+    width: 20,
+    height: 20,
   },
 });
