@@ -115,6 +115,3 @@ const mapFetchedPets = (response: IFetchPetsRequestDto | null): IPetDto[] => {
     })
     .filter((p) => p != null) as IPetDto[];
 };
-
-
-

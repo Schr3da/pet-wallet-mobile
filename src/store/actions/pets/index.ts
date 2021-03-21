@@ -19,7 +19,7 @@ export const onSharePet = (id: string) => async (
 
     dispatch(setLoading(true));
     const shareUrl = await Communication.Share.requestShareUrl(id, token!);
-    
+
     dispatch(setLoading(false));
 
     if (shareUrl == null) {

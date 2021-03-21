@@ -124,7 +124,7 @@ export const ChildView = (props: ILayoutChildProps) => {
 
             return (
               <React.Fragment>
-                {hasAutocomplete === false ? null :  
+                {hasAutocomplete === false ? null : (
                   <ImageButton
                     style={styles.autocompleteButon}
                     source={require("../../../../assets/png/carret-icon.png")}
@@ -133,14 +133,14 @@ export const ChildView = (props: ILayoutChildProps) => {
                       dispatch(onSetPickerVisibility(true, InputTypes.picker));
                     }}
                   />
-                }
-                {isEmptyValue === false ? null :
+                )}
+                {isEmptyValue === false ? null : (
                   <ImageButton
                     style={styles.removeButton}
                     source={require("../../../../assets/png/remove-icon.png")}
                     onPress={() => dispatch(onRemoveNewScanEntity(item.id))}
                   />
-                }
+                )}
               </React.Fragment>
             );
           }}

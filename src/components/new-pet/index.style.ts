@@ -10,6 +10,5 @@ export const applyFooterStyles = (theme: ITheme) => ({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: theme.color1,
-    
-  } as ViewStyle
+  } as ViewStyle,
 });

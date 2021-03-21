@@ -30,7 +30,15 @@ interface IProps {
 }
 
 export const DataList = (props: IProps) => {
-  const {actionRenderer, data, language, theme, onAdd, onSelect, onChange} = props;
+  const {
+    actionRenderer,
+    data,
+    language,
+    theme,
+    onAdd,
+    onSelect,
+    onChange,
+  } = props;
 
   const translation = getTranslation(language);
 
@@ -67,11 +75,9 @@ export const DataList = (props: IProps) => {
               value={d.value}
             />
           )}
-          {actionRenderer && 
-            <View style={styles.actionWrapper}>
-              {actionRenderer(d)}
-            </View>
-          }
+          {actionRenderer && (
+            <View style={styles.actionWrapper}>{actionRenderer(d)}</View>
+          )}
         </View>
       ))}
       <View style={styles.item}>

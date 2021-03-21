@@ -105,8 +105,16 @@ interface IProps {
   dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
   onScroll?: any;
-  getPickerData?: (id: string | null, language: LanguageTypes, view: SubViewComponents) => IPickerData[];
-  onPickerChanged?: (id: string | null, value: InputValues, view: SubViewComponents) => void;
+  getPickerData?: (
+    id: string | null,
+    language: LanguageTypes,
+    view: SubViewComponents,
+  ) => IPickerData[];
+  onPickerChanged?: (
+    id: string | null,
+    value: InputValues,
+    view: SubViewComponents,
+  ) => void;
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -265,7 +273,11 @@ export const Layout = (props: IProps): JSX.Element => {
       {isPickerVisible && inputType === InputTypes.picker && (
         <PickerComponent
           id={focus}
-          data={(getPickerData && getPickerData(focus, language, subViewComponent)) || []}
+          data={
+            (getPickerData &&
+              getPickerData(focus, language, subViewComponent)) ||
+            []
+          }
           theme={theme}
           locale={language}
           isApplePlatform={isApplePlatform}

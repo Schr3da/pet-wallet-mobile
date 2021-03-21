@@ -1,6 +1,6 @@
 export interface ICreateShareRequestDto {
-    petId: string;
+  petId: string;
 }
 export interface ICreateShareResponseDto {
-    shareTokenId: string;
+  shareTokenId: string;
 }

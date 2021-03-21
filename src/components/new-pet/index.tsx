@@ -45,12 +45,14 @@ const getPetTypes = (
 ): IPickerData[] => {
   const translation = getTranslation(language);
   const state = getStore().getState();
-  
+
   if (subViewComponent === SubViewComponents.newScanResult) {
-    return state.scan.result == null ? [] : state.scan.result.suggestions[language].map((r) => ({
-      label: r.shortInfo,
-      value: r.shortInfo,
-    })); 
+    return state.scan.result == null
+      ? []
+      : state.scan.result.suggestions[language].map((r) => ({
+          label: r.shortInfo,
+          value: r.shortInfo,
+        }));
   }
 
   return Object.values(PetTypes).map((v) => ({
@@ -65,7 +67,9 @@ export const Component = () => {
   return (
     <Layout
       imageSource={require("../../../assets/png/add-pet-header-icon.png")}
-      onPickerChanged={(id, value, subViewComponent) => handlePickerValueSelected(dispatch, id, value, subViewComponent)}
+      onPickerChanged={(id, value, subViewComponent) =>
+        handlePickerValueSelected(dispatch, id, value, subViewComponent)
+      }
       getPickerData={getPetTypes}
       childRenderer={(props) => {
         switch (props.subViewComponent) {
@@ -80,7 +84,6 @@ export const Component = () => {
         }
       }}
       footerRenderer={(props) => {
-
         const {theme} = props;
 
         const styles = createStyle(theme, applyFooterStyles);
@@ -100,11 +103,7 @@ export const Component = () => {
             component = null;
         }
 
-        return (
-          <View style={styles.container}>
-            {component}
-          </View>
-        );
+        return <View style={styles.container}>{component}</View>;
       }}
       dialogRenderer={(props) => {
         switch (props.subViewComponent) {
