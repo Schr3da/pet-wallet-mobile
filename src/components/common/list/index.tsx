@@ -11,8 +11,6 @@ import {CheckBox} from "../checkbox";
 
 import {applyStyles} from "./index.style";
 import {RoundedButton} from "../rounded-button";
-import {ImageButton} from "../image-button";
-import {collectionIsEmpty, inputValueEmpty} from "../utils";
 
 export interface IListData {
   id: string;
@@ -25,14 +23,14 @@ interface IProps {
   theme: ThemeTypes;
   language: LanguageTypes;
   data: IListData[];
+  actionRenderer: (data: IListData) => React.ReactNode;
   onSelect: (id: string) => void;
   onChange: (id: string, value: InputValues) => void;
   onAdd: () => void;
-  onRemove: (id: string) => void;
 }
 
 export const DataList = (props: IProps) => {
-  const {data, language, theme, onAdd, onRemove, onSelect, onChange} = props;
+  const {actionRenderer, data, language, theme, onAdd, onSelect, onChange} = props;
 
   const translation = getTranslation(language);
 
@@ -69,19 +67,11 @@ export const DataList = (props: IProps) => {
               value={d.value}
             />
           )}
-          {inputValueEmpty(d.value) === false ? null : (
+          {actionRenderer && 
             <View style={styles.actionWrapper}>
-              <ImageButton
-                style={styles.removeButton}
-                source={
-                  theme === ThemeTypes.Dark
-                    ? require("../../../../assets/png/remove-icon.png")
-                    : require("../../../../assets/png/remove-icon.png")
-                }
-                onPress={() => onRemove(d.id)}
-              />
+              {actionRenderer(d)}
             </View>
-          )}
+          }
         </View>
       ))}
       <View style={styles.item}>

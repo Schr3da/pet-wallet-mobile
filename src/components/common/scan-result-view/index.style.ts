@@ -30,4 +30,13 @@ export const applyStyles = (theme: ITheme) => ({
     width: "100%",
     alignItems: "center",
   } as ViewStyle,
+  autocompleteButon: {
+    width: 18,
+    height: 18,
+    marginRight: 5,
+  } as ViewStyle,
+  removeButton: {
+    width: 18,
+    height: 18,
+  } as ViewStyle,
 });

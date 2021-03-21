@@ -105,8 +105,8 @@ interface IProps {
   dialogRenderer?: (props: ILayoutChildProps) => React.ReactChild | null;
   hasHeader?: boolean;
   onScroll?: any;
-  getPickerData?: (id: string | null, language: LanguageTypes) => IPickerData[];
-  onPickerChanged?: (id: string | null, value: InputValues) => void;
+  getPickerData?: (id: string | null, language: LanguageTypes, view: SubViewComponents) => IPickerData[];
+  onPickerChanged?: (id: string | null, value: InputValues, view: SubViewComponents) => void;
 }
 
 const getChildProps = (props: IStateProps): ILayoutChildProps => {
@@ -199,6 +199,7 @@ export const Layout = (props: IProps): JSX.Element => {
     isLoading,
     isPickerVisible,
     inputType,
+    subViewComponent,
   } = stateProps;
 
   const childProps = getChildProps(stateProps);
@@ -257,19 +258,19 @@ export const Layout = (props: IProps): JSX.Element => {
           theme={theme}
           locale={language}
           onComplete={(id: string | null, date: Date) =>
-            onPickerChanged && onPickerChanged(id, date)
+            onPickerChanged && onPickerChanged(id, date, subViewComponent)
           }
         />
       )}
       {isPickerVisible && inputType === InputTypes.picker && (
         <PickerComponent
           id={focus}
-          data={(getPickerData && getPickerData(focus, language)) || []}
+          data={(getPickerData && getPickerData(focus, language, subViewComponent)) || []}
           theme={theme}
           locale={language}
           isApplePlatform={isApplePlatform}
           onComplete={(id: string | null, value: string | null) =>
-            onPickerChanged && onPickerChanged(id, value)
+            onPickerChanged && onPickerChanged(id, value, subViewComponent)
           }
         />
       )}

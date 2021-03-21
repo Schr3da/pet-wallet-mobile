@@ -8,7 +8,6 @@ import * as PassViews from "./pass-view";
 
 import {Layout, ScanResultViews} from "../common";
 import {onFocus} from "../../store/actions/layout";
-import {onInputFieldChange, InputValues} from "../../store/actions/new-pet";
 import {PetTypes} from "../../dto/pets";
 import {getTranslation, LanguageTypes} from "../../language";
 import {IPickerData} from "../common/picker";
@@ -16,25 +15,44 @@ import {SubViewComponents} from "../../enums/navigation";
 import {createStyle} from "../../theme";
 
 import {applyFooterStyles} from "./index.style";
+import {getStore} from "../../store";
+
+import {NewPet, ScanResult} from "../../store/actions";
 
 const handlePickerValueSelected = (
   dispatch: any,
   id: string | null,
-  value: InputValues,
+  value: NewPet.InputValues,
+  subViewComponent: SubViewComponents,
 ) => {
   dispatch(onFocus(null, null));
+
   if (id == null) {
     return;
   }
 
-  dispatch(onInputFieldChange(id, value));
+  if (subViewComponent === SubViewComponents.newScanResult) {
+    return dispatch(ScanResult.onInputFieldChange(id, value));
+  }
+
+  dispatch(NewPet.onInputFieldChange(id, value));
 };
 
 const getPetTypes = (
   _: string | null,
   language: LanguageTypes,
+  subViewComponent: SubViewComponents,
 ): IPickerData[] => {
   const translation = getTranslation(language);
+  const state = getStore().getState();
+  
+  if (subViewComponent === SubViewComponents.newScanResult) {
+    return state.scan.result == null ? [] : state.scan.result.suggestions[language].map((r) => ({
+      label: r.shortInfo,
+      value: r.shortInfo,
+    })); 
+  }
+
   return Object.values(PetTypes).map((v) => ({
     label: translation.animalTypes[v],
     value: translation.animalTypes[v],
@@ -47,9 +65,7 @@ export const Component = () => {
   return (
     <Layout
       imageSource={require("../../../assets/png/add-pet-header-icon.png")}
-      onPickerChanged={(id, value) =>
-        handlePickerValueSelected(dispatch, id, value)
-      }
+      onPickerChanged={(id, value, subViewComponent) => handlePickerValueSelected(dispatch, id, value, subViewComponent)}
       getPickerData={getPetTypes}
       childRenderer={(props) => {
         switch (props.subViewComponent) {

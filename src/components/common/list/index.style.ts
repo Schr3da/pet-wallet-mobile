@@ -2,7 +2,7 @@ import type {ViewStyle} from "react-native";
 
 import type {ITheme} from "../../../theme";
 
-export const applyStyles = (_: ITheme) => ({
+export const applyStyles = (theme: ITheme) => ({
   container: {
     width: "100%",
     alignItems: "center",
@@ -18,14 +18,13 @@ export const applyStyles = (_: ITheme) => ({
   actionWrapper: {
     position: "absolute",
     height: "100%",
-    right: 0,
-    width: 40,
+    paddingLeft: 20,
+    right: 14,
     justifyContent: "center",
     alignItems: "center",
-  } as ViewStyle,
-  removeButton: {
-    width: 18,
-    height: 18,
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: theme.color11,
   } as ViewStyle,
   addButton: {
     minWidth: 40,

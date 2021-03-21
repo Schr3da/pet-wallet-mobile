@@ -6,19 +6,22 @@ import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
-import {Dialog, RoundedButtons, DataList} from "../../common";
+import {Dialog, RoundedButtons, DataList} from "../";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {
-  onDismissDialog,
-  onSetDialogContentType,
-} from "../../../store/actions/layout";
 import {LanguageTypes} from "../../../language";
-import {base64ImageToUri} from "../../common/utils";
+import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
 import {createStyle} from "../../../theme";
 import {DialogContentTypes, InputTypes} from "../../../enums/layout";
 import {IListData} from "../../common/list";
 import {IScanDataDto} from "../../../dto/scan";
 import {IImageDataDto} from "../../../dto/image";
+
+import {
+  onDismissDialog,
+  onSetDialogContentType,
+  onSetPickerVisibility,
+  onFocus,
+} from "../../../store/actions/layout";
 
 import {
   onCreateNewScanEntity,
@@ -30,6 +33,7 @@ import {
 } from "../../../store/actions/scan-result";
 
 import {applyStyles} from "./index.style";
+import {ImageButton} from "../image-button";
 
 const requestCancel = (dispatch: any) =>
   dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
@@ -42,11 +46,13 @@ const handleCancel = (dispatch: any) => {
 interface IStateProps {
   image: IImageDataDto | null;
   data: IScanDataDto | null;
+  hasFocus: boolean;
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   image: state.scan.image,
   data: state.scan.result,
+  hasFocus: state.layout.focus != null,
 });
 
 const mapEntityToData = (
@@ -65,16 +71,29 @@ const mapEntityToData = (
   }));
 };
 
+const hasSuggestions = (
+  data: IScanDataDto | null,
+  languageType: LanguageTypes,
+) => {
+  if (data == null || data.suggestions == null) {
+    return false;
+  }
+
+  return (data.suggestions[languageType] || []).length > 0;
+};
+
 export const ChildView = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
   const stateProps = useSelector(stateToProps);
+  const {hasFocus} = stateProps;
 
   const {theme, language, languageType} = props;
 
-  const styles = createStyle(theme, applyStyles);
-
   const data = mapEntityToData(stateProps.data, languageType);
+  const hasAutocomplete = hasSuggestions(stateProps.data, languageType);
+
+  const styles = createStyle(theme, applyStyles);
 
   return (
     <View style={styles.container}>
@@ -96,8 +115,36 @@ export const ChildView = (props: ILayoutChildProps) => {
           theme={theme}
           language={languageType}
           data={data}
+          actionRenderer={(item) => {
+            const isEmptyValue = inputValueEmpty(item.value);
+
+            if (hasFocus) {
+              return null;
+            }
+
+            return (
+              <React.Fragment>
+                {hasAutocomplete === false ? null :  
+                  <ImageButton
+                    style={styles.autocompleteButon}
+                    source={require("../../../../assets/png/carret-icon.png")}
+                    onPress={() => {
+                      dispatch(onFocus(item.id, InputTypes.text));
+                      dispatch(onSetPickerVisibility(true, InputTypes.picker));
+                    }}
+                  />
+                }
+                {isEmptyValue === false ? null :
+                  <ImageButton
+                    style={styles.removeButton}
+                    source={require("../../../../assets/png/remove-icon.png")}
+                    onPress={() => dispatch(onRemoveNewScanEntity(item.id))}
+                  />
+                }
+              </React.Fragment>
+            );
+          }}
           onAdd={() => dispatch(onCreateNewScanEntity())}
-          onRemove={(id: string) => dispatch(onRemoveNewScanEntity(id))}
           onSelect={(id: string) => dispatch(onToggleSelectionScanEntity(id))}
           onChange={(id: string, value: InputValues) =>
             dispatch(onInputFieldChange(id, value))

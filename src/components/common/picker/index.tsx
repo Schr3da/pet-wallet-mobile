@@ -6,9 +6,12 @@ import {View} from "react-native";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {getTranslation, LanguageTypes} from "../../../language";
-import {PrimaryButton} from "../rounded-button";
+import {PrimaryButton, SecondaryButton} from "../rounded-button";
 
 import {applyStyles} from "./index.style";
+import {onSetPickerVisibility, onFocus} from "../../../store/actions/layout";
+import {InputTypes} from "../../../enums/layout";
+import {useDispatch} from "react-redux";
 
 export interface IPickerData {
   label: string;
@@ -25,7 +28,10 @@ export interface IProps {
 }
 
 export const PickerComponent = (props: IProps) => {
+  const dispatch = useDispatch();
+
   const [value, setValue] = React.useState(null);
+  const [didInteract, setDidInteract] = React.useState(false);
 
   const {data, isApplePlatform, id, theme, locale, onComplete} = props;
 
@@ -48,7 +54,10 @@ export const PickerComponent = (props: IProps) => {
         itemStyle={styles.itemStyle}
         selectedValue={value}
         dropdownIconColor={textColor}
-        onValueChange={setValue}>
+        onValueChange={(item) => {
+          setDidInteract(true);
+          setValue(item);
+        }}>
         {[...pleaseSelect, ...(data || [])].map((d, i) => (
           <Picker.Item
             key={i}
@@ -58,12 +67,24 @@ export const PickerComponent = (props: IProps) => {
           />
         ))}
       </Picker>
-      <PrimaryButton
-        theme={theme}
-        title={language.common.pick}
-        style={styles.button}
-        onPress={() => onComplete(id, value)}
-      />
+      {didInteract ? 
+        <PrimaryButton
+          theme={theme}
+          title={language.common.pick}
+          style={styles.button}
+          onPress={() => onComplete(id, value)}
+        />
+        :
+        <SecondaryButton
+          theme={theme}
+          title={language.common.cancel}
+          style={styles.button}
+          onPress={() => {
+            dispatch(onFocus(null, null));
+            dispatch(onSetPickerVisibility(false, InputTypes.text));
+          }}
+        />
+      }
     </View>
   );
 };

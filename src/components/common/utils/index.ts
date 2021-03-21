@@ -79,7 +79,7 @@ export const createNotificationAnimation = (
     easing: Easing.linear,
   });
 
-export const isDev = (): boolean => true;
+export const isDev = (): boolean => false;
 
 export const mapNewPetStateToPetDto = (data: INewPetState): IPetDto => ({
   id: data.id,
