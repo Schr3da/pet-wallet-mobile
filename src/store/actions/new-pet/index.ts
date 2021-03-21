@@ -3,7 +3,11 @@ import * as Communication from "../../../communication";
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 import {IPetDto} from "../../../dto/pets";
-import {onChangeSubViewComponent, onShowHomeComponent} from "../navigation";
+import {
+  onChangeSubViewComponent,
+  onShowHomeComponent,
+  onGoBackNavigation,
+} from "../navigation";
 import {SubViewComponents} from "../../../enums/navigation";
 import {ErrorTypes} from "../../../enums/layout";
 import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
@@ -12,10 +16,11 @@ import {
   mapNewPetStateToPetDto,
   base64ImageString,
 } from "../../../components/common/utils";
+
 import {requestScan} from "../../../communication/wallet";
-import {onShowScanResult} from "../scan-result";
+import {onShowScanResult, onResetScanResult} from "../scan-result";
 import {IImageDataDto} from "../../../dto/image";
-import {IScanResult} from "../../../dto/scan";
+import {IScanResult, IScanDataPrefillsDto} from "../../../dto/scan";
 
 export enum InputIds {
   name = "name",
@@ -189,6 +194,37 @@ export const onScan = (image: IImageDataDto) => async (
   }
 };
 
+export const ON_SAVE_SCAN_RESULT = "ON_SAVE_SCAN_RESULT";
+interface IOnSaveScanResult {
+  id: string;
+  type: typeof ON_SAVE_SCAN_RESULT;
+  data: IScanDataPrefillsDto;
+}
+
+export const onSaveScanResult = () => (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+  const language = state.layout.language;
+
+  const {id, result} = state.scan;
+
+  if (result == null) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+    return;
+  }
+
+  dispatch({
+    type: ON_SAVE_SCAN_RESULT,
+    data: result.prefills,
+    id,
+  } as IOnSaveScanResult);
+
+  dispatch(onResetScanResult());
+  dispatch(onGoBackNavigation(language));
+};
+
 export const onCompleteNewPet = () => onShowHomeComponent();
 
 export type Actions =
@@ -197,4 +233,5 @@ export type Actions =
   | IOnSetProfileImageNewPet
   | IOnRemoveNewPetScan
   | IOnCreateNewPet
-  | IOnScanNewPet;
+  | IOnScanNewPet
+  | IOnSaveScanResult;

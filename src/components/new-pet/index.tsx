@@ -18,6 +18,7 @@ import {applyFooterStyles} from "./index.style";
 import {getStore} from "../../store";
 
 import {NewPet, ScanResult} from "../../store/actions";
+import {onSaveScanResult} from "../../store/actions/new-pet";
 
 const handlePickerValueSelected = (
   dispatch: any,
@@ -97,7 +98,12 @@ export const Component = () => {
             component = <PassViews.Footer {...props} />;
             break;
           case SubViewComponents.newScanResult:
-            component = <ScanResultViews.Footer {...props} />;
+            component = (
+              <ScanResultViews.Footer
+                {...props}
+                onSave={() => dispatch(onSaveScanResult())}
+              />
+            );
             break;
           default:
             component = null;

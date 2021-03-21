@@ -2,7 +2,7 @@ import {Database, NewPet, Navigation} from "../../actions";
 import {IPetDto} from "../../../dto/pets";
 
 import {IImageDataDto} from "../../../dto/image";
-import {IScanResult} from "../../../dto/scan";
+import {IScanResult, IScanDataSuggestionsDto} from "../../../dto/scan";
 
 export interface INewPetState {
   id: string | null;
@@ -70,6 +70,25 @@ const handleRemoveScan = (state: INewPetState, id: string) => ({
   scans: state.scans.filter((s) => s.id !== id),
 });
 
+const handleSaveNewScanResult = (
+  state: INewPetState,
+  id: string,
+  data: IScanDataSuggestionsDto,
+): INewPetState => {
+  const scans = [...(state.scans || [])];
+  const match = scans.find((s) => s.id === id);
+  if (match == null) {
+    return state;
+  }
+
+  match.data.prefills = data;
+
+  return {
+    ...state,
+    scans,
+  };
+};
+
 type Actions = NewPet.Actions | Database.Actions | Navigation.Actions;
 
 const reducer = (state: INewPetState = initialState(), action: Actions) => {
@@ -86,6 +105,8 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleCreateNewPet(state, action.data);
     case NewPet.ON_SCAN_NEW_PET:
       return handleNewScan(state, action.data);
+    case NewPet.ON_SAVE_SCAN_RESULT:
+      return handleSaveNewScanResult(state, action.id, action.data);
     case Navigation.ON_SHOW_HOME_COMPONENT:
       return initialState();
     default:

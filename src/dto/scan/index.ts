@@ -16,13 +16,17 @@ export interface IScanEntityDto {
   isSelected: boolean;
 }
 
+export interface IScanDataPrefillsDto {
+  [LanguageTypes.de]: IScanEntityDto[];
+  [LanguageTypes.en]: IScanEntityDto[];
+}
+
+export interface IScanDataSuggestionsDto {
+  [LanguageTypes.de]: IScanEntityDto[];
+  [LanguageTypes.en]: IScanEntityDto[];
+}
+
 export interface IScanDataDto {
-  prefills: {
-    [LanguageTypes.de]: IScanEntityDto[];
-    [LanguageTypes.en]: IScanEntityDto[];
-  };
-  suggestions: {
-    [LanguageTypes.de]: IScanEntityDto[];
-    [LanguageTypes.en]: IScanEntityDto[];
-  };
+  prefills: IScanDataPrefillsDto;
+  suggestions: IScanDataSuggestionsDto;
 }

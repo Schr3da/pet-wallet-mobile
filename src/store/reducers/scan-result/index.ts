@@ -5,11 +5,13 @@ import {IScanDataDto} from "../../../dto/scan";
 import {IImageDataDto} from "../../../dto/image";
 
 export interface IScanResultState {
+  id: string | null;
   result: IScanDataDto | null;
   image: IImageDataDto | null;
 }
 
 const initialState = (): IScanResultState => ({
+  id: null,
   image: null,
   result: null,
 });
@@ -100,6 +102,7 @@ const setData = (
 
   return {
     ...state,
+    id: image == null ? null : image.id,
     image,
     result,
   };

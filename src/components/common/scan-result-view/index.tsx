@@ -6,7 +6,9 @@ import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
 
-import {Dialog, RoundedButtons, DataList} from "../";
+import {DataList} from "../list";
+import {PrimaryButton, SecondaryButton} from "../rounded-button";
+import {Dialog} from "../dialog";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {LanguageTypes} from "../../../language";
 import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
@@ -155,26 +157,26 @@ export const ChildView = (props: ILayoutChildProps) => {
   );
 };
 
-const handleSave = (_dispatch: any) => {
-  console.log("handle save");
-};
+export interface IFooterProps extends ILayoutChildProps {
+  onSave: () => void;
+}
 
-export const Footer = (props: ILayoutChildProps) => {
+export const Footer = (props: IFooterProps) => {
   const dispatch = useDispatch();
 
-  const {language, theme} = props;
+  const {language, theme, onSave} = props;
 
   return (
     <React.Fragment>
-      <RoundedButtons.SecondaryButton
+      <SecondaryButton
         theme={theme}
         title={language.scanResult.secondaryButton}
         onPress={() => requestCancel(dispatch)}
       />
-      <RoundedButtons.PrimaryButton
+      <PrimaryButton
         theme={theme}
         title={language.scanResult.primaryButton}
-        onPress={() => handleSave(dispatch)}
+        onPress={onSave}
       />
     </React.Fragment>
   );
