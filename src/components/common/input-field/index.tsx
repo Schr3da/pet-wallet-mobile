@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {TextInput, View, Text, ViewStyle} from "react-native";
+import {TextInput, View, Text, ViewStyle, TouchableOpacity} from "react-native";
 
 import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {InputValues} from "../../../store/actions/new-pet";
@@ -43,6 +43,8 @@ interface IProps {
 export const InputField = (props: IProps) => {
   const dispatch = useDispatch();
 
+  let input = React.useRef<any>(null);
+
   const {
     id,
     disabled,
@@ -62,19 +64,26 @@ export const InputField = (props: IProps) => {
       {disabled === true ? (
         <Text style={styles.input}>{value}</Text>
       ) : (
-        <TextInput
-          clearButtonMode={"while-editing"}
-          style={styles.input}
-          autoCorrect={false}
-          placeholder={placeholder}
-          onChangeText={(text: string) => onChange(id, text)}
-          onFocus={() => handleFocus(dispatch, id)}
-          onEndEditing={() => handleFocusDelayed(dispatch, null)}
-          placeholderTextColor={colors.color12}
-          returnKeyType="done"
-          keyboardType={type || "default"}
-          value={value as string | undefined}
-        />
+        <TouchableOpacity
+           activeOpacity={1}
+           onPress={()=> (input as any).focus()}>
+           <View pointerEvents="none">
+              <TextInput
+                ref={(ref: any) => input = ref}
+                clearButtonMode={"while-editing"}
+                style={styles.input}
+                autoCorrect={false}
+                placeholder={placeholder}
+                onChangeText={(text: string) => onChange(id, text)}
+                onFocus={() => handleFocus(dispatch, id)}
+                onEndEditing={() => handleFocusDelayed(dispatch, null)}
+                placeholderTextColor={colors.color12}
+                returnKeyType="done"
+                keyboardType={type || "default"}
+                value={value as string | undefined}
+              />
+          </View>
+        </TouchableOpacity>
       )}
     </View>
   );
