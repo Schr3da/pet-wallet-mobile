@@ -30,6 +30,9 @@ export const applyStyles = (theme: ITheme) => ({
     width: "100%",
     alignItems: "center",
   } as ViewStyle,
+  list: {
+    overflow: "hidden",
+  } as ViewStyle,
   autocompleteButon: {
     width: 18,
     height: 18,

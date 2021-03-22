@@ -114,6 +114,7 @@ export const ChildView = (props: ILayoutChildProps) => {
       </Text>
       <View style={styles.resultWrapper}>
         <DataList
+          style={styles.list}
           theme={theme}
           language={languageType}
           data={data}

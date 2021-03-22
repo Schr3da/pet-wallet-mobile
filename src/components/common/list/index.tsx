@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {View} from "react-native";
+import {View, ViewStyle} from "react-native";
 import {InputValues} from "../../../store/actions/new-pet";
 import {ThemeTypes, createStyle, getColors} from "../../../theme";
 import {LanguageTypes, getTranslation} from "../../../language";
@@ -23,6 +23,7 @@ interface IProps {
   theme: ThemeTypes;
   language: LanguageTypes;
   data: IListData[];
+  style: ViewStyle;
   actionRenderer: (data: IListData) => React.ReactNode;
   onSelect: (id: string) => void;
   onChange: (id: string, value: InputValues) => void;
@@ -38,6 +39,7 @@ export const DataList = (props: IProps) => {
     onAdd,
     onSelect,
     onChange,
+    style,
   } = props;
 
   const translation = getTranslation(language);
@@ -47,11 +49,12 @@ export const DataList = (props: IProps) => {
   const styles = createStyle(theme, applyStyles);
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...style}}>
       {data.map((d, i) => (
         <View key={`list-item-${i}`} style={styles.item}>
           <CheckBox
             id={d.id}
+            style={styles.checkbox}
             theme={theme}
             isSelected={d.isSelected}
             onSelect={onSelect}
@@ -59,7 +62,7 @@ export const DataList = (props: IProps) => {
           {d.type === InputTypes.text ? (
             <InputField
               id={d.id}
-              style={{}}
+              style={styles.input}
               theme={theme}
               value={d.value}
               placeholder={translation.scanResult.newEntity}
@@ -68,7 +71,7 @@ export const DataList = (props: IProps) => {
           ) : (
             <InputTypeField
               id={d.id}
-              style={{}}
+              style={styles.input}
               theme={theme}
               language={language}
               inputType={d.type}

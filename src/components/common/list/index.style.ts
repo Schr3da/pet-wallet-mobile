@@ -4,7 +4,6 @@ import type {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({
   container: {
-    width: "100%",
     alignItems: "center",
   } as ViewStyle,
   item: {
@@ -14,6 +13,12 @@ export const applyStyles = (theme: ITheme) => ({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  } as ViewStyle,
+  checkbox: {
+    flexBasis: 30,
+  } as ViewStyle,
+  input: {
+    flex: 1,
   } as ViewStyle,
   actionWrapper: {
     position: "absolute",

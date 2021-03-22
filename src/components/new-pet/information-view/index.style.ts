@@ -30,6 +30,5 @@ export const applyStyles = (theme: ITheme) => ({
   },
   inputField: {
     marginBottom: 10,
-    width: 280,
   },
 });

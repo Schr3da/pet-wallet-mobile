@@ -5,6 +5,7 @@ import type {ITheme} from "../../../theme";
 export const applyStyles = (hasValue: boolean) => (theme: ITheme) => ({
   container: {
     width: "100%",
+    height: 40,
     maxWidth: 300,
     borderRadius: 1000,
     paddingLeft: 20,

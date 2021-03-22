@@ -1,9 +1,11 @@
 import * as React from "react";
 
+
+import {getStore} from "./store";
+
 import {Provider} from "react-redux";
 
 import {Route} from "./router";
-import {getStore} from "./store";
 
 export const App = (): JSX.Element => {
   const store = getStore();

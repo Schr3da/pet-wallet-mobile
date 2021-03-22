@@ -1,6 +1,6 @@
 import type {ITheme} from "../theme";
 
-import {DisplayModes} from "../store/actions/layout";
+import {DisplayModes} from "../enums/layout";
 
 export const applyStyles = (
   isApplePlatform: boolean,
