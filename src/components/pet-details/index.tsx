@@ -3,45 +3,67 @@ import * as React from "react";
 import {View} from "react-native";
 import {useSelector} from "react-redux";
 
-import type {ICombinedReducerState} from "../../store/reducers";
-import {createStyle} from "../../theme";
-import {Card, Layout} from "../common";
+import {EditView, Footer} from "./edit";
+import {ReadOnlyView} from "./read-only";
 
-import {applyStyles} from "./index.style";
+import {createStyle} from "../../theme";
+import {Layout, ScanResultViews} from "../common";
+import {ErrorTypes} from "../../enums/layout";
+import {SubViewComponents} from "../../enums/navigation";
+import {onSetErrorCode} from "../../store/actions/layout";
+import {ICombinedReducerState} from "../../store/reducers";
+
+import {applyFooterStyles} from "./index.style";
 
 const stateToProps = (state: ICombinedReducerState) => ({
-  selectedPet: (state.pets.data || []).find(
-    (data) => state.pets.selectedId === data.id,
-  ),
-});
+  isEditing: false,
+  data: (state.pets.data || []).find((p) => state.pets.selectedId === p.id),
+})
+
+export const handleError = (dispatch: any, errorType: ErrorTypes) =>
+  dispatch(onSetErrorCode(errorType));
 
 export const Component = (): JSX.Element => {
-  const {selectedPet} = useSelector(stateToProps);
+
+  const {isEditing, data} = useSelector(stateToProps);
 
   return (
     <Layout
       hasHeader={false}
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
       childRenderer={(props) => {
-        const {theme, language} = props;
-        const styles = createStyle(theme, applyStyles);
+        if (data == null) {
+          return <View></View>;
+        }
 
         return (
           <React.Fragment>
-            {selectedPet == null ? null : (
-              <View style={styles.container}>
-                <Card
-                  data={selectedPet!}
-                  language={language}
-                  theme={theme}
-                  onPress={() => undefined}
-                  onShare={() => undefined}
-                />
-              </View>
-            )}
+            {isEditing ? 
+              <EditView {...props} data={data} />  : 
+              <ReadOnlyView {...props} data={data} />
+            } 
           </React.Fragment>
+        );
+      }}
+      footerRenderer={(props) => {
+        const {theme, subViewComponent} = props;
+
+        const styles = createStyle(theme, applyFooterStyles);
+
+        return (
+          <View style={styles.container}>
+            {subViewComponent === SubViewComponents.newScanResult ? 
+              <ScanResultViews.Footer
+                {...props}
+                onSave={() => undefined}
+              />
+              : isEditing ? <Footer {...props} /> : null
+            }
+          </View>
         );
       }}
     />
   );
 };
+
+

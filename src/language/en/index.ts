@@ -10,6 +10,7 @@ import type {
   ICommon,
   ISharePetDetails,
   IScanResult,
+  IPetDetails,
 } from "../index";
 
 import {PetTypes} from "../../dto/pets";
@@ -232,6 +233,12 @@ export const sharePetDetails: ISharePetDetails = {
   message: "Pet Wallet want to share data: ",
 };
 
+const petDetails: IPetDetails = {
+  generalInformationTitle: "Allgemeine Information",
+  medicalTitle: "Medizinische Information",
+  notesTitle: "Notizen",
+}
+
 const animalTypes = {
   [PetTypes.alpaca]: "Alpaca",
   [PetTypes.bird]: "Bird",
@@ -279,4 +286,5 @@ export const EN = {
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,
   [ViewComponents.termsAndConditions]: termsAndConditions,
+  [ViewComponents.petDetails]: petDetails,
 };

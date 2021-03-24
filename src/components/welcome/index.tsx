@@ -10,7 +10,6 @@ import {createStyle} from "../../theme";
 import {Layout, Card} from "../common";
 import {AddPetBar} from "./add-pet-bar";
 import {Box} from "./box";
-import {HelpBar} from "./help-bar";
 
 import {animatedCardStyle, applyStyles} from "./index.style";
 
@@ -89,7 +88,7 @@ export const Component = (): JSX.Element => {
         return (
           <View style={styles.footer}>
             {hasPets === false ? (
-              <HelpBar {...props} />
+              null
             ) : (
               <AddPetBar {...props} style={styles.addPetBar} />
             )}

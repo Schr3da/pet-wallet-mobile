@@ -10,6 +10,7 @@ import type {
   ICommon,
   ISharePetDetails,
   IScanResult,
+  IPetDetails,
 } from "../index";
 
 import {PetTypes} from "../../dto/pets";
@@ -259,6 +260,12 @@ const animalTypes = {
   [PetTypes.turtle]: "Schildkröte",
 };
 
+const petDetails: IPetDetails = {
+  generalInformationTitle: "Allgemeine Information",
+  medicalTitle: "Medizinische Information",
+  notesTitle: "Notizen",
+}
+
 const common: ICommon = {
   addText: "Hinzufügen",
   noScansFound: "Keine Einträge hinzugefügt",
@@ -282,4 +289,5 @@ export const DE = {
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,
   [ViewComponents.termsAndConditions]: termsAndConditions,
+  [ViewComponents.petDetails]: petDetails,
 };

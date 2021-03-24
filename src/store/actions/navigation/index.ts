@@ -94,7 +94,7 @@ interface IOnShowPetDetails {
   id: string;
 }
 
-export const onShowPetDetails = (id: string) => (
+export const onShowPetDetails = (id: string) => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {

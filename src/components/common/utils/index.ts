@@ -41,7 +41,7 @@ export const base64ImageString = (image: IImageDataDto | null) => {
 };
 
 export const base64ImageToUri = (
-  image: IImageDataDto,
+  image: IImageDataDto | null,
 ): ImageSourcePropType => ({
   uri: base64ImageString(image) as any,
 });

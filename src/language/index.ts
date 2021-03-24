@@ -109,6 +109,12 @@ export interface ISharePetDetails {
   message: string;
 }
 
+export interface IPetDetails {
+  generalInformationTitle: string;
+  medicalTitle: string;
+  notesTitle: string;
+}
+
 export type INotifications = {[k in NotificationTypes]: IMessage};
 
 export type IErrors = {[k in ErrorTypes]: IMessage} & {default: IMessage};
@@ -131,6 +137,7 @@ export interface ILanguage {
   [ViewComponents.settings]: ISettings;
   [ViewComponents.newPet]: INewPet;
   [ViewComponents.termsAndConditions]: ITermsAndConditions;
+  [ViewComponents.petDetails]: IPetDetails;
 }
 
 export const getTranslation = (language: LanguageTypes): ILanguage => {
