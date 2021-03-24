@@ -17,27 +17,28 @@ interface IProps extends ILayoutChildProps {
 }
 
 export const ReadOnlyView = (props: IProps) => {
-  
   const {data, theme, language} = props;
- 
+
   const styles = createStyle(theme, applyStyles);
 
-  return(
+  return (
     <React.Fragment>
       {data == null ? (
         <Image
           style={styles.placeholderIcon}
           source={
             theme === ThemeTypes.Light
-            ? require("../../../../assets/png/light/new-pet-profile-icon.png")
-            : require("../../../../assets/png/light/new-pet-profile-icon.png")
+              ? require("../../../../assets/png/light/new-pet-profile-icon.png")
+              : require("../../../../assets/png/light/new-pet-profile-icon.png")
           }
         />
       ) : (
         <Image style={styles.profileImage} source={base64ImageToUri(null)} />
       )}
       <View style={{...styles.contentWrapper, marginTop: 40}}>
-        <Text style={{...styles.headline}}>{language.petDetails.generalInformationTitle}</Text>
+        <Text style={{...styles.headline}}>
+          {language.petDetails.generalInformationTitle}
+        </Text>
         <InputField
           id={InputIds.name}
           style={styles.inputField}
@@ -154,5 +155,5 @@ export const ReadOnlyView = (props: IProps) => {
         />
       </View>
     </React.Fragment>
-    );
-}
+  );
+};

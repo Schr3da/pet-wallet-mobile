@@ -20,7 +20,10 @@ export const CheckBox = (props: IProps) => {
 
   return (
     <View style={style}>
-      <TouchableOpacity onPress={() => onSelect(id)} activeOpacity={0.8} style={style}>
+      <TouchableOpacity
+        onPress={() => onSelect(id)}
+        activeOpacity={0.8}
+        style={style}>
         <View style={styles.touchContainer}>
           <View style={styles.container}>
             <Image

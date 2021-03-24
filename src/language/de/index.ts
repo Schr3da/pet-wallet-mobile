@@ -264,7 +264,7 @@ const petDetails: IPetDetails = {
   generalInformationTitle: "Allgemeine Information",
   medicalTitle: "Medizinische Information",
   notesTitle: "Notizen",
-}
+};
 
 const common: ICommon = {
   addText: "Hinzufügen",

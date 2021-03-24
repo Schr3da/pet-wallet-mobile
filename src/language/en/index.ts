@@ -237,7 +237,7 @@ const petDetails: IPetDetails = {
   generalInformationTitle: "Allgemeine Information",
   medicalTitle: "Medizinische Information",
   notesTitle: "Notizen",
-}
+};
 
 const animalTypes = {
   [PetTypes.alpaca]: "Alpaca",

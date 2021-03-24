@@ -48,8 +48,8 @@ export const EditView = (props: IProps) => {
           style={styles.placeholderIcon}
           source={
             theme === ThemeTypes.Light
-            ? require("../../../../assets/png/light/new-pet-profile-icon.png")
-            : require("../../../../assets/png/light/new-pet-profile-icon.png")
+              ? require("../../../../assets/png/light/new-pet-profile-icon.png")
+              : require("../../../../assets/png/light/new-pet-profile-icon.png")
           }
         />
       ) : (
@@ -64,7 +64,9 @@ export const EditView = (props: IProps) => {
         onData={(_: IImageDataDto) => undefined}
       />
       <View style={styles.contentWrapper}>
-        <Text style={{...styles.headline}}>{language.petDetails.generalInformationTitle}</Text>
+        <Text style={{...styles.headline}}>
+          {language.petDetails.generalInformationTitle}
+        </Text>
         <InputField
           id={InputIds.name}
           style={styles.inputField}
@@ -211,9 +213,9 @@ export const EditView = (props: IProps) => {
       </View>
     </React.Fragment>
   );
-}
+};
 
-export const requestCancel = (dispatch: any) => undefined; 
+export const requestCancel = (dispatch: any) => undefined;
 
 export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();

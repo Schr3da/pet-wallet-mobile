@@ -87,9 +87,7 @@ export const Component = (): JSX.Element => {
 
         return (
           <View style={styles.footer}>
-            {hasPets === false ? (
-              null
-            ) : (
+            {hasPets === false ? null : (
               <AddPetBar {...props} style={styles.addPetBar} />
             )}
           </View>

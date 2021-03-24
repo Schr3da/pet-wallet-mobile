@@ -65,23 +65,23 @@ export const InputField = (props: IProps) => {
         <Text style={styles.input}>{value}</Text>
       ) : (
         <TouchableOpacity
-           activeOpacity={1}
-           onPress={()=> (input as any).focus()}>
-           <View pointerEvents="none">
-              <TextInput
-                ref={(ref: any) => input = ref}
-                clearButtonMode={"while-editing"}
-                style={styles.input}
-                autoCorrect={false}
-                placeholder={placeholder}
-                onChangeText={(text: string) => onChange(id, text)}
-                onFocus={() => handleFocus(dispatch, id)}
-                onEndEditing={() => handleFocusDelayed(dispatch, null)}
-                placeholderTextColor={colors.color12}
-                returnKeyType="done"
-                keyboardType={type || "default"}
-                value={value as string | undefined}
-              />
+          activeOpacity={1}
+          onPress={() => (input as any).focus()}>
+          <View pointerEvents="none">
+            <TextInput
+              ref={(ref: any) => (input = ref)}
+              clearButtonMode={"while-editing"}
+              style={styles.input}
+              autoCorrect={false}
+              placeholder={placeholder}
+              onChangeText={(text: string) => onChange(id, text)}
+              onFocus={() => handleFocus(dispatch, id)}
+              onEndEditing={() => handleFocusDelayed(dispatch, null)}
+              placeholderTextColor={colors.color12}
+              returnKeyType="done"
+              keyboardType={type || "default"}
+              value={value as string | undefined}
+            />
           </View>
         </TouchableOpacity>
       )}

@@ -18,13 +18,12 @@ import {applyFooterStyles} from "./index.style";
 const stateToProps = (state: ICombinedReducerState) => ({
   isEditing: false,
   data: (state.pets.data || []).find((p) => state.pets.selectedId === p.id),
-})
+});
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
 
 export const Component = (): JSX.Element => {
-
   const {isEditing, data} = useSelector(stateToProps);
 
   return (
@@ -38,10 +37,11 @@ export const Component = (): JSX.Element => {
 
         return (
           <React.Fragment>
-            {isEditing ? 
-              <EditView {...props} data={data} />  : 
+            {isEditing ? (
+              <EditView {...props} data={data} />
+            ) : (
               <ReadOnlyView {...props} data={data} />
-            } 
+            )}
           </React.Fragment>
         );
       }}
@@ -52,18 +52,14 @@ export const Component = (): JSX.Element => {
 
         return (
           <View style={styles.container}>
-            {subViewComponent === SubViewComponents.newScanResult ? 
-              <ScanResultViews.Footer
-                {...props}
-                onSave={() => undefined}
-              />
-              : isEditing ? <Footer {...props} /> : null
-            }
+            {subViewComponent === SubViewComponents.newScanResult ? (
+              <ScanResultViews.Footer {...props} onSave={() => undefined} />
+            ) : isEditing ? (
+              <Footer {...props} />
+            ) : null}
           </View>
         );
       }}
     />
   );
 };
-
-
