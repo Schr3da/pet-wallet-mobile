@@ -109,6 +109,8 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleSaveNewScanResult(state, action.id, action.data);
     case Navigation.ON_SHOW_HOME_COMPONENT:
       return initialState();
+    case Database.ON_REQUEST_DATA_DELETION:
+      return initialState();
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import {Splash, Navigation} from "../../actions";
+import {Splash, Navigation, Database} from "../../actions";
 
 export interface ISplashState {
   isAnimating: boolean;
@@ -21,7 +21,7 @@ const animationComplete = (state: ISplashState): ISplashState =>
         isAnimating: false,
       };
 
-type Actions = Splash.Actions | Navigation.Actions;
+type Actions = Splash.Actions | Navigation.Actions | Database.Actions;
 
 const reducer = (state = initialState(), action: Actions) => {
   switch (action.type) {
@@ -29,6 +29,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return animationStart(state);
     case Navigation.ON_SHOW_HOME_COMPONENT:
       return animationComplete(state);
+    case Database.ON_REQUEST_DATA_DELETION:
+      return initialState();
     default:
       return state;
   }

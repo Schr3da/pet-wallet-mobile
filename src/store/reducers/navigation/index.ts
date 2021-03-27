@@ -126,15 +126,6 @@ const setHasPets = (
   hasPets,
 });
 
-const handleDataDeletion = (
-  state: INavigationState,
-  language: LanguageTypes,
-): INavigationState => {
-  let next = setHasPets(state, false);
-  next = showHome(next, language, next.hasPets);
-  return next;
-};
-
 type Actions =
   | Pets.Actions
   | Layout.Actions
@@ -167,7 +158,7 @@ export const reducer = (
     case Pets.ON_SET_PETS:
       return setHasPets(state, (action.data || []).length !== 0);
     case Database.ON_REQUEST_DATA_DELETION:
-      return handleDataDeletion(state, action.language);
+      return initialState();
     default:
       return state;
   }

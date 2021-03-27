@@ -36,6 +36,8 @@ const reducer = (state = initialState(), action: Actions) => {
       return handleInitDatabase(state, action.user);
     case Database.ON_LOADED_DATA_FROM_DATABASE:
       return state;
+    case Database.ON_REQUEST_DATA_DELETION:
+      return initialState();
     default:
       return state;
   }

@@ -30,12 +30,12 @@ type Actions =
 
 const reducer = (state: IPetsState = initialState(), action: Actions) => {
   switch (action.type) {
-    case Database.ON_REQUEST_DATA_DELETION:
-      return initialState();
     case Pets.ON_SET_PETS:
       return setPets(state, action.data);
     case Navigation.ON_SHOW_PET_DETAILS:
       return setSelectedId(state, action.id);
+    case Database.ON_REQUEST_DATA_DELETION:
+      return initialState();
     default:
       return state;
   }

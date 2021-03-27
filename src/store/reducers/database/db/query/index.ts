@@ -83,7 +83,7 @@ export const init = (): Promise<boolean> => {
   });
 };
 
-export const deleteDatabase = (): Promise<void> => {
+export const deleteDb = (): Promise<void> => {
   return new Promise((resolve) => {
     if (instance != null) {
       instance.close();

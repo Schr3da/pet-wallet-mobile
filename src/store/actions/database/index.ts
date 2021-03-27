@@ -1,13 +1,14 @@
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 
-import {initDatabase} from "../../reducers/database/db";
+import {initDatabase, deleteDatabase} from "../../reducers/database/db";
 import {
   getSettings,
   ISettingsEntity,
 } from "../../reducers/database/db/settings";
 import {getUser, IUserEntity} from "../../reducers/database/db/user";
 import {isOnline, setDeviceOnline, setLoading} from "../layout";
+import {deleteWallet} from "../../../communication/wallet";
 
 export const ON_INIT_DATA_FROM_DATABASE = "ON_INIT_DATA_FROM_DATABASE";
 interface IOnInitDataFromDatabase {
@@ -45,13 +46,15 @@ export const onRequestDataDeletion = () => async (
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
+  const token = state.database.token;
+
+  await deleteWallet(token!); 
+  await deleteDatabase();
 
   dispatch({
     type: ON_REQUEST_DATA_DELETION,
     language: state.layout.language,
   } as IOnRequesDataDeletion);
-
-  dispatch(setLoading(false));
 };
 
 export const initStateFromDatabase = () => async (

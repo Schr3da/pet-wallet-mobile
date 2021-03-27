@@ -1,4 +1,4 @@
-import {ScanResult, Navigation} from "../../actions";
+import {ScanResult, Navigation, Database} from "../../actions";
 import {LanguageTypes} from "../../../language";
 import {createUuid} from "../../../components/common/utils";
 import {IScanDataDto} from "../../../dto/scan";
@@ -131,7 +131,7 @@ const handleRemoveScanEntity = (
   };
 };
 
-type Actions = ScanResult.Actions | Navigation.Actions;
+type Actions = ScanResult.Actions | Navigation.Actions | Database.Actions;
 
 const reducer = (state: IScanResultState = initialState(), action: Actions) => {
   switch (action.type) {
@@ -146,6 +146,8 @@ const reducer = (state: IScanResultState = initialState(), action: Actions) => {
     case ScanResult.ON_REMOVE_NEW_SCAN_ENTITY:
       return handleRemoveScanEntity(state, action.id);
     case ScanResult.ON_RESET_SCAN_RESULT:
+      return initialState();
+    case Database.ON_REQUEST_DATA_DELETION:
       return initialState();
     default:
       return state;
