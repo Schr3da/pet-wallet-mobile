@@ -213,7 +213,7 @@ const reducer = (state = initialState(), action: Actions) => {
       const {language, theme} = action.settings;
       return applyLanguageAndTheme(state, language, theme);
     case Database.ON_REQUEST_DATA_DELETION:
-      return initialState(); 
+      return initialState();
     default:
       return state;
   }

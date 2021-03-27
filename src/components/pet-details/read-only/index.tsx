@@ -23,13 +23,13 @@ export const ReadOnlyView = (props: IProps) => {
 
   return (
     <React.Fragment>
-      {data == null ? (
+      {true || data == null ? (
         <Image
           style={styles.placeholderIcon}
           source={
             theme === ThemeTypes.Light
               ? require("../../../../assets/png/light/new-pet-profile-icon.png")
-              : require("../../../../assets/png/light/new-pet-profile-icon.png")
+              : require("../../../../assets/png/dark/new-pet-profile-icon.png")
           }
         />
       ) : (

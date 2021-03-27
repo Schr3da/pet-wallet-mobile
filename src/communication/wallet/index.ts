@@ -212,11 +212,9 @@ const getInfos = (
     ];
   }, [] as IScanEntityDto[]);
 
-export const deleteWallet = async (
-  token: string
-): Promise<boolean> => {
+export const deleteWallet = async (token: string): Promise<boolean> => {
   const url = "/api/petpass/user/delete";
-  
+
   try {
     await postRequest<{}, {}>(url, {}, token);
     return true;

@@ -49,7 +49,16 @@ export const Card = (props: IProps) => {
       <View style={styles.row}>
         <View style={{flexBasis: 58}}>
           <View style={styles.profileWrapper}>
-            {hasProfile == null ? null : (
+            {hasProfile == null ? (
+              <Image
+                style={styles.image}
+                source={
+                  theme === ThemeTypes.Dark
+                    ? require("../../../../assets/png/dark/new-pet-profile-icon.png")
+                    : require("../../../../assets/png/light/new-pet-profile-icon.png")
+                }
+              />
+            ) : (
               <Image
                 style={styles.image}
                 source={{uri: data.profileUri! || data.profileImage!}}

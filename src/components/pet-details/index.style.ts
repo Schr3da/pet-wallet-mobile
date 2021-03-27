@@ -9,7 +9,7 @@ export const applyStyles = (theme: ITheme) => ({
     overflow: "hidden",
   } as ViewStyle,
   placeholderIcon: {
-    width: 120,
+    width: 125,
     height: 120,
   } as ImageStyle,
   profileImage: {

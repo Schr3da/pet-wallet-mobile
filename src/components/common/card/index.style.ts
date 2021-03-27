@@ -30,7 +30,7 @@ export const applyStyles = (hasProfile: boolean) => (theme: ITheme) => ({
     borderRadius: 29,
     borderColor: theme.color6,
     backgroundColor: theme.color6,
-    opacity: hasProfile ? 1 : 0.3,
+    opacity: hasProfile ? 1 : 0.2,
     overflow: "hidden",
   } as ViewStyle,
   image: {

@@ -36,4 +36,4 @@ export const deleteDatabase = async (): Promise<boolean> => {
   } catch {
     return false;
   }
-}
+};

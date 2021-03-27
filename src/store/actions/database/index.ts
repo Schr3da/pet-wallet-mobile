@@ -48,7 +48,7 @@ export const onRequestDataDeletion = () => async (
   const state = getState();
   const token = state.database.token;
 
-  await deleteWallet(token!); 
+  await deleteWallet(token!);
   await deleteDatabase();
 
   dispatch({
