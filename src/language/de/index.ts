@@ -230,6 +230,10 @@ const dialogs: IDialogs = {
     title: "Änderungen verwerfen",
     text: "Möchtest du die Änderungen verwerfen?",
   },
+  [DialogContentTypes.cancelEditPetDetails]: {
+    title: "Änderungen verwerfen",
+    text: "Möchtest du die Änderungen verwerfen?",
+  },
 };
 
 export const sharePetDetails: ISharePetDetails = {

@@ -4,14 +4,24 @@ import {View, Image, Text} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {ImagePicker, InputField, InputTypeField} from "../../common";
+import {ImagePicker, InputField, InputTypeField, Dialog} from "../../common";
 
 import {base64ImageToUri} from "../../common/utils";
-import {ErrorTypes, InputTypes} from "../../../enums/layout";
+import {
+  ErrorTypes,
+  InputTypes,
+  DialogContentTypes,
+} from "../../../enums/layout";
 import {IImageDataDto} from "../../../dto/image";
 import {InputValues} from "../../../enums/input";
-import {onSetErrorCode} from "../../../store/actions/layout";
-import {InputIds} from "../../../store/actions/pet-details";
+import {
+  onSetErrorCode,
+  onSetDialogContentType,
+} from "../../../store/actions/layout";
+import {
+  InputIds,
+  onCancelPetDetailsEdit,
+} from "../../../store/actions/pet-details";
 import {ILayoutChildProps} from "../../common/layout";
 import {SecondaryButton, PrimaryButton} from "../../common/rounded-button";
 import {IPetDto} from "../../../dto/pets";
@@ -215,7 +225,8 @@ export const EditView = (props: IProps) => {
   );
 };
 
-export const requestCancel = (dispatch: any) => undefined;
+export const requestCancel = (dispatch: any) =>
+  dispatch(onSetDialogContentType(DialogContentTypes.cancelEditPetDetails));
 
 export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
@@ -236,4 +247,27 @@ export const Footer = (props: ILayoutChildProps) => {
       />
     </React.Fragment>
   );
+};
+
+export const Dialogs = (props: ILayoutChildProps) => {
+  const dispatch = useDispatch();
+
+  const {language, theme, dialogContentType} = props;
+
+  const {title, text} = language.dialogs.cancelEditPetDetails;
+
+  switch (dialogContentType) {
+    case DialogContentTypes.cancelEditPetDetails:
+      return (
+        <Dialog
+          title={title}
+          text={text}
+          theme={theme}
+          language={language}
+          onPress={() => dispatch(onCancelPetDetailsEdit)}
+        />
+      );
+    default:
+      return null;
+  }
 };

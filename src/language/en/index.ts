@@ -227,6 +227,10 @@ const dialogs: IDialogs = {
     title: "Discard changes",
     text: "Press continue to discard the modifications.",
   },
+  [DialogContentTypes.cancelEditPetDetails]: {
+    title: "Änderungen verwerfen",
+    text: "Möchtest du die Änderungen verwerfen?",
+  },
 };
 
 export const sharePetDetails: ISharePetDetails = {

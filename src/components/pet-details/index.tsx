@@ -3,20 +3,20 @@ import * as React from "react";
 import {View} from "react-native";
 import {useSelector} from "react-redux";
 
-import {EditView, Footer} from "./edit";
+import {EditView, Footer, Dialogs} from "./edit";
 import {ReadOnlyView} from "./read-only";
 
 import {createStyle} from "../../theme";
 import {Layout, ScanResultViews} from "../common";
 import {ErrorTypes} from "../../enums/layout";
-import {SubViewComponents} from "../../enums/navigation";
+import {SubViewComponents, ViewComponents} from "../../enums/navigation";
 import {onSetErrorCode} from "../../store/actions/layout";
 import {ICombinedReducerState} from "../../store/reducers";
 
 import {applyFooterStyles} from "./index.style";
 
 const stateToProps = (state: ICombinedReducerState) => ({
-  isEditing: false,
+  isEditing: state.petDetails.isEditMode,
   data: (state.pets.data || []).find((p) => state.pets.selectedId === p.id),
 });
 
@@ -59,6 +59,12 @@ export const Component = (): JSX.Element => {
             ) : null}
           </View>
         );
+      }}
+      dialogRenderer={(props) => {
+        if (isEditing === false) {
+          return null;
+        }
+        return <Dialogs {...props} />;
       }}
     />
   );
