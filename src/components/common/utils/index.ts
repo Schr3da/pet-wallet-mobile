@@ -1,9 +1,12 @@
 import {ImageSourcePropType} from "react-native";
 import Animated, {Easing} from "react-native-reanimated";
+import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 
 import type {INewPetState} from "../../../store/reducers/new-pet";
 import type {IPetDto} from "../../../dto/pets";
+
 import {IImageDataDto} from "../../../dto/image";
+import {ScanErrorTypes, ImagePickerTypes} from "../../../enums/image";
 
 export interface IMeasureResult {
   width: number;
@@ -99,3 +102,57 @@ export const createUuid = () => {
   });
   return uuid;
 };
+
+export const hasScanError = (code: string): boolean =>
+  ScanErrorTypes.permission === code ||
+  ScanErrorTypes.unavailable === code ||
+  ScanErrorTypes.others === code;
+
+export const prepareImageInput = (
+  type: ImagePickerTypes,
+  maxWidth: number,
+  maxHeight: number,
+) =>
+  new Promise<IImageDataDto | null>((resolve) => {
+    const options = {
+      includeBase64: true,
+      mediaType: "photo",
+      maxWidth,
+      maxHeight,
+      quality: 0,
+    };
+
+    if (type === ImagePickerTypes.camera) {
+      return launchCamera(options, (data: any) =>
+        hasScanError(data) === true
+          ? resolve(null)
+          : resolve({
+              id: Date.now().toString(),
+              uri: data.uri,
+              imageBase64: data.base64,
+              fileSize: data.fileSize,
+              width: data.width,
+              height: data.height,
+              fileType: data.type,
+              didCancel: data.didCancel,
+            }),
+      );
+    }
+
+    if (type === ImagePickerTypes.picker) {
+      return launchImageLibrary(options, (data: any) => {
+        hasScanError(data) === true
+          ? resolve(null)
+          : resolve({
+              id: Date.now().toString(),
+              uri: data.uri,
+              imageBase64: data.base64,
+              fileSize: data.fileSize,
+              width: data.width,
+              height: data.height,
+              fileType: data.type,
+              didCancel: data.didCancel,
+            });
+      });
+    }
+  });

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {View, Image, Text} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../../theme";
 import {InputField, Dialog} from "../../../common";
@@ -17,8 +17,13 @@ import {InputIds, onRemovePet} from "../../../../store/actions/pet-details";
 import {
   onSetErrorCode,
   onSetDialogContentType,
+  onSetPickerVisibility,
 } from "../../../../store/actions/layout";
-import {ErrorTypes, DialogContentTypes} from "../../../../enums/layout";
+import {
+  ErrorTypes,
+  DialogContentTypes,
+  InputTypes,
+} from "../../../../enums/layout";
 
 import {applyStyles} from "../index.style";
 import {applySpecificStyles} from "./index.style";
@@ -36,8 +41,8 @@ const handleShare = (dispatch: any, id: string | null) =>
     ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
     : dispatch(onSharePet(id));
 
-const handleScan = (dispatch: any, language: LanguageTypes) =>
-  dispatch(onChangeSubViewComponent(SubViewComponents.newPetScan, language));
+const showScanPicker = (dispatch: any) =>
+  dispatch(onSetPickerVisibility(true, InputTypes.picker));
 
 const handleRemove = (dispatch: any, id: string | null) =>
   id == null
@@ -51,7 +56,7 @@ interface IProps extends ILayoutChildProps {
   data: IPetDto;
 }
 
-export const Component = (props: IProps) => {
+export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
   const {data, theme, language, languageType} = props;
@@ -89,7 +94,7 @@ export const Component = (props: IProps) => {
                 ? require("../../../../../assets/png/light/scan-icon.png")
                 : require("../../../../../assets/png/dark/scan-icon.png")
             }
-            onPress={() => handleScan(dispatch, languageType)}
+            onPress={() => showScanPicker(dispatch)}
           />
           <ImageButton
             style={styles.actionButton}

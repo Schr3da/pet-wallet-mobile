@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import {View, ViewStyle} from "react-native";
-import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 
 import {createStyle, ThemeTypes} from "../../../theme";
 import {ImageButton} from "../image-button";
@@ -9,74 +8,8 @@ import {ImageButton} from "../image-button";
 import {applyStyles} from "./index.style";
 import {ErrorTypes} from "../../../enums/layout";
 import {IImageDataDto} from "../../../dto/image";
-
-enum ImagePickerTypes {
-  camera,
-  picker,
-}
-
-export enum ScanErrorTypes {
-  unavailable = "camera_unavailable",
-  permission = "permission",
-  others = "others",
-}
-
-const handlePress = (
-  type: ImagePickerTypes,
-  setState: (type: ImagePickerTypes) => void,
-  maxWidth: number,
-  maxHeight: number,
-) =>
-  new Promise<IImageDataDto | null>((resolve) => {
-    setState(type);
-
-    const options = {
-      includeBase64: true,
-      mediaType: "photo",
-      maxWidth,
-      maxHeight,
-      quality: 0,
-    };
-
-    if (type === ImagePickerTypes.camera) {
-      return launchCamera(options, (data: any) =>
-        hasError(data) === true
-          ? resolve(null)
-          : resolve({
-              id: Date.now().toString(),
-              uri: data.uri,
-              imageBase64: data.base64,
-              fileSize: data.fileSize,
-              width: data.width,
-              height: data.height,
-              fileType: data.type,
-              didCancel: data.didCancel,
-            }),
-      );
-    }
-
-    if (type === ImagePickerTypes.picker) {
-      return launchImageLibrary(options, (data: any) => {
-        hasError(data) === true
-          ? resolve(null)
-          : resolve({
-              id: Date.now().toString(),
-              uri: data.uri,
-              imageBase64: data.base64,
-              fileSize: data.fileSize,
-              width: data.width,
-              height: data.height,
-              fileType: data.type,
-              didCancel: data.didCancel,
-            });
-      });
-    }
-  });
-
-const hasError = (code: string): boolean =>
-  ScanErrorTypes.permission === code ||
-  ScanErrorTypes.unavailable === code ||
-  ScanErrorTypes.others === code;
+import {ImagePickerTypes} from "../../../enums/image";
+import {prepareImageInput} from "../utils";
 
 const isSelected = (type: ImagePickerTypes, condition: ImagePickerTypes) =>
   type === condition;
@@ -115,9 +48,10 @@ export const ImagePicker = (props: IProps): JSX.Element => {
         }
         style={styles.image(isCameraSelected)}
         onPress={async () => {
-          const data = await handlePress(
+          setType(ImagePickerTypes.camera);
+
+          const data = await prepareImageInput(
             ImagePickerTypes.camera,
-            setType,
             maxWidth,
             maxHeight,
           );
@@ -144,9 +78,10 @@ export const ImagePicker = (props: IProps): JSX.Element => {
         }
         style={styles.image(isPickerSelected)}
         onPress={async () => {
-          const data = await handlePress(
+          setType(ImagePickerTypes.picker);
+
+          const data = await prepareImageInput(
             ImagePickerTypes.picker,
-            setType,
             maxWidth,
             maxHeight,
           );

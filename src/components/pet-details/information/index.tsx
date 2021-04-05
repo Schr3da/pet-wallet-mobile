@@ -17,15 +17,15 @@ export interface IProps extends ILayoutChildProps {
   data: IPetDto;
 }
 
-export const Component = (props: IProps): JSX.Element => {
+export const ChildView = (props: IProps): JSX.Element => {
   const {subViewComponent, data} = props;
 
   return (
     <React.Fragment>
       {subViewComponent === SubViewComponents.petDetailsEdit ? (
-        <EditView.Component {...props} data={data} />
+        <EditView.ChildView {...props} data={data} />
       ) : (
-        <ReadOnlyView.Component {...props} data={data} />
+        <ReadOnlyView.ChildView {...props} data={data} />
       )}
     </React.Fragment>
   );

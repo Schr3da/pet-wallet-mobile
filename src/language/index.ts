@@ -22,6 +22,8 @@ export interface ICommon {
   cancel: string;
   pick: string;
   pleaseSelect: string;
+  camera: string;
+  photoLibrary: string;
 }
 
 export interface IHeader {

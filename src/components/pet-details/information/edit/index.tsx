@@ -44,7 +44,7 @@ interface IProps extends ILayoutChildProps {
   data: IPetDto;
 }
 
-export const Component = (props: IProps) => {
+export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
   const {data, theme, language, languageType} = props;

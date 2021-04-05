@@ -297,6 +297,8 @@ const common: ICommon = {
   cancel: "Abbrechen",
   pick: "Auswählen",
   pleaseSelect: "Bitte auswählen",
+  camera: "Kamera",
+  photoLibrary: "Photoalbum",
 };
 
 export const DE = {

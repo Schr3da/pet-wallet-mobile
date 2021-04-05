@@ -3,6 +3,7 @@ import * as React from "react";
 import {Picker} from "@react-native-picker/picker";
 
 import {View} from "react-native";
+import {useDispatch} from "react-redux";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {getTranslation, LanguageTypes} from "../../../language";
@@ -11,7 +12,6 @@ import {PrimaryButton, SecondaryButton} from "../rounded-button";
 import {applyStyles} from "./index.style";
 import {onSetPickerVisibility, onFocus} from "../../../store/actions/layout";
 import {InputTypes} from "../../../enums/layout";
-import {useDispatch} from "react-redux";
 
 export interface IPickerData {
   label: string;
@@ -54,8 +54,9 @@ export const PickerComponent = (props: IProps) => {
         itemStyle={styles.itemStyle}
         selectedValue={value}
         dropdownIconColor={textColor}
-        onValueChange={(item) => {
-          setDidInteract(true);
+        onValueChange={(item, index) => {
+          const hasInterected = index !== 0;
+          setDidInteract(hasInterected);
           setValue(item);
         }}>
         {[...pleaseSelect, ...(data || [])].map((d, i) => (
