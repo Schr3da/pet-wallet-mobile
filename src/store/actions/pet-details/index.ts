@@ -65,6 +65,6 @@ export const onRemovePet = (id: string) => async (
   const token = state.database.token;
 
   await deletePet(id, token!);
-
   dispatch(onGoBackNavigation(language));
+  dispatch(onDismissDialog());
 };
