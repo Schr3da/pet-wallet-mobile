@@ -54,6 +54,26 @@ const header: IHeader = {
       description: "",
     },
   },
+  [ViewComponents.petDetails]: {
+    [SubViewComponents.none]: {
+      title: "",
+      description: "",
+    },
+    [SubViewComponents.petDetailsEdit]: {
+      title: "",
+      description: "",
+    },
+  },
+  [ViewComponents.petDetails]: {
+    [SubViewComponents.none]: {
+      title: "",
+      description: "",
+    },
+    [SubViewComponents.petDetailsEdit]: {
+      title: "",
+      description: "",
+    },
+  },
   [ViewComponents.settings]: {
     [SubViewComponents.none]: {
       title: "Einstellungen",
@@ -75,6 +95,10 @@ const header: IHeader = {
   },
   [ViewComponents.petDetails]: {
     [SubViewComponents.none]: {
+      title: "",
+      description: "",
+    },
+    [SubViewComponents.petDetailsEdit]: {
       title: "",
       description: "",
     },
@@ -265,9 +289,12 @@ const animalTypes = {
 };
 
 const petDetails: IPetDetails = {
-  generalInformationTitle: "Allgemeine Information",
-  medicalTitle: "Medizinische Information",
-  notesTitle: "Notizen",
+  [SubViewComponents.none]: {},
+  [SubViewComponents.petDetailsEdit]: {
+    generalInformationTitle: "Allgemeine Information",
+    medicalTitle: "Medizinische Information",
+    notesTitle: "Notizen",
+  },
 };
 
 const common: ICommon = {

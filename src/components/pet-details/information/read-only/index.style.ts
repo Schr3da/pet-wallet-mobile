@@ -1,5 +1,5 @@
-import type {ITheme} from "../../../theme";
 import type {ViewStyle, ImageStyle} from "react-native";
+import type {ITheme} from "../../../../theme";
 
 export const applySpecificStyles = (theme: ITheme) => ({
   actionContainer: {

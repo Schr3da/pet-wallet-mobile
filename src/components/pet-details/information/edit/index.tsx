@@ -3,31 +3,32 @@ import * as React from "react";
 import {View, Image, Text} from "react-native";
 import {useDispatch} from "react-redux";
 
-import {createStyle, ThemeTypes} from "../../../theme";
-import {ImagePicker, InputField, InputTypeField, Dialog} from "../../common";
+import {createStyle, ThemeTypes} from "../../../../theme";
+import {ImagePicker, InputField, InputTypeField, Dialog} from "../../../common";
 
-import {base64ImageToUri} from "../../common/utils";
+import {base64ImageToUri} from "../../../common/utils";
+
 import {
   ErrorTypes,
   InputTypes,
   DialogContentTypes,
-} from "../../../enums/layout";
-import {IImageDataDto} from "../../../dto/image";
-import {InputValues} from "../../../enums/input";
+} from "../../../../enums/layout";
+
+import {IImageDataDto} from "../../../../dto/image";
+import {InputValues} from "../../../../enums/input";
 import {
   onSetErrorCode,
   onSetDialogContentType,
-} from "../../../store/actions/layout";
+} from "../../../../store/actions/layout";
 import {
   InputIds,
   onCancelPetDetailsEdit,
-} from "../../../store/actions/pet-details";
-import {ILayoutChildProps} from "../../common/layout";
-import {SecondaryButton, PrimaryButton} from "../../common/rounded-button";
-import {IPetDto} from "../../../dto/pets";
+} from "../../../../store/actions/pet-details";
+import {ILayoutChildProps} from "../../../common/layout";
+import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
+import {IPetDto} from "../../../../dto/pets";
 
 import * as EditStyles from "./index.style";
-
 import {applyStyles} from "../index.style";
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
@@ -43,7 +44,7 @@ interface IProps extends ILayoutChildProps {
   data: IPetDto;
 }
 
-export const EditView = (props: IProps) => {
+export const Component = (props: IProps) => {
   const dispatch = useDispatch();
 
   const {data, theme, language, languageType} = props;
@@ -58,8 +59,8 @@ export const EditView = (props: IProps) => {
           style={styles.placeholderIcon}
           source={
             theme === ThemeTypes.Light
-              ? require("../../../../assets/png/light/new-pet-profile-icon.png")
-              : require("../../../../assets/png/light/new-pet-profile-icon.png")
+              ? require("../../../../../assets/png/light/new-pet-profile-icon.png")
+              : require("../../../../../assets/png/light/new-pet-profile-icon.png")
           }
         />
       ) : (
@@ -75,7 +76,7 @@ export const EditView = (props: IProps) => {
       />
       <View style={styles.contentWrapper}>
         <Text style={{...styles.headline}}>
-          {language.petDetails.generalInformationTitle}
+          {language.petDetails.petDetailsEdit.generalInformationTitle}
         </Text>
         <InputField
           id={InputIds.name}
@@ -106,7 +107,9 @@ export const EditView = (props: IProps) => {
         />
       </View>
       <View style={styles.contentWrapper}>
-        <Text style={styles.headline}>{language.petDetails.medicalTitle}</Text>
+        <Text style={styles.headline}>
+          {language.petDetails.petDetailsEdit.medicalTitle}
+        </Text>
         <InputField
           id={InputIds.name}
           style={styles.inputField}
@@ -164,7 +167,9 @@ export const EditView = (props: IProps) => {
         />
       </View>
       <View style={styles.contentWrapper}>
-        <Text style={styles.headline}>{language.petDetails.notesTitle}</Text>
+        <Text style={styles.headline}>
+          {language.petDetails.petDetailsEdit.notesTitle}
+        </Text>
         <InputField
           id={InputIds.name}
           style={styles.inputField}

@@ -77,6 +77,10 @@ const header: IHeader = {
       title: "",
       description: "",
     },
+    [SubViewComponents.petDetailsEdit]: {
+      title: "",
+      description: "",
+    },
   },
 };
 
@@ -238,9 +242,12 @@ export const sharePetDetails: ISharePetDetails = {
 };
 
 const petDetails: IPetDetails = {
-  generalInformationTitle: "Allgemeine Information",
-  medicalTitle: "Medizinische Information",
-  notesTitle: "Notizen",
+  [SubViewComponents.none]: {},
+  [SubViewComponents.petDetailsEdit]: {
+    generalInformationTitle: "Allgemeine Information",
+    medicalTitle: "Medizinische Information",
+    notesTitle: "Notizen",
+  },
 };
 
 const animalTypes = {

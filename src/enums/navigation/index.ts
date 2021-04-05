@@ -15,4 +15,5 @@ export enum SubViewComponents {
   newPetInformation = "newPetInformation",
   newPetScan = "newPetScan",
   newScanResult = "newScanResult",
+  petDetailsEdit = "petDetailsEdit",
 }

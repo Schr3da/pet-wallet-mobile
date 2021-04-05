@@ -8,6 +8,7 @@ import {Route} from "./router";
 
 export const App = (): JSX.Element => {
   const store = getStore();
+
   return (
     <React.Fragment>
       <Provider store={store}>

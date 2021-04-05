@@ -11,11 +11,6 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 
 import {ICombinedReducerState} from "../../../store/reducers";
-import {
-  onChangeDisplayMode,
-  getDisplayMode,
-} from "../../../store/actions/layout";
-
 import {createStyle, ThemeTypes} from "../../../theme";
 import {getTranslation, ILanguage, LanguageTypes} from "../../../language";
 import {Navigation} from "../navigation";
@@ -30,6 +25,7 @@ import {DatePickerComponent, DatePickerModes} from "../date-picker";
 import {applyStyles} from "./index.style";
 import {InputValues} from "../../../store/actions/new-pet";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+
 import {
   DisplayModes,
   ErrorTypes,
@@ -37,6 +33,11 @@ import {
   DialogContentTypes,
   InputTypes,
 } from "../../../enums/layout";
+
+import {
+  onChangeDisplayMode,
+  getDisplayMode,
+} from "../../../store/actions/layout";
 
 interface IStateProps {
   title: string;

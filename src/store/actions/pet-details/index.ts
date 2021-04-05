@@ -1,5 +1,6 @@
 import {ICombinedReducerState} from "../../reducers";
 import {setLoading, onDismissDialog} from "../layout";
+import {onGoBackNavigation} from "../navigation";
 
 export enum InputIds {
   name = "name",
@@ -7,27 +8,14 @@ export enum InputIds {
   dateOfBirth = "dateOfBirth",
 }
 
-export const ON_TOGGLE_PET_DETAILS_MODE = "ON_TOGGLE_PET_DETAILS_MODE";
-interface ITogglePetDetailsMode {
-  type: typeof ON_TOGGLE_PET_DETAILS_MODE;
-}
-
-export const togglePetDetailsMode = (): ITogglePetDetailsMode => ({
-  type: ON_TOGGLE_PET_DETAILS_MODE,
-});
-
-export const ON_CANCEL_PET_DETAILS_EDIT = "ON_CANCEL_PET_DETAILS_EDIT";
-interface IOnCancelPetDetailsEdit {
-  type: typeof ON_CANCEL_PET_DETAILS_EDIT;
-}
-
 export const onCancelPetDetailsEdit = (
   dispatch: any,
-  _: () => ICombinedReducerState,
+  getState: () => ICombinedReducerState,
 ) => {
+  const state = getState();
+  const {language} = state.layout;
+
   dispatch(onDismissDialog());
   dispatch(setLoading(false));
-  dispatch({type: ON_CANCEL_PET_DETAILS_EDIT});
+  dispatch(onGoBackNavigation(language));
 };
-
-export type Actions = ITogglePetDetailsMode | IOnCancelPetDetailsEdit;

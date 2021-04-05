@@ -3,8 +3,7 @@ import * as React from "react";
 import {View} from "react-native";
 import {useSelector} from "react-redux";
 
-import {EditView, Footer, Dialogs} from "./edit";
-import {ReadOnlyView} from "./read-only";
+import * as InformationView from "./information";
 
 import {createStyle} from "../../theme";
 import {Layout, ScanResultViews} from "../common";
@@ -16,7 +15,6 @@ import {ICombinedReducerState} from "../../store/reducers";
 import {applyFooterStyles} from "./index.style";
 
 const stateToProps = (state: ICombinedReducerState) => ({
-  isEditing: state.petDetails.isEditMode,
   data: (state.pets.data || []).find((p) => state.pets.selectedId === p.id),
 });
 
@@ -24,47 +22,52 @@ export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
 
 export const Component = (): JSX.Element => {
-  const {isEditing, data} = useSelector(stateToProps);
+  const {data} = useSelector(stateToProps);
 
   return (
     <Layout
       hasHeader={false}
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
       childRenderer={(props) => {
+        const {mainViewComponent, subViewComponent} = props;
+
+        if (mainViewComponent !== ViewComponents.petDetails) {
+          return null;
+        }
+
         if (data == null) {
           return <View></View>;
         }
 
-        return (
-          <React.Fragment>
-            {isEditing ? (
-              <EditView {...props} data={data} />
-            ) : (
-              <ReadOnlyView {...props} data={data} />
-            )}
-          </React.Fragment>
-        );
+        if (
+          subViewComponent === SubViewComponents.none ||
+          subViewComponent === SubViewComponents.petDetailsEdit
+        ) {
+          return <InformationView.Component {...props} data={data} />;
+        } else {
+          return null;
+        }
       }}
       footerRenderer={(props) => {
         const {theme, subViewComponent} = props;
 
         const styles = createStyle(theme, applyFooterStyles);
 
-        return (
-          <View style={styles.container}>
-            {subViewComponent === SubViewComponents.newScanResult ? (
-              <ScanResultViews.Footer {...props} onSave={() => undefined} />
-            ) : isEditing ? (
-              <Footer {...props} />
-            ) : null}
-          </View>
-        );
+        let child = null;
+        if (subViewComponent === SubViewComponents.none) {
+          child = <InformationView.Footer {...props} />;
+        } else if (subViewComponent === SubViewComponents.petDetailsEdit) {
+          child = <InformationView.Footer {...props} />;
+        } else if (subViewComponent === SubViewComponents.newScanResult) {
+          child = (
+            <ScanResultViews.Footer {...props} onSave={() => undefined} />
+          );
+        }
+
+        return <View style={styles.container}>{child}</View>;
       }}
       dialogRenderer={(props) => {
-        if (isEditing === false) {
-          return null;
-        }
-        return <Dialogs {...props} />;
+        return <InformationView.Dialogs {...props} />;
       }}
     />
   );

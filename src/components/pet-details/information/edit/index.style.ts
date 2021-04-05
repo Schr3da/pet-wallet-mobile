@@ -1,5 +1,5 @@
+import type {ITheme} from "../../../../theme";
 import type {ViewStyle} from "react-native";
-import type {ITheme} from "../../../theme";
 
 export const applyStyles = (_: ITheme) => ({
   picker: {

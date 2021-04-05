@@ -3,25 +3,30 @@ import * as React from "react";
 import {View, Image, Text} from "react-native";
 import {useDispatch} from "react-redux";
 
-import {createStyle, ThemeTypes} from "../../../theme";
-import {InputField} from "../../common";
+import {createStyle, ThemeTypes} from "../../../../theme";
+import {InputField} from "../../../common";
 
-import {base64ImageToUri} from "../../common/utils";
-import {
-  InputIds,
-  togglePetDetailsMode,
-} from "../../../store/actions/pet-details";
-import {ILayoutChildProps} from "../../common/layout";
-import {IPetDto} from "../../../dto/pets";
-import {ImageButton} from "../../common/image-button";
-import {onSharePet} from "../../../store/actions/pets";
+import {base64ImageToUri} from "../../../common/utils";
+import {ILayoutChildProps} from "../../../common/layout";
+import {IPetDto} from "../../../../dto/pets";
+import {ImageButton} from "../../../common/image-button";
+import {onSharePet} from "../../../../store/actions/pets";
+
+import {InputIds} from "../../../../store/actions/pet-details";
+
+import {onSetErrorCode} from "../../../../store/actions/layout";
+import {ErrorTypes} from "../../../../enums/layout";
 
 import {applyStyles} from "../index.style";
 import {applySpecificStyles} from "./index.style";
-import {onSetErrorCode} from "../../../store/actions/layout";
-import {ErrorTypes} from "../../../enums/layout";
+import {onChangeSubViewComponent} from "../../../../store/actions/navigation";
+import {SubViewComponents} from "../../../../enums/navigation";
+import {LanguageTypes} from "../../../../language";
 
-const handleToggleMode = (dispatch: any) => dispatch(togglePetDetailsMode());
+const showEditView = (dispatch: any, language: LanguageTypes) =>
+  dispatch(
+    onChangeSubViewComponent(SubViewComponents.petDetailsEdit, language),
+  );
 
 const handleShare = (dispatch: any, id: string | null) =>
   id === null
@@ -32,10 +37,10 @@ interface IProps extends ILayoutChildProps {
   data: IPetDto;
 }
 
-export const ReadOnlyView = (props: IProps) => {
+export const Component = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {data, theme, language} = props;
+  const {data, theme, language, languageType} = props;
 
   const styles = {
     ...createStyle(theme, applyStyles),
@@ -49,8 +54,8 @@ export const ReadOnlyView = (props: IProps) => {
           style={styles.placeholderIcon}
           source={
             theme === ThemeTypes.Light
-              ? require("../../../../assets/png/light/new-pet-profile-icon.png")
-              : require("../../../../assets/png/dark/new-pet-profile-icon.png")
+              ? require("../../../../../assets/png/light/new-pet-profile-icon.png")
+              : require("../../../../../assets/png/dark/new-pet-profile-icon.png")
           }
         />
       ) : (
@@ -63,8 +68,8 @@ export const ReadOnlyView = (props: IProps) => {
             imageStyle={{...styles.actionButtonImage, width: "42%"}}
             source={
               theme === ThemeTypes.Light
-                ? require("../../../../assets/png/light/camera-icon-action.png")
-                : require("../../../../assets/png/dark/camera-icon-action.png")
+                ? require("../../../../../assets/png/light/camera-icon-action.png")
+                : require("../../../../../assets/png/dark/camera-icon-action.png")
             }
             onPress={() => undefined}
           />
@@ -73,18 +78,18 @@ export const ReadOnlyView = (props: IProps) => {
             imageStyle={styles.actionButtonImage}
             source={
               theme === ThemeTypes.Light
-                ? require("../../../../assets/png/light/edit-icon-action.png")
-                : require("../../../../assets/png/dark/edit-icon-action.png")
+                ? require("../../../../../assets/png/light/edit-icon-action.png")
+                : require("../../../../../assets/png/dark/edit-icon-action.png")
             }
-            onPress={() => handleToggleMode(dispatch)}
+            onPress={() => showEditView(dispatch, languageType)}
           />
           <ImageButton
             style={styles.actionButton}
             imageStyle={styles.actionButtonImage}
             source={
               theme === ThemeTypes.Light
-                ? require("../../../../assets/png/light/share-icon-action.png")
-                : require("../../../../assets/png/dark/share-icon-action.png")
+                ? require("../../../../../assets/png/light/share-icon-action.png")
+                : require("../../../../../assets/png/dark/share-icon-action.png")
             }
             onPress={() => handleShare(dispatch, data.id)}
           />
@@ -97,14 +102,14 @@ export const ReadOnlyView = (props: IProps) => {
             imageStyle={styles.actionButtonImage}
             source={
               theme === ThemeTypes.Light
-                ? require("../../../../assets/png/delete-icon-action.png")
-                : require("../../../../assets/png/delete-icon-action.png")
+                ? require("../../../../../assets/png/delete-icon-action.png")
+                : require("../../../../../assets/png/delete-icon-action.png")
             }
             onPress={() => undefined}
           />
         </View>
         <Text style={{...styles.headline}}>
-          {language.petDetails.generalInformationTitle}
+          {language.petDetails.petDetailsEdit.generalInformationTitle}
         </Text>
         <InputField
           id={InputIds.name}
@@ -135,7 +140,9 @@ export const ReadOnlyView = (props: IProps) => {
         />
       </View>
       <View style={styles.contentWrapper}>
-        <Text style={styles.headline}>{language.petDetails.medicalTitle}</Text>
+        <Text style={styles.headline}>
+          {language.petDetails.petDetailsEdit.medicalTitle}
+        </Text>
         <InputField
           id={InputIds.name}
           style={styles.inputField}
@@ -192,7 +199,9 @@ export const ReadOnlyView = (props: IProps) => {
         />
       </View>
       <View style={styles.contentWrapper}>
-        <Text style={styles.headline}>{language.petDetails.notesTitle}</Text>
+        <Text style={styles.headline}>
+          {language.petDetails.petDetailsEdit.notesTitle}
+        </Text>
         <InputField
           id={InputIds.dateOfBirth}
           style={styles.inputField}

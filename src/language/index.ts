@@ -110,9 +110,12 @@ export interface ISharePetDetails {
 }
 
 export interface IPetDetails {
-  generalInformationTitle: string;
-  medicalTitle: string;
-  notesTitle: string;
+  [SubViewComponents.none]: {};
+  [SubViewComponents.petDetailsEdit]: {
+    generalInformationTitle: string;
+    medicalTitle: string;
+    notesTitle: string;
+  };
 }
 
 export type INotifications = {[k in NotificationTypes]: IMessage};
