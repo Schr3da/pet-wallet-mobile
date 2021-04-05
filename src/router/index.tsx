@@ -15,10 +15,10 @@ import {
 
 import {ICombinedReducerState} from "../store/reducers";
 import {createStyle, ThemeTypes, getColors} from "../theme";
-
-import {applyStyles} from "./index.style";
 import {ViewComponents} from "../enums/navigation";
 import {DisplayModes} from "../enums/layout";
+
+import {applyStyles} from "./index.style";
 
 interface IProps {
   mainViewComponent: ViewComponents;

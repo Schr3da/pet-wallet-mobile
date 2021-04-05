@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import {View, Image, Text} from "react-native";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../../theme";
-import {InputField} from "../../../common";
+import {InputField, Dialog} from "../../../common";
 
 import {base64ImageToUri} from "../../../common/utils";
 import {ILayoutChildProps} from "../../../common/layout";
@@ -12,10 +12,13 @@ import {IPetDto} from "../../../../dto/pets";
 import {ImageButton} from "../../../common/image-button";
 import {onSharePet} from "../../../../store/actions/pets";
 
-import {InputIds} from "../../../../store/actions/pet-details";
+import {InputIds, onRemovePet} from "../../../../store/actions/pet-details";
 
-import {onSetErrorCode} from "../../../../store/actions/layout";
-import {ErrorTypes} from "../../../../enums/layout";
+import {
+  onSetErrorCode,
+  onSetDialogContentType,
+} from "../../../../store/actions/layout";
+import {ErrorTypes, DialogContentTypes} from "../../../../enums/layout";
 
 import {applyStyles} from "../index.style";
 import {applySpecificStyles} from "./index.style";
@@ -32,6 +35,17 @@ const handleShare = (dispatch: any, id: string | null) =>
   id === null
     ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
     : dispatch(onSharePet(id));
+
+const handleScan = (dispatch: any, language: LanguageTypes) =>
+  dispatch(onChangeSubViewComponent(SubViewComponents.newPetScan, language));
+
+const handleRemove = (dispatch: any, id: string | null) =>
+  id == null
+    ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
+    : dispatch(onRemovePet(id));
+
+const requestPetDelete = (dispatch: any) =>
+  dispatch(onSetDialogContentType(DialogContentTypes.deletePet));
 
 interface IProps extends ILayoutChildProps {
   data: IPetDto;
@@ -65,13 +79,17 @@ export const Component = (props: IProps) => {
         <View style={styles.actionContainer}>
           <ImageButton
             style={styles.actionButton}
-            imageStyle={{...styles.actionButtonImage, width: "42%"}}
+            imageStyle={{
+              ...styles.actionButtonImage,
+              width: "50%",
+              height: "50%",
+            }}
             source={
               theme === ThemeTypes.Light
-                ? require("../../../../../assets/png/light/camera-icon-action.png")
-                : require("../../../../../assets/png/dark/camera-icon-action.png")
+                ? require("../../../../../assets/png/light/scan-icon.png")
+                : require("../../../../../assets/png/dark/scan-icon.png")
             }
-            onPress={() => undefined}
+            onPress={() => handleScan(dispatch, languageType)}
           />
           <ImageButton
             style={styles.actionButton}
@@ -105,7 +123,7 @@ export const Component = (props: IProps) => {
                 ? require("../../../../../assets/png/delete-icon-action.png")
                 : require("../../../../../assets/png/delete-icon-action.png")
             }
-            onPress={() => undefined}
+            onPress={() => requestPetDelete(dispatch)}
           />
         </View>
         <Text style={{...styles.headline}}>
@@ -232,4 +250,27 @@ export const Component = (props: IProps) => {
       </View>
     </React.Fragment>
   );
+};
+
+export const Dialogs = (props: IProps) => {
+  const dispatch = useDispatch();
+
+  const {data, language, theme, dialogContentType} = props;
+
+  const {title, text} = language.dialogs.deletePet;
+
+  switch (dialogContentType) {
+    case DialogContentTypes.deletePet:
+      return (
+        <Dialog
+          title={title}
+          text={text}
+          theme={theme}
+          language={language}
+          onPress={() => handleRemove(dispatch, data.id)}
+        />
+      );
+    default:
+      return null;
+  }
 };

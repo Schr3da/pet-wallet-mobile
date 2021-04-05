@@ -81,6 +81,14 @@ const header: IHeader = {
       title: "",
       description: "",
     },
+    [SubViewComponents.newPetScan]: {
+      title: "",
+      description: "",
+    },
+    [SubViewComponents.newScanResult]: {
+      title: "Scan details",
+      description: "",
+    },
   },
 };
 
@@ -218,6 +226,11 @@ const dialogs: IDialogs = {
     title: "Data deletion",
     text:
       "Attention this is an unreversable action which will remove all saved data associated with your pet wallet.",
+  },
+  [DialogContentTypes.deletePet]: {
+    title: "Delete pet",
+    text:
+      "Attention this is an unreversable action which will remove the pet and its saved data from your pet wallet.",
   },
   [DialogContentTypes.deleteAttachment]: {
     title: "Delete Attachment",

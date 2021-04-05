@@ -63,13 +63,11 @@ const header: IHeader = {
       title: "",
       description: "",
     },
-  },
-  [ViewComponents.petDetails]: {
-    [SubViewComponents.none]: {
+    [SubViewComponents.newPetScan]: {
       title: "",
       description: "",
     },
-    [SubViewComponents.petDetailsEdit]: {
+    [SubViewComponents.newScanResult]: {
       title: "",
       description: "",
     },
@@ -90,16 +88,6 @@ const header: IHeader = {
   [ViewComponents.termsAndConditions]: {
     [SubViewComponents.none]: {
       title: "Nutzungsbedingungen",
-      description: "",
-    },
-  },
-  [ViewComponents.petDetails]: {
-    [SubViewComponents.none]: {
-      title: "",
-      description: "",
-    },
-    [SubViewComponents.petDetailsEdit]: {
-      title: "",
       description: "",
     },
   },
@@ -241,6 +229,11 @@ const dialogs: IDialogs = {
     title: "Daten löschen",
     text:
       "Achtung die gespeicherten Daten werden durch die Zustimmung entfernt und können nicht wiederhergestellt werden.",
+  },
+  [DialogContentTypes.deletePet]: {
+    title: "Tier löschen",
+    text:
+      "Achtung die gespeicherten Daten des Tieres werden durch die Zustimmung entfernt und können nicht wiederhergestellt werden.",
   },
   [DialogContentTypes.deleteAttachment]: {
     title: "Eintrag löschen",

@@ -4,6 +4,7 @@ import {View} from "react-native";
 import {useSelector} from "react-redux";
 
 import * as InformationView from "./information";
+import * as NewScanView from "./new-scan";
 
 import {createStyle} from "../../theme";
 import {Layout, ScanResultViews} from "../common";
@@ -44,6 +45,8 @@ export const Component = (): JSX.Element => {
           subViewComponent === SubViewComponents.petDetailsEdit
         ) {
           return <InformationView.Component {...props} data={data} />;
+        } else if (subViewComponent === SubViewComponents.newPetScan) {
+          return <NewScanView.Component {...props} />;
         } else {
           return null;
         }
@@ -58,6 +61,8 @@ export const Component = (): JSX.Element => {
           child = <InformationView.Footer {...props} />;
         } else if (subViewComponent === SubViewComponents.petDetailsEdit) {
           child = <InformationView.Footer {...props} />;
+        } else if (subViewComponent === SubViewComponents.newPetScan) {
+          child = <NewScanView.Footer {...props} />;
         } else if (subViewComponent === SubViewComponents.newScanResult) {
           child = (
             <ScanResultViews.Footer {...props} onSave={() => undefined} />
@@ -67,7 +72,21 @@ export const Component = (): JSX.Element => {
         return <View style={styles.container}>{child}</View>;
       }}
       dialogRenderer={(props) => {
-        return <InformationView.Dialogs {...props} />;
+        if (data == null) {
+          return null;
+        }
+
+        const {subViewComponent} = props;
+
+        if (subViewComponent === SubViewComponents.none) {
+          return <InformationView.Dialogs {...props} data={data} />;
+        } else if (subViewComponent === SubViewComponents.petDetailsEdit) {
+          return <InformationView.Dialogs {...props} data={data} />;
+        } else if (subViewComponent === SubViewComponents.newPetScan) {
+          return <NewScanView.Dialogs {...props} />;
+        } else {
+          return null;
+        }
       }}
     />
   );

@@ -4,6 +4,7 @@ export enum DialogContentTypes {
   cancelAttachmentChanges = "cancelAttachmentChanges",
   cancelNewPet = "cancelNewPet",
   cancelEditPetDetails = "cancelEditPetDetails",
+  deletePet = "deletePet",
 }
 
 export enum ErrorTypes {

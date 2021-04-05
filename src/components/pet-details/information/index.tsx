@@ -43,13 +43,15 @@ export const Footer = (props: ILayoutChildProps): JSX.Element => {
   );
 };
 
-export const Dialogs = (props: ILayoutChildProps): JSX.Element => {
+export const Dialogs = (props: IProps): JSX.Element | null => {
   const {subViewComponent} = props;
-  return (
-    <React.Fragment>
-      {subViewComponent !== SubViewComponents.petDetailsEdit ? null : (
-        <EditView.Dialogs {...props} />
-      )}
-    </React.Fragment>
-  );
+
+  switch (subViewComponent) {
+    case SubViewComponents.none:
+      return <ReadOnlyView.Dialogs {...props} />;
+    case SubViewComponents.petDetailsEdit:
+      return <EditView.Dialogs {...props} />;
+    default:
+      return null;
+  }
 };
