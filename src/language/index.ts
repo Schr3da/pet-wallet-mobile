@@ -112,7 +112,9 @@ export interface ISharePetDetails {
 }
 
 export interface IPetDetails {
-  [SubViewComponents.none]: {};
+  [SubViewComponents.none]: {
+    noDataTitle: string;
+  };
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: string;
     medicalTitle: string;

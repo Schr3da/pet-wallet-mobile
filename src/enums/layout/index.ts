@@ -15,6 +15,7 @@ export enum ErrorTypes {
   internetConnectionRequired = "internetConnectionRequiredError",
   sharePet = "sharePetError",
   unexpected = "unexpectedError",
+  noData = "noData",
   scanResultEmpty = "scanResultEmptyError",
 }
 

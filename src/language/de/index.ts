@@ -202,6 +202,10 @@ const errors: IErrors = {
     title: "Unerwarteter Fehler",
     text: "Ein unerwarteter Fehler ist aufgetreten.",
   },
+  [ErrorTypes.noData]: {
+    title: "Keine Daten vorhanden",
+    text: "Leider können keine Daten gefunden werden.",
+  },
   [ErrorTypes.scanResultEmpty]: {
     title: "Scan Ergebnis ist leer",
     text: "Es konnten leider keine Informationen extrahiert werden.",
@@ -282,7 +286,9 @@ const animalTypes = {
 };
 
 const petDetails: IPetDetails = {
-  [SubViewComponents.none]: {},
+  [SubViewComponents.none]: {
+    noDataTitle: "Keine Daten vorhanden",
+  },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",
     medicalTitle: "Medizinische Information",

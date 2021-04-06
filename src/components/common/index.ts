@@ -19,6 +19,7 @@ import {InputTypeField} from "./input-type-field";
 import {DatePickerComponent} from "./date-picker";
 import {DataList} from "./list";
 import {CheckBox} from "./checkbox";
+import {NoData} from "./no-data";
 
 export {
   AttachmentPlaceholder,
@@ -41,4 +42,5 @@ export {
   Error,
   InputTypeField,
   DatePickerComponent,
+  NoData,
 };

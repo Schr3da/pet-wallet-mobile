@@ -13,6 +13,7 @@ export const applyStyles = (_: ITheme) => ({
     flex: 1,
   } as ViewStyle,
   contentViewWrapper: {
+    minHeight: "100%",
     alignItems: "center",
     flex: 1,
   } as ViewStyle,

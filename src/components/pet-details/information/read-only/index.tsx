@@ -66,6 +66,8 @@ export const ChildView = (props: IProps) => {
     ...createStyle(theme, applySpecificStyles),
   };
 
+  console.log(data);
+
   return (
     <React.Fragment>
       {true || data == null ? (

@@ -5,10 +5,10 @@ import {useSelector, useDispatch} from "react-redux";
 
 import * as InformationView from "./information";
 
-import {createStyle} from "../../theme";
-import {Layout, ScanResultViews} from "../common";
+import {createStyle, ThemeTypes} from "../../theme";
+import {Layout, ScanResultViews, NoData} from "../common";
 import {ErrorTypes, InputTypes} from "../../enums/layout";
-import {SubViewComponents, ViewComponents} from "../../enums/navigation";
+import {SubViewComponents} from "../../enums/navigation";
 import {
   onSetErrorCode,
   onSetPickerVisibility,
@@ -77,14 +77,17 @@ export const Component = (): JSX.Element => {
         }
       }}
       childRenderer={(props) => {
-        const {mainViewComponent, subViewComponent} = props;
-
-        if (mainViewComponent !== ViewComponents.petDetails) {
-          return null;
-        }
+        const {subViewComponent, theme, language} = props;
 
         if (data == null) {
-          return <View></View>;
+          return <NoData 
+            theme={theme}
+            title={language.petDetails.none.noDataTitle}
+            image={theme === ThemeTypes.Dark
+              ? require("../../../assets/png/dark/new-pet-profile-icon.png")
+              : require("../../../assets/png/light/new-pet-profile-icon.png")
+            }
+            />;
         } else if (
           subViewComponent === SubViewComponents.none ||
           subViewComponent === SubViewComponents.petDetailsEdit

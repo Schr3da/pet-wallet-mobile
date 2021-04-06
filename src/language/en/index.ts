@@ -199,6 +199,10 @@ const errors: IErrors = {
     title: "Unexpected Error",
     text: "An unexpected error has occurred",
   },
+  [ErrorTypes.noData]: {
+    title: "No data available",
+    text: "Unfortunately no data could be found.",
+  },
   [ErrorTypes.scanResultEmpty]: {
     title: "Scan result is empty",
     text: "Unfortunately no information could be extracted from the scan.",
@@ -255,7 +259,9 @@ export const sharePetDetails: ISharePetDetails = {
 };
 
 const petDetails: IPetDetails = {
-  [SubViewComponents.none]: {},
+  [SubViewComponents.none]: {
+    noDataTitle: "No data available",
+  },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",
     medicalTitle: "Medizinische Information",

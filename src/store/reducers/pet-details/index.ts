@@ -1,4 +1,4 @@
-import {PetDetails, Navigation} from "../../actions";
+import {Navigation} from "../../actions";
 import {ON_GO_BACK_NAVIGATION} from "../../actions/navigation";
 
 export interface IPetDetailsState {}
