@@ -22,21 +22,15 @@ export const applyStyles = (hasProfile: boolean) => (theme: ITheme) => ({
     display: "flex",
     flexDirection: "row",
   } as ViewStyle,
-  profileWrapper: {
+  image: {
     width: 58,
     height: 58,
     flexBasis: 58,
-    borderWidth: 0,
-    borderRadius: 29,
-    borderColor: theme.color6,
-    backgroundColor: theme.color6,
+    borderWidth: 4,
+    borderColor: theme.color15,
     opacity: hasProfile ? 1 : 0.2,
     overflow: "hidden",
   } as ViewStyle,
-  image: {
-    width: "101%",
-    height: "101%",
-  },
   middleWrapper: {
     flex: 1,
     marginTop: 6,

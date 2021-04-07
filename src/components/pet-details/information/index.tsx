@@ -9,6 +9,8 @@ import {onSetErrorCode} from "../../../store/actions/layout";
 import {ILayoutChildProps} from "../../common/layout";
 import {IPetDto} from "../../../dto/pets";
 import {SubViewComponents} from "../../../enums/navigation";
+import {useSelector} from "react-redux";
+import {ICombinedReducerState} from "../../../store/reducers";
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
@@ -17,15 +19,21 @@ export interface IProps extends ILayoutChildProps {
   data: IPetDto;
 }
 
+const stateToProps = (state: ICombinedReducerState) => ({
+  filters: state.filters.petDetails.none,
+});
+
 export const ChildView = (props: IProps): JSX.Element => {
+  const {filters} = useSelector(stateToProps);
+
   const {subViewComponent, data} = props;
 
   return (
     <React.Fragment>
       {subViewComponent === SubViewComponents.petDetailsEdit ? (
-        <EditView.ChildView {...props} data={data} />
+        <EditView.ChildView {...props} data={data} filters={filters} />
       ) : (
-        <ReadOnlyView.ChildView {...props} data={data} />
+        <ReadOnlyView.ChildView {...props} data={data} filters={filters} />
       )}
     </React.Fragment>
   );

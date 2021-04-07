@@ -8,13 +8,13 @@ import {onSetErrorCode} from "../../../store/actions/layout";
 import {ErrorTypes} from "../../../enums/layout";
 
 interface IProps {
-  image: any;    
+  image: any;
   title: string;
   theme: ThemeTypes;
 }
 
 export const NoData = (props: IProps) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(onSetErrorCode(ErrorTypes.noData));
@@ -30,4 +30,4 @@ export const NoData = (props: IProps) => {
       <Text style={styles.text}>{title}</Text>
     </View>
   );
-}
+};

@@ -9,8 +9,8 @@ export const applyStyles = (_: ITheme) => ({
     maxHeight: 140,
   },
   picker: {
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
   },
   attachmentsWrapper: {
     width: 280,

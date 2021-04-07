@@ -7,7 +7,7 @@ import {
   ISettingsEntity,
 } from "../../reducers/database/db/settings";
 import {getUser, IUserEntity} from "../../reducers/database/db/user";
-import {isOnline, setDeviceOnline, setLoading} from "../layout";
+import {isOnline, setDeviceOnline} from "../layout";
 import {deleteWallet} from "../../../communication/wallet";
 
 export const ON_INIT_DATA_FROM_DATABASE = "ON_INIT_DATA_FROM_DATABASE";

@@ -68,14 +68,7 @@ export const PickerComponent = (props: IProps) => {
           />
         ))}
       </Picker>
-      {didInteract ? (
-        <PrimaryButton
-          theme={theme}
-          title={language.common.pick}
-          style={styles.button}
-          onPress={() => onComplete(id, value)}
-        />
-      ) : (
+      <View style={styles.buttonWrapper}>
         <SecondaryButton
           theme={theme}
           title={language.common.cancel}
@@ -85,7 +78,15 @@ export const PickerComponent = (props: IProps) => {
             dispatch(onSetPickerVisibility(false, InputTypes.text));
           }}
         />
-      )}
+        {didInteract && (
+          <PrimaryButton
+            theme={theme}
+            title={language.common.pick}
+            style={styles.button}
+            onPress={() => onComplete(id, value)}
+          />
+        )}
+      </View>
     </View>
   );
 };

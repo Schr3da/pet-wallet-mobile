@@ -6,9 +6,11 @@ import * as NewPet from "./new-pet";
 import * as Pets from "./pets";
 import * as ScanResult from "./scan-result";
 import * as PetDetails from "./pet-details";
+import * as Filters from "./filters";
 
 export {
   Database,
+  Filters,
   Layout,
   Navigation,
   NewPet,

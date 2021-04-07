@@ -23,7 +23,7 @@ export const applyStyles = (theme: ITheme) => ({
   } as ViewStyle,
   text: {
     maxWidth: 300,
-    marginBottom: "10%",
+    marginBottom: "5%",
     textAlign: "center",
     fontSize: 16,
     color: theme.color10,

@@ -8,6 +8,7 @@ import {IDatabaseState, database} from "./database";
 import {INewPetState, newPet} from "./new-pet";
 import {IScanResultState, scan} from "./scan-result";
 import {IPetDetailsState, petDetails} from "./pet-details";
+import {IFiltersState, filters} from "./filters";
 
 export interface ICombinedReducerState {
   database: IDatabaseState;
@@ -18,6 +19,7 @@ export interface ICombinedReducerState {
   petDetails: IPetDetailsState;
   splash: ISplashState;
   scan: IScanResultState;
+  filters: IFiltersState;
 }
 
 export const reducer = combineReducers({
@@ -29,4 +31,5 @@ export const reducer = combineReducers({
   petDetails,
   splash,
   scan,
+  filters,
 });

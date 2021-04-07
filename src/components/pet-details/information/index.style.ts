@@ -8,18 +8,14 @@ export const applyStyles = (theme: ITheme) => ({
     justifyContent: "center",
     overflow: "hidden",
   } as ViewStyle,
-  placeholderIcon: {
-    width: 125,
-    height: 120,
-  } as ImageStyle,
-  profileImage: {
+  profile: {
     width: 120,
     height: 120,
-    borderRadius: 70,
-    borderWidth: 6,
-    backgroundColor: theme.color11,
-    borderColor: theme.color11,
   } as ImageStyle,
+  filterBar: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
   contentWrapper: {
     width: "100%",
     marginTop: 10,

@@ -14,12 +14,13 @@ import {Navigation} from "./navigation";
 import {Error} from "./error";
 import {ContentButton} from "./content-button";
 import {Dialog} from "./dialog";
-import {GradientBackground} from "./gradient-background";
 import {InputTypeField} from "./input-type-field";
 import {DatePickerComponent} from "./date-picker";
 import {DataList} from "./list";
 import {CheckBox} from "./checkbox";
 import {NoData} from "./no-data";
+import {ProfileImage} from "./profile-image";
+import {Filters} from "./filters";
 
 export {
   AttachmentPlaceholder,
@@ -29,7 +30,6 @@ export {
   CheckBox,
   DataList,
   Dialog,
-  GradientBackground,
   Header,
   ImagePicker,
   InputField,
@@ -43,4 +43,6 @@ export {
   InputTypeField,
   DatePickerComponent,
   NoData,
+  ProfileImage,
+  Filters,
 };

@@ -1,12 +1,20 @@
 import * as React from "react";
 
-import {View, Image, Text} from "react-native";
+import {View, Text} from "react-native";
 import {useDispatch} from "react-redux";
 
-import {createStyle, ThemeTypes} from "../../../../theme";
-import {ImagePicker, InputField, InputTypeField, Dialog} from "../../../common";
-
-import {base64ImageToUri} from "../../../common/utils";
+import {createStyle} from "../../../../theme";
+import {
+  InputField,
+  InputTypeField,
+  Dialog,
+  ProfileImage,
+  Filters,
+} from "../../../common";
+import {InputValues} from "../../../../enums/input";
+import {ILayoutChildProps} from "../../../common/layout";
+import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
+import {IPetDto} from "../../../../dto/pets";
 
 import {
   ErrorTypes,
@@ -14,22 +22,18 @@ import {
   DialogContentTypes,
 } from "../../../../enums/layout";
 
-import {IImageDataDto} from "../../../../dto/image";
-import {InputValues} from "../../../../enums/input";
 import {
   onSetErrorCode,
   onSetDialogContentType,
 } from "../../../../store/actions/layout";
+
 import {
   InputIds,
   onCancelPetDetailsEdit,
 } from "../../../../store/actions/pet-details";
-import {ILayoutChildProps} from "../../../common/layout";
-import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
-import {IPetDto} from "../../../../dto/pets";
 
-import * as EditStyles from "./index.style";
 import {applyStyles} from "../index.style";
+import {IFilterDataDto} from "../../../../dto/filters";
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
@@ -42,40 +46,29 @@ export const handleInputChange = (
 
 interface IProps extends ILayoutChildProps {
   data: IPetDto;
+  filters: IFilterDataDto[];
 }
 
 export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {data, theme, language, languageType} = props;
+  const {filters, data, theme, language, languageType} = props;
 
   const styles = createStyle(theme, applyStyles);
-  const editStyles = createStyle(theme, EditStyles.applyStyles);
-
-
-  console.log(data);
 
   return (
     <React.Fragment>
-      {data == null ? (
-        <Image
-          style={styles.placeholderIcon}
-          source={
-            theme === ThemeTypes.Light
-              ? require("../../../../../assets/png/light/new-pet-profile-icon.png")
-              : require("../../../../../assets/png/light/new-pet-profile-icon.png")
-          }
-        />
-      ) : (
-        <Image style={styles.profileImage} source={base64ImageToUri(null)} />
-      )}
-      <ImagePicker
-        style={editStyles.picker}
+      <ProfileImage
         theme={theme}
-        maxWidth={512}
-        maxHeight={512}
-        onError={() => handleError(dispatch, ErrorTypes.photoLibrary)}
-        onData={(_: IImageDataDto) => undefined}
+        isEditing={true}
+        image={null}
+        style={styles.profile}
+      />
+      <Filters
+        items={filters}
+        theme={theme}
+        style={styles.filterBar}
+        onFilterPressed={() => undefined}
       />
       <View style={styles.contentWrapper}>
         <Text style={{...styles.headline}}>

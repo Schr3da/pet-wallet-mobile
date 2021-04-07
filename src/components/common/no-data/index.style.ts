@@ -15,6 +15,6 @@ export const applyStyles = (theme: ITheme) => ({
   text: {
     marginTop: 28,
     fontSize: 16,
-    color: theme.color11, 
+    color: theme.color11,
   } as TextStyle,
 });

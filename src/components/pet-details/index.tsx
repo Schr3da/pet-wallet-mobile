@@ -80,14 +80,17 @@ export const Component = (): JSX.Element => {
         const {subViewComponent, theme, language} = props;
 
         if (data == null) {
-          return <NoData 
-            theme={theme}
-            title={language.petDetails.none.noDataTitle}
-            image={theme === ThemeTypes.Dark
-              ? require("../../../assets/png/dark/new-pet-profile-icon.png")
-              : require("../../../assets/png/light/new-pet-profile-icon.png")
-            }
-            />;
+          return (
+            <NoData
+              theme={theme}
+              title={language.petDetails.none.noDataTitle}
+              image={
+                theme === ThemeTypes.Dark
+                  ? require("../../../assets/png/dark/new-pet-profile-icon.png")
+                  : require("../../../assets/png/light/new-pet-profile-icon.png")
+              }
+            />
+          );
         } else if (
           subViewComponent === SubViewComponents.none ||
           subViewComponent === SubViewComponents.petDetailsEdit

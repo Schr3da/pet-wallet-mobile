@@ -250,9 +250,11 @@ export const Layout = (props: IProps): JSX.Element => {
               />
             )}
             {childRenderer(childProps)}
-            {displayMode === DisplayModes.landscape &&
-              footerRenderer &&
-              footerRenderer(childProps)}
+            {displayMode === DisplayModes.landscape && footerRenderer && (
+              <View style={styles.footerPortraitModeWrapper}>
+                {footerRenderer(childProps)}
+              </View>
+            )}
           </View>
         </Animated.ScrollView>
       </View>

@@ -10,6 +10,7 @@ import {ImageButton} from "../image-button";
 import {measureComponent, IMeasureResult} from "../utils";
 
 import {applyStyles} from "./index.style";
+import {ProfileImage} from "../profile-image";
 
 export type CardEventCallback = (
   id: string,
@@ -48,23 +49,16 @@ export const Card = (props: IProps) => {
       />
       <View style={styles.row}>
         <View style={{flexBasis: 58}}>
-          <View style={styles.profileWrapper}>
-            {hasProfile == null ? (
-              <Image
-                style={styles.image}
-                source={
-                  theme === ThemeTypes.Dark
-                    ? require("../../../../assets/png/dark/new-pet-profile-icon.png")
-                    : require("../../../../assets/png/light/new-pet-profile-icon.png")
-                }
-              />
-            ) : (
-              <Image
-                style={styles.image}
-                source={{uri: data.profileUri! || data.profileImage!}}
-              />
-            )}
-          </View>
+          <ProfileImage
+            image={
+              data == null || data.profileImage == null
+                ? null
+                : data.profileImage
+            }
+            isEditing={false}
+            theme={theme}
+            style={styles.image}
+          />
         </View>
         <View style={styles.middleWrapper}>
           <Label

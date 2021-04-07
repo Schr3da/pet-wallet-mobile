@@ -16,8 +16,7 @@ export const applyStyles = (theme: ITheme) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: theme.color6,
-    opacity: 0.2,
+    backgroundColor: theme.color15,
   } as ViewStyle,
   largeText: {
     fontSize: 16,

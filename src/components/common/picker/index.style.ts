@@ -24,6 +24,10 @@ export const applyStyles = (isApplePlatform: boolean) => (theme: ITheme) => ({
   itemStyle: {
     backgroundColor: theme.color1,
   } as TextStyle,
+  buttonWrapper: {
+    display: "flex",
+    flexDirection: "row",
+  } as ViewStyle,
   button: {
     marginTop: 10,
   } as ViewStyle,

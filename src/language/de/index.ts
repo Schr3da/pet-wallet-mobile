@@ -11,10 +11,13 @@ import type {
   ISharePetDetails,
   IScanResult,
   IPetDetails,
+  IFilters,
 } from "../index";
 
+import {FilterTypes} from "../../enums/filters";
 import {PetTypes} from "../../dto/pets";
 import {ViewComponents, SubViewComponents} from "../../enums/navigation";
+
 import {
   ErrorTypes,
   NotificationTypes,
@@ -257,8 +260,17 @@ const dialogs: IDialogs = {
   },
 };
 
-export const sharePetDetails: ISharePetDetails = {
+const sharePetDetails: ISharePetDetails = {
   message: "Pet Wallet möchte gern Tierdaten teilen: ",
+};
+
+const filters: IFilters = {
+  [ViewComponents.petDetails]: {
+    [SubViewComponents.none]: {
+      [FilterTypes.generalOnly]: "Allgemein",
+      [FilterTypes.medicalOnly]: "Impfpass",
+    },
+  },
 };
 
 const animalTypes = {
@@ -317,6 +329,7 @@ export const DE = {
   notifications,
   animalTypes,
   scanResult,
+  filters,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

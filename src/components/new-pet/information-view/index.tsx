@@ -1,21 +1,20 @@
 import * as React from "react";
 
-import {Image, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
-import {createStyle, ThemeTypes} from "../../../theme";
+import {createStyle} from "../../../theme";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {handleInputChange, handleError, requestCancel} from "../hooks";
-import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
+import {handleInputChange, requestCancel} from "../hooks";
+import {inputValueEmpty} from "../../common/utils";
 import {IImageDataDto} from "../../../dto/image";
 
 import {
   InputTypeField,
   Dialog,
-  ImagePicker,
   InputField,
   RoundedButtons,
+  ProfileImage,
 } from "../../common";
 import {
   InputIds,
@@ -25,11 +24,7 @@ import {
   onCancelNewPet,
 } from "../../../store/actions/new-pet";
 
-import {
-  ErrorTypes,
-  InputTypes,
-  DialogContentTypes,
-} from "../../../enums/layout";
+import {InputTypes, DialogContentTypes} from "../../../enums/layout";
 
 import {applyStyles} from "./index.style";
 
@@ -57,25 +52,12 @@ export const ChildView = (props: ILayoutChildProps) => {
 
   return (
     <React.Fragment>
-      {profile == null ? (
-        <Image
-          style={styles.placeholderIcon}
-          source={
-            theme === ThemeTypes.Light
-              ? require("../../../../assets/png/light/new-pet-profile-icon.png")
-              : require("../../../../assets/png/dark/new-pet-profile-icon.png")
-          }
-        />
-      ) : (
-        <Image style={styles.profileImage} source={base64ImageToUri(profile)} />
-      )}
-      <ImagePicker
-        style={styles.picker}
+      <ProfileImage
+        image={profile}
+        isEditing={true}
         theme={theme}
-        maxWidth={512}
-        maxHeight={512}
-        onError={() => handleError(dispatch, ErrorTypes.photoLibrary)}
-        onData={(data: IImageDataDto) => handleProfileImage(dispatch, data)}
+        style={styles.profile}
+        onNewImage={(data) => handleProfileImage(dispatch, data)}
       />
       <InputField
         id={InputIds.name}

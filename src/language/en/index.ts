@@ -11,6 +11,7 @@ import type {
   ISharePetDetails,
   IScanResult,
   IPetDetails,
+  IFilters,
 } from "../index";
 
 import {PetTypes} from "../../dto/pets";
@@ -20,6 +21,7 @@ import {
   NotificationTypes,
   DialogContentTypes,
 } from "../../enums/layout";
+import {FilterTypes} from "../../enums/filters";
 
 const header: IHeader = {
   [ViewComponents.splash]: {
@@ -254,8 +256,17 @@ const dialogs: IDialogs = {
   },
 };
 
-export const sharePetDetails: ISharePetDetails = {
+const sharePetDetails: ISharePetDetails = {
   message: "Pet Wallet want to share data: ",
+};
+
+const filters: IFilters = {
+  [ViewComponents.petDetails]: {
+    [SubViewComponents.none]: {
+      [FilterTypes.generalOnly]: "General",
+      [FilterTypes.medicalOnly]: "Certificates",
+    },
+  },
 };
 
 const petDetails: IPetDetails = {
@@ -314,6 +325,7 @@ export const EN = {
   notifications,
   animalTypes,
   scanResult,
+  filters,
   [ViewComponents.welcome]: welcome,
   [ViewComponents.settings]: settings,
   [ViewComponents.newPet]: newPet,

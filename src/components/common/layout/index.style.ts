@@ -17,4 +17,9 @@ export const applyStyles = (_: ITheme) => ({
     alignItems: "center",
     flex: 1,
   } as ViewStyle,
+  footerPortraitModeWrapper: {
+    width: "100%",
+    alignItems: "center",
+    marginTop: 40,
+  } as ViewStyle,
 });
