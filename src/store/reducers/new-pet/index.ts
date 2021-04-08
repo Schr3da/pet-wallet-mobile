@@ -76,8 +76,6 @@ type Actions = NewPet.Actions | Database.Actions | Navigation.Actions;
 
 const reducer = (state: INewPetState = initialState(), action: Actions) => {
   switch (action.type) {
-    case NewPet.ON_CANCEL_NEW_PET:
-      return initialState();
     case NewPet.ON_SET_PROFILE_IMAGE_NEW_PET:
       return handleProfileImage(state, action.data);
     case NewPet.ON_REMOVE_NEW_PET_SCAN:

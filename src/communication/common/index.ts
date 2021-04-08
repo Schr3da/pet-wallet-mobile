@@ -42,7 +42,6 @@ const request = <S, T>(
       }
 
       if (response.ok === false || response.status !== 200) {
-        console.log(response);
         return Promise.reject();
       }
 
@@ -56,7 +55,9 @@ const request = <S, T>(
       try {
         return JSON.parse(body);
       } catch (e) {
-        console.log("json parse error: ", e);
+        if (isDev()) {
+          console.log("json parse error: ", e);
+        }
         return Promise.reject();
       }
     })

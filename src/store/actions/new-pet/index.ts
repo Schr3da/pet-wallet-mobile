@@ -26,17 +26,10 @@ export enum InputIds {
   dateOfBirth = "dateOfBirth",
 }
 
-export const ON_CANCEL_NEW_PET = "ON_CANCEL_NEW_PET";
-interface IOnCancelNewPet {
-  type: typeof ON_CANCEL_NEW_PET;
-  language: LanguageTypes;
-  hasPets: boolean;
-}
-
-export const onCancelNewPet = (
-  language: LanguageTypes,
-  hasPets: boolean,
-) => async (dispatch: any, getState: () => ICombinedReducerState) => {
+export const onCancelNewPet = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState
+) => {
   const state = getState();
 
   const {id} = state.newPet;
@@ -46,12 +39,7 @@ export const onCancelNewPet = (
   }
 
   dispatch(onDismissDialog());
-
-  dispatch({
-    type: ON_CANCEL_NEW_PET,
-    language,
-    hasPets,
-  });
+  await onShowHomeComponent()(dispatch, getState);
 };
 
 export const ON_SET_PROFILE_IMAGE_NEW_PET = "ON_PROFILE_IMAGE_NEW_PET";
@@ -207,7 +195,6 @@ export const onSaveScanResult = () => (
 export const onCompleteNewPet = () => onShowHomeComponent();
 
 export type Actions =
-  | IOnCancelNewPet
   | IOnSetProfileImageNewPet
   | IOnRemoveNewPetScan
   | IOnCreateNewPet

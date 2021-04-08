@@ -153,7 +153,7 @@ export const reducer = (
       return changeSubview(state, action.next, action.language);
     case Navigation.ON_GO_BACK_NAVIGATION:
       return goBack(state, action.language);
-    case NewPet.ON_CANCEL_NEW_PET:
+    case Navigation.ON_SHOW_HOME_COMPONENT:
       return showHome(state, action.language, action.hasPets);
     case Pets.ON_SET_PETS:
       return setHasPets(state, (action.data || []).length !== 0);
