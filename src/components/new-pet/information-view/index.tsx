@@ -6,7 +6,7 @@ import type {ILayoutChildProps} from "../../common/layout";
 import {createStyle} from "../../../theme";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {handleInputChange, requestCancel} from "../hooks";
-import {inputValueEmpty} from "../../common/utils";
+import {inputValueEmpty, getInputData} from "../../common/utils";
 import {IImageDataDto} from "../../../dto/image";
 
 import {
@@ -16,9 +16,9 @@ import {
   RoundedButtons,
   ProfileImage,
 } from "../../common";
+
 import {
   InputIds,
-  InputValues,
   onProfileImage,
   onCreateNewPet,
   onCancelNewPet,
@@ -27,6 +27,7 @@ import {
 import {InputTypes, DialogContentTypes} from "../../../enums/layout";
 
 import {applyStyles} from "./index.style";
+import {InputValues} from "../../../enums/input";
 
 interface IStateProps {
   inputs: {[key in InputIds]: InputValues};
@@ -34,7 +35,7 @@ interface IStateProps {
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
-  inputs: state.newPet.inputs,
+  inputs: getInputData(state),
   profile: state.newPet.profile,
 });
 
@@ -91,7 +92,7 @@ export const ChildView = (props: ILayoutChildProps) => {
 };
 
 const footerStateToProps = (state: ICombinedReducerState) => {
-  const {name, animal, dateOfBirth} = state.newPet.inputs;
+  const {name, animal, dateOfBirth} = getInputData(state);
 
   const canContinue =
     inputValueEmpty(name) === false &&

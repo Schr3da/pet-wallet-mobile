@@ -4,15 +4,14 @@ import {View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ICombinedReducerState} from "../../store/reducers";
-
 import {Loader} from "../common/loader";
 import {Splash, Navigation} from "../../store/actions";
 import {createStyle, ThemeTypes} from "../../theme";
 import {LanguageTypes} from "../../language";
 
-import {applyStyles} from "./index.style";
-
 import {initStateFromDatabase} from "../../store/actions/database";
+
+import {applyStyles} from "./index.style";
 
 interface IProps {
   isAnimating: boolean;

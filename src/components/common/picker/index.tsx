@@ -1,17 +1,16 @@
 import * as React from "react";
 
 import {Picker} from "@react-native-picker/picker";
-
 import {View} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
 import {getTranslation, LanguageTypes} from "../../../language";
 import {PrimaryButton, SecondaryButton} from "../rounded-button";
-
-import {applyStyles} from "./index.style";
 import {onSetPickerVisibility, onFocus} from "../../../store/actions/layout";
 import {InputTypes} from "../../../enums/layout";
+
+import {applyStyles} from "./index.style";
 
 export interface IPickerData {
   label: string;

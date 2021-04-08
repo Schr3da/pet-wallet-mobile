@@ -5,13 +5,12 @@ import {ViewStyle, View, Image} from "react-native";
 import {IImageDataDto} from "../../../dto/image";
 import {createStyle, ThemeTypes} from "../../../theme";
 import {base64ImageToUri} from "../utils";
-
-import {applyStyles} from "./index.style";
 import {ImagePicker} from "../image-picker";
-
 import {ErrorTypes} from "../../../enums/layout";
 import {onSetErrorCode} from "../../../store/actions/layout";
 import {useDispatch} from "react-redux";
+
+import {applyStyles} from "./index.style";
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));

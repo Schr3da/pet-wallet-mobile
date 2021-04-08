@@ -5,20 +5,20 @@ import {useDispatch} from "react-redux";
 
 import {ImageButton} from "../../components/common/image-button";
 import {getTranslation, LanguageTypes} from "../../language";
+import {onChangeViewComponent} from "../../store/actions/navigation";
+import {onRequestDataDeletion} from "../../store/actions/database";
+import {createStyle, ThemeTypes, getColors} from "../../theme";
+import {Layout, ContentButton, Dialog} from "../common";
+import {ViewComponents, SubViewComponents} from "../../enums/navigation";
+import {DialogContentTypes} from "../../enums/layout";
+
 import {
   onChangeCurrentTheme,
   onChangeLanguage,
   onSetDialogContentType,
 } from "../../store/actions/layout";
-import {onChangeViewComponent} from "../../store/actions/navigation";
-
-import {onRequestDataDeletion} from "../../store/actions/database";
-import {createStyle, ThemeTypes, getColors} from "../../theme";
-import {Layout, ContentButton, Dialog} from "../common";
 
 import {applyStyles} from "./index.style";
-import {ViewComponents, SubViewComponents} from "../../enums/navigation";
-import {DialogContentTypes} from "../../enums/layout";
 
 const handleChangeLanguage = (dispatch: any, language: LanguageTypes) =>
   dispatch(onChangeLanguage(language));

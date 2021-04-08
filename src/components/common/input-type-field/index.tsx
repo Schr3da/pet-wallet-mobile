@@ -1,15 +1,14 @@
 import * as React from "react";
 
 import {Text, TouchableOpacity, View, ViewStyle} from "react-native";
+import {useDispatch} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {InputValues} from "../../../store/actions/new-pet";
 import {onFocus} from "../../../store/actions/layout";
-
 import {applyStyles} from "./index.style";
-import {useDispatch} from "react-redux";
 import {LanguageTypes} from "../../../language";
 import {InputTypes} from "../../../enums/layout";
+import {InputValues} from "../../../enums/input";
 
 const handleFocus = (
   dispatch: any,

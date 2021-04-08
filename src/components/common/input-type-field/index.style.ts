@@ -1,5 +1,4 @@
 import type {ViewStyle} from "react-native";
-
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (hasValue: boolean) => (theme: ITheme) => ({

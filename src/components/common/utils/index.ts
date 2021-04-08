@@ -2,11 +2,9 @@ import {ImageSourcePropType} from "react-native";
 import Animated, {Easing} from "react-native-reanimated";
 import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 
-import type {INewPetState} from "../../../store/reducers/new-pet";
-import type {IPetDto} from "../../../dto/pets";
-
 import {IImageDataDto} from "../../../dto/image";
 import {ScanErrorTypes, ImagePickerTypes} from "../../../enums/image";
+import {ICombinedReducerState} from "../../../store/reducers";
 
 export interface IMeasureResult {
   width: number;
@@ -84,15 +82,6 @@ export const createNotificationAnimation = (
 
 export const isDev = (): boolean => false;
 
-export const mapNewPetStateToPetDto = (data: INewPetState): IPetDto => ({
-  id: data.id,
-  name: String(data.inputs.name),
-  dateOfBirth: (data.inputs.dateOfBirth as Date) || null,
-  profileImage: base64ImageString(data.profile) || undefined,
-  profileUri: data.profile == null ? undefined : data.profile.uri,
-  animal: String(data.inputs.animal),
-});
-
 export const createUuid = () => {
   let dt = new Date().getTime();
   const uuid = "xxxx-xxxx-xxxx-xxxx-xxxx".replace(/[xy]/g, (character) => {
@@ -156,3 +145,18 @@ export const prepareImageInput = (
       });
     }
   });
+
+export const getInputData = <T>(state: ICombinedReducerState): T => {
+  const {mainViewComponent, subViewComponent} = state.navigation;
+  const inputs = state.inputs;
+
+  if (inputs[mainViewComponent] == null) {
+    return {} as any;
+  }
+
+  if (inputs[mainViewComponent][subViewComponent] == null) {
+    return {} as any;
+  }
+
+  return inputs[mainViewComponent][subViewComponent] as any;
+};

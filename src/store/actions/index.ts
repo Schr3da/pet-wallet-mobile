@@ -7,6 +7,7 @@ import * as Pets from "./pets";
 import * as ScanResult from "./scan-result";
 import * as PetDetails from "./pet-details";
 import * as Filters from "./filters";
+import * as Inputs from "./inputs";
 
 export {
   Database,
@@ -18,4 +19,5 @@ export {
   Pets,
   PetDetails,
   ScanResult,
+  Inputs,
 };

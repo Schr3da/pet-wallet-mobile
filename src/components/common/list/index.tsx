@@ -1,16 +1,16 @@
 import * as React from "react";
 
 import {View, ViewStyle} from "react-native";
-import {InputValues} from "../../../store/actions/new-pet";
 import {ThemeTypes, createStyle, getColors} from "../../../theme";
 import {LanguageTypes, getTranslation} from "../../../language";
 import {InputField} from "../input-field";
 import {InputTypes} from "../../../enums/layout";
 import {InputTypeField} from "../input-type-field";
 import {CheckBox} from "../checkbox";
+import {RoundedButton} from "../rounded-button";
+import {InputValues} from "../../../enums/input";
 
 import {applyStyles} from "./index.style";
-import {RoundedButton} from "../rounded-button";
 
 export interface IListData {
   id: string;

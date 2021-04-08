@@ -5,11 +5,11 @@ import {useDispatch} from "react-redux";
 
 import {createStyle, ThemeTypes} from "../../../theme";
 import {onFocus} from "../../../store/actions/layout";
-import {InputValues} from "../../../store/actions/new-pet";
 import {ImageButton} from "../image-button";
+import {InputTypes} from "../../../enums/layout";
+import {InputValues} from "../../../enums/input";
 
 import {applyStyles} from "./index.style";
-import {InputTypes} from "../../../enums/layout";
 
 let timeout: any = null;
 

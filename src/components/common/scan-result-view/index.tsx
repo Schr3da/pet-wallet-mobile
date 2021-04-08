@@ -1,11 +1,9 @@
 import * as React from "react";
 
 import {Image, View, Text} from "react-native";
-
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
-
 import {DataList} from "../list";
 import {PrimaryButton, SecondaryButton} from "../rounded-button";
 import {Dialog} from "../dialog";
@@ -17,6 +15,7 @@ import {DialogContentTypes, InputTypes} from "../../../enums/layout";
 import {IListData} from "../../common/list";
 import {IScanDataDto} from "../../../dto/scan";
 import {IImageDataDto} from "../../../dto/image";
+import {ImageButton} from "../image-button";
 
 import {
   onDismissDialog,
@@ -35,7 +34,6 @@ import {
 } from "../../../store/actions/scan-result";
 
 import {applyStyles} from "./index.style";
-import {ImageButton} from "../image-button";
 
 const requestCancel = (dispatch: any) =>
   dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));

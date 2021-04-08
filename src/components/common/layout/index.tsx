@@ -18,12 +18,8 @@ import {Header} from "../header";
 import {Error} from "../error";
 import {Notification} from "../notification";
 import {IPickerData, PickerComponent} from "../picker";
-
 import {Loader} from "../loader";
 import {DatePickerComponent, DatePickerModes} from "../date-picker";
-
-import {applyStyles} from "./index.style";
-import {InputValues} from "../../../store/actions/new-pet";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
 
 import {
@@ -38,6 +34,9 @@ import {
   onChangeDisplayMode,
   getDisplayMode,
 } from "../../../store/actions/layout";
+
+import {applyStyles} from "./index.style";
+import {InputValues} from "../../../enums/input";
 
 interface IStateProps {
   title: string;

@@ -1,50 +1,30 @@
 import * as Communication from "../../../communication";
 
+import type {ICombinedReducerState} from "../../reducers";
+import type {IPetDto} from "../../../dto/pets";
+import type {IImageDataDto} from "../../../dto/image";
+import type {IScanResult, IScanDataPrefillsDto} from "../../../dto/scan";
+
 import {LanguageTypes} from "../../../language";
-import {ICombinedReducerState} from "../../reducers";
-import {IPetDto} from "../../../dto/pets";
+
+import {SubViewComponents} from "../../../enums/navigation";
+import {ErrorTypes} from "../../../enums/layout";
+import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
+import {base64ImageString} from "../../../components/common/utils";
+import {requestScan} from "../../../communication/wallet";
+import {onShowScanResult, onResetScanResult} from "../scan-result";
+
 import {
   onChangeSubViewComponent,
   onShowHomeComponent,
   onGoBackNavigation,
 } from "../navigation";
-import {SubViewComponents} from "../../../enums/navigation";
-import {ErrorTypes} from "../../../enums/layout";
-import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
-
-import {
-  mapNewPetStateToPetDto,
-  base64ImageString,
-} from "../../../components/common/utils";
-
-import {requestScan} from "../../../communication/wallet";
-import {onShowScanResult, onResetScanResult} from "../scan-result";
-import {IImageDataDto} from "../../../dto/image";
-import {IScanResult, IScanDataPrefillsDto} from "../../../dto/scan";
 
 export enum InputIds {
   name = "name",
   animalType = "animal",
   dateOfBirth = "dateOfBirth",
 }
-
-export type InputValues = string | number | null | undefined | Date;
-
-export const ON_INPUT_FIELD_CHANGE_NEW_PET = "ON_INPUT_FIELD_CHANGE_NEW_PET";
-interface IOnInputFieldChangeNewPet {
-  type: typeof ON_INPUT_FIELD_CHANGE_NEW_PET;
-  id: string;
-  value: InputValues;
-}
-
-export const onInputFieldChange = (
-  id: string,
-  value: InputValues,
-): IOnInputFieldChangeNewPet => ({
-  type: ON_INPUT_FIELD_CHANGE_NEW_PET,
-  id,
-  value,
-});
 
 export const ON_CANCEL_NEW_PET = "ON_CANCEL_NEW_PET";
 interface IOnCancelNewPet {
@@ -58,6 +38,7 @@ export const onCancelNewPet = (
   hasPets: boolean,
 ) => async (dispatch: any, getState: () => ICombinedReducerState) => {
   const state = getState();
+
   const {id} = state.newPet;
 
   if (id != null) {
@@ -116,13 +97,11 @@ export const onCreateNewPet = () => async (
 
   dispatch(setLoading(true));
 
-  const pet = mapNewPetStateToPetDto(state.newPet);
-
   let data = null;
-  if (pet.id == null) {
-    data = await Communication.Pets.createNewPet(pet, token!);
+  if (state.newPet.id == null) {
+    data = await Communication.Pets.createNewPet(state, token!);
   } else {
-    data = await Communication.Pets.updateNewPet(pet, token!);
+    data = await Communication.Pets.updateNewPet(state, token!);
   }
 
   if (data == null) {
@@ -228,7 +207,6 @@ export const onSaveScanResult = () => (
 export const onCompleteNewPet = () => onShowHomeComponent();
 
 export type Actions =
-  | IOnInputFieldChangeNewPet
   | IOnCancelNewPet
   | IOnSetProfileImageNewPet
   | IOnRemoveNewPetScan

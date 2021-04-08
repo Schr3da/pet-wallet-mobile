@@ -1,5 +1,4 @@
 import type {ImageStyle, ViewStyle} from "react-native";
-
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({

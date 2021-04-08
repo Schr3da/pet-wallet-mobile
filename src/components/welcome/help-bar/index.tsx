@@ -4,9 +4,7 @@ import {Text, View} from "react-native";
 import {useDispatch} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
-
 import {onChangeViewComponent} from "../../../store/actions/navigation";
-
 import {createStyle, getColors} from "../../../theme";
 import {LanguageTypes} from "../../../language";
 import {StyledButton} from "../../common";

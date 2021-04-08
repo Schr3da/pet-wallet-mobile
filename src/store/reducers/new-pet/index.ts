@@ -6,25 +6,14 @@ import {IScanResult, IScanDataSuggestionsDto} from "../../../dto/scan";
 
 export interface INewPetState {
   id: string | null;
-  inputs: {[key in NewPet.InputIds]: NewPet.InputValues};
   profile: IImageDataDto | null;
   scans: IScanResult[];
 }
 
 const initialState = (): INewPetState => ({
   id: null,
-  inputs: {} as {[key in NewPet.InputIds]: NewPet.InputValues},
   profile: null,
   scans: [],
-});
-
-const handleInputChange = (
-  state: INewPetState,
-  id: string,
-  value: NewPet.InputValues,
-) => ({
-  ...state,
-  inputs: {...state.inputs, [id]: value},
 });
 
 const handleProfileImage = (
@@ -41,11 +30,6 @@ const handleCreateNewPet = (
 ): INewPetState => ({
   ...state,
   id: data.id,
-  inputs: {
-    [NewPet.InputIds.name]: data.name,
-    [NewPet.InputIds.animalType]: data.animal,
-    [NewPet.InputIds.dateOfBirth]: data.dateOfBirth,
-  },
   scans: [],
   profile:
     state.profile == null || data.profileImage == null
@@ -66,7 +50,6 @@ const handleNewScan = (
 
 const handleRemoveScan = (state: INewPetState, id: string) => ({
   ...state,
-  inputs: {...state.inputs, [id]: null},
   scans: state.scans.filter((s) => s.id !== id),
 });
 
@@ -95,8 +78,6 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
   switch (action.type) {
     case NewPet.ON_CANCEL_NEW_PET:
       return initialState();
-    case NewPet.ON_INPUT_FIELD_CHANGE_NEW_PET:
-      return handleInputChange(state, action.id, action.value);
     case NewPet.ON_SET_PROFILE_IMAGE_NEW_PET:
       return handleProfileImage(state, action.data);
     case NewPet.ON_REMOVE_NEW_PET_SCAN:

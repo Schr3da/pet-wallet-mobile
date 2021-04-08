@@ -1,5 +1,5 @@
 import type {TextStyle, ViewStyle} from "react-native";
-import {ITheme} from "../../../theme";
+import type {ITheme} from "../../../theme";
 
 export const applyStyles = (isApplePlatform: boolean) => (theme: ITheme) => ({
   container: {

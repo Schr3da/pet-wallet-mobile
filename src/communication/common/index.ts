@@ -42,6 +42,7 @@ const request = <S, T>(
       }
 
       if (response.ok === false || response.status !== 200) {
+        console.log(response);
         return Promise.reject();
       }
 
@@ -63,6 +64,7 @@ const request = <S, T>(
       if (isDev()) {
         console.log("connection error: ", e, endpoint);
       }
+
       return Promise.reject();
     });
 

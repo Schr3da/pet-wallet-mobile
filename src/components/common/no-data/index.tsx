@@ -1,11 +1,12 @@
 import * as React from "react";
 import {View, Image, Text} from "react-native";
-
-import {applyStyles} from "./index.style";
-import {createStyle, ThemeTypes} from "../../../theme";
 import {useDispatch} from "react-redux";
+
+import {createStyle, ThemeTypes} from "../../../theme";
 import {onSetErrorCode} from "../../../store/actions/layout";
 import {ErrorTypes} from "../../../enums/layout";
+
+import {applyStyles} from "./index.style";
 
 interface IProps {
   image: any;

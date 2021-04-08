@@ -3,25 +3,50 @@ import type {PetDtos} from "../dto";
 import {postRequest} from "../common";
 import {IPetDto} from "../../dto/pets";
 import {IFetchPetsRequestDto} from "../dto/pet";
+import {ICombinedReducerState} from "../../store/reducers";
+import {base64ImageString} from "../../components/common/utils";
 
-export const createNewPet = async (
-  {name, animal, dateOfBirth, profileImage}: IPetDto,
-  token: string,
-): Promise<IPetDto | null> => {
-  const url = "/api/petpass/pet/create";
+const mapNewPetToDto = (state: ICombinedReducerState): IPetDto => {
+  const {mainViewComponent, subViewComponent} = state.navigation;
+  const {name, dateOfBirth, animal} = state.inputs[mainViewComponent][
+    subViewComponent
+  ];
+  const {id, profile} = state.newPet;
 
-  const mappedData: PetDtos.ICreatePetRequestDto = {
-    name,
+  return {
+    id,
+    name: String(name),
+    animal: String(animal),
+    dateOfBirth: (dateOfBirth as Date) || null,
+    profileImage: base64ImageString(profile) || undefined,
+    profileUri: profile == null ? undefined : profile.uri,
+  };
+};
+
+const newCreatePetRequest = (
+  state: ICombinedReducerState,
+): PetDtos.ICreatePetRequestDto => {
+  const {name, dateOfBirth, animal, profileImage} = mapNewPetToDto(state);
+
+  return {
+    name: name,
     dateOfBirth: dateOfBirth == null ? null : dateOfBirth.getTime(),
     type: animal,
     avatarImage: profileImage || null,
   };
+};
+
+export const createNewPet = async (
+  state: ICombinedReducerState,
+  token: string,
+): Promise<IPetDto | null> => {
+  const url = "/api/petpass/pet/create";
 
   try {
     const response = await postRequest<
       PetDtos.ICreatePetRequestDto,
       PetDtos.ICreatePetResponseDto
-    >(url, mappedData, token);
+    >(url, newCreatePetRequest(state), token);
 
     if (response == null) {
       return Promise.resolve(null);
@@ -41,25 +66,24 @@ export const createNewPet = async (
   }
 };
 
+const newUpdatePetRequest = (
+  state: ICombinedReducerState,
+): PetDtos.IUpdatePetRequestDto => ({
+  ...newCreatePetRequest(state),
+  id: String(state.newPet.id),
+});
+
 export const updateNewPet = async (
-  {id, name, animal, dateOfBirth, profileImage}: IPetDto,
+  state: ICombinedReducerState,
   token: string,
 ) => {
   const url = "/api/petpass/pet/update";
-
-  const mappedData: PetDtos.IUpdatePetRequestDto = {
-    id: id!,
-    name,
-    dateOfBirth: dateOfBirth == null ? null : dateOfBirth.getTime(),
-    type: animal,
-    avatarImage: profileImage || null,
-  };
 
   try {
     const response = await postRequest<
       PetDtos.IUpdatePetRequestDto,
       PetDtos.IUpdatePetResponseDto
-    >(url, mappedData, token);
+    >(url, newUpdatePetRequest(state), token);
     return Promise.resolve(response);
   } catch (error) {
     return Promise.resolve(null);

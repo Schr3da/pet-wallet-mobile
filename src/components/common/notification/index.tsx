@@ -7,12 +7,11 @@ import Animated from "react-native-reanimated";
 import type {ICombinedReducerState} from "../../../store/reducers";
 import {createStyle} from "../../../theme";
 import {ILayoutChildProps} from "../layout";
-
 import {onSetNotificationType} from "../../../store/actions/layout";
-
 import {createNotificationAnimation} from "../utils";
-import {applyStyles, containerAnimation} from "./index.style";
 import {NotificationTypes} from "../../../enums/layout";
+
+import {applyStyles, containerAnimation} from "./index.style";
 
 interface IProps extends ILayoutChildProps {
   type: NotificationTypes;

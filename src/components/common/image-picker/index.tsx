@@ -4,7 +4,6 @@ import {View, ViewStyle} from "react-native";
 
 import {createStyle, ThemeTypes} from "../../../theme";
 import {ImageButton} from "../image-button";
-
 import {applyStyles} from "./index.style";
 import {ErrorTypes} from "../../../enums/layout";
 import {IImageDataDto} from "../../../dto/image";

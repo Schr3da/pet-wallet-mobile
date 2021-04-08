@@ -1,8 +1,9 @@
-import {InputValues, onInputFieldChange} from "../../../store/actions/new-pet";
 import {LanguageTypes} from "../../../language";
 import {SubViewComponents} from "../../../enums/navigation";
 import {onChangeSubViewComponent} from "../../../store/actions/navigation";
 import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
+import {InputValues} from "../../../enums/input";
+import {onInputChange} from "../../../store/actions/inputs";
 
 import {
   onSetErrorCode,
@@ -13,7 +14,7 @@ export const handleInputChange = (
   id: string,
   value: InputValues,
   dispatch: any,
-) => dispatch(onInputFieldChange(id, value));
+) => dispatch(onInputChange(id, value));
 
 export const handleChangeSubView = (
   dispatch: any,

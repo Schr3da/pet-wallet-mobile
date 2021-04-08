@@ -3,9 +3,9 @@ import * as React from "react";
 import {Text, ViewStyle} from "react-native";
 
 import {StyledButton} from "../styled-button";
+import {createStyleWithoutTheme, ThemeTypes, getColors} from "../../../theme";
 
 import {applyStyles} from "./index.style";
-import {createStyleWithoutTheme, ThemeTypes, getColors} from "../../../theme";
 
 const handlePress = (
   isDisabled: boolean | undefined,

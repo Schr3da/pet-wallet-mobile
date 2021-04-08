@@ -17,13 +17,14 @@ import {createStyle} from "../../theme";
 import {applyFooterStyles} from "./index.style";
 import {getStore} from "../../store";
 
-import {NewPet, ScanResult} from "../../store/actions";
+import {Inputs, ScanResult} from "../../store/actions";
 import {onSaveScanResult} from "../../store/actions/new-pet";
+import {InputValues} from "../../enums/input";
 
 const handlePickerValueSelected = (
   dispatch: any,
   id: string | null,
-  value: NewPet.InputValues,
+  value: InputValues,
   subViewComponent: SubViewComponents,
 ) => {
   dispatch(onFocus(null, null));
@@ -36,7 +37,7 @@ const handlePickerValueSelected = (
     return dispatch(ScanResult.onInputFieldChange(id, value));
   }
 
-  dispatch(NewPet.onInputFieldChange(id, value));
+  dispatch(Inputs.onInputChange(id, value));
 };
 
 const getPetTypes = (
