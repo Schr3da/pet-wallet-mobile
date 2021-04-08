@@ -5,8 +5,7 @@ import {SubViewComponents} from "../../../enums/navigation";
 import {IImageDataDto} from "../../../dto/image";
 import {onSetValuesFor, onResetInputsFor} from "../inputs";
 import {LanguageTypes} from "../../../language";
-
-export type InputValues = string | number | null | undefined | Date;
+import {InputValues} from "../../../enums/input";
 
 export const ON_SET_DATA_FOR_SCAN_RESULT = "ON_SET_DATA_FOR_SCAN_RESULT";
 interface IOnSetDataScanResult {

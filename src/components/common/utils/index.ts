@@ -83,7 +83,7 @@ export const createNotificationAnimation = (
     easing: Easing.linear,
   });
 
-export const isDev = (): boolean => false;
+export const isDev = (): boolean => true;
 
 export const createUuid = () => {
   let dt = new Date().getTime();

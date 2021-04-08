@@ -16,31 +16,6 @@ const initialState = (): IScanResultState => ({
   result: null,
 });
 
-const handleInputChange = (
-  state: IScanResultState,
-  id: string,
-  value: any,
-): IScanResultState => {
-  if (state.result == null) {
-    return state;
-  }
-
-  const data = {...state.result.prefills};
-
-  Object.values(LanguageTypes).forEach((lang) => {
-    const match = data[lang].find((p) => p.id === id);
-    if (match == null) {
-      return;
-    }
-    match.shortInfo = value;
-  });
-
-  return {
-    ...state,
-    result: {...state.result},
-  };
-};
-
 const handleNewScanEntity = (state: IScanResultState): IScanResultState => {
   if (state.result == null) {
     return state;
