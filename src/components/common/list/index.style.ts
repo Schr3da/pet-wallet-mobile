@@ -4,6 +4,7 @@ import type {ITheme} from "../../../theme";
 export const applyStyles = (theme: ITheme) => ({
   container: {
     alignItems: "center",
+    marginBottom: 150,
   } as ViewStyle,
   item: {
     height: 40,

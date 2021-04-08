@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import {View, ViewStyle} from "react-native";
+
 import {ThemeTypes, createStyle, getColors} from "../../../theme";
 import {LanguageTypes, getTranslation} from "../../../language";
 import {InputField} from "../input-field";
@@ -23,6 +24,7 @@ interface IProps {
   theme: ThemeTypes;
   language: LanguageTypes;
   data: IListData[];
+  inputs: {[key: string]: InputValues};
   style: ViewStyle;
   actionRenderer: (data: IListData) => React.ReactNode;
   onSelect: (id: string) => void;
@@ -34,6 +36,7 @@ export const DataList = (props: IProps) => {
   const {
     actionRenderer,
     data,
+    inputs,
     language,
     theme,
     onAdd,
@@ -64,7 +67,7 @@ export const DataList = (props: IProps) => {
               id={d.id}
               style={styles.input}
               theme={theme}
-              value={d.value}
+              value={inputs[d.id]}
               placeholder={translation.scanResult.newEntity}
               onChange={onChange}
             />
@@ -75,7 +78,7 @@ export const DataList = (props: IProps) => {
               theme={theme}
               language={language}
               inputType={d.type}
-              value={d.value}
+              value={inputs[d.id]}
             />
           )}
           {actionRenderer && (

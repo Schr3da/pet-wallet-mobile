@@ -3,25 +3,10 @@ import {ICombinedReducerState} from "../../reducers";
 import {onChangeSubViewComponent, onGoBackNavigation} from "../navigation";
 import {SubViewComponents} from "../../../enums/navigation";
 import {IImageDataDto} from "../../../dto/image";
+import {onSetValuesFor, onResetInputsFor} from "../inputs";
+import {LanguageTypes} from "../../../language";
 
 export type InputValues = string | number | null | undefined | Date;
-
-export const ON_INPUT_FIELD_CHANGE_SCAN_RESULT =
-  "ON_INPUT_FIELD_CHANGE_SCAN_RESULT";
-interface IOnInputFieldChangeScanResult {
-  type: typeof ON_INPUT_FIELD_CHANGE_SCAN_RESULT;
-  id: string;
-  value: InputValues;
-}
-
-export const onInputFieldChange = (
-  id: string,
-  value: InputValues,
-): IOnInputFieldChangeScanResult => ({
-  type: ON_INPUT_FIELD_CHANGE_SCAN_RESULT,
-  id,
-  value,
-});
 
 export const ON_SET_DATA_FOR_SCAN_RESULT = "ON_SET_DATA_FOR_SCAN_RESULT";
 interface IOnSetDataScanResult {
@@ -45,13 +30,29 @@ export const onShowScanResult = (image: IImageDataDto, data: IScanDataDto) => (
 ) => {
   const state = getState();
 
-  dispatch(onSetDataForScanResult(image, data));
-  dispatch(
-    onChangeSubViewComponent(
-      SubViewComponents.newScanResult,
-      state.layout.language,
-    ),
+  const {mainViewComponent} = state.navigation;
+
+  const inputs = (Object.keys(data) as Array<keyof IScanDataDto>).reduce(
+    (result, key) => {
+      const d = data[key];
+      (Object.keys(d) as LanguageTypes[]).forEach((lang) => {
+        const match = d[lang];
+        (match || []).forEach((p) => {
+          result[p.id] = p.shortInfo;
+        });
+      });
+      return result;
+    },
+    {} as {[key: string]: InputValues},
   );
+
+  const subViewComponent = SubViewComponents.newScanResult;
+
+  dispatch(onSetValuesFor(inputs, mainViewComponent, subViewComponent));
+
+  dispatch(onSetDataForScanResult(image, data));
+
+  dispatch(onChangeSubViewComponent(subViewComponent, state.layout.language));
 };
 
 export const ON_CREATE_NEW_SCAN_ENTITY = "ON_CREATE_NEW_SCAN_ENTITY";
@@ -103,13 +104,14 @@ export const onCancelScanResult = () => (
 ) => {
   const state = getState();
   const language = state.layout.language;
+  const {mainViewComponent, subViewComponent} = state.navigation;
 
+  dispatch(onResetInputsFor(mainViewComponent, subViewComponent));
   dispatch(onGoBackNavigation(language));
   dispatch(onResetScanResult());
 };
 
 export type Actions =
-  | IOnInputFieldChangeScanResult
   | IOnSetDataScanResult
   | IOnCreateNewScanEntity
   | IOnSelectScanEntity

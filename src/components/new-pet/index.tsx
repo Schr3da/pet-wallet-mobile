@@ -17,9 +17,10 @@ import {createStyle} from "../../theme";
 import {applyFooterStyles} from "./index.style";
 import {getStore} from "../../store";
 
-import {Inputs, ScanResult} from "../../store/actions";
+import {Inputs} from "../../store/actions";
 import {onSaveScanResult} from "../../store/actions/new-pet";
 import {InputValues} from "../../enums/input";
+import {onInputChange} from "../../store/actions/inputs";
 
 const handlePickerValueSelected = (
   dispatch: any,
@@ -34,7 +35,7 @@ const handlePickerValueSelected = (
   }
 
   if (subViewComponent === SubViewComponents.newScanResult) {
-    return dispatch(ScanResult.onInputFieldChange(id, value));
+    return dispatch(onInputChange(id, value));
   }
 
   dispatch(Inputs.onInputChange(id, value));

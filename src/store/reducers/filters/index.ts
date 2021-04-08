@@ -66,7 +66,11 @@ const changeSelection = (
   },
 });
 
-type Actions = Database.Actions | Filters.Actions | Layout.Actions | Navigation.Actions;
+type Actions =
+  | Database.Actions
+  | Filters.Actions
+  | Layout.Actions
+  | Navigation.Actions;
 
 const reducer = (state: IFiltersState = initialState(), action: Actions) => {
   switch (action.type) {

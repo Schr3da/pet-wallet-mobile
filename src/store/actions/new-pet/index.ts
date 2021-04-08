@@ -3,14 +3,21 @@ import * as Communication from "../../../communication";
 import type {ICombinedReducerState} from "../../reducers";
 import type {IPetDto} from "../../../dto/pets";
 import type {IImageDataDto} from "../../../dto/image";
-import type {IScanResult, IScanDataPrefillsDto} from "../../../dto/scan";
+import type {
+  IScanResult,
+  IScanDataPrefillsDto,
+  IScanDataDto,
+} from "../../../dto/scan";
 
 import {LanguageTypes} from "../../../language";
 
 import {SubViewComponents} from "../../../enums/navigation";
 import {ErrorTypes} from "../../../enums/layout";
 import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
-import {base64ImageString} from "../../../components/common/utils";
+import {
+  base64ImageString,
+  getInputValue,
+} from "../../../components/common/utils";
 import {requestScan} from "../../../communication/wallet";
 import {onShowScanResult, onResetScanResult} from "../scan-result";
 
@@ -19,6 +26,7 @@ import {
   onShowHomeComponent,
   onGoBackNavigation,
 } from "../navigation";
+import {onResetInputsFor} from "../inputs";
 
 export enum InputIds {
   name = "name",
@@ -28,7 +36,7 @@ export enum InputIds {
 
 export const onCancelNewPet = () => async (
   dispatch: any,
-  getState: () => ICombinedReducerState
+  getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
 
@@ -172,22 +180,48 @@ export const onSaveScanResult = () => (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
-  const state = getState();
-  const language = state.layout.language;
-
-  const {id, result} = state.scan;
+  const {layout, scan, navigation, inputs} = getState();
+  const {mainViewComponent, subViewComponent} = navigation;
+  const {language} = layout;
+  const {id, result} = scan;
 
   if (result == null) {
     dispatch(onSetErrorCode(ErrorTypes.unexpected));
     return;
   }
 
+  const data = (Object.keys(result) as Array<keyof IScanDataDto>).reduce(
+    (collection, key) => {
+      const section = collection[key];
+      (Object.keys(section) as LanguageTypes[]).forEach((lang) => {
+        let item = section[lang];
+        item = item.map((i) => {
+          const newValue = getInputValue(
+            inputs,
+            i.id,
+            mainViewComponent,
+            subViewComponent,
+          );
+          return {
+            ...i,
+            shortInfo: newValue ? String(newValue) : i.shortInfo,
+          };
+        });
+
+        collection[key][lang] = item;
+      });
+      return collection;
+    },
+    {...result},
+  );
+
   dispatch({
     type: ON_SAVE_SCAN_RESULT,
-    data: result.prefills,
+    data: data.prefills,
     id,
   } as IOnSaveScanResult);
 
+  dispatch(onResetInputsFor(mainViewComponent, subViewComponent));
   dispatch(onResetScanResult());
   dispatch(onGoBackNavigation(language));
 };

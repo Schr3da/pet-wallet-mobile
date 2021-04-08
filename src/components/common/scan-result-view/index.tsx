@@ -1,21 +1,26 @@
 import * as React from "react";
-
 import {Image, View, Text} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import type {ILayoutChildProps} from "../../common/layout";
+
 import {DataList} from "../list";
 import {PrimaryButton, SecondaryButton} from "../rounded-button";
 import {Dialog} from "../dialog";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {LanguageTypes} from "../../../language";
-import {base64ImageToUri, inputValueEmpty} from "../../common/utils";
+import {
+  base64ImageToUri,
+  inputValueEmpty,
+  getInputData,
+} from "../../common/utils";
 import {createStyle} from "../../../theme";
 import {DialogContentTypes, InputTypes} from "../../../enums/layout";
 import {IListData} from "../../common/list";
 import {IScanDataDto} from "../../../dto/scan";
 import {IImageDataDto} from "../../../dto/image";
 import {ImageButton} from "../image-button";
+import {onInputChange} from "../../../store/actions/inputs";
 
 import {
   onDismissDialog,
@@ -29,7 +34,6 @@ import {
   onToggleSelectionScanEntity,
   onCancelScanResult,
   InputValues,
-  onInputFieldChange,
   onRemoveNewScanEntity,
 } from "../../../store/actions/scan-result";
 
@@ -47,12 +51,14 @@ interface IStateProps {
   image: IImageDataDto | null;
   data: IScanDataDto | null;
   hasFocus: boolean;
+  inputs: {[key: string]: InputValues};
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   image: state.scan.image,
   data: state.scan.result,
   hasFocus: state.layout.focus != null,
+  inputs: getInputData(state),
 });
 
 const mapEntityToData = (
@@ -86,7 +92,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
   const stateProps = useSelector(stateToProps);
-  const {hasFocus} = stateProps;
+  const {hasFocus, inputs, image} = stateProps;
 
   const {theme, language, languageType} = props;
 
@@ -98,11 +104,8 @@ export const ChildView = (props: ILayoutChildProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        {stateProps.image == null ? null : (
-          <Image
-            style={styles.image}
-            source={base64ImageToUri(stateProps.image)}
-          />
+        {image == null ? null : (
+          <Image style={styles.image} source={base64ImageToUri(image)} />
         )}
       </View>
       <Text style={styles.info}>
@@ -116,8 +119,9 @@ export const ChildView = (props: ILayoutChildProps) => {
           theme={theme}
           language={languageType}
           data={data}
+          inputs={inputs}
           actionRenderer={(item) => {
-            const isEmptyValue = inputValueEmpty(item.value);
+            const isEmptyValue = inputValueEmpty(inputs[item.id]);
 
             if (hasFocus) {
               return null;
@@ -148,7 +152,7 @@ export const ChildView = (props: ILayoutChildProps) => {
           onAdd={() => dispatch(onCreateNewScanEntity())}
           onSelect={(id: string) => dispatch(onToggleSelectionScanEntity(id))}
           onChange={(id: string, value: InputValues) =>
-            dispatch(onInputFieldChange(id, value))
+            dispatch(onInputChange(id, value))
           }
         />
       </View>

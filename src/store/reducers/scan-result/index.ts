@@ -135,8 +135,6 @@ type Actions = ScanResult.Actions | Navigation.Actions | Database.Actions;
 
 const reducer = (state: IScanResultState = initialState(), action: Actions) => {
   switch (action.type) {
-    case ScanResult.ON_INPUT_FIELD_CHANGE_SCAN_RESULT:
-      return handleInputChange(state, action.id, action.value);
     case ScanResult.ON_SET_DATA_FOR_SCAN_RESULT:
       return setData(state, action.image, action.data);
     case ScanResult.ON_CREATE_NEW_SCAN_ENTITY:

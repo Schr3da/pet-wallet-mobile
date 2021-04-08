@@ -6,11 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {
-  DialogContentTypes,
-  ErrorTypes,
-  InputTypes,
-} from "../../../enums/layout";
 import {onShowScanResult} from "../../../store/actions/scan-result";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {handleError, handleInputChange, requestCancel} from "../hooks";
@@ -18,6 +13,9 @@ import {IScanResult} from "../../../dto/scan";
 import {applyStyles} from "./index.style";
 import {IImageDataDto} from "../../../dto/image";
 import {getInputData} from "../../common/utils";
+import {InputValues} from "../../../enums/input";
+
+import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
 
 import {
   ImagePicker,
@@ -41,7 +39,7 @@ import {
 
 interface IStateProps {
   attachments: IScanResult[];
-  inputs: {[key: string]: InputTypes};
+  inputs: {[key: string]: InputValues};
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
@@ -107,7 +105,7 @@ export const ChildView = (props: ILayoutChildProps) => {
           />
         ) : (
           attachments.map((a: IScanResult, index: number) => {
-            let title = String(inputs[a.id]);
+            let title = inputs[a.id];
 
             if (title == null) {
               title =

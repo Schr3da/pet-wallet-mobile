@@ -5,6 +5,9 @@ import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 import {IImageDataDto} from "../../../dto/image";
 import {ScanErrorTypes, ImagePickerTypes} from "../../../enums/image";
 import {ICombinedReducerState} from "../../../store/reducers";
+import {IInputState} from "../../../store/reducers/inputs";
+import {SubViewComponents, ViewComponents} from "../../../enums/navigation";
+import {InputValues} from "../../../enums/input";
 
 export interface IMeasureResult {
   width: number;
@@ -159,4 +162,21 @@ export const getInputData = <T>(state: ICombinedReducerState): T => {
   }
 
   return inputs[mainViewComponent][subViewComponent] as any;
+};
+
+export const getInputValue = (
+  inputs: IInputState,
+  key: string,
+  mainViewComponent: ViewComponents,
+  subViewComponent: SubViewComponents,
+): null | InputValues => {
+  if (inputs[mainViewComponent] == null) {
+    return null;
+  }
+
+  if (inputs[mainViewComponent][subViewComponent] == null) {
+    return null;
+  }
+
+  return inputs[mainViewComponent][subViewComponent][key];
 };

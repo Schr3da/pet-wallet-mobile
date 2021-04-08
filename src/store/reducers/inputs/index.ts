@@ -1,4 +1,4 @@
-import {Inputs, Navigation} from "../../actions";
+import {Inputs, Navigation, ScanResult} from "../../actions";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
 import {InputValues} from "../../actions/scan-result";
 
@@ -41,7 +41,55 @@ const handleInputChange = (
   };
 };
 
-type Actions = Inputs.Actions | Navigation.Actions;
+const handleSetValuesFor = (
+  state: IInputState,
+  data: {[key: string]: InputValues},
+  mainView: ViewComponents,
+  subView: SubViewComponents,
+) => {
+  if (state[mainView] == null) {
+    state[mainView] = {};
+  }
+
+  if (state[mainView][subView] == null) {
+    state[mainView][subView] = {};
+  }
+
+  return {
+    ...state,
+    [mainView]: {
+      ...state[mainView],
+      [subView]: {
+        ...state[mainView][subView],
+        ...data,
+      },
+    },
+  };
+};
+
+const handleResetFor = (
+  state: IInputState,
+  mainView: ViewComponents,
+  subView: SubViewComponents,
+) => {
+  if (state[mainView] == null) {
+    return state;
+  }
+
+  if (state[mainView][subView] == null) {
+    return state;
+  }
+
+  return {
+    ...state,
+    [mainView]: {
+      ...state[mainView],
+      [subView]: null,
+    },
+  };
+};
+
+type Actions = Inputs.Actions | Navigation.Actions | ScanResult.Actions;
 
 const reducer = (state: IInputState = initialState(), action: Actions) => {
   switch (action.type) {
@@ -54,6 +102,19 @@ const reducer = (state: IInputState = initialState(), action: Actions) => {
         action.subViewComponent,
         action.id,
         action.value,
+      );
+    case Inputs.ON_SET_VALUES_FOR:
+      return handleSetValuesFor(
+        state,
+        action.data,
+        action.mainViewComponent,
+        action.subViewComponent,
+      );
+    case Inputs.ON_RESET_INPUTS_FOR:
+      return handleResetFor(
+        state,
+        action.mainViewComponent,
+        action.subViewComponent,
       );
     default:
       return state;
