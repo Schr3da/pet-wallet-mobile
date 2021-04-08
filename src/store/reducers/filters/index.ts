@@ -23,31 +23,25 @@ const changeLanguage = (
   state: IFiltersState,
   language: LanguageTypes,
 ): IFiltersState => {
+
   const translation = getTranslation(language);
 
   return Object.keys(state).reduce(
-    (next: any, key: any) => {
+    (next, key) => {
       const mainComponent = {...next[key]};
 
       return {
         ...next,
-        [key]: Object.keys(mainComponent).reduce(
-          (childResult: any, childKey: any) => {
-            const subComponent = [...childResult[childKey]] as IFilterDataDto[];
-
-            childResult[childKey] = subComponent.map((s) => ({
+        [key]: Object.keys(mainComponent).reduce((childResult, childKey) => {
+            childResult[childKey] = childResult[childKey].map((s) => ({
               ...s,
               label: (translation.filters as any)[key][childKey][s.id],
             }));
 
             return {...childResult};
-          },
-          {...mainComponent},
-        ),
+          }, {...mainComponent}),
       };
-    },
-    {...state},
-  );
+    }, {...state});
 };
 
 const changeSelection = (
