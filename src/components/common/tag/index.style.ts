@@ -8,7 +8,7 @@ export const applyStyles = (theme: ITheme) => ({
     paddingRight: 6,
     paddingTop: 4,
     paddingBottom: 4,
-    borderColor: theme.color3,
+    borderColor: theme.color16,
     borderStyle: "solid",
     borderWidth: 2,
     borderRadius: 1000,
@@ -16,6 +16,6 @@ export const applyStyles = (theme: ITheme) => ({
   text: {
     fontSize: 10,
     fontWeight: "bold",
-    color: theme.color3,
+    color: theme.color16,
   } as TextStyle,
 });

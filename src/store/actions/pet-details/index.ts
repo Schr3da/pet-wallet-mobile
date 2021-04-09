@@ -18,6 +18,7 @@ export enum InputIds {
   name = "name",
   animalType = "animal",
   dateOfBirth = "dateOfBirth",
+  notes = "animalNotes",
 }
 
 const mapToInputs = (id: string, state: ICombinedReducerState) => {

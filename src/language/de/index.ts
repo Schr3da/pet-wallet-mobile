@@ -304,6 +304,7 @@ const animalTypes = {
 const petDetails: IPetDetails = {
   [SubViewComponents.none]: {
     noDataTitle: "Keine Daten vorhanden",
+    notesTitle: "Notizen",
   },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",

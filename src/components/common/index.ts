@@ -21,6 +21,7 @@ import {CheckBox} from "./checkbox";
 import {NoData} from "./no-data";
 import {ProfileImage} from "./profile-image";
 import {Filters} from "./filters";
+import {TextAreaField} from "./text-area-field";
 
 export {
   AttachmentPlaceholder,
@@ -45,4 +46,5 @@ export {
   NoData,
   ProfileImage,
   Filters,
+  TextAreaField,
 };

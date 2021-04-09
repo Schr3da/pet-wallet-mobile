@@ -18,6 +18,7 @@ import {
   Dialog,
   ProfileImage,
   Filters,
+  TextAreaField,
 } from "../../../common";
 
 import {
@@ -73,7 +74,7 @@ export const ChildView = (props: IProps) => {
         theme={theme}
         isEditing={true}
         image={newProfile || data.profileImage || null}
-        style={styles.profile}
+        style={{...styles.profile, marginBottom: 2}}
         onNewImage={(data) => dispatch(onProfileImage(data))}
       />
       <Filters items={filters} theme={theme} style={styles.filterBar} />
@@ -102,6 +103,14 @@ export const ChildView = (props: IProps) => {
             tag={language.newPet.newPetInformation.dateOfBirth}
             theme={theme}
             value={inputs[InputIds.dateOfBirth]}
+          />
+          <TextAreaField
+            id={InputIds.notes}
+            style={{...styles.inputField, marginBottom: 100}}
+            tag={language.petDetails.none.notesTitle}
+            theme={theme}
+            value={inputs[InputIds.notes]}
+            onChange={(id, value) => dispatch(onInputChange(id, value))}
           />
         </View>
       )}

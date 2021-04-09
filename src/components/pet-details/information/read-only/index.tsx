@@ -10,6 +10,7 @@ import {
   ProfileImage,
   Filters,
   InputTypeField,
+  TextAreaField,
 } from "../../../common";
 import {ILayoutChildProps} from "../../../common/layout";
 import {InputIds, onRemovePet} from "../../../../store/actions/pet-details";
@@ -100,6 +101,15 @@ export const ChildView = (props: IProps) => {
             theme={theme}
             disabled={true}
             value={inputs[InputIds.dateOfBirth]}
+          />
+          <TextAreaField
+            id={InputIds.notes}
+            style={styles.inputField}
+            tag={language.petDetails.none.notesTitle}
+            theme={theme}
+            disabled={true}
+            value={inputs[InputIds.notes]}
+            onChange={() => undefined}
           />
         </View>
       )}

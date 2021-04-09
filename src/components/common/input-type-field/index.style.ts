@@ -22,6 +22,6 @@ export const applyStyles = (hasValue: boolean) => (theme: ITheme) => ({
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 16,
-    color: hasValue ? theme.color8 : "#AAA",
+    color: hasValue ? theme.color8 : theme.color16,
   } as ViewStyle,
 });

@@ -276,11 +276,12 @@ const filters: IFilters = {
 const petDetails: IPetDetails = {
   [SubViewComponents.none]: {
     noDataTitle: "No data available",
+    notesTitle: "Notes",
   },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",
     medicalTitle: "Medizinische Information",
-    notesTitle: "Notizen",
+    notesTitle: "Notes",
   },
 };
 
