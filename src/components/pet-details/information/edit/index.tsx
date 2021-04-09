@@ -34,6 +34,7 @@ import {
 import {
   InputIds,
   onCancelPetDetailsEdit,
+  onProfileImage
 } from "../../../../store/actions/pet-details";
 
 import {applyStyles} from "../index.style";
@@ -45,6 +46,7 @@ const stateToProps = (state: ICombinedReducerState) => ({
   inputs: getInputData<{[key: string]: InputValues}>(state),
   filters: state.filters.petDetails.petDetailsEdit,
   data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
+  newProfile: state.petDetails.newProfile,
 });
 
 interface IProps extends ILayoutChildProps {
@@ -54,7 +56,7 @@ interface IProps extends ILayoutChildProps {
 export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {data, filters, inputs} = useSelector(stateToProps);
+  const {data, filters, inputs, newProfile} = useSelector(stateToProps);
 
   const {theme, language} = props;
 
@@ -70,9 +72,9 @@ export const ChildView = (props: IProps) => {
       <ProfileImage
         theme={theme}
         isEditing={true}
-        image={data.profileImage || null}
+        image={newProfile || data.profileImage || null}
         style={styles.profile}
-        onNewImage={() => {}}
+        onNewImage={(data) => dispatch(onProfileImage(data))}
       />
       <Filters items={filters} theme={theme} style={styles.filterBar} />
       {filterId === FilterTypes.generalOnly && (

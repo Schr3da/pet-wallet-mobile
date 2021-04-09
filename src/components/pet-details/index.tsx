@@ -16,7 +16,7 @@ import {ILanguage, LanguageTypes, getTranslation} from "../../language";
 import {IPickerData} from "../common/picker";
 import {prepareImageInput} from "../common/utils";
 import {onScan, InputIds} from "../../store/actions/pet-details";
-import {onSetPickerVisibility} from "../../store/actions/layout";
+import {onSetPickerVisibility, onFocus} from "../../store/actions/layout";
 import {InputValues} from "../../enums/input";
 
 import {applyFooterStyles} from "./index.style";
@@ -68,6 +68,7 @@ const handlePickerChanged = async (
   view: SubViewComponents,
 ) => {
   dispatch(onSetPickerVisibility(false, InputTypes.picker));
+  dispatch(onFocus(null, null));
 
   switch (view) {
     case SubViewComponents.none:
