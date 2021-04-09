@@ -7,23 +7,24 @@ import * as InformationView from "./information";
 
 import {createStyle, ThemeTypes} from "../../theme";
 import {Layout, ScanResultViews, NoData} from "../common";
-import {ErrorTypes, InputTypes} from "../../enums/layout";
+import {InputTypes} from "../../enums/layout";
 import {SubViewComponents} from "../../enums/navigation";
-import {
-  onSetErrorCode,
-  onSetPickerVisibility,
-} from "../../store/actions/layout";
 import {ICombinedReducerState} from "../../store/reducers";
 
-import {applyFooterStyles} from "./index.style";
 import {ImagePickerTypes} from "../../enums/image";
 import {ILanguage, LanguageTypes, getTranslation} from "../../language";
 import {IPickerData} from "../common/picker";
 import {prepareImageInput} from "../common/utils";
-import {onScan} from "../../store/actions/pet-details";
+import {onScan, InputIds} from "../../store/actions/pet-details";
+import {onSetPickerVisibility} from "../../store/actions/layout";
+import {InputValues} from "../../enums/input";
+
+import {applyFooterStyles} from "./index.style";
+import {onInputChange} from "../../store/actions/inputs";
+import {PetTypes} from "../../dto/pets";
 
 const stateToProps = (state: ICombinedReducerState) => ({
-  data: (state.pets.data || []).find((p) => state.pets.selectedId === p.id),
+  selectedId: state.pets.selectedId!,
 });
 
 const getImagePickerData = (language: ILanguage): IPickerData[] => [
@@ -37,49 +38,67 @@ const getImagePickerData = (language: ILanguage): IPickerData[] => [
   },
 ];
 
-export const handleError = (dispatch: any, errorType: ErrorTypes) =>
-  dispatch(onSetErrorCode(errorType));
+const requestPickerData = (
+  id: string | null,
+  language: LanguageTypes,
+  view: SubViewComponents,
+) => {
+  const translation = getTranslation(language);
+
+  switch (view) {
+    case SubViewComponents.none:
+      return getImagePickerData(translation);
+    case SubViewComponents.petDetailsEdit:
+      if (id === InputIds.animalType) {
+        return Object.values(PetTypes).map((v) => ({
+          label: translation.animalTypes[v],
+          value: translation.animalTypes[v],
+        }));
+      }
+    default:
+      return [];
+  }
+};
+
+const handlePickerChanged = async (
+  dispatch: any,
+  petId: string,
+  inputId: string | null,
+  value: InputValues,
+  view: SubViewComponents,
+) => {
+  dispatch(onSetPickerVisibility(false, InputTypes.picker));
+
+  switch (view) {
+    case SubViewComponents.none:
+      const result = await prepareImageInput(value as any, 1600, 1600);
+      return result == null || petId == null
+        ? null
+        : dispatch(onScan(petId, result));
+    case SubViewComponents.petDetailsEdit:
+      return inputId == null ? null : dispatch(onInputChange(inputId, value));
+    default:
+      return;
+  }
+};
 
 export const Component = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const {data} = useSelector(stateToProps);
+  const {selectedId} = useSelector(stateToProps);
 
   return (
     <Layout
       hasHeader={false}
       imageSource={require("../../../assets/png/welcome-header-icon.png")}
-      getPickerData={(
-        _: string | null,
-        language: LanguageTypes,
-        view: SubViewComponents,
-      ) => {
-        const translation = getTranslation(language);
-
-        switch (view) {
-          case SubViewComponents.none:
-            return getImagePickerData(translation);
-          default:
-            return [];
-        }
-      }}
-      onPickerChanged={async (_, value, view) => {
-        dispatch(onSetPickerVisibility(false, InputTypes.picker));
-
-        switch (view) {
-          case SubViewComponents.none:
-            const result = await prepareImageInput(value as any, 1600, 1600);
-            return result == null || data == null
-              ? null
-              : dispatch(onScan(data.id, result));
-          default:
-            return;
-        }
-      }}
+      getPickerData={requestPickerData}
+      onPickerChanged={async (id, value, view) =>
+        handlePickerChanged(dispatch, selectedId, id, value, view)
+      }
       childRenderer={(props) => {
         const {subViewComponent, theme, language} = props;
 
-        if (data == null) {
+        if (selectedId == null) {
           return (
             <NoData
               theme={theme}
@@ -95,7 +114,7 @@ export const Component = (): JSX.Element => {
           subViewComponent === SubViewComponents.none ||
           subViewComponent === SubViewComponents.petDetailsEdit
         ) {
-          return <InformationView.ChildView {...props} data={data} />;
+          return <InformationView.ChildView {...props} id={selectedId} />;
         } else if (subViewComponent === SubViewComponents.newScanResult) {
           return <ScanResultViews.ChildView {...props} />;
         } else {
@@ -121,16 +140,16 @@ export const Component = (): JSX.Element => {
         return <View style={styles.container}>{child}</View>;
       }}
       dialogRenderer={(props) => {
-        if (data == null) {
+        if (selectedId == null) {
           return null;
         }
 
         const {subViewComponent} = props;
 
         if (subViewComponent === SubViewComponents.none) {
-          return <InformationView.Dialogs {...props} data={data} />;
+          return <InformationView.Dialogs {...props} id={selectedId} />;
         } else if (subViewComponent === SubViewComponents.petDetailsEdit) {
-          return <InformationView.Dialogs {...props} data={data} />;
+          return <InformationView.Dialogs {...props} id={selectedId} />;
         } else {
           return null;
         }

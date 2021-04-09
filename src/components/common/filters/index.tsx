@@ -13,7 +13,6 @@ import {handleChangeFilter} from "../../../store/actions/filters";
 interface IProps {
   items: IFilterDataDto[];
   theme: ThemeTypes;
-  onFilterPressed: (id: string, index: number) => void;
   style?: ViewStyle;
 }
 

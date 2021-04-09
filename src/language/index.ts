@@ -134,7 +134,10 @@ export type AnimalTypes = {[k in PetTypes]: string};
 export type IFilters = {
   [ViewComponents.petDetails]: {
     [SubViewComponents.none]: {
-      [FilterTypes.all]: string;
+      [FilterTypes.generalOnly]: string;
+      [FilterTypes.medicalOnly]: string;
+    };
+    [SubViewComponents.petDetailsEdit]: {
       [FilterTypes.generalOnly]: string;
       [FilterTypes.medicalOnly]: string;
     };

@@ -270,6 +270,10 @@ const filters: IFilters = {
       [FilterTypes.generalOnly]: "Allgemein",
       [FilterTypes.medicalOnly]: "Impfpass",
     },
+    [SubViewComponents.petDetailsEdit]: {
+      [FilterTypes.generalOnly]: "Allgemein",
+      [FilterTypes.medicalOnly]: "Impfpass",
+    },
   },
 };
 

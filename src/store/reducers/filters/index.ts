@@ -15,6 +15,9 @@ const initialState = () => {
   return {
     [ViewComponents.petDetails]: {
       [SubViewComponents.none]: getPetDetailsFilters(LanguageTypes.en),
+      [SubViewComponents.petDetailsEdit]: getPetDetailsFilters(
+        LanguageTypes.en,
+      ),
     },
   };
 };

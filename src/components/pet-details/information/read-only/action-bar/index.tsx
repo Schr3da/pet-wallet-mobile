@@ -5,27 +5,25 @@ import {useDispatch} from "react-redux";
 import {ImageButton} from "../../../../common/image-button";
 import {ThemeTypes, createStyle} from "../../../../../theme";
 import {LanguageTypes} from "../../../../../language";
-import {onChangeSubViewComponent} from "../../../../../store/actions/navigation";
-import {SubViewComponents} from "../../../../../enums/navigation";
+import {onSharePet} from "../../../../../store/actions/pets";
+import {onShowEditView} from "../../../../../store/actions/pet-details";
+
 import {
   onSetErrorCode,
   onSetPickerVisibility,
   onSetDialogContentType,
 } from "../../../../../store/actions/layout";
+
 import {
   ErrorTypes,
   InputTypes,
   DialogContentTypes,
 } from "../../../../../enums/layout";
-import {onSharePet} from "../../../../../store/actions/pets";
-import {IPetDto} from "../../../../../dto/pets";
 
 import {applyStyles} from "./index.style";
 
-const showEditView = (dispatch: any, language: LanguageTypes) =>
-  dispatch(
-    onChangeSubViewComponent(SubViewComponents.petDetailsEdit, language),
-  );
+const handleEditView = (dispatch: any, id: string) =>
+  dispatch(onShowEditView(id));
 
 const handleShare = (dispatch: any, id: string | null) =>
   id === null
@@ -39,16 +37,16 @@ const requestPetDelete = (dispatch: any) =>
   dispatch(onSetDialogContentType(DialogContentTypes.deletePet));
 
 interface IProps {
+  id: string;
   theme: ThemeTypes;
   language: LanguageTypes;
-  data: IPetDto;
   style: ViewStyle;
 }
 
 export const ActionBar = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {data, language, theme, style} = props;
+  const {id, theme, style} = props;
 
   const styles = createStyle(theme, applyStyles);
 
@@ -76,7 +74,7 @@ export const ActionBar = (props: IProps) => {
             ? require("../../../../../../assets/png/light/edit-icon-action.png")
             : require("../../../../../../assets/png/dark/edit-icon-action.png")
         }
-        onPress={() => showEditView(dispatch, language)}
+        onPress={() => handleEditView(dispatch, id)}
       />
       <ImageButton
         style={styles.actionButton}
@@ -86,7 +84,7 @@ export const ActionBar = (props: IProps) => {
             ? require("../../../../../../assets/png/light/share-icon-action.png")
             : require("../../../../../../assets/png/dark/share-icon-action.png")
         }
-        onPress={() => handleShare(dispatch, data.id)}
+        onPress={() => handleShare(dispatch, id)}
       />
       <ImageButton
         style={{

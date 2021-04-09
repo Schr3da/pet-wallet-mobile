@@ -44,12 +44,22 @@ interface IProps {
   inputType: InputTypes;
   placeholder?: string;
   language?: LanguageTypes;
+  disabled?: boolean;
 }
 
 export const InputTypeField = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {language, id, inputType, placeholder, style, theme, value} = props;
+  const {
+    disabled,
+    language,
+    id,
+    inputType,
+    placeholder,
+    style,
+    theme,
+    value,
+  } = props;
 
   const hasValue = value != null;
 
@@ -58,7 +68,12 @@ export const InputTypeField = (props: IProps) => {
   return (
     <View style={{...styles.container, ...style}}>
       <TouchableOpacity
-        onPress={() => handleFocus(dispatch, id, inputType)}
+        onPress={() => {
+          if (disabled) {
+            return;
+          }
+          handleFocus(dispatch, id, inputType);
+        }}
         activeOpacity={1}>
         <Text style={styles.input} numberOfLines={1}>
           {valueFormatter(value, language) || placeholder}

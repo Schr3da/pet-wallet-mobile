@@ -1,6 +1,6 @@
 import type {IPetDto} from "../../../dto/pets";
 
-import {NewPet, Pets, Database, Navigation} from "../../actions";
+import {NewPet, Pets, Database, PetDetails} from "../../actions";
 
 export interface IPetsState {
   selectedId: string | null;
@@ -26,13 +26,13 @@ type Actions =
   | NewPet.Actions
   | Pets.Actions
   | Database.Actions
-  | Navigation.Actions;
+  | PetDetails.Actions;
 
 const reducer = (state: IPetsState = initialState(), action: Actions) => {
   switch (action.type) {
     case Pets.ON_SET_PETS:
       return setPets(state, action.data);
-    case Navigation.ON_SHOW_PET_DETAILS:
+    case PetDetails.ON_SHOW_PET_DETAILS:
       return setSelectedId(state, action.id);
     case Database.ON_REQUEST_DATA_DELETION:
       return initialState();

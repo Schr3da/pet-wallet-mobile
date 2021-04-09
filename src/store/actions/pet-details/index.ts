@@ -1,18 +1,77 @@
 import {ICombinedReducerState} from "../../reducers";
 import {setLoading, onDismissDialog, onSetErrorCode} from "../layout";
-import {onGoBackNavigation} from "../navigation";
+import {
+  onGoBackNavigation,
+  onChangeViewComponent,
+  onChangeSubViewComponent,
+} from "../navigation";
 import {deletePet} from "../../../communication/pets";
 import {IImageDataDto} from "../../../dto/image";
 import {base64ImageString} from "../../../components/common/utils";
 import {requestScan} from "../../../communication/wallet";
 import {ErrorTypes} from "../../../enums/layout";
 import {onShowScanResult} from "../scan-result";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+import {onSetValuesFor} from "../inputs";
 
 export enum InputIds {
   name = "name",
   animalType = "animal",
   dateOfBirth = "dateOfBirth",
 }
+
+const mapToInputs = (id: string, state: ICombinedReducerState) => {
+  const data = state.pets.data.find((d) => id === d.id);
+
+  if (data == null) {
+    return null;
+  }
+
+  const {name, animal, dateOfBirth} = data;
+
+  return {
+    name,
+    animal,
+    dateOfBirth,
+  };
+};
+
+export const ON_SHOW_PET_DETAILS = "ON_SHOW_PET_DETAILS";
+interface IOnShowPetDetails {
+  type: typeof ON_SHOW_PET_DETAILS;
+  id: string;
+}
+
+export const onShowPetDetails = (id: string) => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+
+  const data = mapToInputs(id, state);
+  if (data == null) {
+    return;
+  }
+
+  dispatch(
+    onSetValuesFor(data, ViewComponents.petDetails, SubViewComponents.none),
+  );
+
+  dispatch({
+    type: ON_SHOW_PET_DETAILS,
+    id,
+  } as IOnShowPetDetails);
+
+  const language = state.layout.language;
+
+  dispatch(
+    onChangeViewComponent(
+      ViewComponents.petDetails,
+      SubViewComponents.none,
+      language,
+    ),
+  );
+};
 
 export const onScan = (id: string | null, image: IImageDataDto) => async (
   dispatch: any,
@@ -68,3 +127,31 @@ export const onRemovePet = (id: string) => async (
   dispatch(onGoBackNavigation(language));
   dispatch(onDismissDialog());
 };
+
+export const onShowEditView = (id: string) => (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+
+  const {language} = state.layout;
+
+  const data = mapToInputs(id, state);
+  if (data == null) {
+    return;
+  }
+
+  dispatch(
+    onSetValuesFor(
+      data,
+      ViewComponents.petDetails,
+      SubViewComponents.petDetailsEdit,
+    ),
+  );
+
+  dispatch(
+    onChangeSubViewComponent(SubViewComponents.petDetailsEdit, language),
+  );
+};
+
+export type Actions = IOnShowPetDetails;

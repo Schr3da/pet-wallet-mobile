@@ -1,9 +1,17 @@
 import * as React from "react";
 
-import {View, Text} from "react-native";
-import {useDispatch} from "react-redux";
+import {View} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
 
 import {createStyle} from "../../../../theme";
+import {InputValues} from "../../../../enums/input";
+import {ILayoutChildProps} from "../../../common/layout";
+import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
+import {ICombinedReducerState} from "../../../../store/reducers";
+import {getInputData} from "../../../common/utils";
+import {FilterTypes} from "../../../../enums/filters";
+import {onInputChange} from "../../../../store/actions/inputs";
+
 import {
   InputField,
   InputTypeField,
@@ -11,10 +19,6 @@ import {
   ProfileImage,
   Filters,
 } from "../../../common";
-import {InputValues} from "../../../../enums/input";
-import {ILayoutChildProps} from "../../../common/layout";
-import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
-import {IPetDto} from "../../../../dto/pets";
 
 import {
   ErrorTypes,
@@ -33,195 +37,130 @@ import {
 } from "../../../../store/actions/pet-details";
 
 import {applyStyles} from "../index.style";
-import {IFilterDataDto} from "../../../../dto/filters";
 
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
 
-export const handleInputChange = (
-  id: string,
-  value: InputValues,
-  dispatch: any,
-) => undefined;
+const stateToProps = (state: ICombinedReducerState) => ({
+  inputs: getInputData<{[key: string]: InputValues}>(state),
+  filters: state.filters.petDetails.petDetailsEdit,
+  data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
+});
 
 interface IProps extends ILayoutChildProps {
-  data: IPetDto;
-  filters: IFilterDataDto[];
+  id: string;
 }
 
 export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {filters, data, theme, language, languageType} = props;
+  const {data, filters, inputs} = useSelector(stateToProps);
+
+  const {theme, language} = props;
 
   const styles = createStyle(theme, applyStyles);
+
+  const selectedFilter = filters.find((f) => f.isSelected);
+
+  const filterId =
+    selectedFilter == null ? FilterTypes.generalOnly : selectedFilter.id;
 
   return (
     <React.Fragment>
       <ProfileImage
         theme={theme}
         isEditing={true}
-        image={null}
+        image={data.profileImage || null}
         style={styles.profile}
+        onNewImage={() => {}}
       />
-      <Filters
-        items={filters}
-        theme={theme}
-        style={styles.filterBar}
-        onFilterPressed={() => undefined}
-      />
-      <View style={styles.contentWrapper}>
-        <Text style={{...styles.headline}}>
-          {language.petDetails.petDetailsEdit.generalInformationTitle}
-        </Text>
-        <InputField
-          id={InputIds.name}
-          style={styles.inputField}
-          placeholder={language.newPet.newPetInformation.name}
-          theme={theme}
-          value=""
-          onChange={(id: string, value: InputValues) =>
-            handleInputChange(id, value, dispatch)
-          }
-        />
-        <InputTypeField
-          id={InputIds.animalType}
-          style={styles.inputField}
-          theme={theme}
-          inputType={InputTypes.picker}
-          placeholder=""
-          value=""
-        />
-        <InputTypeField
-          id={InputIds.dateOfBirth}
-          style={styles.inputField}
-          theme={theme}
-          language={languageType}
-          inputType={InputTypes.date}
-          placeholder=""
-          value=""
-        />
-      </View>
-      <View style={styles.contentWrapper}>
-        <Text style={styles.headline}>
-          {language.petDetails.petDetailsEdit.medicalTitle}
-        </Text>
-        <InputField
-          id={InputIds.name}
-          style={styles.inputField}
-          placeholder={language.newPet.newPetInformation.name}
-          theme={theme}
-          value=""
-          onChange={(id: string, value: InputValues) =>
-            handleInputChange(id, value, dispatch)
-          }
-        />
-        <InputTypeField
-          id={InputIds.animalType}
-          style={styles.inputField}
-          theme={theme}
-          inputType={InputTypes.picker}
-          placeholder=""
-          value=""
-        />
-        <InputTypeField
-          id={InputIds.dateOfBirth}
-          style={styles.inputField}
-          theme={theme}
-          language={languageType}
-          inputType={InputTypes.date}
-          placeholder=""
-          value=""
-        />
-
-        <InputField
-          id={InputIds.name}
-          style={styles.inputField}
-          placeholder={language.newPet.newPetInformation.name}
-          theme={theme}
-          value=""
-          onChange={(id: string, value: InputValues) =>
-            handleInputChange(id, value, dispatch)
-          }
-        />
-        <InputTypeField
-          id={InputIds.animalType}
-          style={styles.inputField}
-          theme={theme}
-          inputType={InputTypes.picker}
-          placeholder=""
-          value=""
-        />
-        <InputTypeField
-          id={InputIds.dateOfBirth}
-          style={styles.inputField}
-          theme={theme}
-          language={languageType}
-          inputType={InputTypes.date}
-          placeholder=""
-          value=""
-        />
-      </View>
-      <View style={styles.contentWrapper}>
-        <Text style={styles.headline}>
-          {language.petDetails.petDetailsEdit.notesTitle}
-        </Text>
-        <InputField
-          id={InputIds.name}
-          style={styles.inputField}
-          placeholder={language.newPet.newPetInformation.name}
-          theme={theme}
-          value=""
-          onChange={(id: string, value: InputValues) =>
-            handleInputChange(id, value, dispatch)
-          }
-        />
-        <InputTypeField
-          id={InputIds.animalType}
-          style={styles.inputField}
-          theme={theme}
-          inputType={InputTypes.picker}
-          placeholder=""
-          value=""
-        />
-        <InputTypeField
-          id={InputIds.dateOfBirth}
-          style={styles.inputField}
-          theme={theme}
-          language={languageType}
-          inputType={InputTypes.date}
-          placeholder=""
-          value=""
-        />
-
-        <InputField
-          id={InputIds.name}
-          style={styles.inputField}
-          placeholder={language.newPet.newPetInformation.name}
-          theme={theme}
-          value=""
-          onChange={(id: string, value: InputValues) =>
-            handleInputChange(id, value, dispatch)
-          }
-        />
-        <InputTypeField
-          id={InputIds.animalType}
-          style={styles.inputField}
-          theme={theme}
-          inputType={InputTypes.picker}
-          placeholder=""
-          value=""
-        />
-        <InputTypeField
-          id={InputIds.dateOfBirth}
-          style={styles.inputField}
-          theme={theme}
-          language={languageType}
-          inputType={InputTypes.date}
-          placeholder=""
-          value=""
-        />
-      </View>
+      <Filters items={filters} theme={theme} style={styles.filterBar} />
+      {filterId === FilterTypes.generalOnly && (
+        <View style={styles.contentWrapper}>
+          <InputField
+            id={InputIds.name}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.name}
+            theme={theme}
+            value={inputs[InputIds.name]}
+            onChange={(id, value) => dispatch(onInputChange(id, value))}
+          />
+          <InputTypeField
+            id={InputIds.animalType}
+            inputType={InputTypes.picker}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.animalType}
+            theme={theme}
+            value={inputs[InputIds.animalType]}
+          />
+          <InputTypeField
+            id={InputIds.dateOfBirth}
+            inputType={InputTypes.date}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            theme={theme}
+            value={inputs[InputIds.dateOfBirth]}
+          />
+        </View>
+      )}
+      {filterId === FilterTypes.medicalOnly && (
+        <View style={styles.contentWrapper}>
+          <InputField
+            id={InputIds.name}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.name}
+            theme={theme}
+            value=""
+            disabled={true}
+            onChange={() => undefined}
+          />
+          <InputField
+            id={InputIds.animalType}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.animalType}
+            theme={theme}
+            value=""
+            disabled={true}
+            onChange={() => undefined}
+          />
+          <InputField
+            id={InputIds.dateOfBirth}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            theme={theme}
+            value=""
+            disabled={true}
+            onChange={() => undefined}
+          />
+          <InputField
+            id={InputIds.dateOfBirth}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            theme={theme}
+            value=""
+            disabled={true}
+            onChange={() => undefined}
+          />
+          <InputField
+            id={InputIds.dateOfBirth}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            theme={theme}
+            value=""
+            disabled={true}
+            onChange={() => undefined}
+          />
+          <InputField
+            id={InputIds.dateOfBirth}
+            style={styles.inputField}
+            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            theme={theme}
+            value=""
+            disabled={true}
+            onChange={() => undefined}
+          />
+        </View>
+      )}
     </React.Fragment>
   );
 };

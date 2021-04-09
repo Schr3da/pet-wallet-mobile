@@ -129,7 +129,7 @@ export const Footer = (props: ILayoutChildProps) => {
 export const Dialogs = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
-  const {language, languageType, hasPets, theme, dialogContentType} = props;
+  const {language, theme, dialogContentType} = props;
   const {title, text} = language.dialogs.deleteAttachment;
 
   switch (dialogContentType) {
@@ -140,7 +140,7 @@ export const Dialogs = (props: ILayoutChildProps) => {
           text={text}
           theme={theme}
           language={language}
-          onPress={() => dispatch(onCancelNewPet(languageType, hasPets))}
+          onPress={() => dispatch(onCancelNewPet())}
         />
       );
     default:

@@ -4,12 +4,12 @@ import {Animated, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import {onSharePet} from "../../store/actions/pets";
-import {onShowPetDetails} from "../../store/actions/navigation";
 import {ICombinedReducerState} from "../../store/reducers";
 import {createStyle} from "../../theme";
 import {Layout, Card} from "../common";
 import {AddPetBar} from "./add-pet-bar";
 import {Box} from "./box";
+import {onShowPetDetails} from "../../store/actions/pet-details";
 
 import {animatedCardStyle, applyStyles} from "./index.style";
 

@@ -266,6 +266,10 @@ const filters: IFilters = {
       [FilterTypes.generalOnly]: "General",
       [FilterTypes.medicalOnly]: "Certificates",
     },
+    [SubViewComponents.petDetailsEdit]: {
+      [FilterTypes.generalOnly]: "General",
+      [FilterTypes.medicalOnly]: "Certificates",
+    },
   },
 };
 

@@ -88,39 +88,8 @@ export const onShowHomeComponent = () => async (
   dispatch(setLoading(false));
 };
 
-export const ON_SHOW_PET_DETAILS = "ON_SHOW_PET_DETAILS";
-interface IOnShowPetDetails {
-  type: typeof ON_SHOW_PET_DETAILS;
-  id: string;
-}
-
-export const onShowPetDetails = (id: string) => async (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-) => {
-  dispatch({
-    type: ON_SHOW_PET_DETAILS,
-    id,
-  } as IOnShowPetDetails);
-
-  const state = getState();
-  if (state.pets.selectedId == null) {
-    return;
-  }
-
-  const language = state.layout.language;
-  dispatch(
-    onChangeViewComponent(
-      ViewComponents.petDetails,
-      SubViewComponents.none,
-      language,
-    ),
-  );
-};
-
 export type Actions =
   | IOnGoBackNavigation
   | IOnChangeViewComponent
   | IOnChangeSubViewComponent
-  | IOnShowHomeComponent
-  | IOnShowPetDetails;
+  | IOnShowHomeComponent;
