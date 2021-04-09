@@ -9,6 +9,7 @@ import {applyStyles} from "./index.style";
 import {LanguageTypes} from "../../../language";
 import {InputTypes} from "../../../enums/layout";
 import {InputValues} from "../../../enums/input";
+import {Tag} from "../tag";
 
 const handleFocus = (
   dispatch: any,
@@ -43,6 +44,7 @@ interface IProps {
   value: InputValues;
   inputType: InputTypes;
   placeholder?: string;
+  tag?: string;
   language?: LanguageTypes;
   disabled?: boolean;
 }
@@ -56,6 +58,7 @@ export const InputTypeField = (props: IProps) => {
     id,
     inputType,
     placeholder,
+    tag,
     style,
     theme,
     value,
@@ -74,10 +77,12 @@ export const InputTypeField = (props: IProps) => {
           }
           handleFocus(dispatch, id, inputType);
         }}
-        activeOpacity={1}>
+        activeOpacity={1}
+        style={styles.wrapper}>
         <Text style={styles.input} numberOfLines={1}>
           {valueFormatter(value, language) || placeholder}
         </Text>
+        <Tag text={tag} theme={theme} />
       </TouchableOpacity>
     </View>
   );

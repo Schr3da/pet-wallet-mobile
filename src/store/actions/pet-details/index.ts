@@ -154,7 +154,8 @@ export const onShowEditView = (id: string) => (
   );
 };
 
-export const ON_SET_PROFILE_IMAGE_PET_DETAILS = "ON_SET_PROFILE_IMAGE_PET_DETAILS";
+export const ON_SET_PROFILE_IMAGE_PET_DETAILS =
+  "ON_SET_PROFILE_IMAGE_PET_DETAILS";
 interface IOnSetProfileImagePetDetails {
   type: typeof ON_SET_PROFILE_IMAGE_PET_DETAILS;
   data: IImageDataDto;
@@ -164,7 +165,7 @@ export const onProfileImage = (data: IImageDataDto) => (
   dispatch: any,
   _getState: () => ICombinedReducerState,
 ) => {
-  const action: IOnSetProfileImagePetDetails =  {
+  const action: IOnSetProfileImagePetDetails = {
     type: ON_SET_PROFILE_IMAGE_PET_DETAILS,
     data,
   };
@@ -172,7 +173,4 @@ export const onProfileImage = (data: IImageDataDto) => (
   dispatch(action);
 };
 
-export type Actions = 
-  | IOnShowPetDetails
-  | IOnSetProfileImagePetDetails
-;
+export type Actions = IOnShowPetDetails | IOnSetProfileImagePetDetails;

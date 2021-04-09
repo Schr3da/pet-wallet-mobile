@@ -12,8 +12,13 @@ export const applyStyles = (hasValue: boolean) => (theme: ITheme) => ({
     backgroundColor: theme.color11,
     overflow: "hidden",
   } as ViewStyle,
+  wrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  } as ViewStyle,
   input: {
-    width: "100%",
+    flex: 1,
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 16,

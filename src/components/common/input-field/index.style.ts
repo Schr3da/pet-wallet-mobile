@@ -11,7 +11,17 @@ export const applyStyles = (theme: ITheme) => ({
     paddingLeft: 20,
     paddingRight: 10,
     backgroundColor: theme.color11,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   } as ViewStyle,
+  text: {
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 16,
+    color: theme.color8,
+  },
   input: {
     width: "100%",
     paddingTop: 10,

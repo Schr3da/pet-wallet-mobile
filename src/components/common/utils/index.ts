@@ -60,7 +60,7 @@ export const collectionIsEmpty = <T>(collection: T | T[]) => {
         Object.values(collection).some(condition);
 };
 
-export const inputValueEmpty = <T>(value: T) => {
+export const inputValueEmpty = <T>(value: T): boolean => {
   if (value == null) {
     return true;
   }

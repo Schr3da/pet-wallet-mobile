@@ -7,6 +7,7 @@ import {createStyle, ThemeTypes, getColors} from "../../../theme";
 import {onFocus} from "../../../store/actions/layout";
 import {InputTypes} from "../../../enums/layout";
 import {InputValues} from "../../../enums/input";
+import {Tag} from "../tag";
 
 import {applyStyles} from "./index.style";
 
@@ -34,6 +35,7 @@ interface IProps {
   style: ViewStyle;
   theme: ThemeTypes;
   value: InputValues;
+  tag?: string;
   placeholder?: string;
   disabled?: boolean;
   type?: KeyboardTypes;
@@ -52,6 +54,7 @@ export const InputField = (props: IProps) => {
     style,
     type,
     theme,
+    tag,
     value,
     onChange,
   } = props;
@@ -62,10 +65,11 @@ export const InputField = (props: IProps) => {
   return (
     <View style={{...styles.container, ...style}}>
       {disabled === true ? (
-        <Text style={styles.input}>{value}</Text>
+        <Text style={styles.text}>{value}</Text>
       ) : (
         <TouchableOpacity
           activeOpacity={1}
+          style={{flex: 1}}
           onPress={() => (input as any).focus()}>
           <View pointerEvents="none">
             <TextInput
@@ -85,6 +89,7 @@ export const InputField = (props: IProps) => {
           </View>
         </TouchableOpacity>
       )}
+      <Tag text={tag} theme={theme} />
     </View>
   );
 };

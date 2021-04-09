@@ -77,17 +77,17 @@ export const ChildView = (props: IProps) => {
           <InputField
             id={InputIds.name}
             style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.name}
             theme={theme}
             value={inputs[InputIds.name]}
             disabled={true}
+            tag={language.newPet.newPetInformation.name}
             onChange={() => undefined}
           />
           <InputTypeField
             id={InputIds.animalType}
             inputType={InputTypes.picker}
             style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.animalType}
+            tag={language.newPet.newPetInformation.animalType}
             theme={theme}
             disabled={true}
             value={inputs[InputIds.animalType]}
@@ -96,7 +96,7 @@ export const ChildView = (props: IProps) => {
             id={InputIds.dateOfBirth}
             inputType={InputTypes.date}
             style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            tag={language.newPet.newPetInformation.dateOfBirth}
             theme={theme}
             disabled={true}
             value={inputs[InputIds.dateOfBirth]}

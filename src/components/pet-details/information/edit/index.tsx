@@ -34,7 +34,7 @@ import {
 import {
   InputIds,
   onCancelPetDetailsEdit,
-  onProfileImage
+  onProfileImage,
 } from "../../../../store/actions/pet-details";
 
 import {applyStyles} from "../index.style";
@@ -82,7 +82,7 @@ export const ChildView = (props: IProps) => {
           <InputField
             id={InputIds.name}
             style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.name}
+            tag={language.newPet.newPetInformation.name}
             theme={theme}
             value={inputs[InputIds.name]}
             onChange={(id, value) => dispatch(onInputChange(id, value))}
@@ -91,7 +91,7 @@ export const ChildView = (props: IProps) => {
             id={InputIds.animalType}
             inputType={InputTypes.picker}
             style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.animalType}
+            tag={language.newPet.newPetInformation.animalType}
             theme={theme}
             value={inputs[InputIds.animalType]}
           />
@@ -99,7 +99,7 @@ export const ChildView = (props: IProps) => {
             id={InputIds.dateOfBirth}
             inputType={InputTypes.date}
             style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
+            tag={language.newPet.newPetInformation.dateOfBirth}
             theme={theme}
             value={inputs[InputIds.dateOfBirth]}
           />
