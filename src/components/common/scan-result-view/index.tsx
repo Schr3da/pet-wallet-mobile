@@ -9,11 +9,6 @@ import {PrimaryButton, SecondaryButton} from "../rounded-button";
 import {Dialog} from "../dialog";
 import {ICombinedReducerState} from "../../../store/reducers";
 import {LanguageTypes} from "../../../language";
-import {
-  base64ImageToUri,
-  inputValueEmpty,
-  getInputData,
-} from "../../common/utils";
 import {createStyle} from "../../../theme";
 import {DialogContentTypes, InputTypes} from "../../../enums/layout";
 import {IListData} from "../../common/list";
@@ -21,6 +16,7 @@ import {IScanDataDto} from "../../../dto/scan";
 import {IImageDataDto} from "../../../dto/image";
 import {ImageButton} from "../image-button";
 import {onInputChange} from "../../../store/actions/inputs";
+import {InputValues} from "../../../enums/input";
 
 import {
   onDismissDialog,
@@ -33,9 +29,14 @@ import {
   onCreateNewScanEntity,
   onToggleSelectionScanEntity,
   onCancelScanResult,
-  InputValues,
   onRemoveNewScanEntity,
 } from "../../../store/actions/scan-result";
+
+import {
+  base64ImageToUri,
+  inputValueEmpty,
+  getInputData,
+} from "../../common/utils";
 
 import {applyStyles} from "./index.style";
 

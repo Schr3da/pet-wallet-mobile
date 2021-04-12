@@ -46,8 +46,14 @@ const mapScanData = (
 
   return {
     prefills: {
-      [LanguageTypes.de]: filterByLanguage(LanguageTypes.de, prefills),
-      [LanguageTypes.en]: filterByLanguage(LanguageTypes.en, prefills),
+      [LanguageTypes.de]: filterByLanguage(
+        LanguageTypes.de,
+        prefills.length === 0 ? suggestions : prefills,
+      ),
+      [LanguageTypes.en]: filterByLanguage(
+        LanguageTypes.en,
+        prefills.length === 0 ? suggestions : prefills,
+      ),
     },
     suggestions: {
       [LanguageTypes.de]: filterByLanguage(LanguageTypes.de, suggestions),

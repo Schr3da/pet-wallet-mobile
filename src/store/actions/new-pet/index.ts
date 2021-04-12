@@ -34,6 +34,14 @@ export enum InputIds {
   dateOfBirth = "dateOfBirth",
 }
 
+export const onSkipAction = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  dispatch(onDismissDialog());
+  await onShowHomeComponent()(dispatch, getState);
+};
+
 export const onCancelNewPet = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,

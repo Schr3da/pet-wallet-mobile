@@ -26,7 +26,8 @@ interface IProps {
   data: IListData[];
   inputs: {[key: string]: InputValues};
   style: ViewStyle;
-  actionRenderer: (data: IListData) => React.ReactNode;
+  disabled?: boolean;
+  actionRenderer?: (data: IListData) => React.ReactNode;
   onSelect: (id: string) => void;
   onChange: (id: string, value: InputValues) => void;
   onAdd: () => void;
@@ -42,6 +43,7 @@ export const DataList = (props: IProps) => {
     onAdd,
     onSelect,
     onChange,
+    disabled,
     style,
   } = props;
 
@@ -55,19 +57,22 @@ export const DataList = (props: IProps) => {
     <View style={{...styles.container, ...style}}>
       {data.map((d, i) => (
         <View key={`list-item-${i}`} style={styles.item}>
-          <CheckBox
-            id={d.id}
-            style={styles.checkbox}
-            theme={theme}
-            isSelected={d.isSelected}
-            onSelect={onSelect}
-          />
+          {disabled === true ? null : (
+            <CheckBox
+              id={d.id}
+              style={styles.checkbox}
+              theme={theme}
+              isSelected={d.isSelected}
+              onSelect={onSelect}
+            />
+          )}
           {d.type === InputTypes.text ? (
             <InputField
               id={d.id}
               style={styles.input}
               theme={theme}
               value={inputs[d.id]}
+              disabled={disabled}
               placeholder={translation.scanResult.newEntity}
               onChange={onChange}
             />
@@ -77,6 +82,7 @@ export const DataList = (props: IProps) => {
               style={styles.input}
               theme={theme}
               language={language}
+              disabled={disabled}
               inputType={d.type}
               value={inputs[d.id]}
             />
@@ -86,15 +92,17 @@ export const DataList = (props: IProps) => {
           )}
         </View>
       ))}
-      <View style={styles.item}>
-        <RoundedButton
-          title={translation.common.addText}
-          background={colors.color11}
-          color={colors.color12}
-          style={styles.addButton}
-          onPress={onAdd}
-        />
-      </View>
+      {disabled == true ? null : (
+        <View style={styles.item}>
+          <RoundedButton
+            title={translation.common.newEntry}
+            background={colors.color6}
+            color={colors.color3}
+            style={styles.addButton}
+            onPress={onAdd}
+          />
+        </View>
+      )}
     </View>
   );
 };

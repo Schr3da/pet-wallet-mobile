@@ -149,7 +149,7 @@ const newPet: INewPet = {
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: "Save",
-    secondaryButton: "Cancel",
+    secondaryButton: "Skip",
     attachmentLabel: "Scan result",
   },
 };
@@ -252,7 +252,11 @@ const dialogs: IDialogs = {
   },
   [DialogContentTypes.cancelEditPetDetails]: {
     title: "Änderungen verwerfen",
-    text: "Möchtest du die Änderungen verwerfen?",
+    text: "Do you want discard your changes?",
+  },
+  [DialogContentTypes.skip]: {
+    title: "Skip action",
+    text: "Do you want to skip this step?",
   },
 };
 
@@ -310,7 +314,7 @@ const animalTypes = {
 };
 
 const common: ICommon = {
-  addText: "Add",
+  newEntry: "New entry",
   noScansFound: "No scans added",
   continue: "Continue",
   cancel: "Cancel",

@@ -17,7 +17,7 @@ export enum LanguageTypes {
 }
 
 export interface ICommon {
-  addText: string;
+  newEntry: string;
   noScansFound: string;
   continue: string;
   cancel: string;

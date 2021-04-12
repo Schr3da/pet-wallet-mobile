@@ -19,6 +19,7 @@ import {
   ProfileImage,
   Filters,
   TextAreaField,
+  DataList,
 } from "../../../common";
 
 import {
@@ -59,7 +60,7 @@ export const ChildView = (props: IProps) => {
 
   const {data, filters, inputs, newProfile} = useSelector(stateToProps);
 
-  const {theme, language} = props;
+  const {theme, language, languageType} = props;
 
   const styles = createStyle(theme, applyStyles);
 
@@ -116,58 +117,33 @@ export const ChildView = (props: IProps) => {
       )}
       {filterId === FilterTypes.medicalOnly && (
         <View style={styles.contentWrapper}>
-          <InputField
-            id={InputIds.name}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.name}
+          <DataList
+            style={{}}
             theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.animalType}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.animalType}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
+            language={languageType}
+            data={[
+              {
+                id: "1",
+                value: "asdasd",
+                isSelected: true,
+                type: InputTypes.text,
+              },
+              {
+                id: "2",
+                value: "asdasd",
+                isSelected: true,
+                type: InputTypes.text,
+              },
+              {
+                id: "3",
+                value: "asdasd",
+                isSelected: true,
+                type: InputTypes.text,
+              },
+            ]}
+            inputs={inputs}
+            onAdd={() => undefined}
+            onSelect={() => undefined}
             onChange={() => undefined}
           />
         </View>

@@ -8,7 +8,12 @@ import type {ILayoutChildProps} from "../../common/layout";
 import {createStyle, ThemeTypes} from "../../../theme";
 import {onShowScanResult} from "../../../store/actions/scan-result";
 import {ICombinedReducerState} from "../../../store/reducers";
-import {handleError, handleInputChange, requestCancel} from "../hooks";
+import {
+  handleError,
+  handleInputChange,
+  requestCancel,
+  requestSkip,
+} from "../hooks";
 import {IScanResult} from "../../../dto/scan";
 import {applyStyles} from "./index.style";
 import {IImageDataDto} from "../../../dto/image";
@@ -30,12 +35,15 @@ import {
   onCompleteNewPet,
   onCancelNewPet,
   onScan,
+  onSkipAction,
 } from "../../../store/actions/new-pet";
 
 import {
   onSetDialogContentType,
   onDismissDialog,
 } from "../../../store/actions/layout";
+
+import {SubViewComponents} from "../../../enums/navigation";
 
 interface IStateProps {
   attachments: IScanResult[];
@@ -133,25 +141,50 @@ export const ChildView = (props: ILayoutChildProps) => {
   );
 };
 
+const footerStateToProps = (state: ICombinedReducerState) => ({
+  hasAttachments: state.newPet.scans.length !== 0,
+});
+
 export const Footer = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
-  const {theme, language} = props;
+  const {hasAttachments} = useSelector(footerStateToProps);
 
-  return (
-    <React.Fragment>
-      <RoundedButtons.SecondaryButton
-        theme={theme}
-        title={language.newPet.newPetScan.secondaryButton}
-        onPress={() => requestCancel(dispatch)}
-      />
-      <RoundedButtons.PrimaryButton
-        theme={theme}
-        title={language.newPet.newPetScan.primaryButton}
-        onPress={() => dispatch(onCompleteNewPet())}
-      />
-    </React.Fragment>
-  );
+  const {theme, language, subViewComponent} = props;
+
+  switch (subViewComponent) {
+    case SubViewComponents.newPetScan:
+      return (
+        <React.Fragment>
+          <RoundedButtons.SecondaryButton
+            theme={theme}
+            title={language.newPet.newPetScan.secondaryButton}
+            onPress={() => requestSkip(dispatch)}
+          />
+          <RoundedButtons.PrimaryButton
+            theme={theme}
+            isDisabled={hasAttachments === false}
+            title={language.newPet.newPetScan.primaryButton}
+            onPress={() => dispatch(onCompleteNewPet())}
+          />
+        </React.Fragment>
+      );
+    default:
+      return (
+        <React.Fragment>
+          <RoundedButtons.SecondaryButton
+            theme={theme}
+            title={language.newPet.newPetScan.secondaryButton}
+            onPress={() => requestCancel(dispatch)}
+          />
+          <RoundedButtons.PrimaryButton
+            theme={theme}
+            title={language.newPet.newPetScan.primaryButton}
+            onPress={() => dispatch(onCompleteNewPet())}
+          />
+        </React.Fragment>
+      );
+  }
 };
 
 export const Dialogs = (props: ILayoutChildProps) => {
@@ -168,6 +201,16 @@ export const Dialogs = (props: ILayoutChildProps) => {
           theme={theme}
           language={language}
           onPress={() => dispatch(onCancelNewPet())}
+        />
+      );
+    case DialogContentTypes.skip:
+      return (
+        <Dialog
+          title={language.dialogs.skip.title}
+          text={language.dialogs.skip.text}
+          theme={theme}
+          language={language}
+          onPress={() => dispatch(onSkipAction())}
         />
       );
     case DialogContentTypes.deleteAttachment:

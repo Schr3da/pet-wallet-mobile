@@ -11,6 +11,7 @@ import {
   Filters,
   InputTypeField,
   TextAreaField,
+  DataList,
 } from "../../../common";
 import {ILayoutChildProps} from "../../../common/layout";
 import {InputIds, onRemovePet} from "../../../../store/actions/pet-details";
@@ -115,58 +116,34 @@ export const ChildView = (props: IProps) => {
       )}
       {filterId === FilterTypes.medicalOnly && (
         <View style={styles.contentWrapper}>
-          <InputField
-            id={InputIds.name}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.name}
+          <DataList
+            style={{}}
             theme={theme}
-            value=""
+            language={languageType}
+            data={[
+              {
+                id: "1",
+                value: "asdasd",
+                isSelected: true,
+                type: InputTypes.text,
+              },
+              {
+                id: "2",
+                value: "asdasd",
+                isSelected: true,
+                type: InputTypes.text,
+              },
+              {
+                id: "3",
+                value: "asdasd",
+                isSelected: true,
+                type: InputTypes.text,
+              },
+            ]}
             disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.animalType}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.animalType}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
-            onChange={() => undefined}
-          />
-          <InputField
-            id={InputIds.dateOfBirth}
-            style={styles.inputField}
-            placeholder={language.newPet.newPetInformation.dateOfBirth}
-            theme={theme}
-            value=""
-            disabled={true}
+            inputs={inputs}
+            onAdd={() => undefined}
+            onSelect={() => undefined}
             onChange={() => undefined}
           />
         </View>

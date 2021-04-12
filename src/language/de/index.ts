@@ -152,7 +152,7 @@ const newPet: INewPet = {
   },
   [SubViewComponents.newPetScan]: {
     primaryButton: "Speichern",
-    secondaryButton: "Abbrechen",
+    secondaryButton: "Überspringen",
     attachmentLabel: "Scan Resultat",
   },
 };
@@ -258,6 +258,10 @@ const dialogs: IDialogs = {
     title: "Änderungen verwerfen",
     text: "Möchtest du die Änderungen verwerfen?",
   },
+  [DialogContentTypes.skip]: {
+    title: "Aktion überspringen",
+    text: "Möchtest du die Aktion überspringen",
+  },
 };
 
 const sharePetDetails: ISharePetDetails = {
@@ -314,7 +318,7 @@ const petDetails: IPetDetails = {
 };
 
 const common: ICommon = {
-  addText: "Hinzufügen",
+  newEntry: "Neuer Eintrag",
   noScansFound: "Keine Einträge hinzugefügt",
   continue: "Weiter",
   cancel: "Abbrechen",

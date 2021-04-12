@@ -31,5 +31,8 @@ export const handleChangeComponentView = (
 export const requestCancel = (dispatch: any) =>
   dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
 
+export const requestSkip = (dispatch: any) =>
+  dispatch(onSetDialogContentType(DialogContentTypes.skip));
+
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
