@@ -8,19 +8,21 @@ import type {ILayoutChildProps} from "../../common/layout";
 import {createStyle, ThemeTypes} from "../../../theme";
 import {onShowScanResult} from "../../../store/actions/scan-result";
 import {ICombinedReducerState} from "../../../store/reducers";
+
+import {IScanResult} from "../../../dto/scan";
+import {applyStyles} from "./index.style";
+import {IImageDataDto} from "../../../dto/image";
+import {getInputData} from "../../common/utils";
+import {InputValues} from "../../../enums/input";
+import {SubViewComponents} from "../../../enums/navigation";
+import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
+
 import {
   handleError,
   handleInputChange,
   requestCancel,
   requestSkip,
 } from "../hooks";
-import {IScanResult} from "../../../dto/scan";
-import {applyStyles} from "./index.style";
-import {IImageDataDto} from "../../../dto/image";
-import {getInputData} from "../../common/utils";
-import {InputValues} from "../../../enums/input";
-
-import {DialogContentTypes, ErrorTypes} from "../../../enums/layout";
 
 import {
   ImagePicker,
@@ -42,8 +44,6 @@ import {
   onSetDialogContentType,
   onDismissDialog,
 } from "../../../store/actions/layout";
-
-import {SubViewComponents} from "../../../enums/navigation";
 
 interface IStateProps {
   attachments: IScanResult[];

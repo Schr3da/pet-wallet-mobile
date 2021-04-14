@@ -18,7 +18,7 @@ import {
   base64ImageString,
   getInputValue,
 } from "../../../components/common/utils";
-import {requestScan} from "../../../communication/wallet";
+import {requestScan, saveScanResults} from "../../../communication/wallet";
 import {onShowScanResult, onResetScanResult} from "../scan-result";
 
 import {
@@ -234,7 +234,25 @@ export const onSaveScanResult = () => (
   dispatch(onGoBackNavigation(language));
 };
 
-export const onCompleteNewPet = () => onShowHomeComponent();
+export const onCompleteNewPet = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+  const token = state.database.token!;
+
+  dispatch(setLoading(true));
+
+  const isSuccesful = await saveScanResults(state, token);
+
+  dispatch(onShowHomeComponent());
+
+  dispatch(setLoading(false));
+
+  if (isSuccesful === false) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+  }
+};
 
 export type Actions =
   | IOnSetProfileImageNewPet

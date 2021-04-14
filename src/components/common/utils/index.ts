@@ -41,7 +41,7 @@ export const base64ImageString = (image: IImageDataDto | null) => {
     return null;
   }
 
-  return `data:${image.fileType};base64, ${image.imageBase64}`;
+  return `data:${image.fileType};${image.imageBase64}`;
 };
 
 export const base64ImageToUri = (

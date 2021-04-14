@@ -170,7 +170,7 @@ export const Footer = (props: ILayoutChildProps) => {
       <PrimaryButton
         theme={theme}
         title={language.scanResult.primaryButton}
-        onPress={() => undefined}
+        onPress={() => dispatch(onSavePetDetails())}
       />
     </React.Fragment>
   );

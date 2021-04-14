@@ -129,6 +129,13 @@ export const onRemovePet = (id: string) => async (
   dispatch(onDismissDialog());
 };
 
+export const onSave = () => (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+};
+
 export const onShowEditView = (id: string) => (
   dispatch: any,
   getState: () => ICombinedReducerState,

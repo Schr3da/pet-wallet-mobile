@@ -5,6 +5,7 @@ import {postRequest} from "../common";
 import {LanguageTypes} from "../../language";
 import {IScanEntityDto} from "../../dto/scan";
 import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
+import {ICombinedReducerState} from "../../store/reducers";
 
 export const requestScan = async (
   id: string,
@@ -227,4 +228,63 @@ export const deleteWallet = async (token: string): Promise<boolean> => {
   } catch {
     return false;
   }
+};
+
+export const saveScanResults = async (
+  state: ICombinedReducerState,
+  token: string,
+): Promise<boolean> => {
+  const url = "/api/petpass/wallet/create";
+
+  const {scans, id} = state.newPet;
+  const language = state.layout.language;
+  const requests = mapScansToEntries(id, scans, language);
+
+  try {
+    for (let i = 0; i < requests.length; i++) {
+      const request = requests[i];
+      await postRequest<
+        WalletDtos.CreateWalletEntryRequestDto,
+        WalletDtos.CreateWalletScanResponseDto
+      >(url, request, token);
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const mapScansToEntries = (
+  petId: string | null,
+  scans: Dtos.Scan.IScanResult[],
+  language: LanguageTypes,
+): WalletDtos.CreateWalletEntryRequestDto[] => {
+  if (petId == null) {
+    return [];
+  }
+
+  return (scans || []).reduce((result, next) => {
+    if (next == null || next.data == null) {
+      return result;
+    }
+
+    if (next.data.prefills == null || next.data.prefills[language] == null) {
+      return result;
+    }
+
+    const data = next.data.prefills[language]
+      .filter((d) => d.isSelected)
+      .map((d) => {
+        const entry: WalletDtos.CreateWalletEntryRequestDto = {
+          petId,
+          medicineId: d.id,
+          title: d.shortInfo,
+          description: d.longInfo,
+          date: Date.now(),
+        };
+        return entry;
+      });
+    return [...result, ...data];
+  }, [] as WalletDtos.CreateWalletEntryRequestDto[]);
 };

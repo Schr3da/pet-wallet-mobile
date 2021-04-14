@@ -21,3 +21,20 @@ export interface PetWalletScanMedicineInfoDto {
   language: string;
   url: string;
 }
+
+export interface CreateWalletEntryRequestDto {
+  petId: string;
+  medicineId: string | undefined;
+  title: string;
+  description: string | null;
+  date: number;
+}
+
+export interface CreateWalletEntryResponseDto {
+  id: string;
+  petId: string;
+  medicineId: string | null;
+  title: string;
+  description: string | null;
+  date: number;
+}

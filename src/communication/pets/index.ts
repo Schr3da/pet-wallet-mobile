@@ -42,11 +42,13 @@ export const createNewPet = async (
 ): Promise<IPetDto | null> => {
   const url = "/api/petpass/pet/create";
 
+  const request = newCreatePetRequest(state);
+
   try {
     const response = await postRequest<
       PetDtos.ICreatePetRequestDto,
       PetDtos.ICreatePetResponseDto
-    >(url, newCreatePetRequest(state), token);
+    >(url, request, token);
 
     if (response == null) {
       return Promise.resolve(null);
@@ -58,7 +60,7 @@ export const createNewPet = async (
       name: response.name,
       dateOfBirth:
         response.dateOfBirth == null ? null : new Date(response.dateOfBirth),
-      profileImage: response.avatarImage || undefined,
+      profileImage: response.avatarImage || request.avatarImage || undefined,
       profileUri: undefined,
     });
   } catch (error) {
@@ -79,12 +81,22 @@ export const updateNewPet = async (
 ) => {
   const url = "/api/petpass/pet/update";
 
+  const request = newUpdatePetRequest(state);
+
   try {
     const response = await postRequest<
       PetDtos.IUpdatePetRequestDto,
       PetDtos.IUpdatePetResponseDto
-    >(url, newUpdatePetRequest(state), token);
-    return Promise.resolve(response);
+    >(url, request, token);
+    return Promise.resolve({
+      id: response.id || request.id,
+      animal: response.type || request.type,
+      name: response.name || request.name,
+      dateOfBirth:
+        response.dateOfBirth == null ? null : new Date(response.dateOfBirth),
+      profileImage: response.avatarImage || request.avatarImage || undefined,
+      profileUri: undefined,
+    });
   } catch (error) {
     return Promise.resolve(null);
   }
