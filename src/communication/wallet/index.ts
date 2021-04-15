@@ -246,7 +246,6 @@ export const saveScanResults = async (
   try {
     for (let i = 0; i < requests.length; i++) {
       const request = requests[i];
-      console.log(request);
       await postRequest<
         WalletDtos.CreateWalletEntryRequestDto,
         WalletDtos.CreateWalletScanResponseDto

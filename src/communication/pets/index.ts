@@ -151,3 +151,9 @@ const mapFetchedPets = (response: IFetchPetsRequestDto | null): IPetDto[] => {
     })
     .filter((p) => p != null) as IPetDto[];
 };
+
+export const updatePet = async (state: ICombinedReducerState) => {
+  
+  return true;
+}
+

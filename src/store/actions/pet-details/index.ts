@@ -5,7 +5,7 @@ import {
   onChangeViewComponent,
   onChangeSubViewComponent,
 } from "../navigation";
-import {deletePet} from "../../../communication/pets";
+import {deletePet, updatePet} from "../../../communication/pets";
 import {IImageDataDto} from "../../../dto/image";
 import {base64ImageString} from "../../../components/common/utils";
 import {requestScan} from "../../../communication/wallet";
@@ -129,11 +129,20 @@ export const onRemovePet = (id: string) => async (
   dispatch(onDismissDialog());
 };
 
-export const onSave = () => (
+export const onSave = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
+  
+  const {language} = state.layout;
+
+  dispatch(setLoading(true));
+
+  await updatePet(state);
+
+  dispatch(onGoBackNavigation(language));
+  dispatch(setLoading(false));
 };
 
 export const onShowEditView = (id: string) => (
