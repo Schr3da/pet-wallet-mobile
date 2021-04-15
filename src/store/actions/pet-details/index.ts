@@ -1,24 +1,25 @@
 import {ICombinedReducerState} from "../../reducers";
-import {setLoading, onDismissDialog, onSetErrorCode} from "../layout";
+import {setLoading, onDismissDialog, onSetErrorCode, onSetNotificationType} from "../layout";
 import {deletePet, updatePet} from "../../../communication/pets";
 import {IImageDataDto} from "../../../dto/image";
+import {requestScan, getNotes, postNotes} from "../../../communication/wallet";
+import {ErrorTypes, NotificationTypes} from "../../../enums/layout";
+import {onShowScanResult} from "../scan-result";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+import {onSetValuesFor} from "../inputs";
+import {INotesDto} from "../../../dto/pets";
+
 import {
   base64ImageString,
   arrayToDictionary,
 } from "../../../components/common/utils";
-import {requestScan, getNotes} from "../../../communication/wallet";
-import {ErrorTypes} from "../../../enums/layout";
-import {onShowScanResult} from "../scan-result";
-import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
-import {onSetValuesFor} from "../inputs";
 
 import {
   onGoBackNavigation,
   onChangeViewComponent,
   onChangeSubViewComponent,
+  onShowHomeComponent,
 } from "../navigation";
-import {INotesDto} from "../../../dto/pets";
-import {onFetchPets} from "../pets";
 
 export enum InputIds {
   name = "name",
@@ -138,12 +139,19 @@ export const onRemovePet = (id: string) => async (
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
-  const {language} = state.layout;
   const token = state.database.token;
 
+  const {language} = state.layout;
+
+  dispatch(setLoading(true));
+  
   await deletePet(id, token!);
+
   dispatch(onGoBackNavigation(language));
+
   dispatch(onDismissDialog());
+
+  dispatch(setLoading(false));
 };
 
 export const onSave = () => async (
@@ -162,11 +170,15 @@ export const onSave = () => async (
 
   await updatePet(petId, state);
 
-  await onFetchPets()(dispatch, getState);
+  await postNotes(petId, state);
+
+  await onShowHomeComponent()(dispatch, getState);
 
   await onShowPetDetails(petId)(dispatch, getState);
 
   dispatch(setLoading(false));
+
+  dispatch(onSetNotificationType(NotificationTypes.savedData));
 };
 
 export const onShowEditView = (id: string) => (
@@ -177,14 +189,18 @@ export const onShowEditView = (id: string) => (
 
   const {language} = state.layout;
 
+  const {notes} = state.petDetails;
+
   const data = mapToInputs(id, state);
   if (data == null) {
     return;
   }
 
+  const noteData = arrayToDictionary(notes, (n) => n.body);
+
   dispatch(
     onSetValuesFor(
-      data,
+      {...data, ...noteData},
       ViewComponents.petDetails,
       SubViewComponents.petDetailsEdit,
     ),
@@ -242,4 +258,5 @@ export const fetchNotes = (id: string) => async (
 export type Actions =
   | IOnShowPetDetails
   | IOnSetProfileImagePetDetails
-  | IOnFetchNotesPetDetails;
+  | IOnFetchNotesPetDetails
+;

@@ -74,7 +74,6 @@ export const InputField = (props: IProps) => {
           <View pointerEvents="none">
             <TextInput
               ref={(ref: any) => (input = ref)}
-              clearButtonMode={"while-editing"}
               style={styles.input}
               autoCorrect={false}
               placeholder={placeholder}

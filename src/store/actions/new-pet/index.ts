@@ -12,21 +12,22 @@ import type {
 import {LanguageTypes} from "../../../language";
 
 import {SubViewComponents} from "../../../enums/navigation";
-import {ErrorTypes} from "../../../enums/layout";
-import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
+import {ErrorTypes, NotificationTypes} from "../../../enums/layout";
+import {setLoading, onSetErrorCode, onDismissDialog, onSetNotificationType} from "../layout";
+import {requestScan, saveScanResults} from "../../../communication/wallet";
+import {onShowScanResult, onResetScanResult} from "../scan-result";
+import {onResetInputsFor} from "../inputs";
+
 import {
   base64ImageString,
   getInputValue,
 } from "../../../components/common/utils";
-import {requestScan, saveScanResults} from "../../../communication/wallet";
-import {onShowScanResult, onResetScanResult} from "../scan-result";
 
 import {
   onChangeSubViewComponent,
   onShowHomeComponent,
   onGoBackNavigation,
 } from "../navigation";
-import {onResetInputsFor} from "../inputs";
 
 export enum InputIds {
   name = "name",
@@ -251,9 +252,9 @@ export const onCompleteNewPet = () => async (
 
   dispatch(setLoading(false));
 
-  if (isSuccesful === false) {
-    dispatch(onSetErrorCode(ErrorTypes.unexpected));
-  }
+  isSuccesful === false 
+    ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
+    : null; 
 };
 
 export type Actions =

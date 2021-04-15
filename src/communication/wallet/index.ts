@@ -7,6 +7,8 @@ import {IScanEntityDto} from "../../dto/scan";
 import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
 import {ICombinedReducerState} from "../../store/reducers";
 import {INotesDto} from "../../dto/pets";
+import {getInputData} from "../../components/common/utils";
+import {InputIds} from "../../store/actions/pet-details";
 
 export const requestScan = async (
   id: string,
@@ -297,7 +299,7 @@ export const getNotes = async (
   petId: string,
   token: string | null,
 ): Promise<INotesDto[]> => {
-  const url = "/api/petpass/note/create";
+  const url = "/api/petpass/note/find";
 
   if (token == null) {
     return [];
@@ -320,6 +322,43 @@ export const getNotes = async (
 };
 
 export const postNotes = async (
+  petId: string,
   state: ICombinedReducerState,
-  token: string | null,
-) => {};
+) => {
+  const url = "/api/petpass/note/create";
+
+  const {token} = state.database;
+
+  if (token == null) {
+    return [];
+  }
+  
+  const {notes} = state.petDetails;
+  
+  const request = {
+    petId,
+    notes: notes.length == 0 ? [{
+      title: "",
+      body: getInputData<{[InputIds.notes]: string}>(state)[InputIds.notes],
+    }] : notes.map((n) => ({
+      title: "",
+      body: getInputData<{[id: string]: string}>(state)[n.id] || "",
+    }))
+  };
+
+  try {
+    await postRequest<
+      WalletDtos.ICreateWalletNotesRequestDto,
+      {}
+    >(url, request, token);
+
+    return true;
+
+  } catch {
+    return false;
+  }
+
+
+
+
+};

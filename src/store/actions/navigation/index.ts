@@ -73,6 +73,7 @@ export const onShowHomeComponent = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ): Promise<void> => {
+
   dispatch(setLoading(true));
 
   await onFetchPets()(dispatch, getState);
@@ -84,7 +85,7 @@ export const onShowHomeComponent = () => async (
     language: state.layout.language,
     hasPets: state.navigation.hasPets,
   });
-
+  
   dispatch(setLoading(false));
 };
 
