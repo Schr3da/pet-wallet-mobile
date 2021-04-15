@@ -98,6 +98,7 @@ const extractPrefills = (
         url: matchDE.url,
         language: matchDE.language as LanguageTypes,
         isSelected: true,
+        isLocallyAdded: false,
       });
     }
 
@@ -110,6 +111,7 @@ const extractPrefills = (
         url: matchEN.url,
         language: matchEN.language as LanguageTypes,
         isSelected: true,
+        isLocallyAdded: false,
       });
     }
 
@@ -215,6 +217,7 @@ const getInfos = (
         longInfo: next.longInfo,
         url: next.url,
         language: next.language as LanguageTypes,
+        isLocallyAdded: false,
       },
     ];
   }, [] as IScanEntityDto[]);
@@ -243,6 +246,7 @@ export const saveScanResults = async (
   try {
     for (let i = 0; i < requests.length; i++) {
       const request = requests[i];
+      console.log(request);
       await postRequest<
         WalletDtos.CreateWalletEntryRequestDto,
         WalletDtos.CreateWalletScanResponseDto
@@ -278,7 +282,7 @@ const mapScansToEntries = (
       .map((d) => {
         const entry: WalletDtos.CreateWalletEntryRequestDto = {
           petId,
-          medicineId: d.id,
+          medicineId: d.isLocallyAdded ? undefined : d.id,
           title: d.shortInfo,
           description: d.longInfo,
           date: Date.now(),

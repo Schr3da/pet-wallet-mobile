@@ -37,6 +37,7 @@ import {
   InputIds,
   onCancelPetDetailsEdit,
   onProfileImage,
+  onSave,
 } from "../../../../store/actions/pet-details";
 
 import {applyStyles} from "../index.style";
@@ -170,7 +171,7 @@ export const Footer = (props: ILayoutChildProps) => {
       <PrimaryButton
         theme={theme}
         title={language.scanResult.primaryButton}
-        onPress={() => dispatch(onSavePetDetails())}
+        onPress={() => dispatch(onSave())}
       />
     </React.Fragment>
   );

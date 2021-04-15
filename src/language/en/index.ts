@@ -258,6 +258,10 @@ const dialogs: IDialogs = {
     title: "Skip action",
     text: "Do you want to skip this step?",
   },
+  [DialogContentTypes.noDataSelected]: {
+    title: "No data selected",
+    text: "No data have been selected. Do you want to continue?",
+  },
 };
 
 const sharePetDetails: ISharePetDetails = {

@@ -118,7 +118,7 @@ export const Footer = (props: ILayoutChildProps) => {
       />
       <RoundedButtons.PrimaryButton
         theme={theme}
-        title={language.newPet.newPetInformation.primaryButton}
+        title={language.common.continue}
         isDisabled={canContinue === false}
         onPress={() => dispatch(onCreateNewPet())}
       />

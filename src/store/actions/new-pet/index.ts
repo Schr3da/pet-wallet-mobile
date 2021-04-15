@@ -195,6 +195,7 @@ export const onSaveScanResult = () => (
 
   if (result == null) {
     dispatch(onSetErrorCode(ErrorTypes.unexpected));
+    dispatch(onDismissDialog());
     return;
   }
 
@@ -232,6 +233,7 @@ export const onSaveScanResult = () => (
   dispatch(onResetInputsFor(mainViewComponent, subViewComponent));
   dispatch(onResetScanResult());
   dispatch(onGoBackNavigation(language));
+  dispatch(onDismissDialog());
 };
 
 export const onCompleteNewPet = () => async (

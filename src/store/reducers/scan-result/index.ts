@@ -1,7 +1,7 @@
 import {ScanResult, Navigation, Database} from "../../actions";
 import {LanguageTypes} from "../../../language";
 import {createUuid} from "../../../components/common/utils";
-import {IScanDataDto} from "../../../dto/scan";
+import {IScanDataDto, IScanEntityDto} from "../../../dto/scan";
 import {IImageDataDto} from "../../../dto/image";
 
 export interface IScanResultState {
@@ -29,6 +29,7 @@ const handleNewScanEntity = (state: IScanResultState): IScanResultState => {
     longInfo: "",
     url: "",
     isSelected: true,
+    isLocallyAdded: true,
   };
 
   Object.values(LanguageTypes).forEach((lang) => {
