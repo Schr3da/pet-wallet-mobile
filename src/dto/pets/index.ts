@@ -30,3 +30,9 @@ export interface IPetDto {
   profileUri: string | undefined;
   animal: string;
 }
+
+export interface INotesDto {
+  id: string;
+  title: string;
+  body: string;
+}

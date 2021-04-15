@@ -38,3 +38,21 @@ export interface CreateWalletEntryResponseDto {
   description: string | null;
   date: number;
 }
+
+export interface INoteDto {
+  title: string;
+  body: string;
+}
+
+export interface ICreateWalletNotesRequestDto {
+  petId: string;
+  notes: INoteDto[];
+}
+
+export interface IGetWalletNotesRequestDto {
+  petId: string;
+}
+
+export interface IGetWalletNotesResponseDto {
+  data: INoteDto[];
+}

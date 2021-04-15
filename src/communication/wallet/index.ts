@@ -6,6 +6,7 @@ import {LanguageTypes} from "../../language";
 import {IScanEntityDto} from "../../dto/scan";
 import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
 import {ICombinedReducerState} from "../../store/reducers";
+import {INotesDto} from "../../dto/pets";
 
 export const requestScan = async (
   id: string,
@@ -291,3 +292,34 @@ const mapScansToEntries = (
     return [...result, ...data];
   }, [] as WalletDtos.CreateWalletEntryRequestDto[]);
 };
+
+export const getNotes = async (
+  petId: string,
+  token: string | null,
+): Promise<INotesDto[]> => {
+  const url = "/api/petpass/note/create";
+
+  if (token == null) {
+    return [];
+  }
+
+  try {
+    const response = await postRequest<
+      WalletDtos.IGetWalletNotesRequestDto,
+      WalletDtos.IGetWalletNotesResponseDto
+    >(url, {petId}, token);
+
+    return (response.data || []).map((d, index) => ({
+      id: `note-${index}`,
+      title: d.title,
+      body: d.body,
+    }));
+  } catch {
+    return [];
+  }
+};
+
+export const postNotes = async (
+  state: ICombinedReducerState,
+  token: string | null,
+) => {};

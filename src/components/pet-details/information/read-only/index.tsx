@@ -43,10 +43,11 @@ const stateToProps = (state: ICombinedReducerState) => ({
   inputs: getInputData<{[key: string]: InputValues}>(state),
   filters: state.filters.petDetails.none,
   data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
+  notes: state.petDetails.notes,
 });
 
 export const ChildView = (props: IProps) => {
-  const {data, filters, inputs} = useSelector(stateToProps);
+  const {data, filters, inputs, notes} = useSelector(stateToProps);
 
   const {id, theme, language, languageType} = props;
 
@@ -103,15 +104,30 @@ export const ChildView = (props: IProps) => {
             disabled={true}
             value={inputs[InputIds.dateOfBirth]}
           />
-          <TextAreaField
-            id={InputIds.notes}
-            style={styles.inputField}
-            tag={language.petDetails.none.notesTitle}
-            theme={theme}
-            disabled={true}
-            value={inputs[InputIds.notes]}
-            onChange={() => undefined}
-          />
+          {notes.length === 0 ? (
+            <TextAreaField
+              id={InputIds.notes}
+              style={styles.inputField}
+              tag={language.petDetails.none.notesTitle}
+              theme={theme}
+              disabled={true}
+              value={inputs[InputIds.notes]}
+              onChange={() => undefined}
+            />
+          ) : (
+            notes.map((n) => (
+              <TextAreaField
+                id={n.id}
+                key={n.id}
+                style={styles.inputField}
+                tag={language.petDetails.none.notesTitle}
+                theme={theme}
+                disabled={true}
+                value={inputs[n.id]}
+                onChange={() => undefined}
+              />
+            ))
+          )}
         </View>
       )}
       {filterId === FilterTypes.medicalOnly && (

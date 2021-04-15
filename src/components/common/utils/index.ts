@@ -180,3 +180,18 @@ export const getInputValue = (
 
   return inputs[mainViewComponent][subViewComponent][key];
 };
+
+export const arrayToDictionary = <T extends {id: string}>(
+  array: T[],
+  getValue: (d: T) => InputValues,
+) =>
+  (array || []).reduce((result, next) => {
+    if (next == null) {
+      return result;
+    }
+
+    const {id} = next;
+    result[id] = getValue(next);
+
+    return result;
+  }, {} as {[id: string]: InputValues});
