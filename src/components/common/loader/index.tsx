@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Image, View} from "react-native";
+import {Image, View, ViewStyle} from "react-native";
 import Animated, {Easing} from "react-native-reanimated";
 
 import {createStyle, getColors, ThemeTypes} from "../../../theme";
@@ -91,18 +91,22 @@ class Page extends React.Component<IPageProps, unknown> {
 
 interface IProps {
   theme: ThemeTypes;
+  isVisible: boolean;
   isAnimating: boolean;
+  style?: ViewStyle;
 }
 
 export const Loader = (props: IProps) => {
-  const {isAnimating, theme} = props;
+  const {isAnimating, isVisible, theme, style} = props;
 
   const styles = createStyle(theme, applyStyles);
   const colors = getColors(theme);
+  const pointerEvent = isVisible ? "auto" : "none";
   const endValue = 30;
 
+
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container(isVisible), ...(style || {})}} pointerEvents={pointerEvent}>
       <View style={styles.loader}>
         <Page
           color={colors.color4}

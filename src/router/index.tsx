@@ -19,12 +19,14 @@ import {ViewComponents} from "../enums/navigation";
 import {DisplayModes} from "../enums/layout";
 
 import {applyStyles} from "./index.style";
+import {Loader} from "../components/common/loader";
 
 interface IProps {
   mainViewComponent: ViewComponents;
   theme: ThemeTypes;
   isApplePlatform: boolean;
   displayMode: DisplayModes;
+  isLoading: boolean;
 }
 
 const stateToProps = (state: ICombinedReducerState): IProps => ({
@@ -32,10 +34,11 @@ const stateToProps = (state: ICombinedReducerState): IProps => ({
   theme: state.layout.theme,
   isApplePlatform: state.layout.isApplePlatform,
   displayMode: state.layout.displayMode,
+  isLoading: state.layout.isLoading,
 });
 
 export const Route = (): JSX.Element => {
-  const {displayMode, isApplePlatform, mainViewComponent, theme} = useSelector(
+  const {displayMode, isApplePlatform, mainViewComponent, theme, isLoading} = useSelector(
     stateToProps,
   );
 
@@ -78,6 +81,7 @@ export const Route = (): JSX.Element => {
         barStyle={theme === ThemeTypes.Dark ? "light-content" : "dark-content"}
       />
       <View style={styles.container}>{childComponent}</View>
+      <Loader style={styles.loader} theme={theme} isVisible={isLoading} isAnimating={true} />
     </SafeAreaView>
   );
 };
