@@ -7,10 +7,6 @@ export interface IScanResult {
   data: IScanDataDto;
 }
 
-export interface IScanResultDataDto {
-  data: IScanDataDto;
-}
-
 export interface IScanEntityDto {
   id: string;
   shortInfo: string;

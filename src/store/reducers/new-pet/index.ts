@@ -1,4 +1,4 @@
-import {Database, NewPet, Navigation} from "../../actions";
+import {Database, NewPet, Navigation, ScanResult} from "../../actions";
 import {IPetDto} from "../../../dto/pets";
 
 import {IImageDataDto} from "../../../dto/image";
@@ -72,7 +72,11 @@ const handleSaveNewScanResult = (
   };
 };
 
-type Actions = NewPet.Actions | Database.Actions | Navigation.Actions;
+type Actions =
+  | NewPet.Actions
+  | Database.Actions
+  | Navigation.Actions
+  | ScanResult.Actions;
 
 const reducer = (state: INewPetState = initialState(), action: Actions) => {
   switch (action.type) {
@@ -82,7 +86,7 @@ const reducer = (state: INewPetState = initialState(), action: Actions) => {
       return handleRemoveScan(state, action.id);
     case NewPet.ON_CREATE_NEW_PET:
       return handleCreateNewPet(state, action.data);
-    case NewPet.ON_SCAN_NEW_PET:
+    case ScanResult.ON_NEW_PET_PASS_SCAN_RESULT:
       return handleNewScan(state, action.data);
     case NewPet.ON_SAVE_SCAN_RESULT:
       return handleSaveNewScanResult(state, action.id, action.data);

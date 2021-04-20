@@ -1,10 +1,9 @@
-import {Navigation, PetDetails} from "../../actions";
-import {
-  ON_GO_BACK_NAVIGATION,
-  ON_SHOW_HOME_COMPONENT,
-} from "../../actions/navigation";
+import {Navigation, PetDetails, ScanResult} from "../../actions";
+import {ON_SHOW_HOME_COMPONENT} from "../../actions/navigation";
 import {IImageDataDto} from "../../../dto/image";
 import {INotesDto, IScanDto} from "../../../dto/pets";
+import {ON_NEW_PET_PASS_SCAN_RESULT} from "../../actions/scan-result";
+import {IScanResult} from "../../../dto/scan";
 
 import {
   ON_SET_PROFILE_IMAGE_PET_DETAILS,
@@ -16,12 +15,14 @@ export interface IPetDetailsState {
   newProfile: IImageDataDto | null;
   notes: INotesDto[];
   scans: IScanDto[];
+  newScan: IScanResult | null;
 }
 
 const initialState = (): IPetDetailsState => ({
   newProfile: null,
   notes: [],
   scans: [],
+  newScan: null,
 });
 
 const handleNewProfileImage = (
@@ -50,7 +51,15 @@ const handleSetScans = (
   scans,
 });
 
-type Actions = Navigation.Actions | PetDetails.Actions;
+const handleNewScanResult = (
+  state: IPetDetailsState,
+  newScan: IScanResult,
+): IPetDetailsState => ({
+  ...state,
+  newScan,
+});
+
+type Actions = Navigation.Actions | PetDetails.Actions | ScanResult.Actions;
 
 const reducer = (state: IPetDetailsState = initialState(), action: Actions) => {
   switch (action.type) {
@@ -62,6 +71,8 @@ const reducer = (state: IPetDetailsState = initialState(), action: Actions) => {
       return handleSetNotes(state, action.data);
     case ON_FETCH_SCAN_RESULTS_PET_DETAILS:
       return handleSetScans(state, action.data);
+    case ON_NEW_PET_PASS_SCAN_RESULT:
+      return handleNewScanResult(state, action.data);
     default:
       return state;
   }

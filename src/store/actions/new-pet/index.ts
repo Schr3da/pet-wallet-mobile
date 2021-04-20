@@ -3,21 +3,16 @@ import * as Communication from "../../../communication";
 import type {ICombinedReducerState} from "../../reducers";
 import type {IPetDto} from "../../../dto/pets";
 import type {IImageDataDto} from "../../../dto/image";
-import type {IScanResult, IScanDataPrefillsDto} from "../../../dto/scan";
+import type {IScanDataPrefillsDto} from "../../../dto/scan";
 
 import {LanguageTypes} from "../../../language";
-
 import {SubViewComponents} from "../../../enums/navigation";
 import {ErrorTypes} from "../../../enums/layout";
 import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
-import {requestScan, saveScanResults} from "../../../communication/wallet";
-import {onShowScanResult, onResetScanResult} from "../scan-result";
+import {saveScanResults} from "../../../communication/wallet";
+import {onResetScanResult} from "../scan-result";
 import {onResetInputsFor} from "../inputs";
-
-import {
-  base64ImageString,
-  convertScansToScanResult,
-} from "../../../components/common/utils";
+import {convertScansToScanResult} from "../../../components/common/utils";
 
 import {
   onChangeSubViewComponent,
@@ -126,54 +121,6 @@ export const onCreateNewPet = () => async (
   dispatch(setLoading(false));
 };
 
-export const ON_SCAN_NEW_PET = "ON_SCAN_NEW_PET";
-interface IOnScanNewPet {
-  type: typeof ON_SCAN_NEW_PET;
-  data: IScanResult;
-}
-
-export const onScan = (image: IImageDataDto) => async (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-) => {
-  const base64Image = base64ImageString(image);
-  if (base64Image == null) {
-    return;
-  }
-
-  const state = getState();
-  const token = state.database.token;
-  const id = state.newPet.id;
-
-  dispatch(setLoading(true));
-
-  const data = await requestScan(id!, base64Image, token!);
-
-  if (data == null) {
-    dispatch(setLoading(false));
-    return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
-  }
-
-  const mappedData: IScanResult = {
-    id: image.id,
-    image: {...image},
-    data,
-  };
-
-  dispatch({
-    type: ON_SCAN_NEW_PET,
-    data: mappedData,
-  } as IOnScanNewPet);
-
-  dispatch(onShowScanResult(image, data));
-
-  dispatch(setLoading(false));
-
-  if (data.suggestions.de.length === 0 && data.suggestions.en.length === 0) {
-    dispatch(onSetErrorCode(ErrorTypes.scanResultEmpty));
-  }
-};
-
 export const ON_SAVE_SCAN_RESULT = "ON_SAVE_SCAN_RESULT";
 interface IOnSaveScanResult {
   id: string;
@@ -238,5 +185,4 @@ export type Actions =
   | IOnSetProfileImageNewPet
   | IOnRemoveNewPetScan
   | IOnCreateNewPet
-  | IOnScanNewPet
   | IOnSaveScanResult;

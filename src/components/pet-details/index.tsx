@@ -15,7 +15,7 @@ import {ImagePickerTypes} from "../../enums/image";
 import {ILanguage, LanguageTypes, getTranslation} from "../../language";
 import {IPickerData} from "../common/picker";
 import {prepareImageInput} from "../common/utils";
-import {onScan} from "../../store/actions/pet-details";
+import {onScan} from "../../store/actions/scan-result";
 import {onSetPickerVisibility, onFocus} from "../../store/actions/layout";
 import {InputValues, InputIds} from "../../enums/input";
 
@@ -63,7 +63,7 @@ const requestPickerData = (
 
 const handlePickerChanged = async (
   dispatch: any,
-  petId: string,
+  petId: string | null,
   inputId: string | null,
   value: InputValues,
   view: SubViewComponents,
@@ -73,10 +73,8 @@ const handlePickerChanged = async (
 
   switch (view) {
     case SubViewComponents.none:
-      const result = await prepareImageInput(value as any, 1600, 1600);
-      return result == null || petId == null
-        ? null
-        : dispatch(onScan(petId, result));
+      const image = await prepareImageInput(value as any, 1600, 1600);
+      return dispatch(onScan(petId, image));
     case SubViewComponents.petDetailsEdit:
       return inputId == null ? null : dispatch(onInputChange(inputId, value));
     default:

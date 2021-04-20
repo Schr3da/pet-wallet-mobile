@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import type {ILayoutChildProps} from "../../common/layout";
 
 import {createStyle, ThemeTypes} from "../../../theme";
-import {onShowScanResult} from "../../../store/actions/scan-result";
+import {onShowScanResult, onScan} from "../../../store/actions/scan-result";
 import {ICombinedReducerState} from "../../../store/reducers";
 
 import {IScanResult} from "../../../dto/scan";
@@ -36,7 +36,6 @@ import {
   onRemoveScan,
   onCompleteNewPet,
   onCancelNewPet,
-  onScan,
   onSkipAction,
 } from "../../../store/actions/new-pet";
 
@@ -46,17 +45,22 @@ import {
 } from "../../../store/actions/layout";
 
 interface IStateProps {
+  id: string | null;
   attachments: IScanResult[];
   inputs: {[key: string]: InputValues};
 }
 
 const stateToProps = (state: ICombinedReducerState): IStateProps => ({
+  id: state.newPet.id,
   attachments: state.newPet.scans,
   inputs: getInputData(state),
 });
 
-const handleScanImage = (dispatch: any, data: IImageDataDto) =>
-  dispatch(onScan(data));
+const handleScanImage = (
+  dispatch: any,
+  id: string | null,
+  data: IImageDataDto,
+) => dispatch(onScan(id, data));
 
 let attachmentIdToRemove: string | null = null;
 const requestRemoveAttachment = (dispatch: any, id: string) => {
@@ -78,7 +82,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   const dispatch = useDispatch();
 
   const stateProps = useSelector(stateToProps);
-  const {inputs, attachments} = stateProps;
+  const {id, inputs, attachments} = stateProps;
 
   const {theme, language} = props;
   const styles = createStyle(theme, applyStyles);
@@ -99,7 +103,7 @@ export const ChildView = (props: ILayoutChildProps) => {
         maxWidth={1600}
         maxHeight={1600}
         onError={(errorType: ErrorTypes) => handleError(dispatch, errorType)}
-        onData={(data: IImageDataDto) => handleScanImage(dispatch, data)}
+        onData={(data: IImageDataDto) => handleScanImage(dispatch, id, data)}
       />
       <View style={styles.attachmentsWrapper}>
         {(attachments || []).length === 0 ? (

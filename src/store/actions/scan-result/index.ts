@@ -1,4 +1,4 @@
-import {IScanDataDto} from "../../../dto/scan";
+import {IScanDataDto, IScanResult} from "../../../dto/scan";
 import {ICombinedReducerState} from "../../reducers";
 import {onChangeSubViewComponent, onGoBackNavigation} from "../navigation";
 import {SubViewComponents} from "../../../enums/navigation";
@@ -6,6 +6,63 @@ import {IImageDataDto} from "../../../dto/image";
 import {onSetValuesFor, onResetInputsFor} from "../inputs";
 import {LanguageTypes} from "../../../language";
 import {InputValues} from "../../../enums/input";
+import {base64ImageString} from "../../../components/common/utils";
+import {setLoading, onSetErrorCode} from "../layout";
+import {requestScan} from "../../../communication/wallet";
+import {ErrorTypes} from "../../../enums/layout";
+
+export const ON_NEW_PET_PASS_SCAN_RESULT = "ON_NEW_PET_PASS_SCAN_RESULT";
+interface IOnNewPetPassScanResult {
+  type: typeof ON_NEW_PET_PASS_SCAN_RESULT;
+  data: IScanResult;
+}
+
+export const onScan = (
+  id: string | null,
+  image: IImageDataDto | null,
+) => async (dispatch: any, getState: () => ICombinedReducerState) => {
+  if (id == null || image == null) {
+    return;
+  }
+
+  const base64Image = base64ImageString(image);
+  if (base64Image == null) {
+    return;
+  }
+
+  const state = getState();
+  const token = state.database.token;
+
+  dispatch(setLoading(true));
+
+  const data = await requestScan(id, base64Image, token!);
+
+  if (data == null) {
+    dispatch(setLoading(false));
+    return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
+  }
+
+  const mappedData: IScanResult = {
+    id: image.id,
+    image: {...image},
+    data,
+  };
+
+  const action: IOnNewPetPassScanResult = {
+    type: ON_NEW_PET_PASS_SCAN_RESULT,
+    data: mappedData,
+  };
+
+  dispatch(action);
+
+  dispatch(onShowScanResult(image, data));
+
+  dispatch(setLoading(false));
+
+  if (data.suggestions.de.length === 0 && data.suggestions.en.length === 0) {
+    dispatch(onSetErrorCode(ErrorTypes.scanResultEmpty));
+  }
+};
 
 export const ON_SET_DATA_FOR_SCAN_RESULT = "ON_SET_DATA_FOR_SCAN_RESULT";
 interface IOnSetDataScanResult {
@@ -115,4 +172,5 @@ export type Actions =
   | IOnCreateNewScanEntity
   | IOnSelectScanEntity
   | IOnResetScanResult
-  | IOnRemoveNewScanEntity;
+  | IOnRemoveNewScanEntity
+  | IOnNewPetPassScanResult;

@@ -2,7 +2,7 @@ import * as Dtos from "../../dto";
 import {WalletDtos} from "../dto";
 
 import {postRequest} from "../common";
-import {LanguageTypes} from "../../language";
+import {LanguageTypes, IScanResult} from "../../language";
 import {IScanEntityDto, IScanDataDto, IScanResultDataDto} from "../../dto/scan";
 import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
 import {ICombinedReducerState} from "../../store/reducers";
@@ -272,7 +272,7 @@ export const fetchScanResults = async (
 
 export const saveScanResults = async (
   id: string | null,
-  scans: Dtos.Scan.IScanResultDataDto[],
+  scans: Dtos.Scan.IScanResult[],
   language: LanguageTypes,
   token: string,
 ): Promise<boolean> => {
@@ -297,13 +297,13 @@ export const saveScanResults = async (
 
 const mapScansToEntries = (
   petId: string | null,
-  scans: IScanResultDataDto[],
+  scans: Dtos.Scan.IScanResult[],
   language: LanguageTypes,
 ): WalletDtos.CreateWalletEntryRequestDto[] => {
   if (petId == null) {
     return [];
   }
-
+  debugger;
   return (scans || []).reduce((result, next) => {
     if (next == null || next.data == null) {
       return result;
@@ -325,6 +325,7 @@ const mapScansToEntries = (
         };
         return entry;
       });
+
     return [...result, ...data];
   }, [] as WalletDtos.CreateWalletEntryRequestDto[]);
 };
