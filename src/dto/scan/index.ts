@@ -14,6 +14,7 @@ export interface IScanEntityDto {
   url: string;
   language: LanguageTypes;
   isSelected: boolean;
+  isLocallyAdded: boolean;
 }
 
 export interface IScanDataPrefillsDto {

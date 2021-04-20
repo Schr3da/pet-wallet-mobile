@@ -13,6 +13,7 @@ import {InputTypes} from "../../../enums/layout";
 import {applyStyles} from "./index.style";
 
 export interface IPickerData {
+  id?: string;
   label: string;
   value: string;
 }
@@ -30,9 +31,11 @@ export const PickerComponent = (props: IProps) => {
   const dispatch = useDispatch();
 
   const [value, setValue] = React.useState(null);
+  const [itemId, setId] = React.useState<string | null>(null);
+
   const [didInteract, setDidInteract] = React.useState(false);
 
-  const {data, isApplePlatform, id, theme, locale, onComplete} = props;
+  const {isApplePlatform, id, theme, locale, onComplete} = props;
 
   const styles = createStyle(theme, applyStyles(isApplePlatform));
   const language = getTranslation(locale);
@@ -46,6 +49,8 @@ export const PickerComponent = (props: IProps) => {
     },
   ];
 
+  const data = [...pleaseSelect, ...(props.data || [])];
+
   return (
     <View style={styles.container}>
       <Picker
@@ -57,8 +62,11 @@ export const PickerComponent = (props: IProps) => {
           const hasInterected = index !== 0;
           setDidInteract(hasInterected);
           setValue(item);
+
+          const d = data[index] as IPickerData;
+          setId(d == null ? null : d.id || null);
         }}>
-        {[...pleaseSelect, ...(data || [])].map((d, i) => (
+        {data.map((d, i) => (
           <Picker.Item
             key={i}
             color={textColor}
@@ -82,7 +90,7 @@ export const PickerComponent = (props: IProps) => {
             theme={theme}
             title={language.common.pick}
             style={styles.button}
-            onPress={() => onComplete(id, value)}
+            onPress={() => onComplete(id || itemId, value)}
           />
         )}
       </View>

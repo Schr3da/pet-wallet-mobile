@@ -5,8 +5,8 @@ export const applyStyles = (_: ITheme) => ({
     flex: 1,
   },
   placeholderIcon: {
-    maxWidth: 112,
-    maxHeight: 140,
+    width: 120,
+    height: 120,
   },
   picker: {
     marginTop: 10,

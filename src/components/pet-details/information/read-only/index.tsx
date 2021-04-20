@@ -14,7 +14,7 @@ import {
   DataList,
 } from "../../../common";
 import {ILayoutChildProps} from "../../../common/layout";
-import {InputIds, onRemovePet} from "../../../../store/actions/pet-details";
+import {onRemovePet} from "../../../../store/actions/pet-details";
 import {onSetErrorCode} from "../../../../store/actions/layout";
 import {
   ErrorTypes,
@@ -22,7 +22,7 @@ import {
   InputTypes,
 } from "../../../../enums/layout";
 import {ActionBar} from "./action-bar";
-import {InputValues} from "../../../../enums/input";
+import {InputValues, InputIds} from "../../../../enums/input";
 
 import {applyStyles} from "../index.style";
 import {applySpecificStyles} from "./index.style";
@@ -43,10 +43,12 @@ const stateToProps = (state: ICombinedReducerState) => ({
   inputs: getInputData<{[key: string]: InputValues}>(state),
   filters: state.filters.petDetails.none,
   data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
+  notes: state.petDetails.notes,
+  scans: state.petDetails.scans,
 });
 
 export const ChildView = (props: IProps) => {
-  const {data, filters, inputs} = useSelector(stateToProps);
+  const {data, filters, inputs, notes, scans} = useSelector(stateToProps);
 
   const {id, theme, language, languageType} = props;
 
@@ -103,15 +105,30 @@ export const ChildView = (props: IProps) => {
             disabled={true}
             value={inputs[InputIds.dateOfBirth]}
           />
-          <TextAreaField
-            id={InputIds.notes}
-            style={styles.inputField}
-            tag={language.petDetails.none.notesTitle}
-            theme={theme}
-            disabled={true}
-            value={inputs[InputIds.notes]}
-            onChange={() => undefined}
-          />
+          {notes.length === 0 ? (
+            <TextAreaField
+              id={InputIds.notes}
+              style={styles.inputField}
+              tag={language.petDetails.none.notesTitle}
+              theme={theme}
+              disabled={true}
+              value={inputs[InputIds.notes]}
+              onChange={() => undefined}
+            />
+          ) : (
+            notes.map((n) => (
+              <TextAreaField
+                id={n.id}
+                key={n.id}
+                style={styles.inputField}
+                tag={language.petDetails.none.notesTitle}
+                theme={theme}
+                disabled={true}
+                value={inputs[n.id]}
+                onChange={() => undefined}
+              />
+            ))
+          )}
         </View>
       )}
       {filterId === FilterTypes.medicalOnly && (
@@ -120,26 +137,12 @@ export const ChildView = (props: IProps) => {
             style={{}}
             theme={theme}
             language={languageType}
-            data={[
-              {
-                id: "1",
-                value: "asdasd",
-                isSelected: true,
-                type: InputTypes.text,
-              },
-              {
-                id: "2",
-                value: "asdasd",
-                isSelected: true,
-                type: InputTypes.text,
-              },
-              {
-                id: "3",
-                value: "asdasd",
-                isSelected: true,
-                type: InputTypes.text,
-              },
-            ]}
+            data={scans.map((s) => ({
+              id: s.id,
+              value: s.title,
+              isSelected: s.isSelected,
+              type: InputTypes.text,
+            }))}
             disabled={true}
             inputs={inputs}
             onAdd={() => undefined}

@@ -69,7 +69,7 @@ interface IOnShowHomeComponent {
   hasPets: boolean;
 }
 
-export const onShowHomeComponent = () => async (
+export const onShowHomeComponent = (didFinish: boolean = true) => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ): Promise<void> => {
@@ -84,6 +84,10 @@ export const onShowHomeComponent = () => async (
     language: state.layout.language,
     hasPets: state.navigation.hasPets,
   });
+
+  if (didFinish == false) {
+    return;
+  }
 
   dispatch(setLoading(false));
 };

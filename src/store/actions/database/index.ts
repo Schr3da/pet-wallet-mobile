@@ -1,7 +1,7 @@
 import {LanguageTypes} from "../../../language";
 import {ICombinedReducerState} from "../../reducers";
 import {getUser, IUserEntity} from "../../reducers/database/db/user";
-import {isOnline, setDeviceOnline} from "../layout";
+import {isOnline, setDeviceOnline, setLoading} from "../layout";
 import {deleteWallet} from "../../../communication/wallet";
 
 import {initDatabase, deleteDatabase} from "../../reducers/database/db";

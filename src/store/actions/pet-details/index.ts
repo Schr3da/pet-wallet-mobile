@@ -1,25 +1,36 @@
 import {ICombinedReducerState} from "../../reducers";
-import {setLoading, onDismissDialog, onSetErrorCode} from "../layout";
+import {deletePet, updatePet} from "../../../communication/pets";
+import {IImageDataDto} from "../../../dto/image";
+import {ErrorTypes, NotificationTypes} from "../../../enums/layout";
+import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
+import {onSetValuesFor} from "../inputs";
+import {INotesDto, IScanDto} from "../../../dto/pets";
+
+import {
+  setLoading,
+  onDismissDialog,
+  onSetErrorCode,
+  onSetNotificationType,
+} from "../layout";
+
+import {
+  getNotes,
+  postNotes,
+  fetchScanResults,
+  saveScanResults,
+} from "../../../communication/wallet";
+
+import {
+  arrayToDictionary,
+  convertScansToScanResult,
+} from "../../../components/common/utils";
+
 import {
   onGoBackNavigation,
   onChangeViewComponent,
   onChangeSubViewComponent,
+  onShowHomeComponent,
 } from "../navigation";
-import {deletePet} from "../../../communication/pets";
-import {IImageDataDto} from "../../../dto/image";
-import {base64ImageString} from "../../../components/common/utils";
-import {requestScan} from "../../../communication/wallet";
-import {ErrorTypes} from "../../../enums/layout";
-import {onShowScanResult} from "../scan-result";
-import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
-import {onSetValuesFor} from "../inputs";
-
-export enum InputIds {
-  name = "name",
-  animalType = "animal",
-  dateOfBirth = "dateOfBirth",
-  notes = "animalNotes",
-}
 
 const mapToInputs = (id: string, state: ICombinedReducerState) => {
   const data = state.pets.data.find((d) => id === d.id);
@@ -47,15 +58,30 @@ export const onShowPetDetails = (id: string) => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
-  const state = getState();
+  let state = getState();
 
-  const data = mapToInputs(id, state);
-  if (data == null) {
+  const petData = mapToInputs(id, state);
+  if (petData == null) {
     return;
   }
 
+  dispatch(setLoading(true));
+
+  await onFetchScanResult(id)(dispatch, getState);
+  await onFetchNotes(id)(dispatch, getState);
+
+  state = getState();
+  const {notes, scans} = state.petDetails;
+
+  const noteInputs = arrayToDictionary(notes, (n) => n.body);
+  const scanInputs = arrayToDictionary(scans, (n) => n.title);
+
   dispatch(
-    onSetValuesFor(data, ViewComponents.petDetails, SubViewComponents.none),
+    onSetValuesFor(
+      {...petData, ...noteInputs, ...scanInputs},
+      ViewComponents.petDetails,
+      SubViewComponents.none,
+    ),
   );
 
   dispatch({
@@ -72,36 +98,99 @@ export const onShowPetDetails = (id: string) => async (
       language,
     ),
   );
+
+  dispatch(setLoading(false));
 };
 
-export const onScan = (id: string | null, image: IImageDataDto) => async (
+export const ON_FETCH_NOTES_PET_DETAILS = "ON_FETCH_NOTES_PET_DETAILS";
+interface IOnFetchNotesPetDetails {
+  type: typeof ON_FETCH_NOTES_PET_DETAILS;
+  data: INotesDto[];
+}
+
+export const onFetchNotes = (id: string) => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
-) => {
-  const base64Image = base64ImageString(image);
-  if (base64Image == null) {
-    return;
-  }
-
+): Promise<void> => {
   const state = getState();
   const token = state.database.token;
 
-  dispatch(setLoading(true));
+  const data = await getNotes(id, token);
 
-  const data = await requestScan(id!, base64Image, token!);
+  const action: IOnFetchNotesPetDetails = {
+    type: ON_FETCH_NOTES_PET_DETAILS,
+    data,
+  };
+
+  dispatch(action);
+};
+
+export const ON_FETCH_SCAN_RESULTS_PET_DETAILS =
+  "ON_FETCH_SCAN_RESULTS_PET_DETAILS";
+interface IOnFetchScanResultPetDetails {
+  type: typeof ON_FETCH_SCAN_RESULTS_PET_DETAILS;
+  data: IScanDto[];
+}
+
+export const onFetchScanResult = (id: string) => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+): Promise<void> => {
+  const state = getState();
+  const token = state.database.token;
+
+  const data = await fetchScanResults(id, token);
+
+  const action: IOnFetchScanResultPetDetails = {
+    type: ON_FETCH_SCAN_RESULTS_PET_DETAILS,
+    data,
+  };
+
+  dispatch(action);
+};
+
+export const onSaveScanResult = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+
+  const id = state.pets.selectedId;
+
+  dispatch(onDismissDialog());
+
+  if (id == null) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+    return;
+  }
+
+  const data = convertScansToScanResult(state);
 
   if (data == null) {
-    dispatch(setLoading(false));
-    return dispatch(onSetErrorCode(ErrorTypes.internetConnectionRequired));
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+    return;
   }
 
-  dispatch(onShowScanResult(image, data));
-
-  dispatch(setLoading(false));
-
-  if (data.suggestions.de.length === 0 && data.suggestions.en.length === 0) {
-    dispatch(onSetErrorCode(ErrorTypes.scanResultEmpty));
+  const newScan = state.petDetails.newScan;
+  if (newScan == null) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+    return;
   }
+  newScan.data = data;
+
+  const token = state.database.token!;
+  const language = state.layout.language;
+
+  dispatch(setLoading(true));
+
+  const isSuccesful = await saveScanResults(id, [newScan], language, token);
+
+  dispatch(onShowHomeComponent(false));
+  dispatch(onShowPetDetails(id));
+
+  isSuccesful === false
+    ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
+    : null;
 };
 
 export const onCancelPetDetailsEdit = (
@@ -112,8 +201,8 @@ export const onCancelPetDetailsEdit = (
   const {language} = state.layout;
 
   dispatch(onDismissDialog());
-  dispatch(setLoading(false));
   dispatch(onGoBackNavigation(language));
+  dispatch(setLoading(false));
 };
 
 export const onRemovePet = (id: string) => async (
@@ -121,12 +210,46 @@ export const onRemovePet = (id: string) => async (
   getState: () => ICombinedReducerState,
 ) => {
   const state = getState();
-  const {language} = state.layout;
   const token = state.database.token;
 
+  const {language} = state.layout;
+
+  dispatch(setLoading(true));
+
   await deletePet(id, token!);
+
   dispatch(onGoBackNavigation(language));
+
   dispatch(onDismissDialog());
+
+  dispatch(setLoading(false));
+};
+
+export const onSave = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+
+  const petId = state.pets.selectedId;
+  if (petId == null) {
+    dispatch(onSetErrorCode(ErrorTypes.unexpected));
+    return;
+  }
+
+  dispatch(setLoading(true));
+
+  await updatePet(petId, state);
+
+  await postNotes(petId, state);
+
+  await onShowHomeComponent(false)(dispatch, getState);
+
+  await onShowPetDetails(petId)(dispatch, getState);
+
+  dispatch(setLoading(false));
+
+  dispatch(onSetNotificationType(NotificationTypes.savedData));
 };
 
 export const onShowEditView = (id: string) => (
@@ -137,14 +260,18 @@ export const onShowEditView = (id: string) => (
 
   const {language} = state.layout;
 
+  const {notes} = state.petDetails;
+
   const data = mapToInputs(id, state);
   if (data == null) {
     return;
   }
 
+  const noteData = arrayToDictionary(notes, (n) => n.body);
+
   dispatch(
     onSetValuesFor(
-      data,
+      {...data, ...noteData},
       ViewComponents.petDetails,
       SubViewComponents.petDetailsEdit,
     ),
@@ -174,4 +301,8 @@ export const onProfileImage = (data: IImageDataDto) => (
   dispatch(action);
 };
 
-export type Actions = IOnShowPetDetails | IOnSetProfileImagePetDetails;
+export type Actions =
+  | IOnShowPetDetails
+  | IOnSetProfileImagePetDetails
+  | IOnFetchNotesPetDetails
+  | IOnFetchScanResultPetDetails;

@@ -8,6 +8,8 @@ import {ICombinedReducerState} from "../../../store/reducers";
 import {IInputState} from "../../../store/reducers/inputs";
 import {SubViewComponents, ViewComponents} from "../../../enums/navigation";
 import {InputValues} from "../../../enums/input";
+import {IScanDataDto} from "../../../dto/scan";
+import {LanguageTypes} from "../../../language";
 
 export interface IMeasureResult {
   width: number;
@@ -41,7 +43,7 @@ export const base64ImageString = (image: IImageDataDto | null) => {
     return null;
   }
 
-  return `data:${image.fileType};base64, ${image.imageBase64}`;
+  return `data:${image.fileType};${image.imageBase64}`;
 };
 
 export const base64ImageToUri = (
@@ -179,4 +181,56 @@ export const getInputValue = (
   }
 
   return inputs[mainViewComponent][subViewComponent][key];
+};
+
+export const arrayToDictionary = <T extends {id: string}>(
+  array: T[],
+  getValue: (d: T) => InputValues,
+) =>
+  (array || []).reduce((result, next) => {
+    if (next == null) {
+      return result;
+    }
+
+    const {id} = next;
+    result[id] = getValue(next);
+
+    return result;
+  }, {} as {[id: string]: InputValues});
+
+export const convertScansToScanResult = (
+  state: ICombinedReducerState,
+): IScanDataDto | null => {
+  const {scan, navigation, inputs} = state;
+  const {mainViewComponent, subViewComponent} = navigation;
+  const {result} = scan;
+
+  if (result == null) {
+    return null;
+  }
+
+  return (Object.keys(result) as Array<keyof IScanDataDto>).reduce(
+    (collection, key) => {
+      const section = collection[key];
+      (Object.keys(section) as LanguageTypes[]).forEach((lang) => {
+        let item = section[lang];
+        item = item.map((i) => {
+          const newValue = getInputValue(
+            inputs,
+            i.id,
+            mainViewComponent,
+            subViewComponent,
+          );
+          return {
+            ...i,
+            shortInfo: newValue ? String(newValue) : i.shortInfo,
+          };
+        });
+
+        collection[key][lang] = item;
+      });
+      return collection;
+    },
+    {...result},
+  );
 };

@@ -41,11 +41,15 @@ import {
 import {applyStyles} from "./index.style";
 
 const requestCancel = (dispatch: any) =>
-  dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
+  dispatch(onSetDialogContentType(DialogContentTypes.cancelAttachmentChanges));
 
 const handleCancel = (dispatch: any) => {
   dispatch(onDismissDialog());
   dispatch(onCancelScanResult());
+};
+
+const requestSave = (dispatch: any) => {
+  dispatch(onSetDialogContentType(DialogContentTypes.noDataSelected));
 };
 
 interface IStateProps {
@@ -105,7 +109,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        {image == null ? null : (
+        {image && (
           <Image style={styles.image} source={base64ImageToUri(image)} />
         )}
       </View>
@@ -161,12 +165,26 @@ export const ChildView = (props: ILayoutChildProps) => {
   );
 };
 
+const footerPropsToState = (state: ICombinedReducerState) => {
+  const {language} = state.layout;
+  const {result} = state.scan;
+
+  return {
+    hasSelectedItems:
+      result == null
+        ? false
+        : result.prefills[language].some((r) => r.isSelected === true),
+  };
+};
+
 export interface IFooterProps extends ILayoutChildProps {
   onSave: () => void;
 }
 
 export const Footer = (props: IFooterProps) => {
   const dispatch = useDispatch();
+
+  const {hasSelectedItems} = useSelector(footerPropsToState);
 
   const {language, theme, onSave} = props;
 
@@ -180,27 +198,40 @@ export const Footer = (props: IFooterProps) => {
       <PrimaryButton
         theme={theme}
         title={language.scanResult.primaryButton}
-        onPress={onSave}
+        onPress={() => (hasSelectedItems ? onSave() : requestSave(dispatch))}
       />
     </React.Fragment>
   );
 };
 
-export const Dialogs = (props: ILayoutChildProps) => {
+export interface IDialogProps extends ILayoutChildProps {
+  onSave: () => void;
+}
+
+export const Dialogs = (props: IDialogProps) => {
   const dispatch = useDispatch();
 
-  const {language, theme, dialogContentType} = props;
-  const {title, text} = language.dialogs.cancelAttachmentChanges;
+  const {language, theme, dialogContentType, onSave} = props;
 
   switch (dialogContentType) {
-    case DialogContentTypes.cancelNewPet:
+    case DialogContentTypes.cancelAttachmentChanges:
       return (
         <Dialog
-          title={title}
-          text={text}
+          title={language.dialogs.cancelAttachmentChanges.title}
+          text={language.dialogs.cancelAttachmentChanges.text}
           theme={theme}
           language={language}
           onPress={() => handleCancel(dispatch)}
+        />
+      );
+    case DialogContentTypes.noDataSelected:
+      return (
+        <Dialog
+          title={language.dialogs.noDataSelected.title}
+          text={language.dialogs.noDataSelected.text}
+          theme={theme}
+          language={language}
+          onPress={onSave}
         />
       );
     default:

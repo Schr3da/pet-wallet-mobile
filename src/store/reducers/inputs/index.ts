@@ -1,6 +1,6 @@
 import {Inputs, Navigation, ScanResult} from "../../actions";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
-import {InputValues} from "../../actions/scan-result";
+import {InputValues} from "../../../enums/input";
 
 export interface IInputState {
   [mainView: string]: {

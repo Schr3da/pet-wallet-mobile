@@ -15,13 +15,14 @@ import {ImagePickerTypes} from "../../enums/image";
 import {ILanguage, LanguageTypes, getTranslation} from "../../language";
 import {IPickerData} from "../common/picker";
 import {prepareImageInput} from "../common/utils";
-import {onScan, InputIds} from "../../store/actions/pet-details";
+import {onScan, onNewEmptyScan} from "../../store/actions/scan-result";
 import {onSetPickerVisibility, onFocus} from "../../store/actions/layout";
-import {InputValues} from "../../enums/input";
+import {InputValues, InputIds} from "../../enums/input";
 
 import {applyFooterStyles} from "./index.style";
 import {onInputChange} from "../../store/actions/inputs";
 import {PetTypes} from "../../dto/pets";
+import {onSaveScanResult} from "../../store/actions/pet-details";
 
 const stateToProps = (state: ICombinedReducerState) => ({
   selectedId: state.pets.selectedId!,
@@ -29,12 +30,19 @@ const stateToProps = (state: ICombinedReducerState) => ({
 
 const getImagePickerData = (language: ILanguage): IPickerData[] => [
   {
+    id: ImagePickerTypes.camera,
     label: language.common.camera,
     value: ImagePickerTypes.camera,
   },
   {
+    id: ImagePickerTypes.picker,
     label: language.common.photoLibrary,
     value: ImagePickerTypes.picker,
+  },
+  {
+    id: ImagePickerTypes.noPicker,
+    label: language.common.newEntry,
+    value: ImagePickerTypes.noPicker,
   },
 ];
 
@@ -62,7 +70,7 @@ const requestPickerData = (
 
 const handlePickerChanged = async (
   dispatch: any,
-  petId: string,
+  petId: string | null,
   inputId: string | null,
   value: InputValues,
   view: SubViewComponents,
@@ -70,12 +78,14 @@ const handlePickerChanged = async (
   dispatch(onSetPickerVisibility(false, InputTypes.picker));
   dispatch(onFocus(null, null));
 
+  if (inputId === ImagePickerTypes.noPicker) {
+    return dispatch(onNewEmptyScan());
+  }
+
   switch (view) {
     case SubViewComponents.none:
-      const result = await prepareImageInput(value as any, 1600, 1600);
-      return result == null || petId == null
-        ? null
-        : dispatch(onScan(petId, result));
+      const image = await prepareImageInput(value as any, 1600, 1600);
+      return dispatch(onScan(petId, image));
     case SubViewComponents.petDetailsEdit:
       return inputId == null ? null : dispatch(onInputChange(inputId, value));
     default:
@@ -134,7 +144,10 @@ export const Component = (): JSX.Element => {
           child = <InformationView.Footer {...props} />;
         } else if (subViewComponent === SubViewComponents.newScanResult) {
           child = (
-            <ScanResultViews.Footer {...props} onSave={() => undefined} />
+            <ScanResultViews.Footer
+              {...props}
+              onSave={() => dispatch(onSaveScanResult())}
+            />
           );
         }
 
@@ -151,6 +164,13 @@ export const Component = (): JSX.Element => {
           return <InformationView.Dialogs {...props} id={selectedId} />;
         } else if (subViewComponent === SubViewComponents.petDetailsEdit) {
           return <InformationView.Dialogs {...props} id={selectedId} />;
+        } else if (subViewComponent === SubViewComponents.newScanResult) {
+          return (
+            <ScanResultViews.Dialogs
+              {...props}
+              onSave={() => dispatch(onSaveScanResult())}
+            />
+          );
         } else {
           return null;
         }

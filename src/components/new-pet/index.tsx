@@ -114,7 +114,12 @@ export const Component = () => {
           case SubViewComponents.newPetScan:
             return <PassViews.Dialogs {...props} />;
           case SubViewComponents.newScanResult:
-            return <ScanResultViews.Dialogs {...props} />;
+            return (
+              <ScanResultViews.Dialogs
+                {...props}
+                onSave={() => dispatch(onSaveScanResult())}
+              />
+            );
           default:
             return null;
         }

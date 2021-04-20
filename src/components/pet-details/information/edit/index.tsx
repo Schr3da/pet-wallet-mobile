@@ -4,7 +4,7 @@ import {View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import {createStyle} from "../../../../theme";
-import {InputValues} from "../../../../enums/input";
+import {InputValues, InputIds} from "../../../../enums/input";
 import {ILayoutChildProps} from "../../../common/layout";
 import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
 import {ICombinedReducerState} from "../../../../store/reducers";
@@ -34,9 +34,9 @@ import {
 } from "../../../../store/actions/layout";
 
 import {
-  InputIds,
   onCancelPetDetailsEdit,
   onProfileImage,
+  onSave,
 } from "../../../../store/actions/pet-details";
 
 import {applyStyles} from "../index.style";
@@ -49,6 +49,7 @@ const stateToProps = (state: ICombinedReducerState) => ({
   filters: state.filters.petDetails.petDetailsEdit,
   data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
   newProfile: state.petDetails.newProfile,
+  notes: state.petDetails.notes,
 });
 
 interface IProps extends ILayoutChildProps {
@@ -58,7 +59,7 @@ interface IProps extends ILayoutChildProps {
 export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {data, filters, inputs, newProfile} = useSelector(stateToProps);
+  const {data, filters, inputs, newProfile, notes} = useSelector(stateToProps);
 
   const {theme, language, languageType} = props;
 
@@ -105,14 +106,28 @@ export const ChildView = (props: IProps) => {
             theme={theme}
             value={inputs[InputIds.dateOfBirth]}
           />
-          <TextAreaField
-            id={InputIds.notes}
-            style={{...styles.inputField, marginBottom: 100}}
-            tag={language.petDetails.none.notesTitle}
-            theme={theme}
-            value={inputs[InputIds.notes]}
-            onChange={(id, value) => dispatch(onInputChange(id, value))}
-          />
+          {notes.length === 0 ? (
+            <TextAreaField
+              id={InputIds.notes}
+              style={styles.inputField}
+              tag={language.petDetails.none.notesTitle}
+              theme={theme}
+              value={inputs[InputIds.notes]}
+              onChange={(id, value) => dispatch(onInputChange(id, value))}
+            />
+          ) : (
+            notes.map((n) => (
+              <TextAreaField
+                id={n.id}
+                key={n.id}
+                style={{...styles.inputField, marginBottom: 100}}
+                tag={language.petDetails.none.notesTitle}
+                theme={theme}
+                value={inputs[n.id]}
+                onChange={(id, value) => dispatch(onInputChange(id, value))}
+              />
+            ))
+          )}
         </View>
       )}
       {filterId === FilterTypes.medicalOnly && (
@@ -170,7 +185,7 @@ export const Footer = (props: ILayoutChildProps) => {
       <PrimaryButton
         theme={theme}
         title={language.scanResult.primaryButton}
-        onPress={() => undefined}
+        onPress={() => dispatch(onSave())}
       />
     </React.Fragment>
   );

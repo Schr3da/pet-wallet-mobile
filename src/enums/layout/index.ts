@@ -5,6 +5,7 @@ export enum DialogContentTypes {
   cancelNewPet = "cancelNewPet",
   cancelEditPetDetails = "cancelEditPetDetails",
   deletePet = "deletePet",
+  noDataSelected = "noDataSelected",
   skip = "skip",
 }
 

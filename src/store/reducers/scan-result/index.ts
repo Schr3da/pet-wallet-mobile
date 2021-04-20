@@ -29,6 +29,7 @@ const handleNewScanEntity = (state: IScanResultState): IScanResultState => {
     longInfo: "",
     url: "",
     isSelected: true,
+    isLocallyAdded: true,
   };
 
   Object.values(LanguageTypes).forEach((lang) => {

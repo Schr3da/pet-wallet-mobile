@@ -18,7 +18,6 @@ import {Header} from "../header";
 import {Error} from "../error";
 import {Notification} from "../notification";
 import {IPickerData, PickerComponent} from "../picker";
-import {Loader} from "../loader";
 import {DatePickerComponent, DatePickerModes} from "../date-picker";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
 
@@ -55,7 +54,6 @@ interface IStateProps {
   errorType: ErrorTypes | null;
   notificationType: NotificationTypes | null;
   dialogContentType: DialogContentTypes | null;
-  isLoading: boolean;
   isPickerVisible: boolean;
   inputType: InputTypes | null | undefined;
 }
@@ -77,7 +75,6 @@ const stateToProps = (state: ICombinedReducerState): IStateProps => ({
   errorType: state.layout.errorType,
   notificationType: state.layout.notificationType,
   dialogContentType: state.layout.dialogContentType,
-  isLoading: state.layout.isLoading,
   isPickerVisible: state.layout.isPickerVisible,
   inputType: state.layout.inputType,
 });
@@ -204,7 +201,6 @@ export const Layout = (props: IProps): JSX.Element => {
     description,
     language,
     isApplePlatform,
-    isLoading,
     isPickerVisible,
     inputType,
     subViewComponent,
@@ -291,7 +287,6 @@ export const Layout = (props: IProps): JSX.Element => {
       {hasError === false && hasNotification && (
         <Notification {...childProps} />
       )}
-      {isLoading && <Loader theme={theme} isAnimating={true} />}
       {hasError && <Error {...childProps} />}
       {hasDialog && dialogRenderer && dialogRenderer(childProps)}
     </KeyboardAvoidingView>

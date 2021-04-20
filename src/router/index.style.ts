@@ -21,4 +21,12 @@ export const applyStyles = (
     marginLeft: 20,
     marginRight: 20,
   },
+  loader:
+    displayMode === DisplayModes.portrait
+      ? {
+          top: isApplePlatform ? 10 : 0,
+        }
+      : {
+          bottom: isApplePlatform ? 20 : 0,
+        },
 });

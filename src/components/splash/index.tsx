@@ -56,7 +56,7 @@ export const Component = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Loader theme={theme} isAnimating={true} />
+      <Loader theme={theme} isAnimating={true} isVisible={true} />
     </View>
   );
 };

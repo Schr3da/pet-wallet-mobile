@@ -262,6 +262,11 @@ const dialogs: IDialogs = {
     title: "Aktion überspringen",
     text: "Möchtest du die Aktion überspringen",
   },
+  [DialogContentTypes.noDataSelected]: {
+    title: "Keine Einträge ausgewählt",
+    text:
+      "Es wurden keine Einträge ausgewählt. Möchtest du trotzdem fortsetzen?",
+  },
 };
 
 const sharePetDetails: ISharePetDetails = {
