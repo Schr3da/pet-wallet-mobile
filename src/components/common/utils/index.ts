@@ -8,6 +8,8 @@ import {ICombinedReducerState} from "../../../store/reducers";
 import {IInputState} from "../../../store/reducers/inputs";
 import {SubViewComponents, ViewComponents} from "../../../enums/navigation";
 import {InputValues} from "../../../enums/input";
+import {IScanDataDto} from "../../../dto/scan";
+import {LanguageTypes} from "../../../language";
 
 export interface IMeasureResult {
   width: number;
@@ -195,3 +197,40 @@ export const arrayToDictionary = <T extends {id: string}>(
 
     return result;
   }, {} as {[id: string]: InputValues});
+
+export const convertScansToScanResult = (
+  state: ICombinedReducerState,
+): IScanDataDto | null => {
+  const {scan, navigation, inputs} = state;
+  const {mainViewComponent, subViewComponent} = navigation;
+  const {result} = scan;
+
+  if (result == null) {
+    return null;
+  }
+
+  return (Object.keys(result) as Array<keyof IScanDataDto>).reduce(
+    (collection, key) => {
+      const section = collection[key];
+      (Object.keys(section) as LanguageTypes[]).forEach((lang) => {
+        let item = section[lang];
+        item = item.map((i) => {
+          const newValue = getInputValue(
+            inputs,
+            i.id,
+            mainViewComponent,
+            subViewComponent,
+          );
+          return {
+            ...i,
+            shortInfo: newValue ? String(newValue) : i.shortInfo,
+          };
+        });
+
+        collection[key][lang] = item;
+      });
+      return collection;
+    },
+    {...result},
+  );
+};

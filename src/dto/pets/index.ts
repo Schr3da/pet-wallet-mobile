@@ -1,3 +1,5 @@
+import {InputTypes} from "../../enums/layout";
+
 export enum PetTypes {
   dog = "dog",
   cat = "cat",
@@ -35,4 +37,12 @@ export interface INotesDto {
   id: string;
   title: string;
   body: string;
+}
+
+export interface IScanDto {
+  id: string;
+  title: string;
+  description: string;
+  medicineId: string;
+  isSelected: boolean;
 }

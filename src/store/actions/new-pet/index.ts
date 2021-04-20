@@ -3,24 +3,20 @@ import * as Communication from "../../../communication";
 import type {ICombinedReducerState} from "../../reducers";
 import type {IPetDto} from "../../../dto/pets";
 import type {IImageDataDto} from "../../../dto/image";
-import type {
-  IScanResult,
-  IScanDataPrefillsDto,
-  IScanDataDto,
-} from "../../../dto/scan";
+import type {IScanResult, IScanDataPrefillsDto} from "../../../dto/scan";
 
 import {LanguageTypes} from "../../../language";
 
 import {SubViewComponents} from "../../../enums/navigation";
-import {ErrorTypes, NotificationTypes} from "../../../enums/layout";
-import {setLoading, onSetErrorCode, onDismissDialog, onSetNotificationType} from "../layout";
+import {ErrorTypes} from "../../../enums/layout";
+import {setLoading, onSetErrorCode, onDismissDialog} from "../layout";
 import {requestScan, saveScanResults} from "../../../communication/wallet";
 import {onShowScanResult, onResetScanResult} from "../scan-result";
 import {onResetInputsFor} from "../inputs";
 
 import {
   base64ImageString,
-  getInputValue,
+  convertScansToScanResult,
 } from "../../../components/common/utils";
 
 import {
@@ -185,45 +181,24 @@ interface IOnSaveScanResult {
   data: IScanDataPrefillsDto;
 }
 
-export const onSaveScanResult = () => (
+export const onSaveScanResult = () => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
-) => {
-  const {layout, scan, navigation, inputs} = getState();
+): Promise<void> => {
+  const state = getState();
+
+  const {layout, scan, navigation} = getState();
   const {mainViewComponent, subViewComponent} = navigation;
   const {language} = layout;
-  const {id, result} = scan;
+  const {id} = scan;
 
-  if (result == null) {
+  const data = convertScansToScanResult(state);
+
+  if (data == null) {
     dispatch(onSetErrorCode(ErrorTypes.unexpected));
     dispatch(onDismissDialog());
     return;
   }
-
-  const data = (Object.keys(result) as Array<keyof IScanDataDto>).reduce(
-    (collection, key) => {
-      const section = collection[key];
-      (Object.keys(section) as LanguageTypes[]).forEach((lang) => {
-        let item = section[lang];
-        item = item.map((i) => {
-          const newValue = getInputValue(
-            inputs,
-            i.id,
-            mainViewComponent,
-            subViewComponent,
-          );
-          return {
-            ...i,
-            shortInfo: newValue ? String(newValue) : i.shortInfo,
-          };
-        });
-
-        collection[key][lang] = item;
-      });
-      return collection;
-    },
-    {...result},
-  );
 
   dispatch({
     type: ON_SAVE_SCAN_RESULT,
@@ -243,18 +218,20 @@ export const onCompleteNewPet = () => async (
 ) => {
   const state = getState();
   const token = state.database.token!;
+  const language = state.layout.language;
 
   dispatch(setLoading(true));
 
-  const isSuccesful = await saveScanResults(state, token);
+  const {id, scans} = state.newPet;
+  const isSuccesful = await saveScanResults(id, scans, language, token);
 
   dispatch(onShowHomeComponent());
 
   dispatch(setLoading(false));
 
-  isSuccesful === false 
+  isSuccesful === false
     ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
-    : null; 
+    : null;
 };
 
 export type Actions =

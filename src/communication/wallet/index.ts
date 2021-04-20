@@ -3,12 +3,12 @@ import {WalletDtos} from "../dto";
 
 import {postRequest} from "../common";
 import {LanguageTypes} from "../../language";
-import {IScanEntityDto} from "../../dto/scan";
+import {IScanEntityDto, IScanDataDto, IScanResultDataDto} from "../../dto/scan";
 import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
 import {ICombinedReducerState} from "../../store/reducers";
-import {INotesDto} from "../../dto/pets";
+import {INotesDto, IScanDto} from "../../dto/pets";
 import {getInputData} from "../../components/common/utils";
-import {InputIds} from "../../store/actions/pet-details";
+import {InputIds} from "../../enums/input";
 
 export const requestScan = async (
   id: string,
@@ -236,14 +236,48 @@ export const deleteWallet = async (token: string): Promise<boolean> => {
   }
 };
 
+export const fetchScanResults = async (
+  petId: string,
+  token: string | null,
+): Promise<IScanDto[]> => {
+  if (token == null) {
+    return [];
+  }
+
+  const url = "/api/petpass/wallet/find";
+
+  const request = {petId};
+
+  try {
+    const data = await postRequest<
+      WalletDtos.FindWalletEntriesRequestDto,
+      WalletDtos.FindWalletEntriesResponseDto
+    >(url, request, token);
+
+    if (data == null) {
+      return [];
+    }
+
+    return (data.entries || []).map((d) => ({
+      id: d.id,
+      title: d.title,
+      description: d.description || "",
+      medicineId: d.medicineId || "",
+      isSelected: true,
+    }));
+  } catch {
+    return [];
+  }
+};
+
 export const saveScanResults = async (
-  state: ICombinedReducerState,
+  id: string | null,
+  scans: Dtos.Scan.IScanResultDataDto[],
+  language: LanguageTypes,
   token: string,
 ): Promise<boolean> => {
   const url = "/api/petpass/wallet/create";
 
-  const {scans, id} = state.newPet;
-  const language = state.layout.language;
   const requests = mapScansToEntries(id, scans, language);
 
   try {
@@ -263,7 +297,7 @@ export const saveScanResults = async (
 
 const mapScansToEntries = (
   petId: string | null,
-  scans: Dtos.Scan.IScanResult[],
+  scans: IScanResultDataDto[],
   language: LanguageTypes,
 ): WalletDtos.CreateWalletEntryRequestDto[] => {
   if (petId == null) {
@@ -332,33 +366,36 @@ export const postNotes = async (
   if (token == null) {
     return [];
   }
-  
+
   const {notes} = state.petDetails;
-  
+
   const request = {
     petId,
-    notes: notes.length == 0 ? [{
-      title: "",
-      body: getInputData<{[InputIds.notes]: string}>(state)[InputIds.notes],
-    }] : notes.map((n) => ({
-      title: "",
-      body: getInputData<{[id: string]: string}>(state)[n.id] || "",
-    }))
+    notes:
+      notes.length == 0
+        ? [
+            {
+              title: "",
+              body: getInputData<{[InputIds.notes]: string}>(state)[
+                InputIds.notes
+              ],
+            },
+          ]
+        : notes.map((n) => ({
+            title: "",
+            body: getInputData<{[id: string]: string}>(state)[n.id] || "",
+          })),
   };
 
   try {
-    await postRequest<
-      WalletDtos.ICreateWalletNotesRequestDto,
-      {}
-    >(url, request, token);
+    await postRequest<WalletDtos.ICreateWalletNotesRequestDto, {}>(
+      url,
+      request,
+      token,
+    );
 
     return true;
-
   } catch {
     return false;
   }
-
-
-
-
 };

@@ -4,18 +4,19 @@ import type {ImageStyle, ViewStyle} from "react-native";
 import type {ITheme} from "../../../theme";
 
 export const applyStyles = (theme: ITheme) => ({
-  container: (isVisible: boolean) => ({
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: theme.color1,
-    opacity: isVisible ? 1 : 0,  
-  } as ViewStyle),
+  container: (isVisible: boolean) =>
+    ({
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.color1,
+      opacity: isVisible ? 1 : 0,
+    } as ViewStyle),
   loader: {
     width: 62,
     height: 44,

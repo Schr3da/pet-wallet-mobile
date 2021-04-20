@@ -1,17 +1,29 @@
 import {ICombinedReducerState} from "../../reducers";
-import {setLoading, onDismissDialog, onSetErrorCode, onSetNotificationType} from "../layout";
+import {
+  setLoading,
+  onDismissDialog,
+  onSetErrorCode,
+  onSetNotificationType,
+} from "../layout";
 import {deletePet, updatePet} from "../../../communication/pets";
 import {IImageDataDto} from "../../../dto/image";
-import {requestScan, getNotes, postNotes} from "../../../communication/wallet";
+import {
+  requestScan,
+  getNotes,
+  postNotes,
+  fetchScanResults,
+  saveScanResults,
+} from "../../../communication/wallet";
 import {ErrorTypes, NotificationTypes} from "../../../enums/layout";
-import {onShowScanResult} from "../scan-result";
+import {onShowScanResult, onResetScanResult} from "../scan-result";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
-import {onSetValuesFor} from "../inputs";
-import {INotesDto} from "../../../dto/pets";
+import {onSetValuesFor, onResetInputsFor} from "../inputs";
+import {INotesDto, IScanDto} from "../../../dto/pets";
 
 import {
   base64ImageString,
   arrayToDictionary,
+  convertScansToScanResult,
 } from "../../../components/common/utils";
 
 import {
@@ -20,13 +32,6 @@ import {
   onChangeSubViewComponent,
   onShowHomeComponent,
 } from "../navigation";
-
-export enum InputIds {
-  name = "name",
-  animalType = "animal",
-  dateOfBirth = "dateOfBirth",
-  notes = "animalNotes",
-}
 
 const mapToInputs = (id: string, state: ICombinedReducerState) => {
   const data = state.pets.data.find((d) => id === d.id);
@@ -54,7 +59,7 @@ export const onShowPetDetails = (id: string) => async (
   dispatch: any,
   getState: () => ICombinedReducerState,
 ) => {
-  const state = getState();
+  let state = getState();
 
   const petData = mapToInputs(id, state);
   if (petData == null) {
@@ -63,12 +68,18 @@ export const onShowPetDetails = (id: string) => async (
 
   dispatch(setLoading(true));
 
-  const notes = await fetchNotes(id)(dispatch, getState);
-  const noteData = arrayToDictionary(notes, (n) => n.body);
+  await onFetchScanResult(id)(dispatch, getState);
+  await onFetchNotes(id)(dispatch, getState);
+
+  state = getState();
+  const {notes, scans} = state.petDetails;
+
+  const noteInputs = arrayToDictionary(notes, (n) => n.body);
+  const scanInputs = arrayToDictionary(scans, (n) => n.title);
 
   dispatch(
     onSetValuesFor(
-      {...petData, ...noteData},
+      {...petData, ...noteInputs, ...scanInputs},
       ViewComponents.petDetails,
       SubViewComponents.none,
     ),
@@ -90,6 +101,85 @@ export const onShowPetDetails = (id: string) => async (
   );
 
   dispatch(setLoading(false));
+};
+
+export const ON_FETCH_NOTES_PET_DETAILS = "ON_FETCH_NOTES_PET_DETAILS";
+interface IOnFetchNotesPetDetails {
+  type: typeof ON_FETCH_NOTES_PET_DETAILS;
+  data: INotesDto[];
+}
+
+export const onFetchNotes = (id: string) => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+): Promise<void> => {
+  const state = getState();
+  const token = state.database.token;
+
+  const data = await getNotes(id, token);
+
+  const action: IOnFetchNotesPetDetails = {
+    type: ON_FETCH_NOTES_PET_DETAILS,
+    data,
+  };
+
+  dispatch(action);
+};
+
+export const ON_FETCH_SCAN_RESULTS_PET_DETAILS =
+  "ON_FETCH_SCAN_RESULTS_PET_DETAILS";
+interface IOnFetchScanResultPetDetails {
+  type: typeof ON_FETCH_SCAN_RESULTS_PET_DETAILS;
+  data: IScanDto[];
+}
+
+export const onFetchScanResult = (id: string) => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+): Promise<void> => {
+  const state = getState();
+  const token = state.database.token;
+
+  const data = await fetchScanResults(id, token);
+
+  const action: IOnFetchScanResultPetDetails = {
+    type: ON_FETCH_SCAN_RESULTS_PET_DETAILS,
+    data,
+  };
+
+  dispatch(action);
+};
+
+export const onSaveScanResult = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const state = getState();
+  const token = state.database.token!;
+  const language = state.layout.language;
+  const id = state.pets.selectedId;
+
+  const {mainViewComponent, subViewComponent} = state.navigation;
+
+  const scans = convertScansToScanResult(state);
+
+  if (id == null || scans == null) {
+    return;
+  }
+
+  dispatch(setLoading(true));
+
+  const result = [{data: scans}];
+  const isSuccesful = await saveScanResults(id, result, language, token);
+
+  dispatch(onResetInputsFor(mainViewComponent, subViewComponent));
+  dispatch(onResetScanResult());
+  dispatch(onShowHomeComponent(false));
+  dispatch(onShowPetDetails(id));
+
+  isSuccesful === false
+    ? dispatch(onSetErrorCode(ErrorTypes.unexpected))
+    : null;
 };
 
 export const onScan = (id: string | null, image: IImageDataDto) => async (
@@ -144,7 +234,7 @@ export const onRemovePet = (id: string) => async (
   const {language} = state.layout;
 
   dispatch(setLoading(true));
-  
+
   await deletePet(id, token!);
 
   dispatch(onGoBackNavigation(language));
@@ -172,7 +262,7 @@ export const onSave = () => async (
 
   await postNotes(petId, state);
 
-  await onShowHomeComponent()(dispatch, getState);
+  await onShowHomeComponent(false)(dispatch, getState);
 
   await onShowPetDetails(petId)(dispatch, getState);
 
@@ -230,33 +320,8 @@ export const onProfileImage = (data: IImageDataDto) => (
   dispatch(action);
 };
 
-export const ON_FETCH_NOTES_PET_DETAILS = "ON_FETCH_NOTES_PET_DETAILS";
-interface IOnFetchNotesPetDetails {
-  type: typeof ON_FETCH_NOTES_PET_DETAILS;
-  data: INotesDto[];
-}
-
-export const fetchNotes = (id: string) => async (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-): Promise<INotesDto[]> => {
-  const state = getState();
-
-  const {token} = state.database;
-
-  const data = await getNotes(id, token);
-
-  const action: IOnFetchNotesPetDetails = {
-    type: ON_FETCH_NOTES_PET_DETAILS,
-    data,
-  };
-
-  dispatch(action);
-  return data;
-};
-
 export type Actions =
   | IOnShowPetDetails
   | IOnSetProfileImagePetDetails
   | IOnFetchNotesPetDetails
-;
+  | IOnFetchScanResultPetDetails;

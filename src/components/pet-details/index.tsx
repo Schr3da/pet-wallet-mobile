@@ -15,13 +15,14 @@ import {ImagePickerTypes} from "../../enums/image";
 import {ILanguage, LanguageTypes, getTranslation} from "../../language";
 import {IPickerData} from "../common/picker";
 import {prepareImageInput} from "../common/utils";
-import {onScan, InputIds} from "../../store/actions/pet-details";
+import {onScan} from "../../store/actions/pet-details";
 import {onSetPickerVisibility, onFocus} from "../../store/actions/layout";
-import {InputValues} from "../../enums/input";
+import {InputValues, InputIds} from "../../enums/input";
 
 import {applyFooterStyles} from "./index.style";
 import {onInputChange} from "../../store/actions/inputs";
 import {PetTypes} from "../../dto/pets";
+import {onSaveScanResult} from "../../store/actions/pet-details";
 
 const stateToProps = (state: ICombinedReducerState) => ({
   selectedId: state.pets.selectedId!,
@@ -134,7 +135,10 @@ export const Component = (): JSX.Element => {
           child = <InformationView.Footer {...props} />;
         } else if (subViewComponent === SubViewComponents.newScanResult) {
           child = (
-            <ScanResultViews.Footer {...props} onSave={() => undefined} />
+            <ScanResultViews.Footer
+              {...props}
+              onSave={() => dispatch(onSaveScanResult())}
+            />
           );
         }
 

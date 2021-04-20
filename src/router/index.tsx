@@ -38,9 +38,13 @@ const stateToProps = (state: ICombinedReducerState): IProps => ({
 });
 
 export const Route = (): JSX.Element => {
-  const {displayMode, isApplePlatform, mainViewComponent, theme, isLoading} = useSelector(
-    stateToProps,
-  );
+  const {
+    displayMode,
+    isApplePlatform,
+    mainViewComponent,
+    theme,
+    isLoading,
+  } = useSelector(stateToProps);
 
   const styles = createStyle(theme, applyStyles(isApplePlatform, displayMode));
   const colors = getColors(theme);
@@ -81,7 +85,12 @@ export const Route = (): JSX.Element => {
         barStyle={theme === ThemeTypes.Dark ? "light-content" : "dark-content"}
       />
       <View style={styles.container}>{childComponent}</View>
-      <Loader style={styles.loader} theme={theme} isVisible={isLoading} isAnimating={true} />
+      <Loader
+        style={styles.loader}
+        theme={theme}
+        isVisible={isLoading}
+        isAnimating={true}
+      />
     </SafeAreaView>
   );
 };

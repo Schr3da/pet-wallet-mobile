@@ -4,7 +4,7 @@ import {View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
 import {createStyle} from "../../../../theme";
-import {InputValues} from "../../../../enums/input";
+import {InputValues, InputIds} from "../../../../enums/input";
 import {ILayoutChildProps} from "../../../common/layout";
 import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
 import {ICombinedReducerState} from "../../../../store/reducers";
@@ -34,7 +34,6 @@ import {
 } from "../../../../store/actions/layout";
 
 import {
-  InputIds,
   onCancelPetDetailsEdit,
   onProfileImage,
   onSave,

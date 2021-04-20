@@ -39,6 +39,22 @@ export interface CreateWalletEntryResponseDto {
   date: number;
 }
 
+export interface FindWalletEntriesResponseEntryDto {
+  id: string;
+  medicineId: string | null;
+  title: string;
+  description: string | null;
+  date: number;
+}
+
+export interface FindWalletEntriesRequestDto {
+  petId: string;
+}
+
+export interface FindWalletEntriesResponseDto {
+  entries: FindWalletEntriesResponseEntryDto[];
+}
+
 export interface INoteDto {
   title: string;
   body: string;

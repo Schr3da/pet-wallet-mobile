@@ -104,9 +104,10 @@ export const Loader = (props: IProps) => {
   const pointerEvent = isVisible ? "auto" : "none";
   const endValue = 30;
 
-
   return (
-    <View style={{...styles.container(isVisible), ...(style || {})}} pointerEvents={pointerEvent}>
+    <View
+      style={{...styles.container(isVisible), ...(style || {})}}
+      pointerEvents={pointerEvent}>
       <View style={styles.loader}>
         <Page
           color={colors.color4}
