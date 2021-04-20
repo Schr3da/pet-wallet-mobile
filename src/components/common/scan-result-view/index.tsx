@@ -41,7 +41,7 @@ import {
 import {applyStyles} from "./index.style";
 
 const requestCancel = (dispatch: any) =>
-  dispatch(onSetDialogContentType(DialogContentTypes.cancelNewPet));
+  dispatch(onSetDialogContentType(DialogContentTypes.cancelAttachmentChanges));
 
 const handleCancel = (dispatch: any) => {
   dispatch(onDismissDialog());
@@ -109,7 +109,7 @@ export const ChildView = (props: ILayoutChildProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        {image == null ? null : (
+        {image && (
           <Image style={styles.image} source={base64ImageToUri(image)} />
         )}
       </View>
@@ -214,7 +214,7 @@ export const Dialogs = (props: IDialogProps) => {
   const {language, theme, dialogContentType, onSave} = props;
 
   switch (dialogContentType) {
-    case DialogContentTypes.cancelNewPet:
+    case DialogContentTypes.cancelAttachmentChanges:
       return (
         <Dialog
           title={language.dialogs.cancelAttachmentChanges.title}

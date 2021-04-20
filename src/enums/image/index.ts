@@ -1,6 +1,7 @@
 export enum ImagePickerTypes {
   camera = "camera",
   picker = "image",
+  noPicker = "noPicker",
 }
 
 export enum ScanErrorTypes {

@@ -15,7 +15,7 @@ import {ImagePickerTypes} from "../../enums/image";
 import {ILanguage, LanguageTypes, getTranslation} from "../../language";
 import {IPickerData} from "../common/picker";
 import {prepareImageInput} from "../common/utils";
-import {onScan} from "../../store/actions/scan-result";
+import {onScan, onNewEmptyScan} from "../../store/actions/scan-result";
 import {onSetPickerVisibility, onFocus} from "../../store/actions/layout";
 import {InputValues, InputIds} from "../../enums/input";
 
@@ -30,12 +30,19 @@ const stateToProps = (state: ICombinedReducerState) => ({
 
 const getImagePickerData = (language: ILanguage): IPickerData[] => [
   {
+    id: ImagePickerTypes.camera,
     label: language.common.camera,
     value: ImagePickerTypes.camera,
   },
   {
+    id: ImagePickerTypes.picker,
     label: language.common.photoLibrary,
     value: ImagePickerTypes.picker,
+  },
+  {
+    id: ImagePickerTypes.noPicker,
+    label: language.common.newEntry,
+    value: ImagePickerTypes.noPicker,
   },
 ];
 
@@ -70,6 +77,10 @@ const handlePickerChanged = async (
 ) => {
   dispatch(onSetPickerVisibility(false, InputTypes.picker));
   dispatch(onFocus(null, null));
+
+  if (inputId === ImagePickerTypes.noPicker) {
+    return dispatch(onNewEmptyScan());
+  }
 
   switch (view) {
     case SubViewComponents.none:
@@ -153,6 +164,13 @@ export const Component = (): JSX.Element => {
           return <InformationView.Dialogs {...props} id={selectedId} />;
         } else if (subViewComponent === SubViewComponents.petDetailsEdit) {
           return <InformationView.Dialogs {...props} id={selectedId} />;
+        } else if (subViewComponent === SubViewComponents.newScanResult) {
+          return (
+            <ScanResultViews.Dialogs
+              {...props}
+              onSave={() => dispatch(onSaveScanResult())}
+            />
+          );
         } else {
           return null;
         }

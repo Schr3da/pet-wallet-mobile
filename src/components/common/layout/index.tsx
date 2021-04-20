@@ -18,7 +18,6 @@ import {Header} from "../header";
 import {Error} from "../error";
 import {Notification} from "../notification";
 import {IPickerData, PickerComponent} from "../picker";
-import {Loader} from "../loader";
 import {DatePickerComponent, DatePickerModes} from "../date-picker";
 import {ViewComponents, SubViewComponents} from "../../../enums/navigation";
 

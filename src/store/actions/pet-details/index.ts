@@ -156,9 +156,11 @@ export const onSaveScanResult = () => async (
   const state = getState();
 
   const id = state.pets.selectedId;
+
+  dispatch(onDismissDialog());
+
   if (id == null) {
     dispatch(onSetErrorCode(ErrorTypes.unexpected));
-    dispatch(onDismissDialog());
     return;
   }
 
@@ -166,13 +168,12 @@ export const onSaveScanResult = () => async (
 
   if (data == null) {
     dispatch(onSetErrorCode(ErrorTypes.unexpected));
-    dispatch(onDismissDialog());
     return;
   }
+
   const newScan = state.petDetails.newScan;
   if (newScan == null) {
     dispatch(onSetErrorCode(ErrorTypes.unexpected));
-    dispatch(onDismissDialog());
     return;
   }
   newScan.data = data;

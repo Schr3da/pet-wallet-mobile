@@ -6,10 +6,39 @@ import {IImageDataDto} from "../../../dto/image";
 import {onSetValuesFor, onResetInputsFor} from "../inputs";
 import {LanguageTypes} from "../../../language";
 import {InputValues} from "../../../enums/input";
-import {base64ImageString} from "../../../components/common/utils";
+import {base64ImageString, createUuid} from "../../../components/common/utils";
 import {setLoading, onSetErrorCode} from "../layout";
 import {requestScan} from "../../../communication/wallet";
 import {ErrorTypes} from "../../../enums/layout";
+
+export const onNewEmptyScan = () => async (
+  dispatch: any,
+  getState: () => ICombinedReducerState,
+) => {
+  const mappedData: IScanResult = {
+    id: createUuid(),
+    image: null as any,
+    data: {
+      prefills: {
+        [LanguageTypes.en]: [],
+        [LanguageTypes.de]: [],
+      },
+      suggestions: {
+        [LanguageTypes.en]: [],
+        [LanguageTypes.de]: [],
+      },
+    },
+  };
+
+  const action: IOnNewPetPassScanResult = {
+    type: ON_NEW_PET_PASS_SCAN_RESULT,
+    data: mappedData,
+  };
+
+  dispatch(action);
+
+  dispatch(onShowScanResult(null, mappedData.data));
+};
 
 export const ON_NEW_PET_PASS_SCAN_RESULT = "ON_NEW_PET_PASS_SCAN_RESULT";
 interface IOnNewPetPassScanResult {
@@ -80,10 +109,10 @@ const onSetDataForScanResult = (
   data,
 });
 
-export const onShowScanResult = (image: IImageDataDto, data: IScanDataDto) => (
-  dispatch: any,
-  getState: () => ICombinedReducerState,
-) => {
+export const onShowScanResult = (
+  image: IImageDataDto | null,
+  data: IScanDataDto,
+) => (dispatch: any, getState: () => ICombinedReducerState) => {
   const state = getState();
 
   const {mainViewComponent} = state.navigation;
