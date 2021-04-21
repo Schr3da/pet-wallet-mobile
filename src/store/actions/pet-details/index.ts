@@ -31,6 +31,7 @@ import {
   onChangeSubViewComponent,
   onShowHomeComponent,
 } from "../navigation";
+import {ON_CHANGE_FILTER} from "../filters";
 
 const mapToInputs = (id: string, state: ICombinedReducerState) => {
   const data = state.pets.data.find((d) => id === d.id);
@@ -261,6 +262,18 @@ export const onShowEditView = (id: string) => (
   const {language} = state.layout;
 
   const {notes} = state.petDetails;
+
+  const filter = (
+    state.filters[ViewComponents.petDetails][SubViewComponents.none] || []
+  ).find((f) => f.isSelected);
+  if (filter != null) {
+    dispatch({
+      type: ON_CHANGE_FILTER,
+      id: filter.id,
+      mainViewComponent: ViewComponents.petDetails,
+      subViewComponent: SubViewComponents.petDetailsEdit,
+    });
+  }
 
   const data = mapToInputs(id, state);
   if (data == null) {

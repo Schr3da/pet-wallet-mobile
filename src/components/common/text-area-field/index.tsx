@@ -37,6 +37,7 @@ interface IProps {
   theme: ThemeTypes;
   value: InputValues;
   tag?: string;
+  numberOfLines?: number;
   placeholder?: string;
   disabled?: boolean;
   type?: KeyboardTypes;
@@ -55,6 +56,7 @@ export const TextAreaField = (props: IProps) => {
     style,
     type,
     theme,
+    numberOfLines,
     tag,
     value,
     onChange,
@@ -69,7 +71,9 @@ export const TextAreaField = (props: IProps) => {
     <View style={{...styles.container(isValueEmpty), ...style}}>
       <Tag text={tag} theme={theme} style={styles.tag} />
       {disabled === true ? (
-        <Text style={styles.text}>{value}</Text>
+        <Text style={styles.text} numberOfLines={numberOfLines}>
+          {value}
+        </Text>
       ) : (
         <TouchableOpacity
           activeOpacity={1}
@@ -79,6 +83,7 @@ export const TextAreaField = (props: IProps) => {
             <TextInput
               ref={(ref: any) => (input = ref)}
               multiline={true}
+              numberOfLines={numberOfLines}
               clearButtonMode={"while-editing"}
               style={styles.input}
               autoCorrect={false}

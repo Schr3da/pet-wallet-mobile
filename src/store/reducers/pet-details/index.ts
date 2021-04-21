@@ -1,5 +1,8 @@
 import {Navigation, PetDetails, ScanResult} from "../../actions";
-import {ON_SHOW_HOME_COMPONENT} from "../../actions/navigation";
+import {
+  ON_SHOW_HOME_COMPONENT,
+  ON_GO_BACK_NAVIGATION,
+} from "../../actions/navigation";
 import {IImageDataDto} from "../../../dto/image";
 import {INotesDto, IScanDto} from "../../../dto/pets";
 import {ON_NEW_PET_PASS_SCAN_RESULT} from "../../actions/scan-result";

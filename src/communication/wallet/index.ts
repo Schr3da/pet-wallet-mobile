@@ -2,8 +2,8 @@ import * as Dtos from "../../dto";
 import {WalletDtos} from "../dto";
 
 import {postRequest} from "../common";
-import {LanguageTypes, IScanResult} from "../../language";
-import {IScanEntityDto, IScanDataDto, IScanResultDataDto} from "../../dto/scan";
+import {LanguageTypes} from "../../language";
+import {IScanEntityDto} from "../../dto/scan";
 import {PetWalletScanMedicineInfoDto} from "../dto/wallet";
 import {ICombinedReducerState} from "../../store/reducers";
 import {INotesDto, IScanDto} from "../../dto/pets";
@@ -303,7 +303,7 @@ const mapScansToEntries = (
   if (petId == null) {
     return [];
   }
-  debugger;
+
   return (scans || []).reduce((result, next) => {
     if (next == null || next.data == null) {
       return result;

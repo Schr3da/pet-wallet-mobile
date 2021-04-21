@@ -22,6 +22,7 @@ import {NoData} from "./no-data";
 import {ProfileImage} from "./profile-image";
 import {Filters} from "./filters";
 import {TextAreaField} from "./text-area-field";
+import {MedicineInfo} from "./medicine-info";
 
 export {
   AttachmentPlaceholder,
@@ -47,4 +48,5 @@ export {
   ProfileImage,
   Filters,
   TextAreaField,
+  MedicineInfo,
 };

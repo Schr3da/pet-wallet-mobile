@@ -285,6 +285,8 @@ const petDetails: IPetDetails = {
   [SubViewComponents.none]: {
     noDataTitle: "No data available",
     notesTitle: "Notes",
+    noMedicineDescription:
+      "To this entry no further information are available.",
   },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",

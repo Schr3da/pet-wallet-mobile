@@ -116,6 +116,7 @@ export interface IPetDetails {
   [SubViewComponents.none]: {
     noDataTitle: string;
     notesTitle: string;
+    noMedicineDescription: string;
   };
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: string;

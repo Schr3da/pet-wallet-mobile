@@ -11,7 +11,7 @@ import {
   Filters,
   InputTypeField,
   TextAreaField,
-  DataList,
+  MedicineInfo,
 } from "../../../common";
 import {ILayoutChildProps} from "../../../common/layout";
 import {onRemovePet} from "../../../../store/actions/pet-details";
@@ -27,7 +27,7 @@ import {InputValues, InputIds} from "../../../../enums/input";
 import {applyStyles} from "../index.style";
 import {applySpecificStyles} from "./index.style";
 import {ICombinedReducerState} from "../../../../store/reducers";
-import {getInputData} from "../../../common/utils";
+import {getInputData, inputValueEmpty} from "../../../common/utils";
 import {FilterTypes} from "../../../../enums/filters";
 
 const handleRemove = (dispatch: any, id: string | null) =>
@@ -133,22 +133,22 @@ export const ChildView = (props: IProps) => {
       )}
       {filterId === FilterTypes.medicalOnly && (
         <View style={styles.contentWrapper}>
-          <DataList
-            style={{}}
-            theme={theme}
-            language={languageType}
-            data={scans.map((s) => ({
-              id: s.id,
-              value: s.title,
-              isSelected: s.isSelected,
-              type: InputTypes.text,
-            }))}
-            disabled={true}
-            inputs={inputs}
-            onAdd={() => undefined}
-            onSelect={() => undefined}
-            onChange={() => undefined}
-          />
+          {scans.map((s) => (
+            <MedicineInfo
+              key={s.id}
+              id={s.id}
+              style={styles.inputField}
+              tag={s.title}
+              theme={theme}
+              numberOfLines={14}
+              disabled={true}
+              value={
+                inputValueEmpty(s.description)
+                  ? language.petDetails.none.noMedicineDescription
+                  : s.description
+              }
+            />
+          ))}
         </View>
       )}
     </React.Fragment>

@@ -8,7 +8,7 @@ import {InputValues, InputIds} from "../../../../enums/input";
 import {ILayoutChildProps} from "../../../common/layout";
 import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
 import {ICombinedReducerState} from "../../../../store/reducers";
-import {getInputData} from "../../../common/utils";
+import {getInputData, inputValueEmpty} from "../../../common/utils";
 import {FilterTypes} from "../../../../enums/filters";
 import {onInputChange} from "../../../../store/actions/inputs";
 
@@ -20,6 +20,7 @@ import {
   Filters,
   TextAreaField,
   DataList,
+  MedicineInfo,
 } from "../../../common";
 
 import {
@@ -50,6 +51,7 @@ const stateToProps = (state: ICombinedReducerState) => ({
   data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
   newProfile: state.petDetails.newProfile,
   notes: state.petDetails.notes,
+  scans: state.petDetails.scans,
 });
 
 interface IProps extends ILayoutChildProps {
@@ -59,9 +61,11 @@ interface IProps extends ILayoutChildProps {
 export const ChildView = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {data, filters, inputs, newProfile, notes} = useSelector(stateToProps);
+  const {data, filters, inputs, newProfile, notes, scans} = useSelector(
+    stateToProps,
+  );
 
-  const {theme, language, languageType} = props;
+  const {theme, language} = props;
 
   const styles = createStyle(theme, applyStyles);
 
@@ -132,35 +136,22 @@ export const ChildView = (props: IProps) => {
       )}
       {filterId === FilterTypes.medicalOnly && (
         <View style={styles.contentWrapper}>
-          <DataList
-            style={{}}
-            theme={theme}
-            language={languageType}
-            data={[
-              {
-                id: "1",
-                value: "asdasd",
-                isSelected: true,
-                type: InputTypes.text,
-              },
-              {
-                id: "2",
-                value: "asdasd",
-                isSelected: true,
-                type: InputTypes.text,
-              },
-              {
-                id: "3",
-                value: "asdasd",
-                isSelected: true,
-                type: InputTypes.text,
-              },
-            ]}
-            inputs={inputs}
-            onAdd={() => undefined}
-            onSelect={() => undefined}
-            onChange={() => undefined}
-          />
+          {scans.map((s) => (
+            <MedicineInfo
+              key={s.id}
+              id={s.id}
+              style={styles.inputField}
+              tag={s.title}
+              theme={theme}
+              numberOfLines={14}
+              value={
+                inputValueEmpty(s.description)
+                  ? language.petDetails.none.noMedicineDescription
+                  : s.description
+              }
+              onRemove={(id) => console.log(id)}
+            />
+          ))}
         </View>
       )}
     </React.Fragment>
