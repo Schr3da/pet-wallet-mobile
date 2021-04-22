@@ -30,6 +30,11 @@ export const applyStyles = (theme: ITheme) => ({
   inputField: {
     marginBottom: 10,
   } as ViewStyle,
+  noData: {
+    width: "100%",
+    marginTop: 60,
+    opacity: 0.8,
+  } as ViewStyle,
 });
 
 export const applyFooterStyles = (theme: ITheme) => ({

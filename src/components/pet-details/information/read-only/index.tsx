@@ -3,7 +3,7 @@ import * as React from "react";
 import {View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
-import {createStyle} from "../../../../theme";
+import {createStyle, ThemeTypes} from "../../../../theme";
 import {
   InputField,
   Dialog,
@@ -12,6 +12,7 @@ import {
   InputTypeField,
   TextAreaField,
   MedicineInfo,
+  NoData,
 } from "../../../common";
 import {ILayoutChildProps} from "../../../common/layout";
 import {onRemovePet} from "../../../../store/actions/pet-details";
@@ -27,7 +28,11 @@ import {InputValues, InputIds} from "../../../../enums/input";
 import {applyStyles} from "../index.style";
 import {applySpecificStyles} from "./index.style";
 import {ICombinedReducerState} from "../../../../store/reducers";
-import {getInputData, inputValueEmpty} from "../../../common/utils";
+import {
+  getInputData,
+  inputValueEmpty,
+  collectionIsEmpty,
+} from "../../../common/utils";
 import {FilterTypes} from "../../../../enums/filters";
 
 const handleRemove = (dispatch: any, id: string | null) =>
@@ -133,22 +138,36 @@ export const ChildView = (props: IProps) => {
       )}
       {filterId === FilterTypes.medicalOnly && (
         <View style={styles.contentWrapper}>
-          {scans.map((s) => (
-            <MedicineInfo
-              key={s.id}
-              id={s.id}
-              style={styles.inputField}
-              tag={s.title}
-              theme={theme}
-              numberOfLines={14}
-              disabled={true}
-              value={
-                inputValueEmpty(s.description)
-                  ? language.petDetails.none.noMedicineDescription
-                  : s.description
+          {collectionIsEmpty(scans) ? (
+            <NoData
+              image={
+                theme === ThemeTypes.Dark
+                  ? require("../../../../../assets/png/dark/no-vaccine.png")
+                  : require("../../../../../assets/png/light/no-vaccine.png")
               }
+              title={language.petDetails.none.noVaccinationData}
+              theme={theme}
+              disableNotification={true}
+              style={styles.noData}
             />
-          ))}
+          ) : (
+            scans.map((s) => (
+              <MedicineInfo
+                key={s.id}
+                id={s.id}
+                style={styles.inputField}
+                tag={s.title}
+                theme={theme}
+                numberOfLines={14}
+                disabled={true}
+                value={
+                  inputValueEmpty(s.description)
+                    ? language.petDetails.none.noMedicineDescription
+                    : s.description
+                }
+              />
+            ))
+          )}
         </View>
       )}
     </React.Fragment>

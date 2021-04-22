@@ -295,6 +295,48 @@ export const saveScanResults = async (
   }
 };
 
+export const updateScanResult = async (
+  petId: string,
+  state: ICombinedReducerState,
+): Promise<void> => {
+  const token = state.database.token;
+  const deleteUrl = "/api/petpass/wallet/delete";
+  const updateUrl = "/api/petpass/wallet/update";
+
+  try {
+    const toRemove = state.petDetails.editScans || [];
+    for (let i = 0; i < toRemove.length; i++) {
+      const {id} = toRemove[i];
+      await postRequest<
+        WalletDtos.DeleteWalletEntryRequestDto,
+        WalletDtos.DeleteWalletEntryResponseDto
+      >(deleteUrl, {id}, token!);
+    }
+
+    const toUpdate = (state.petDetails.scans || []).filter(
+      (u) => toRemove.find((r) => r.id === u.id) == null,
+    );
+
+    for (let i = 0; i < toUpdate.length; i++) {
+      const data = toUpdate[i];
+      const request = {
+        petId,
+        id: data.id,
+        medicineId: data.medicineId,
+        title: data.title,
+        description: data.description,
+        date: Date.now(),
+      };
+
+      await postRequest<WalletDtos.UpdateWalletEntryRequestDto, {}>(
+        updateUrl,
+        request,
+        token!,
+      );
+    }
+  } catch {}
+};
+
 const mapScansToEntries = (
   petId: string | null,
   scans: Dtos.Scan.IScanResult[],

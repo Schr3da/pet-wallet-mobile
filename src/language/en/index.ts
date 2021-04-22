@@ -239,8 +239,8 @@ const dialogs: IDialogs = {
       "Attention this is an unreversable action which will remove the pet and its saved data from your pet wallet.",
   },
   [DialogContentTypes.deleteAttachment]: {
-    title: "Delete Attachment",
-    text: "Please continue to delete the information.",
+    title: "Delete data entry",
+    text: "Please press continue to delete the information.",
   },
   [DialogContentTypes.cancelNewPet]: {
     title: "Cancel new pet",
@@ -251,8 +251,8 @@ const dialogs: IDialogs = {
     text: "Press continue to discard the modifications.",
   },
   [DialogContentTypes.cancelEditPetDetails]: {
-    title: "Änderungen verwerfen",
-    text: "Do you want discard your changes?",
+    title: "Discard changes",
+    text: "Do you want to discard your changes?",
   },
   [DialogContentTypes.skip]: {
     title: "Skip action",
@@ -272,11 +272,11 @@ const filters: IFilters = {
   [ViewComponents.petDetails]: {
     [SubViewComponents.none]: {
       [FilterTypes.generalOnly]: "General",
-      [FilterTypes.medicalOnly]: "Certificates",
+      [FilterTypes.medicalOnly]: "Vaccination",
     },
     [SubViewComponents.petDetailsEdit]: {
       [FilterTypes.generalOnly]: "General",
-      [FilterTypes.medicalOnly]: "Certificates",
+      [FilterTypes.medicalOnly]: "Vaccination",
     },
   },
 };
@@ -287,11 +287,13 @@ const petDetails: IPetDetails = {
     notesTitle: "Notes",
     noMedicineDescription:
       "To this entry no further information are available.",
+    noVaccinationData: "No vaccination information are available",
   },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",
     medicalTitle: "Medizinische Information",
     notesTitle: "Notes",
+    noVaccinationData: "No vaccination information are available",
   },
 };
 

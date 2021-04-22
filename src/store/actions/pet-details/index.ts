@@ -18,6 +18,7 @@ import {
   postNotes,
   fetchScanResults,
   saveScanResults,
+  updateScanResult,
 } from "../../../communication/wallet";
 
 import {
@@ -244,6 +245,8 @@ export const onSave = () => async (
 
   await postNotes(petId, state);
 
+  await updateScanResult(petId, state);
+
   await onShowHomeComponent(false)(dispatch, getState);
 
   await onShowPetDetails(petId)(dispatch, getState);
@@ -295,6 +298,20 @@ export const onShowEditView = (id: string) => (
   );
 };
 
+export const ON_SET_SELECTED_MEDICINE_ID_PET_DETAILS =
+  "ON_SET_SELECTED_MEDICINE_ID_PET_DETAILS";
+interface IOnSetSelectedMedicineInfoIdPetDetails {
+  type: typeof ON_SET_SELECTED_MEDICINE_ID_PET_DETAILS;
+  id: string | null;
+}
+
+export const onSetSelectedMedicineInfoId = (
+  id: string | null,
+): IOnSetSelectedMedicineInfoIdPetDetails => ({
+  type: ON_SET_SELECTED_MEDICINE_ID_PET_DETAILS,
+  id,
+});
+
 export const ON_SET_PROFILE_IMAGE_PET_DETAILS =
   "ON_SET_PROFILE_IMAGE_PET_DETAILS";
 interface IOnSetProfileImagePetDetails {
@@ -314,8 +331,30 @@ export const onProfileImage = (data: IImageDataDto) => (
   dispatch(action);
 };
 
+export const ON_REMOVE_MEDICINE_INFO_PET_DETAILS =
+  "ON_REMOVE_MEDICINE_INFO_PET_DETAILS";
+interface IOnRemoveMedicineInfoPetDetails {
+  type: typeof ON_REMOVE_MEDICINE_INFO_PET_DETAILS;
+  id?: string;
+}
+
+export const onRemoveMedicineInfo = (id?: string) => (
+  dispatch: any,
+  _getState: () => ICombinedReducerState,
+) => {
+  const action: IOnRemoveMedicineInfoPetDetails = {
+    type: ON_REMOVE_MEDICINE_INFO_PET_DETAILS,
+    id,
+  };
+
+  dispatch(action);
+  dispatch(onDismissDialog());
+};
+
 export type Actions =
   | IOnShowPetDetails
   | IOnSetProfileImagePetDetails
   | IOnFetchNotesPetDetails
-  | IOnFetchScanResultPetDetails;
+  | IOnFetchScanResultPetDetails
+  | IOnSetSelectedMedicineInfoIdPetDetails
+  | IOnRemoveMedicineInfoPetDetails;

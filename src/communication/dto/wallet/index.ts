@@ -39,6 +39,30 @@ export interface CreateWalletEntryResponseDto {
   date: number;
 }
 
+export interface UpdateWalletEntryRequestDto {
+  id: string;
+  petId: string;
+  medicineId: string | undefined;
+  title: string;
+  description: string | null;
+  date: number;
+}
+
+export interface UpdateWalletEntryRequestDto {
+  id: string;
+  petId: string;
+  medicineId: string | undefined;
+  title: string;
+  description: string | null;
+  date: number;
+}
+
+export interface DeleteWalletEntryRequestDto {
+  id: string;
+}
+
+export interface DeleteWalletEntryResponseDto {}
+
 export interface FindWalletEntriesResponseEntryDto {
   id: string;
   medicineId: string | null;

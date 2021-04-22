@@ -123,7 +123,7 @@ export const prepareImageInput = (
           : resolve({
               id: Date.now().toString(),
               uri: data.uri,
-              imageBase64: data.base64,
+              imageBase64: "base64, " + data.base64,
               fileSize: data.fileSize,
               width: data.width,
               height: data.height,
@@ -140,7 +140,7 @@ export const prepareImageInput = (
           : resolve({
               id: Date.now().toString(),
               uri: data.uri,
-              imageBase64: data.base64,
+              imageBase64: "base64, " + data.base64,
               fileSize: data.fileSize,
               width: data.width,
               height: data.height,

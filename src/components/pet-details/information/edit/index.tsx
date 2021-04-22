@@ -3,12 +3,16 @@ import * as React from "react";
 import {View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 
-import {createStyle} from "../../../../theme";
+import {createStyle, ThemeTypes} from "../../../../theme";
 import {InputValues, InputIds} from "../../../../enums/input";
 import {ILayoutChildProps} from "../../../common/layout";
 import {SecondaryButton, PrimaryButton} from "../../../common/rounded-button";
 import {ICombinedReducerState} from "../../../../store/reducers";
-import {getInputData, inputValueEmpty} from "../../../common/utils";
+import {
+  getInputData,
+  inputValueEmpty,
+  collectionIsEmpty,
+} from "../../../common/utils";
 import {FilterTypes} from "../../../../enums/filters";
 import {onInputChange} from "../../../../store/actions/inputs";
 
@@ -19,8 +23,8 @@ import {
   ProfileImage,
   Filters,
   TextAreaField,
-  DataList,
   MedicineInfo,
+  NoData,
 } from "../../../common";
 
 import {
@@ -38,6 +42,8 @@ import {
   onCancelPetDetailsEdit,
   onProfileImage,
   onSave,
+  onSetSelectedMedicineInfoId,
+  onRemoveMedicineInfo,
 } from "../../../../store/actions/pet-details";
 
 import {applyStyles} from "../index.style";
@@ -45,13 +51,18 @@ import {applyStyles} from "../index.style";
 export const handleError = (dispatch: any, errorType: ErrorTypes) =>
   dispatch(onSetErrorCode(errorType));
 
+export const handleDeleteRequest = (dispatch: any, id: string) => {
+  dispatch(onSetSelectedMedicineInfoId(id));
+  dispatch(onSetDialogContentType(DialogContentTypes.deleteAttachment));
+};
+
 const stateToProps = (state: ICombinedReducerState) => ({
   inputs: getInputData<{[key: string]: InputValues}>(state),
   filters: state.filters.petDetails.petDetailsEdit,
   data: state.pets.data.find((d) => d.id === state.pets.selectedId)!,
   newProfile: state.petDetails.newProfile,
   notes: state.petDetails.notes,
-  scans: state.petDetails.scans,
+  scans: state.petDetails.editScans,
 });
 
 interface IProps extends ILayoutChildProps {
@@ -136,22 +147,36 @@ export const ChildView = (props: IProps) => {
       )}
       {filterId === FilterTypes.medicalOnly && (
         <View style={styles.contentWrapper}>
-          {scans.map((s) => (
-            <MedicineInfo
-              key={s.id}
-              id={s.id}
-              style={styles.inputField}
-              tag={s.title}
-              theme={theme}
-              numberOfLines={14}
-              value={
-                inputValueEmpty(s.description)
-                  ? language.petDetails.none.noMedicineDescription
-                  : s.description
+          {collectionIsEmpty(scans) ? (
+            <NoData
+              image={
+                theme === ThemeTypes.Dark
+                  ? require("../../../../../assets/png/dark/no-vaccine.png")
+                  : require("../../../../../assets/png/light/no-vaccine.png")
               }
-              onRemove={(id) => console.log(id)}
+              title={language.petDetails.petDetailsEdit.noVaccinationData}
+              theme={theme}
+              disableNotification={true}
+              style={styles.noData}
             />
-          ))}
+          ) : (
+            scans.map((s) => (
+              <MedicineInfo
+                key={s.id}
+                id={s.id}
+                style={styles.inputField}
+                tag={s.title}
+                theme={theme}
+                numberOfLines={14}
+                value={
+                  inputValueEmpty(s.description)
+                    ? language.petDetails.none.noMedicineDescription
+                    : s.description
+                }
+                onRemove={(id) => handleDeleteRequest(dispatch, id)}
+              />
+            ))
+          )}
         </View>
       )}
     </React.Fragment>
@@ -187,14 +212,22 @@ export const Dialogs = (props: ILayoutChildProps) => {
 
   const {language, theme, dialogContentType} = props;
 
-  const {title, text} = language.dialogs.cancelEditPetDetails;
-
   switch (dialogContentType) {
+    case DialogContentTypes.deleteAttachment:
+      return (
+        <Dialog
+          title={language.dialogs.deleteAttachment.title}
+          text={language.dialogs.deleteAttachment.text}
+          theme={theme}
+          language={language}
+          onPress={() => dispatch(onRemoveMedicineInfo())}
+        />
+      );
     case DialogContentTypes.cancelEditPetDetails:
       return (
         <Dialog
-          title={title}
-          text={text}
+          title={language.dialogs.cancelEditPetDetails.title}
+          text={language.dialogs.cancelEditPetDetails.text}
           theme={theme}
           language={language}
           onPress={() => dispatch(onCancelPetDetailsEdit)}

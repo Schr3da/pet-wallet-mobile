@@ -110,7 +110,12 @@ export const ChildView = (props: ILayoutChildProps) => {
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
         {image && (
-          <Image style={styles.image} source={base64ImageToUri(image)} />
+          <Image
+            style={styles.image}
+            source={
+              typeof image === "string" ? {uri: image} : base64ImageToUri(image)
+            }
+          />
         )}
       </View>
       <Text style={styles.info}>

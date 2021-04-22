@@ -277,11 +277,11 @@ const filters: IFilters = {
   [ViewComponents.petDetails]: {
     [SubViewComponents.none]: {
       [FilterTypes.generalOnly]: "Allgemein",
-      [FilterTypes.medicalOnly]: "Impfpass",
+      [FilterTypes.medicalOnly]: "Schutzimpfungen",
     },
     [SubViewComponents.petDetailsEdit]: {
       [FilterTypes.generalOnly]: "Allgemein",
-      [FilterTypes.medicalOnly]: "Impfpass",
+      [FilterTypes.medicalOnly]: "Schutzimpfpass",
     },
   },
 };
@@ -316,11 +316,13 @@ const petDetails: IPetDetails = {
     notesTitle: "Notizen",
     noMedicineDescription:
       "Es existieren leider keine weiteren Informationen zu diesem Eintrag.",
+    noVaccinationData: "Keine Impfdaten vorhanden",
   },
   [SubViewComponents.petDetailsEdit]: {
     generalInformationTitle: "Allgemeine Information",
     medicalTitle: "Medizinische Information",
     notesTitle: "Notizen",
+    noVaccinationData: "Keine Impfdaten vorhanden",
   },
 };
 

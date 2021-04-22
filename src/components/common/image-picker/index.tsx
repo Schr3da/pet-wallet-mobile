@@ -54,6 +54,7 @@ export const ImagePicker = (props: IProps): JSX.Element => {
             maxWidth,
             maxHeight,
           );
+
           if (data == null) {
             return onError(ErrorTypes.camera);
           }
@@ -61,8 +62,6 @@ export const ImagePicker = (props: IProps): JSX.Element => {
           if (data.didCancel === true) {
             return;
           }
-
-          data.imageBase64 = "base64, " + data.imageBase64;
 
           onData(data);
         }}
@@ -86,6 +85,7 @@ export const ImagePicker = (props: IProps): JSX.Element => {
             maxWidth,
             maxHeight,
           );
+
           if (data == null) {
             return onError(ErrorTypes.photoLibrary);
           }
@@ -93,8 +93,6 @@ export const ImagePicker = (props: IProps): JSX.Element => {
           if (data.didCancel === true) {
             return;
           }
-
-          data.imageBase64 = "base64, " + data.imageBase64;
 
           onData(data);
         }}
