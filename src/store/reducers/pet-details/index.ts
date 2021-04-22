@@ -75,11 +75,9 @@ const handleSelectMedicineInfoId = (
   selectedMedicineInfoId: id,
 });
 
-const handleCancelEdit = (
-  state: IPetDetailsState,
-): IPetDetailsState => ({
+const handleCancelEdit = (state: IPetDetailsState): IPetDetailsState => ({
   ...state,
-  editScans: state.scans.map((s) =>({...s})),
+  editScans: state.scans.map((s) => ({...s})),
 });
 
 const handleRemoveMedicineInfo = (state: IPetDetailsState, id?: string) => ({

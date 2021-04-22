@@ -195,8 +195,6 @@ export const onSaveScanResult = () => async (
     : null;
 };
 
-
-
 export const ON_CANCEL_PET_DETAILS_EDIT = "ON_CANCEL_PET_DETAILS_EDIT";
 interface IOnCancelPetDetailsEdit {
   type: typeof ON_CANCEL_PET_DETAILS_EDIT;
@@ -366,5 +364,4 @@ export type Actions =
   | IOnFetchScanResultPetDetails
   | IOnSetSelectedMedicineInfoIdPetDetails
   | IOnRemoveMedicineInfoPetDetails
-  | IOnCancelPetDetailsEdit
-;
+  | IOnCancelPetDetailsEdit;

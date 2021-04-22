@@ -300,11 +300,13 @@ export const updateScanResult = async (
   state: ICombinedReducerState,
 ): Promise<void> => {
   const token = state.database.token;
-  const deleteUrl = "/api/petpass/wallet/delete";
-  const updateUrl = "/api/petpass/wallet/update";
 
   try {
-    const toRemove = state.petDetails.editScans || [];
+    const deleteUrl = "/api/petpass/wallet/delete";
+    const toRemove = (state.petDetails.scans || []).filter(
+      (s) => state.petDetails.editScans.find((u) => u.id === s.id) == null,
+    );
+
     for (let i = 0; i < toRemove.length; i++) {
       const {id} = toRemove[i];
       await postRequest<
@@ -313,8 +315,9 @@ export const updateScanResult = async (
       >(deleteUrl, {id}, token!);
     }
 
-    const toUpdate = (state.petDetails.scans || []).filter(
-      (u) => toRemove.find((r) => r.id === u.id) == null,
+    const updateUrl = "/api/petpass/wallet/update";
+    const toUpdate = (state.petDetails.editScans || []).filter(
+      (u) => state.petDetails.scans.find((r) => r.id === u.id) == null,
     );
 
     for (let i = 0; i < toUpdate.length; i++) {
