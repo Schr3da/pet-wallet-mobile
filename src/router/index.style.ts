@@ -15,9 +15,9 @@ export const applyStyles = (
     marginTop: isApplePlatform
       ? 0
       : displayMode === DisplayModes.portrait
-      ? 30
-      : 20,
-    marginBottom: isApplePlatform ? 0 : 10,
+      ? 20
+      : 0,
+    marginBottom: isApplePlatform ? 0 : 6,
     marginLeft: 20,
     marginRight: 20,
   },
