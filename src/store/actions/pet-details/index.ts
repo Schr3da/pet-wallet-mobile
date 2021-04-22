@@ -195,6 +195,13 @@ export const onSaveScanResult = () => async (
     : null;
 };
 
+
+
+export const ON_CANCEL_PET_DETAILS_EDIT = "ON_CANCEL_PET_DETAILS_EDIT";
+interface IOnCancelPetDetailsEdit {
+  type: typeof ON_CANCEL_PET_DETAILS_EDIT;
+}
+
 export const onCancelPetDetailsEdit = (
   dispatch: any,
   getState: () => ICombinedReducerState,
@@ -205,6 +212,7 @@ export const onCancelPetDetailsEdit = (
   dispatch(onDismissDialog());
   dispatch(onGoBackNavigation(language));
   dispatch(setLoading(false));
+  dispatch({type: ON_CANCEL_PET_DETAILS_EDIT});
 };
 
 export const onRemovePet = (id: string) => async (
@@ -357,4 +365,6 @@ export type Actions =
   | IOnFetchNotesPetDetails
   | IOnFetchScanResultPetDetails
   | IOnSetSelectedMedicineInfoIdPetDetails
-  | IOnRemoveMedicineInfoPetDetails;
+  | IOnRemoveMedicineInfoPetDetails
+  | IOnCancelPetDetailsEdit
+;

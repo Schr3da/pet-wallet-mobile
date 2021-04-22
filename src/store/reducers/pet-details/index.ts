@@ -11,6 +11,7 @@ import {
   ON_FETCH_SCAN_RESULTS_PET_DETAILS,
   ON_SET_SELECTED_MEDICINE_ID_PET_DETAILS,
   ON_REMOVE_MEDICINE_INFO_PET_DETAILS,
+  ON_CANCEL_PET_DETAILS_EDIT,
 } from "../../actions/pet-details";
 
 export interface IPetDetailsState {
@@ -74,6 +75,13 @@ const handleSelectMedicineInfoId = (
   selectedMedicineInfoId: id,
 });
 
+const handleCancelEdit = (
+  state: IPetDetailsState,
+): IPetDetailsState => ({
+  ...state,
+  editScans: state.scans.map((s) =>({...s})),
+});
+
 const handleRemoveMedicineInfo = (state: IPetDetailsState, id?: string) => ({
   ...state,
   selectedMedicineInfoId:
@@ -102,6 +110,8 @@ const reducer = (state: IPetDetailsState = initialState(), action: Actions) => {
       return handleSelectMedicineInfoId(state, action.id);
     case ON_REMOVE_MEDICINE_INFO_PET_DETAILS:
       return handleRemoveMedicineInfo(state, action.id);
+    case ON_CANCEL_PET_DETAILS_EDIT:
+      return handleCancelEdit(state);
     default:
       return state;
   }
