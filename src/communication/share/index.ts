@@ -17,5 +17,5 @@ export const requestShareUrl = async (
   }
 
   const shareToken = response.shareTokenId;
-  return baseUrl + "/" + shareToken + "/" + id;
+  return baseUrl + "/share?shareId=" + id;
 };
