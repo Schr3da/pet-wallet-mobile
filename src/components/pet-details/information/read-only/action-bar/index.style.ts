@@ -1,4 +1,4 @@
-import type {ViewStyle, ImageStyle} from "react-native";
+import type {ViewStyle, ImageStyle, TextStyle} from "react-native";
 
 import type {ITheme} from "../../../../../theme";
 
@@ -9,10 +9,18 @@ export const applyStyles = (theme: ITheme) => ({
     display: "flex",
     flexDirection: "row",
   } as ViewStyle,
+  actionContainer: {
+    marginRight: 15,
+  },
+  actionText: {
+    fontSize: 11, 
+    textAlign: "center",
+    marginTop: 6,
+    color: theme.color3,
+  } as TextStyle,
   actionButton: {
     width: 44,
     height: 44,
-    marginRight: 15,
     borderRadius: 160,
     justifyContent: "center",
     alignItems: "center",
@@ -25,4 +33,7 @@ export const applyStyles = (theme: ITheme) => ({
   deleteButton: {
     backgroundColor: theme.color4,
   } as ViewStyle,
+  deleteText: {
+    color: theme.color4,
+  } as TextStyle,
 });

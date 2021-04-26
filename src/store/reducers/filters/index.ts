@@ -11,12 +11,14 @@ export interface IFiltersState {
   };
 }
 
-const initialState = () => {
+const initialState = (
+  language?: LanguageTypes,
+) => {
   return {
     [ViewComponents.petDetails]: {
       [SubViewComponents.none]: getPetDetailsFilters(LanguageTypes.en),
       [SubViewComponents.petDetailsEdit]: getPetDetailsFilters(
-        LanguageTypes.en,
+        language == null ? LanguageTypes.en : language,
       ),
     },
   };
@@ -78,11 +80,13 @@ type Actions =
 const reducer = (state: IFiltersState = initialState(), action: Actions) => {
   switch (action.type) {
     case Navigation.ON_SHOW_HOME_COMPONENT:
-      return initialState();
+      return initialState(action.language);
     case Layout.ON_CHANGE_LANGUAGE:
       return changeLanguage(state, action.next);
     case Database.ON_INIT_DATA_FROM_DATABASE:
       return changeLanguage(state, action.settings.language);
+    case Navigation.ON_CHANGE_VIEW_COMPONENT: 
+      return changeLanguage(state, action.language);
     case Filters.ON_CHANGE_FILTER:
       return changeSelection(
         state,

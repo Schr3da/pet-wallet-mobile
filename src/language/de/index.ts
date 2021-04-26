@@ -335,6 +335,10 @@ const common: ICommon = {
   pleaseSelect: "Bitte auswählen",
   camera: "Kamera",
   photoLibrary: "Photoalbum",
+  share: "Teilen", 
+  edit: "Bearbeiten",
+  scan: "Scannen",
+  remove: "Löschen",
 };
 
 export const DE = {

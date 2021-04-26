@@ -60,4 +60,11 @@ export const applyStyles = (hasProfile: boolean) => (theme: ITheme) => ({
     width: 22,
     height: 22,
   },
+  pressable: {
+    position: "absolute",
+    left: 0,
+    right: 60,
+    top: 0,
+    bottom: 0,
+  } as ViewStyle
 });

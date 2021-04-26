@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {View, Image, ViewStyle} from "react-native";
+import {View, Image, ViewStyle, TouchableOpacity} from "react-native";
 
 import {ILanguage} from "../../../language";
 import {createStyle, ThemeTypes} from "../../../theme";
@@ -102,6 +102,12 @@ export const Card = (props: IProps) => {
             }}
           />
         </View>
+      </View>
+      <View style={styles.pressable}>
+        <TouchableOpacity style={{flex: 1}}onPress={async () => {
+          const measures = await measureComponent(ref);
+          onPress(data.id!, measures);
+        }} activeOpacity={0.8}/>
       </View>
     </View>
   );
