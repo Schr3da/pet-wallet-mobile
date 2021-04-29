@@ -94,7 +94,7 @@ export const ChildView = (props: IProps) => {
         style={{...styles.profile, marginBottom: 2}}
         onNewImage={(data) => dispatch(onProfileImage(data))}
       />
-      <Filters items={filters} theme={theme} style={styles.filterBar} />
+      <Filters items={filters} theme={theme} style={{...styles.filterBar, marginTop: 30}} />
       {filterId === FilterTypes.generalOnly && (
         <View style={styles.contentWrapper}>
           <InputField

@@ -25,6 +25,10 @@ export interface ICommon {
   pleaseSelect: string;
   camera: string;
   photoLibrary: string;
+  share: string;
+  edit: string;
+  scan: string;
+  remove: string;
 }
 
 export interface IHeader {

@@ -1,10 +1,10 @@
 import * as React from "react";
-import {View, ViewStyle} from "react-native";
+import {View, ViewStyle, Text} from "react-native";
 import {useDispatch} from "react-redux";
 
 import {ImageButton} from "../../../../common/image-button";
 import {ThemeTypes, createStyle} from "../../../../../theme";
-import {LanguageTypes} from "../../../../../language";
+import {LanguageTypes, getTranslation} from "../../../../../language";
 import {onSharePet} from "../../../../../store/actions/pets";
 import {onShowEditView} from "../../../../../store/actions/pet-details";
 
@@ -46,60 +46,74 @@ interface IProps {
 export const ActionBar = (props: IProps) => {
   const dispatch = useDispatch();
 
-  const {id, theme, style} = props;
+  const {id, theme, style, language} = props;
+
+  const translation = getTranslation(language);
 
   const styles = createStyle(theme, applyStyles);
 
   return (
     <View style={{...styles.container, ...style}}>
-      <ImageButton
-        style={styles.actionButton}
-        imageStyle={{
-          ...styles.actionButtonImage,
-          width: "50%",
-          height: "50%",
-        }}
-        source={
-          theme === ThemeTypes.Light
-            ? require("../../../../../../assets/png/light/scan-icon.png")
-            : require("../../../../../../assets/png/dark/scan-icon.png")
-        }
-        onPress={() => showScanPicker(dispatch)}
-      />
-      <ImageButton
-        style={styles.actionButton}
-        imageStyle={styles.actionButtonImage}
-        source={
-          theme === ThemeTypes.Light
-            ? require("../../../../../../assets/png/light/edit-icon-action.png")
-            : require("../../../../../../assets/png/dark/edit-icon-action.png")
-        }
-        onPress={() => handleEditView(dispatch, id)}
-      />
-      <ImageButton
-        style={styles.actionButton}
-        imageStyle={styles.actionButtonImage}
-        source={
-          theme === ThemeTypes.Light
-            ? require("../../../../../../assets/png/light/share-icon-action.png")
-            : require("../../../../../../assets/png/dark/share-icon-action.png")
-        }
-        onPress={() => handleShare(dispatch, id)}
-      />
-      <ImageButton
-        style={{
-          ...styles.actionButton,
-          ...styles.deleteButton,
-          marginRight: 0,
-        }}
-        imageStyle={styles.actionButtonImage}
-        source={
-          theme === ThemeTypes.Light
-            ? require("../../../../../../assets/png/delete-icon-action.png")
-            : require("../../../../../../assets/png/delete-icon-action.png")
-        }
-        onPress={() => requestPetDelete(dispatch)}
-      />
+      <View style={styles.actionContainer}>
+        <ImageButton
+          style={styles.actionButton}
+          imageStyle={{
+            ...styles.actionButtonImage,
+            width: "50%",
+            height: "50%",
+          }}
+          source={
+            theme === ThemeTypes.Light
+              ? require("../../../../../../assets/png/light/scan-icon.png")
+              : require("../../../../../../assets/png/dark/scan-icon.png")
+          }
+          onPress={() => showScanPicker(dispatch)}
+        />
+        <Text style={styles.actionText}>{translation.common.scan}</Text>
+      </View>
+      <View style={styles.actionContainer}>
+        <ImageButton
+          style={styles.actionButton}
+          imageStyle={styles.actionButtonImage}
+          source={
+            theme === ThemeTypes.Light
+              ? require("../../../../../../assets/png/light/edit-icon-action.png")
+              : require("../../../../../../assets/png/dark/edit-icon-action.png")
+          }
+          onPress={() => handleEditView(dispatch, id)}
+        />
+        <Text style={styles.actionText}>{translation.common.edit}</Text>
+      </View>
+      <View style={styles.actionContainer}>
+        <ImageButton
+          style={styles.actionButton}
+          imageStyle={styles.actionButtonImage}
+          source={
+            theme === ThemeTypes.Light
+              ? require("../../../../../../assets/png/light/share-icon-action.png")
+              : require("../../../../../../assets/png/dark/share-icon-action.png")
+          }
+          onPress={() => handleShare(dispatch, id)}
+        />
+        <Text style={styles.actionText}>{translation.common.share}</Text>
+      </View>
+      <View style={{...styles.actionContainer, marginRight: 0}}>
+        <ImageButton
+          style={{
+            ...styles.actionButton,
+            ...styles.deleteButton,
+            marginRight: 0,
+          }}
+          imageStyle={styles.actionButtonImage}
+          source={
+            theme === ThemeTypes.Light
+              ? require("../../../../../../assets/png/delete-icon-action.png")
+              : require("../../../../../../assets/png/delete-icon-action.png")
+          }
+          onPress={() => requestPetDelete(dispatch)}
+        />
+        <Text style={{...styles.actionText, ...styles.deleteText}}>{translation.common.remove}</Text>
+      </View>
     </View>
   );
 };
