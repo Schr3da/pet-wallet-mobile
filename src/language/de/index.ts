@@ -294,7 +294,7 @@ const animalTypes = {
   [PetTypes.chinchilla]: "Chinchilla",
   [PetTypes.cow]: "Kuh",
   [PetTypes.dog]: "Hund",
-  [PetTypes.ferret]: "Fettchen",
+  [PetTypes.ferret]: "Frettchen",
   [PetTypes.fish]: "Fisch",
   [PetTypes.goat]: "Ziege",
   [PetTypes.hamster]: "Hamster",
