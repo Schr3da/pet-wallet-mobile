@@ -1,0 +1,20 @@
+{
+  "name": "petpass-endpoints",
+  "version": "1.0.0",
+  "description": "Endpoints petpass",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "13.9.0",
+    "@types/helmet": "0.0.48",
+    "prettier": "^1.16.4",
+    "tslint": "5.20.0",
+    "tslint-config-prettier": "1.18.0"
+  }
+}
